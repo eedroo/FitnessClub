@@ -1,0 +1,329 @@
+'use client';
+
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { MoreHorizontal } from 'lucide-react';
+import {
+  addRest,
+  addSessionExercise,
+  deleteSet,
+  discardSession,
+  endSession,
+  skipRest,
+  updateSet,
+} from '@/actions/fitness';
+import { elapsed, focusExercise, validateSet } from '@/lib/fitness/session';
+import type { ActiveSessionView, ExerciseView } from '@/lib/fitness/types';
+import { Button } from '@/components/ui/Button';
+import { ExercisePicker } from './ExercisePicker';
+import { RestTimer } from './RestTimer';
+import { SessionExerciseCard, type ShownSet } from './SessionExerciseCard';
+import { canSync, newSetId, postSession, readQueue, writeQueue, type QueuedSet } from './sessionQueue';
+import type { SetValues } from './SetRow';
+import { formatClock, useNow } from './useNow';
+
+/** Cronómetro total, sempre a partir de `startedAt`. */
+export function SessionTimer({ startedAt }: { startedAt: string }) {
+  const t = useTranslations('fitness.session');
+  const now = useNow();
+  const time = formatClock(elapsed(new Date(startedAt), now));
+  return (
+    <span className="mg-session-timer" role="timer" aria-label={t('elapsed', { time })}>
+      {time}
+    </span>
+  );
+}
+
+/** Ecrã mantido aceso durante a sessão (quando o browser deixa). */
+function useWakeLock(on: boolean) {
+  useEffect(() => {
+    if (!on || !('wakeLock' in navigator)) return;
+    let lock: WakeLockSentinel | null = null;
+    let alive = true;
+    const request = async () => {
+      try {
+        if (document.visibilityState === 'visible') lock = await navigator.wakeLock.request('screen');
+        if (!alive) void lock?.release();
+      } catch {
+        // recusado (bateria, permissões): segue sem
+      }
+    };
+    void request();
+    const onVisible = () => document.visibilityState === 'visible' && void request();
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      alive = false;
+      document.removeEventListener('visibilitychange', onVisible);
+      void lock?.release();
+    };
+  }, [on]);
+}
+
+/** A sessão activa: tudo o que se faz no ginásio, com fila sem rede. */
+export function SessionScreen({ session, exercises, keepAwake }: { session: ActiveSessionView; exercises: ExerciseView[]; keepAwake: boolean }) {
+  const t = useTranslations('fitness.session');
+  const te = useTranslations();
+  const router = useRouter();
+  const [queue, setQueue] = useState<QueuedSet[]>([]);
+  const [rest, setRest] = useState<{ endsAt: string; total: number; exerciseId: string | null } | null>(() => {
+    if (!session.restEndsAt) return null;
+    const item = session.items.find((i) => i.exercise.id === session.restExerciseId);
+    return { endsAt: session.restEndsAt, total: item?.target.restSec ?? 90, exerciseId: session.restExerciseId };
+  });
+  const [menu, setMenu] = useState(false);
+  const [picker, setPicker] = useState(false);
+  const [notes, setNotes] = useState(session.notes ?? '');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const flushing = useRef(false);
+  // recordes batidos nesta visita (o troféu aparece logo, com animação).
+  const [freshPrs, setFreshPrs] = useState<Record<string, string[]>>({});
+
+  useWakeLock(keepAwake);
+
+  // A fila vive numa ref (lida já pelo envio) e é espelhada no dispositivo e no ecrã.
+  const queueRef = useRef<QueuedSet[]>([]);
+  const saveQueue = useCallback(
+    (fn: (q: QueuedSet[]) => QueuedSet[]) => {
+      const next = fn(queueRef.current);
+      queueRef.current = next;
+      writeQueue(session.id, next);
+      setQueue(next);
+    },
+    [session.id],
+  );
+
+  const serverIds = useMemo(() => new Set(session.items.flatMap((i) => i.doneSets.map((s) => s.id))), [session]);
+  // O que o servidor já tem sai da fila.
+  useEffect(() => {
+    if (queue.some((q) => serverIds.has(q.id))) saveQueue((q) => q.filter((x) => !serverIds.has(x.id)));
+  }, [serverIds, queue, saveQueue]);
+
+  const flush = useCallback(async () => {
+    if (flushing.current) return;
+    flushing.current = true;
+    try {
+      for (const q of [...queueRef.current]) {
+        type SetResult = { ok: true; data: { setId: string; restEndsAt: string | null; prKinds: string[] } } | { ok: false; error: string };
+        const res = await postSession<SetResult>(session.id, { op: 'set', set: q });
+        if (!res) break; // sem rede (ou a app a ser suspensa): tenta outra vez quando voltar
+        if (!res.ok) {
+          saveQueue((list) => list.filter((x) => x.id !== q.id));
+          setError(te(res.error));
+          continue;
+        }
+        if (res.data.prKinds.length) setFreshPrs((m) => ({ ...m, [q.id]: res.data.prKinds }));
+        if (res.data.restEndsAt) {
+          const item = session.items.find((i) => i.exercise.id === q.exerciseId);
+          setRest({ endsAt: res.data.restEndsAt, total: item?.target.restSec ?? 90, exerciseId: q.exerciseId });
+        }
+      }
+      if (canSync()) router.refresh();
+    } finally {
+      flushing.current = false;
+    }
+  }, [router, saveQueue, session.id, session.items, te]);
+
+  useEffect(() => {
+    // Fila guardada no dispositivo (de uma visita anterior sem rede).
+    if (!queueRef.current.length) {
+      queueRef.current = readQueue(session.id);
+      setQueue(queueRef.current);
+    }
+    void flush();
+    const onOnline = () => void flush();
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [flush, session.id]);
+
+  // Em segundo plano: o fim do descanso vai por push; com a app à vista, só o aviso no ecrã.
+  useEffect(() => {
+    const onVis = () => {
+      const hidden = document.visibilityState === 'hidden';
+      void postSession(session.id, { op: 'hidden', hidden }, hidden);
+      // Ao voltar: envia o que ficou na fila e actualiza (só quando houver rede).
+      if (!hidden) void flush();
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, [session.id, flush]);
+
+  const log = (exerciseId: string, restSec: number, v: SetValues): string | null => {
+    const item = session.items.find((i) => i.exercise.id === exerciseId);
+    if (!item) return null;
+    const check = validateSet(item.exercise.measure, { exerciseId, ...v });
+    if (!check.ok) return te(`fitness.errors.${check.reason}`);
+    const now = new Date();
+    saveQueue((q) => [...q, { id: newSetId(), exerciseId, completedAt: now.toISOString(), ...v }]);
+    setRest({ endsAt: new Date(now.getTime() + restSec * 1000).toISOString(), total: restSec, exerciseId });
+    setError(null);
+    void flush();
+    return null;
+  };
+
+  const shown = (exerciseId: string): ShownSet[] => {
+    const item = session.items.find((i) => i.exercise.id === exerciseId);
+    const done = (item?.doneSets ?? []).map((s) => ({
+      id: s.id,
+      pending: false,
+      prKinds: s.prKinds,
+      fresh: s.id in freshPrs,
+      at: s.completedAt,
+      ...(s.reps != null && { reps: s.reps }),
+      ...(s.weightGrams != null && { weightGrams: s.weightGrams }),
+      ...(s.durationSec != null && { durationSec: s.durationSec }),
+    }));
+    const queued = queue
+      .filter((q) => q.exerciseId === exerciseId && !serverIds.has(q.id))
+      .map(({ id, reps, weightGrams, durationSec, completedAt }) => ({ id, pending: !(id in freshPrs), prKinds: freshPrs[id] ?? [], fresh: id in freshPrs, at: completedAt, reps, weightGrams, durationSec }));
+    return [...done, ...queued];
+  };
+
+  // Exercício em foco: o último com série registada; cumpridas as séries do alvo, passa logo ao seguinte.
+  const lastLogged = (() => {
+    const recent = [...queue].reverse().find((q) => !serverIds.has(q.id))?.exerciseId;
+    if (recent) return recent;
+    const done = session.items.flatMap((i) => i.doneSets.map((s) => ({ id: i.exercise.id, at: s.completedAt })));
+    return rest?.exerciseId ?? done.sort((a, b) => b.at.localeCompare(a.at))[0]?.id ?? null;
+  })();
+  const focusId = focusExercise(
+    session.items.map((i) => ({ id: i.exercise.id, targetSets: i.target.sets, done: shown(i.exercise.id).length })),
+    lastLogged,
+  );
+
+  const restName = rest?.exerciseId ? (session.items.find((i) => i.exercise.id === rest.exerciseId)?.exercise.name ?? null) : null;
+  const totalSets = session.items.reduce((n, i) => n + i.doneSets.length, 0) + queue.filter((q) => !serverIds.has(q.id)).length;
+
+  const finish = async () => {
+    if (queue.length) {
+      await flush();
+      if (queueRef.current.some((q) => !serverIds.has(q.id)) && !navigator.onLine) return setError(t('offlineFinish'));
+    }
+    if (!window.confirm(t('finishConfirm'))) return;
+    setBusy(true);
+    try {
+      const res = await endSession(session.id);
+      if (!res.ok) return setError(te(res.error));
+      // Corpo passo a passo (água e alongamento) e depois o resumo; ou logo o resumo.
+      router.push(res.data.next);
+    } catch {
+      setError(t('offlineFinish'));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="mg-session">
+      <header className="mg-session__top">
+        <h1 className="mg-session__name">{session.workoutName ?? t('free')}</h1>
+        <SessionTimer startedAt={session.startedAt} />
+        <div className="mg-session__actions">
+          <Button className="mg-btn--body" loading={busy} onClick={finish}>
+            {t('finish')}
+          </Button>
+          <Button variant="subtle" aria-label={t('more')} aria-expanded={menu} onClick={() => setMenu(!menu)}>
+            <MoreHorizontal size={20} aria-hidden="true" />
+          </Button>
+        </div>
+      </header>
+
+      {menu && (
+        <div className="mg-session__menu">
+          <label>
+            {t('notes')}
+            <textarea
+              className="mg-input"
+              rows={3}
+              maxLength={1000}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              onBlur={() => void postSession(session.id, { op: 'notes', notes }, document.visibilityState === 'hidden')}
+            />
+          </label>
+          {totalSets === 0 && (
+            <Button
+              variant="danger"
+              onClick={async () => {
+                if (!window.confirm(t('discardConfirm'))) return;
+                const res = await discardSession(session.id);
+                if (!res.ok) return setError(te(res.error));
+                writeQueue(session.id, []);
+                router.push('/');
+              }}
+            >
+              {t('discard')}
+            </Button>
+          )}
+        </div>
+      )}
+
+      {queue.length > 0 && (
+        <p className="mg-session__queue" role="status">
+          {t('queued', { n: queue.length })}
+        </p>
+      )}
+      {error && (
+        <p className="mg-set-input__error" role="alert">
+          {error}
+        </p>
+      )}
+
+      {session.items.map((item) => (
+        <SessionExerciseCard
+          key={item.exercise.id}
+          item={item}
+          sets={shown(item.exercise.id)}
+          current={focusId === item.exercise.id}
+          onLog={(v) => log(item.exercise.id, item.target.restSec, v)}
+          onUpdate={async (setId, v) => {
+            const res = await updateSet(setId, { reps: v.reps ?? null, weightGrams: v.weightGrams ?? null, durationSec: v.durationSec ?? null });
+            if (!res.ok) return te(res.error);
+            router.refresh();
+            return null;
+          }}
+          onDelete={async (setId) => {
+            await deleteSet(setId);
+            router.refresh();
+          }}
+        />
+      ))}
+      {!session.items.length && <p className="mg-body-empty">{t('emptyFree')}</p>}
+
+      <Button variant="subtle" block onClick={() => setPicker(true)}>
+        {t('addExercise')}
+      </Button>
+      <ExercisePicker
+        exercises={exercises}
+        open={picker}
+        multiple={false}
+        confirmLabel={t('addExerciseConfirm')}
+        onClose={() => setPicker(false)}
+        onConfirm={async (ids) => {
+          if (ids[0]) await addSessionExercise(session.id, ids[0]);
+          setPicker(false);
+          router.refresh();
+        }}
+      />
+
+      {rest && (
+        <RestTimer
+          endsAt={rest.endsAt}
+          totalSec={rest.total}
+          exerciseName={restName}
+          onAdd={async (sec) => {
+            const optimistic = new Date(Math.max(Date.now(), new Date(rest.endsAt).getTime() + sec * 1000)).toISOString();
+            setRest({ ...rest, endsAt: optimistic, total: Math.max(rest.total, rest.total + sec) });
+            const res = await addRest(session.id, sec).catch(() => null);
+            if (res?.ok && res.data.restEndsAt) setRest((r) => (r ? { ...r, endsAt: res.data.restEndsAt as string } : r));
+          }}
+          onSkip={() => {
+            setRest(null);
+            void skipRest(session.id).catch(() => {});
+          }}
+        />
+      )}
+    </div>
+  );
+}

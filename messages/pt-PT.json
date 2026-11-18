@@ -470,20 +470,12 @@
         "neck": "Pescoço"
       }
     },
-    "guide": {
-      "title": "O Guia e o teu corpo",
-      "invite": "O teu Guia pode ler também o teu corpo: peso médio, objectivo e treinos. Queres activar?",
-      "on": "O Guia lê a média semanal do peso, o objectivo e os treinos. Nunca as pesagens de cada dia.",
-      "enable": "Activar",
-      "disable": "Desligar"
-    },
     "errors": {
-      "consent": "Para registar o peso, autoriza primeiro os dados de bem-estar.",
+      "consent": "Para registar o peso, autoriza primeiro os dados de saúde.",
       "weight": "Escreve o peso em kg, entre 30 e 300 (por exemplo 76,4).",
       "date": "Escolhe hoje ou um dia do último ano.",
       "goal": "Escolhe a direcção e um dos ritmos.",
-      "noWeight": "Regista o peso primeiro para criar o objectivo.",
-      "guideConsent": "Activa primeiro o Guia nas Definições."
+      "noWeight": "Regista o peso primeiro para criar o objectivo."
     }
   },
   "fitness": {
@@ -572,7 +564,6 @@
       }
     },
     "title": "Treinos",
-    "backToApp": "MYGLOW",
     "moveUp": "Subir",
     "moveDown": "Descer",
     "nav": {
@@ -607,7 +598,7 @@
     },
     "welcome": {
       "hello": "O teu corpo, no seu ritmo",
-      "helloText": "Programas, treinos e sessões com cronómetro e descanso. Os checks do Hoje ficam iguais e marcam-se sozinhos quando terminas uma sessão.",
+      "helloText": "Programas, treinos e sessões com cronómetro e descanso, recordes por exercício e o teu peso com uma meta.",
       "restTitle": "Quanto descansas entre séries?",
       "seconds": "{n} s",
       "restOther": "Outro valor (segundos)",
@@ -853,7 +844,8 @@
       "sets": "Séries",
       "progress": "Evolução",
       "records": "Recordes"
-    }
+    },
+    "settingsLink": "Definições"
   },
   "shell": {
     "home": "FitnessClub — ir para os treinos",

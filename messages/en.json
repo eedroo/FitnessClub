@@ -470,20 +470,12 @@
         "neck": "Neck"
       }
     },
-    "guide": {
-      "title": "Your Guide and your body",
-      "invite": "Your Guide can also read your body: average weight, goal and workouts. Turn it on?",
-      "on": "Your Guide reads your weekly average weight, your goal and your workouts. Never your daily weigh-ins.",
-      "enable": "Turn on",
-      "disable": "Turn off"
-    },
     "errors": {
-      "consent": "To log your weight, first allow wellbeing data.",
+      "consent": "To log your weight, first allow health data.",
       "weight": "Enter your weight in kg, between 30 and 300 (e.g. 76.4).",
       "date": "Pick today or a day in the last year.",
       "goal": "Pick a direction and one of the paces.",
-      "noWeight": "Log your weight first to set a goal.",
-      "guideConsent": "Turn on your Guide in Settings first."
+      "noWeight": "Log your weight first to set a goal."
     }
   },
   "fitness": {
@@ -572,7 +564,6 @@
       }
     },
     "title": "Workouts",
-    "backToApp": "MYGLOW",
     "moveUp": "Move up",
     "moveDown": "Move down",
     "nav": {
@@ -607,7 +598,7 @@
     },
     "welcome": {
       "hello": "Your body, at its own pace",
-      "helloText": "Programs, workouts and sessions with a timer and rest. The checks on Today stay the same and tick themselves when you finish a session.",
+      "helloText": "Programmes, workouts and sessions with a timer and rest, records for every exercise, and your weight with a goal.",
       "restTitle": "How long do you rest between sets?",
       "seconds": "{n}s",
       "restOther": "Another value (seconds)",
@@ -853,7 +844,8 @@
       "sets": "Sets",
       "progress": "Progress",
       "records": "Records"
-    }
+    },
+    "settingsLink": "Settings"
   },
   "shell": {
     "home": "FitnessClub — go to workouts",

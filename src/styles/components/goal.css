@@ -1,0 +1,19 @@
+/* BodyGoalSheet, BodyGoalCard e BodyGuideCard (F17): texto neutro */
+
+.mg-goal-card__line {
+  margin: 0;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-goal-card__line strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+}
+
+.mg-goal-sheet__rates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
