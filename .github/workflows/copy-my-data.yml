@@ -1,0 +1,45 @@
+# Copia o histórico de treino e peso de UMA conta do MYGLOW para o FitnessClub (scripts/copy-my-data.ts).
+# Corre à mão: Actions → copy-my-data → Run workflow. Primeiro sem "gravar" (simulação), depois com "gravar".
+# Segredos do repositório (Settings → Secrets and variables → Actions), postos pela própria pessoa:
+#   MYGLOW_DATABASE_URL  ligação ao banco do MYGLOW (só é lido)
+#   FITNESSCLUB_DATABASE_URL  ligação ao banco do FitnessClub
+name: copy-my-data
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: 'Email da conta (igual nos dois apps)'
+        required: true
+        type: string
+      apply:
+        description: 'Gravar (desligado = só mostra o que ia copiar)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Copiar
+        env:
+          MYGLOW_DATABASE_URL: ${{ secrets.MYGLOW_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.FITNESSCLUB_DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.FITNESSCLUB_DATABASE_URL }}
+          EMAIL: ${{ inputs.email }}
+        run: |
+          if [ -z "$MYGLOW_DATABASE_URL" ] || [ -z "$DATABASE_URL" ]; then
+            echo "::error::Faltam os segredos MYGLOW_DATABASE_URL e/ou FITNESSCLUB_DATABASE_URL."
+            exit 1
+          fi
+          npx tsx scripts/copy-my-data.ts --email "$EMAIL" ${{ inputs.apply && '--apply' || '' }}

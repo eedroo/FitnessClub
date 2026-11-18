@@ -9,6 +9,7 @@
  * - A conta tem de existir já no FitnessClub com o mesmo email (registo normal: palavra-passe e consentimento
  *   próprios). Os dados passam a pertencer a essa conta; os ids de programas, treinos, sessões, séries e
  *   exercícios próprios mantêm-se. Os exercícios da biblioteca vêm do seed (mesmos ids): correr o seed antes.
+ * - Também corre no GitHub Actions (`.github/workflows/copy-my-data.yml`), com as ligações em segredos do repositório.
  * - Idempotente (`skipDuplicates`): correr de novo não duplica. Peso e meta só com o consentimento de saúde
  *   dado no FitnessClub.
  */
@@ -33,9 +34,9 @@ async function main() {
   const to = new PrismaClient({ datasources: { db: { url: toUrl } } });
   try {
     const src = await from.user.findUnique({ where: { email }, select: { id: true } });
-    if (!src) throw new Error(`Não há conta ${email} no MYGLOW.`);
+    if (!src) throw new Error(`Não há conta com esse email no MYGLOW.`);
     const dst = await to.user.findUnique({ where: { email }, select: { id: true, wellbeingConsentAt: true } });
-    if (!dst) throw new Error(`Cria primeiro a conta ${email} no FitnessClub (registo normal).`);
+    if (!dst) throw new Error(`Cria primeiro a conta com esse email no FitnessClub (registo normal).`);
     const uid = dst.id;
 
     const [prefs, custom, programs, sessions, weights, goal] = await Promise.all([
@@ -58,7 +59,7 @@ async function main() {
     if (missing.length) throw new Error(`Exercícios da biblioteca em falta no FitnessClub (correr o seed): ${missing.slice(0, 10).join(', ')}`);
 
     const withHealth = !!dst.wellbeingConsentAt;
-    console.log(`[copy] ${email}: ${custom.length} exercícios próprios, ${programs.length} programas, ${workouts.length} treinos, ${items.length} itens, ${sessions.length} sessões, ${sets.length} séries, ${weights.length} pesagens${goal ? ', meta' : ''}${prefs ? ', preferências' : ''}`);
+    console.log(`[copy] ${custom.length} exercícios próprios, ${programs.length} programas, ${workouts.length} treinos, ${items.length} itens, ${sessions.length} sessões, ${sets.length} séries, ${weights.length} pesagens${goal ? ', meta' : ''}${prefs ? ', preferências' : ''}`);
     if (!withHealth && (weights.length || goal)) console.log('[copy] Sem consentimento de dados de saúde no FitnessClub: o peso e a meta ficam de fora.');
     if (!apply) {
       console.log('[copy] Simulação: nada foi gravado. Correr de novo com --apply.');
