@@ -20,9 +20,10 @@ describe('direitos', () => {
     expect(canUse('pro', { plan: 'FREE', rollout: 'ALL', override: null })).toBe(true);
   });
 
-  it('buildEntitlements: sem linha de FeatureFlag usa o defaultRollout (PREMIUM)', () => {
-    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, {}, {}, now)).toEqual({ plan: 'FREE', features: { pro: false } });
-    expect(buildEntitlements({ plan: 'PREMIUM', planExpiresAt: null }, {}, {}, now).features.pro).toBe(true);
+  it('buildEntitlements: sem linha de FeatureFlag usa o defaultRollout (ALL: aberto a todos)', () => {
+    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, {}, {}, now)).toEqual({ plan: 'FREE', features: { pro: true } });
+    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'PREMIUM' }, {}, now).features.pro).toBe(false);
+    expect(buildEntitlements({ plan: 'PREMIUM', planExpiresAt: null }, { pro: 'PREMIUM' }, {}, now).features.pro).toBe(true);
     // Interruptor global em "Todos": grátis também usa.
     expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'ALL' }, {}, now).features.pro).toBe(true);
     // Excepção por pessoa com a funcionalidade escondida para todos.

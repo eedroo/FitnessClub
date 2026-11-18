@@ -43,7 +43,7 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 
 ## Premium e operação
 - Plano `FREE`/`PREMIUM` lido do servidor por pedido (nunca no JWT), com origem (`MANUAL`, `GIFT`, `PAID` mais tarde) e data de fim opcional. Sem pagamentos por agora.
-- Um recurso, `pro`, com interruptor global (`HIDDEN`/`PREMIUM`/`ALL`, sem novo deploy, por defeito `PREMIUM`) e excepções por pessoa; a verificação que conta é sempre no servidor (`requireFeature`). Sem acesso: os treinos mostram o cadeado; as definições, a exportação e apagar a conta continuam abertas.
+- Um recurso, `pro`, com interruptor global (`HIDDEN`/`PREMIUM`/`ALL`, sem novo deploy, por defeito `ALL` — o app está aberto a todos; cada funcionalidade nova decide-se grátis ou premium quando for lançada) e excepções por pessoa; a verificação que conta é sempre no servidor (`requireFeature`). Sem acesso: os treinos mostram o cadeado; as definições, a exportação e apagar a conta continuam abertas.
 - Administração em `/admin` só para `ADMIN_EMAILS` (os outros recebem 404), sem acesso aos treinos nem ao peso de ninguém.
 - Actividade diária em `UserActiveDay` (um registo por dia no fuso da pessoa) para DAU/WAU/MAU.
 - Sentry na região UE, sem dados pessoais (só o id interno) nem Session Replay.

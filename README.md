@@ -35,8 +35,8 @@ As variáveis vivem só na Vercel (Project → Settings → Environment Variable
    - `LEGAL_TERMS_VERSION=2026-11`, `LEGAL_PRIVACY_VERSION=2026-11`, `ADMIN_EMAILS` (o teu email);
    - `BLOB_READ_WRITE_TOKEN` só para reenviar as imagens (ver abaixo).
    Não são precisas: `OPENAI_*`, `GUIDE_CONSENT_VERSION`, `BETA*`.
-4. **Primeiro acesso:** registar a conta com o email de `ADMIN_EMAILS` → `/admin/users` → a tua ficha → Plano: Premium
-   (ou `/admin/features` → `pro` → Todos, para abrir a toda a gente).
+4. **Primeiro acesso:** registar a conta com o email de `ADMIN_EMAILS`. O app está aberto a todos (recurso `pro` em
+   «Todos»); para o fechar a premium: `/admin/features` → `pro` → Premium.
 5. **Domínio e PWA:** ligar o domínio (Settings → Domains) e actualizar `AUTH_URL` e `APP_URL`; mudar de domínio depois obriga a reinstalar o app e a reactivar os avisos.
 
 ### Imagens dos exercícios
@@ -59,7 +59,7 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 ## Lista de verificação manual (num telemóvel)
 
 - [ ] Registo → boas-vindas (descanso, aviso, modelo) → Treinos com o programa do modelo.
-- [ ] Conta sem premium: cadeado em `/locked`; Definições, exportação e apagar a conta funcionam.
+- [ ] Com `pro` em Premium no admin, uma conta grátis vê o cadeado em `/locked`; Definições, exportação e apagar a conta funcionam.
 - [ ] Sessão: começar treino, registar séries, descanso com contagem, −15 s / +30 s / Saltar, terminar → resumo.
 - [ ] Push de fim de descanso com o app em segundo plano (no iPhone, com o app instalado no ecrã inicial).
 - [ ] Sem rede a meio da sessão: as séries ficam na fila e gravam ao voltar.
