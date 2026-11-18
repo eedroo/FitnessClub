@@ -220,7 +220,9 @@ export async function withdrawWellbeingConsent(input: { deleteData: boolean }): 
   if (!parsed.success) return fail('common.errors.generic');
   await db.$transaction([
     db.user.update({ where: { id: user.id }, data: { wellbeingConsentAt: null } }),
-    // Os dados de peso entram aqui quando o schema do corpo existir (passo 2).
+    ...(parsed.data.deleteData
+      ? [db.bodyWeightEntry.deleteMany({ where: { userId: user.id } }), db.bodyGoal.deleteMany({ where: { userId: user.id } })]
+      : []),
   ]);
   revalidatePath('/', 'layout');
   return { ok: true };
