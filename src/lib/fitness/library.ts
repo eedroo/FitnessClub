@@ -3,7 +3,7 @@ import type { AppLocale } from '@/i18n/locales';
 import type { ExerciseView } from './types';
 
 /**
- * Biblioteca de exercícios (F16): free-exercise-db (Unlicense) + exercícios próprios. Funções puras usadas
+ * Biblioteca de exercícios: free-exercise-db (Unlicense) + exercícios próprios. Funções puras usadas
  * pelo seed, pelas queries e pela pesquisa.
  */
 export interface FreeExerciseDbItem {

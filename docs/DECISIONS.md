@@ -49,3 +49,26 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Sentry na região UE, sem dados pessoais (só o id interno) nem Session Replay.
 - Vercel Analytics (sem cookies) só nas páginas públicas.
 - Notificações: só o push de fim de descanso; a permissão só é pedida depois de um gesto ("Activar"); iOS só com o app instalado no ecrã inicial (16.4+). Subscrições que respondem 404/410 são apagadas.
+
+## Treino (do Foco no corpo do MYGLOW, F16)
+- **Acesso:** todo o treino é do recurso `pro`. Sem ele, as páginas levam a `/locked` (cadeado premium) e as acções respondem 404.
+- **Biblioteca:** free-exercise-db (Unlicense) importada para a DB pelo seed em cada deploy, com imagens no Vercel Blob (na v1 os URLs do Blob do MYGLOW; `scripts/fitness/import-images.ts --reupload` cria a cópia própria). Exercícios próprios por pessoa.
+- **Estrutura:** Programa → Treino → Item. As séries ficam em `SessionSet`, ligadas ao exercício (histórico por data).
+- **Sessão:** uma activa de cada vez; tempos sempre a partir de timestamps; descanso por item, depois por exercício, depois pela preferência; sessão esquecida há mais de 6 h termina na última série.
+- **Aviso de fim de descanso:** push só com o app em segundo plano (job Inngest `fitness-rest-alert`, TTL 60 s).
+- **Fim da sessão:** abre o resumo da sessão (já não marca checks de nenhum diário).
+
+## Peso e evolução (do Corpo II do MYGLOW, F17)
+- **Peso diário** (com consentimento de dados de saúde): 1 registo por dia; a média semanal (domingo a sábado) é o número principal; tendência de 7 dias; objectivo ganhar / manter / perder com ritmos fixos e linguagem neutra.
+- **Recordes:** peso, e1RM (Epley, até 12 reps) e reps por peso, gravados na série e recalculados ao editar.
+- **Comparação** com a sessão anterior por exercício.
+- **Mapa muscular** com recuperação: menos de 48 h, 48 a 72 h, mais de 72 h.
+- Nunca sugere dietas nem suplementos.
+
+## Treino (pedidos da dona do projecto, já no MYGLOW)
+- O exercício em foco (borda acesa) é o último com série registada; cumpridas as séries do alvo, o foco passa logo ao exercício seguinte por fazer, mesmo durante o descanso (`focusExercise`).
+- A comparação com a anterior é um cartão 2×2 (séries, reps, volume, kg por rep; ▲ verde quando sobe, o resto neutro) na página do exercício e em cada exercício da sessão (contra a última vez).
+- As séries aparecem em linhas com a hora e os números grandes com a unidade pequena; no histórico, da mais recente para a mais antiga.
+- Na página do exercício, só uma linha curta debaixo do nome; o resto em "Detalhes e ações". "Voltar" regressa à página anterior.
+- O gráfico do peso liga as pesagens (sem a média de 7 dias).
+- Navegação com 4 itens: Treinos · Sessões · Dia · Corpo; os exercícios abrem-se a partir de Treinos.

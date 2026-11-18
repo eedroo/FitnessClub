@@ -1,7 +1,7 @@
 import type { ExerciseMeasure, ProgramKind } from '@prisma/client';
 import type { DateISO } from '@/lib/dates';
 
-/** Foco no corpo (F16): tipos de domínio partilhados pelo servidor e pelos componentes. */
+/** Treino: tipos de domínio partilhados pelo servidor e pelos componentes. */
 export type { ExerciseMeasure, ProgramKind };
 
 export interface ExerciseView {
@@ -38,7 +38,7 @@ export interface SessionSetView {
   weightGrams: number | null;
   durationSec: number | null;
   completedAt: string;
-  /** F17: recordes batidos nesta série. */
+  /** recordes batidos nesta série. */
   prKinds: string[];
 }
 
