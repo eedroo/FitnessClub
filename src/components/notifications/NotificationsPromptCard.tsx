@@ -12,7 +12,7 @@ import { InstallGuide } from './InstallGuide';
 type Phase = 'hidden' | 'ask' | 'ios' | 'enabling' | 'done' | 'denied' | 'error';
 
 /**
- * Convite em /today para activar os lembretes. Nunca pede permissão sozinho: só depois de "Activar".
+ * Convite para activar o aviso de fim de descanso (boas-vindas e definições). Nunca pede permissão sozinho: só depois de "Activar".
  * Some se o dispositivo já estiver subscrito, se não houver suporte ou se o utilizador dispensar (14 dias).
  */
 export function NotificationsPromptCard() {

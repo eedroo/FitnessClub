@@ -60,12 +60,6 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 - Check pequeno inline com ícone (alongamento, treino, água)
 - **Props:** `icon: MagicIconName`, `label`, `checked`, `onCheckedChange`
 
-### WeightInput — F3
-- **TSX:** `WeightInput.tsx` (`'use client'`) · **CSS:** `weight.css`
-- **Classes:** `mg-weight-input`, `mg-weight-input__field`, `mg-weight-input__unit`
-- `inputMode="decimal"`, aceita vírgula ou ponto; valida com `parseKgToGrams` no blur e mostra erro inline (via `Field`)
-- **Props:** `id`, `grams: number | null`, `locale`, `onCommit(grams | null)`, `unitLabel`, `errorLabel`, `label`
-
 ### Toast — F1
 - **TSX:** `Toast.tsx` (`'use client'`) · **CSS:** `toast.css`
 - **Classes:** `mg-toast`, `mg-toast--success`, `mg-toast--error`, `mg-toast__message`, `mg-toast__close`
@@ -144,12 +138,13 @@ Rotas novas: `(auth)/forgot-password`, `reset-password`, `verify-email`, `confir
 | `VerifyEmailResult` | server | `auth-result.css` | `mg-auth-result`, `--ok`, `--error`, `__icon`, `__title`, `__text`, `__actions` | `/verify-email?token=` → consome o token e mostra sucesso ou erro |
 | `ConfirmEmailChangeResult` | server | `auth-result.css` | `mg-auth-result`, … | `/confirm-email-change?token=` → aplica o email novo; pede para entrar de novo |
 | `SettingsNav` | client | `settings-nav.css` | `mg-settings-nav`, `__list`, `__item`, `--active` | índice das secções das definições (âncoras); no desktop fica fixo ao lado; secção visível marcada (IntersectionObserver) |
+| `TrainingPrefsForm` | client | `form.css` (reutiliza) | `mg-form`, `__row`, `__status` | Definições → Treino (só com `pro`): descanso por defeito (60 · 90 · 120 · 180 s, `SegmentedControl`), aviso de fim de descanso e ecrã aceso (`CheckChip`) → `updateFitnessPrefs` |
+| Página `/settings` | server | `settings-nav.css` | `mg-settings__back` | link de volta aos treinos (ou ao cadeado) por cima do título |
 | `ChangeEmailForm` | client | `form.css` | `mg-form`, `__row`, `__status`, `--error` | email novo + palavra-passe actual → `requestEmailChange` ("Enviámos um link para o email novo.") |
 | `ChangePasswordForm` | client | `form.css` | `mg-form`, … | palavra-passe actual + nova → `changePassword` (outros dispositivos saem; este continua) |
 | `WellbeingConsentCard` | client | `form.css` | `mg-form`, `__status` | privacidade: data do consentimento; "Retirar" (aviso + opção de apagar as pesagens e a meta) ou "Dar consentimento" |
 | `DeleteAccountDialog` | client | `danger.css` | `mg-danger`, `__text`, `__list`, `__confirm`, `__actions` | zona de perigo: explica o que é apagado (tudo, sem recuperação), sugere exportar antes; `<dialog>` com palavra-passe + escrever "APAGAR"/"DELETE"; botão `mg-btn--danger` |
 | `PolicyUpdateDialog` | client | `policy-dialog.css` | `mg-policy-dialog`, `__title`, `__text`, `__links`, `__consent`, `__actions` | bloqueante no layout `(app)` quando a versão dos Termos/Política mudou (ou nunca foi aceite): resumo + links + "Aceitar"; sem consentimento dos dados de saúde mostra também a caixa (opcional) |
-| `WellbeingNotice` | partilhado (sem estado) | `form.css` | `mg-wellbeing-off`, `__text`, `__link` | no lugar do peso e da meta sem consentimento: nota + link para voltar a consentir |
 | `LegalPage` | server | `legal.css` | `mg-legal`, `__meta`, `__draft`, `__body` | `/privacy` e `/terms`: `content/legal/<doc>/<locale>.md` com o parser mínimo (títulos `##`, listas, links, citações); Cormorant nos títulos, Jost no corpo, largura máxima 68ch; versão e data no topo |
 | `AuthResult` | server | `auth-result.css` | `mg-auth-result`, … | bloco comum (ícone, título, texto, acções) de `VerifyEmailResult` e `ConfirmEmailChangeResult` |
 | Layouts | server | `legal.css`, `settings-nav.css` | `mg-public`, `__header`, `__brand` · `mg-settings`, `__sections`, `__section` | grupo `(public)` (marca + "Voltar", sem login) · grelha das definições (índice + secções; 2 colunas a partir de 1024 px) |
@@ -193,7 +188,7 @@ Recurso premium `pro` com navegação própria, inspirado no Setgraph: bibliotec
 | `BodyNav` | client | `body-nav.css` | `mg-body-nav`, `__item`, `--active` | Treinos · Sessões · Dia · Corpo |
 | `useNow` / `formatClock` | client (hook) | — | — | hora actual a cada segundo (e ao voltar à app); `formatClock` ("1:02:05") vive em `src/lib/fitness/session.ts` (usado também nos componentes servidor) |
 | `ActiveSessionPill` | client | `session-pill.css` | `mg-session-pill` | "Sessão em curso · 00:32:10" acima da `BodyNav`; toca para voltar (escondida no ecrã da sessão) |
-| `BodyWelcome` | client | `body-welcome.css` | `mg-body-welcome`, `__step`, `__options`, `__option--active` | boas-vindas do app (`/welcome`, onboarding) em 4 passos: boas-vindas, descanso (60 · 90 · 120 · 180 · outro), aviso de fim de descanso (pede notificações), modelo ou do zero |
+| `BodyWelcome` | client | `body-welcome.css` | `mg-body-welcome`, `__step`, `__options`, `__option--active` | boas-vindas do app (`/welcome`, onboarding; `completeFitnessOnboarding` grava as preferências e `User.onboardedAt`, `update({})` → `/`) em 4 passos: boas-vindas, descanso (60 · 90 · 120 · 180 · outro), aviso de fim de descanso (pede notificações), modelo ou do zero |
 | `ProgramList` / `ProgramRow` | server | `program.css` | `mg-program-list`, `mg-program-row` | programas: nome, descrição curta, nº de treinos |
 | `ProgramForm` | client | `program.css` | `mg-program-form` | criar ou editar programa (nome, descrição, tipo) e "Usar um modelo"; arquivar |
 | `WorkoutList` / `WorkoutRow` | client (reordenação) | `program.css` | `mg-workout-list`, `mg-workout-row` | treinos do programa: nome, notas curtas, nº de exercícios |
@@ -255,10 +250,3 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
 | `RouteError` | client | `route-error.css` | `mg-route-error`, `__title`, `__actions` | `error.tsx` do grupo `(app)`: mensagem em cartão de vidro dentro do layout (a navegação continua à vista), "Tentar de novo" (refresca e repõe) e "Recarregar a app"; erros de rede ou de versão nova (`isRecoverableError`) recarregam sozinhos, no máximo uma vez por minuto |
-
-
-### Boas-vindas (`src/components/welcome/`, rota `/welcome`)
-
-| Componente | Tipo | CSS | Classes | Conteúdo |
-|---|---|---|---|---|
-| `WelcomeStart` | client | `button.css` | `mg-btn` | fecha as boas-vindas (`finishWelcome` → `User.onboardedAt`) → `update({})` → `/` |

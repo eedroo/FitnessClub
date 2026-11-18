@@ -11,7 +11,7 @@ interface WellbeingConsentCardProps {
   consentedOn: string | null;
 }
 
-/** Consentimento explícito para humor, sono e peso: ver, retirar (com opção de apagar) ou dar. */
+/** Consentimento explícito para os dados de saúde (peso e meta): ver, retirar (com opção de apagar) ou dar. */
 export function WellbeingConsentCard({ consentedOn }: WellbeingConsentCardProps) {
   const t = useTranslations('account.wellbeing');
   const router = useRouter();

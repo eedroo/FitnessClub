@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { completeFitnessOnboarding } from '@/actions/fitness';
 import { Button } from '@/components/ui/Button';
@@ -17,6 +18,7 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
   const t = useTranslations('fitness.welcome');
   const te = useTranslations();
   const router = useRouter();
+  const { update } = useSession();
   const [step, setStep] = useState(0);
   const [rest, setRest] = useState(initialRest);
   const [custom, setCustom] = useState(RESTS.includes(initialRest) ? '' : String(initialRest));
@@ -29,7 +31,10 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
     start(async () => {
       const res = await completeFitnessOnboarding({ defaultRestSec: rest, restAlert: alert, templateId: template });
       if (!res.ok) return setError(te(res.error));
+      // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos.
+      await update({});
       router.push('/');
+      router.refresh();
     });
 
   return (
@@ -89,7 +94,7 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('alertTitle')}</h2>
           <p className="mg-body-welcome__text">{t('alertText')}</p>
-          <CheckChip icon="sparkles" label={t('alertToggle')} checked={alert} onCheckedChange={setAlert} />
+          <CheckChip icon="bell" label={t('alertToggle')} checked={alert} onCheckedChange={setAlert} />
           {alert && <NotificationsPromptCard />}
         </section>
       )}

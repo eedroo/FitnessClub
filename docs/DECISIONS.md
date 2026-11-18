@@ -72,3 +72,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Na página do exercício, só uma linha curta debaixo do nome; o resto em "Detalhes e ações". "Voltar" regressa à página anterior.
 - O gráfico do peso liga as pesagens (sem a média de 7 dias).
 - Navegação com 4 itens: Treinos · Sessões · Dia · Corpo; os exercícios abrem-se a partir de Treinos.
+
+## Boas-vindas, definições e conta
+- **Onboarding = boas-vindas do treino** (`/welcome`, 4 passos: olá, descanso, aviso de fim de descanso, modelo ou do zero). Concluir grava as preferências e `User.onboardedAt`; sem `pro` também se conclui (o modelo de programa só se copia com `pro`) e a pessoa vê o cadeado.
+- **Definições** (`/settings`, abertas com ou sem `pro`): perfil, conta (email, palavra-passe), preferências (língua, tema, fuso), treino (descanso por defeito, aviso, ecrã aceso — só com `pro`), aviso de fim de descanso neste dispositivo, privacidade (consentimento de saúde, exportação, documentos), sessões e zona de perigo.
+- **Apagar a conta:** remove séries e programas antes do utilizador (as séries e os itens apontam para exercícios sem cascata; um exercício próprio já usado bloqueava a remoção — bug herdado do MYGLOW).

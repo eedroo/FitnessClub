@@ -174,8 +174,13 @@ export async function deleteAccount(input: { password: string; confirmText: stri
   if (!(await bcrypt.compare(parsed.data.password, user.passwordHash))) return fail('account.errors.wrongPassword', 'password');
 
   const { email, name, locale } = user;
-  // Remoção imediata: todas as relações estão em onDelete: Cascade.
-  await db.user.delete({ where: { id: user.id } });
+  // Remoção imediata, em cascata. Séries e itens de treino apontam para exercícios (sem cascata, para não perder
+  // histórico ao arquivar): apagá-los primeiro, senão os exercícios próprios da pessoa bloqueiam a remoção.
+  await db.$transaction([
+    db.sessionSet.deleteMany({ where: { userId: user.id } }),
+    db.fitnessProgram.deleteMany({ where: { userId: user.id } }),
+    db.user.delete({ where: { id: user.id } }),
+  ]);
   await sendAccountEmail(email, { kind: 'account-deleted', locale, name });
   await signOut({ redirectTo: '/goodbye' });
   return { ok: true };

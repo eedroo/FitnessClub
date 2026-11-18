@@ -84,8 +84,15 @@
       "notifications": "Notifications",
       "privacy": "Privacy",
       "sessions": "Sessions",
-      "danger": "Danger zone"
-    }
+      "danger": "Danger zone",
+      "training": "Training"
+    },
+    "training": {
+      "rest": "Default rest",
+      "restCustom": "Currently {n} s. Pick one of the values to change it.",
+      "keepAwake": "Keep the screen on during a session"
+    },
+    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session."
   },
   "validation": {
     "required": "This field is required.",
@@ -93,18 +100,6 @@
     "nameLength": "Name must be between 2 and 60 characters.",
     "passwordLength": "Password must be between 8 and 72 characters.",
     "timezone": "Choose a valid time zone."
-  },
-  "weight": {
-    "averageTitle": "Average weight this week",
-    "kgValue": "{kg} kg",
-    "fromWeighIns": "{n, plural, one {from # weigh-in} other {from # weigh-ins}}",
-    "openWeight": "Open weight",
-    "title": "My weight this week",
-    "label": "Weight in kilograms",
-    "unit": "kg",
-    "placeholder": "0.0",
-    "invalid": "Enter your weight in kg, e.g. 76.4.",
-    "delta": "{delta} vs last week"
   },
   "notifications": {
     "push": {
@@ -307,10 +302,6 @@
       "confirmWithdraw": "Withdraw",
       "cancel": "Cancel",
       "grant": "Give consent"
-    },
-    "wellbeingOff": {
-      "text": "Weight and goal are turned off because you haven't consented to health data.",
-      "link": "Turn on in settings"
     },
     "export": {
       "title": "Export my data",
@@ -852,8 +843,6 @@
     "settings": "Settings"
   },
   "welcome": {
-    "title": "Welcome to FitnessClub",
-    "text": "Log workouts, sets and rest, track your weight and watch your records go up.",
-    "start": "Get started"
+    "title": "Welcome to FitnessClub"
   }
 }

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { toDbDate, todayInTz } from '@/lib/dates';
-import { requireFeature } from '@/lib/entitlements/server';
+import { getEntitlements, requireFeature } from '@/lib/entitlements/server';
 import { translatorFor } from '@/i18n/translator';
 import { findTemplate } from '@/lib/fitness/templates';
 import { getFitnessPrefs, recomputeExercisePrs, usableExercise } from '@/lib/fitness/queries';
@@ -112,14 +112,21 @@ const onboardingSchema = z.object({
   templateId: z.string().max(40).nullable().optional(),
 });
 
+/**
+ * Fecha as boas-vindas (o onboarding do app): grava as preferências e `User.onboardedAt`. Aberta a toda a gente
+ * com sessão (sem `pro` também se entra, para ver o cadeado); o modelo de programa só se copia com `pro`.
+ */
 export async function completeFitnessOnboarding(input: z.input<typeof onboardingSchema>): Promise<FitnessResult> {
-  const uid = await userId();
+  const s = await auth();
+  const uid = s?.user?.id;
   if (!uid) return fail('common.errors.unauthorized');
   const p = onboardingSchema.safeParse(input);
   if (!p.success) return fail();
-  const data = { defaultRestSec: p.data.defaultRestSec, restAlert: p.data.restAlert, onboardedAt: new Date() };
+  const now = new Date();
+  const data = { defaultRestSec: p.data.defaultRestSec, restAlert: p.data.restAlert, onboardedAt: now };
   await db.fitnessPrefs.upsert({ where: { userId: uid }, create: { userId: uid, ...data }, update: data });
-  if (p.data.templateId) await copyTemplateFor(uid, p.data.templateId);
+  await db.user.updateMany({ where: { id: uid, onboardedAt: null }, data: { onboardedAt: now } });
+  if (p.data.templateId && (await getEntitlements(uid)).features.pro) await copyTemplateFor(uid, p.data.templateId);
   refresh();
   return ok();
 }

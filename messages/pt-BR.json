@@ -84,8 +84,15 @@
       "notifications": "Notificações",
       "privacy": "Privacidade",
       "sessions": "Sessões",
-      "danger": "Zona de perigo"
-    }
+      "danger": "Zona de perigo",
+      "training": "Treino"
+    },
+    "training": {
+      "rest": "Descanso padrão",
+      "restCustom": "Agora: {n} s. Escolha um dos valores para mudar.",
+      "keepAwake": "Tela acesa durante a sessão"
+    },
+    "notificationsHint": "O único aviso é o de fim do descanso, e ele só chega quando você sai do app durante a sessão."
   },
   "validation": {
     "required": "Campo obrigatório.",
@@ -93,18 +100,6 @@
     "nameLength": "O nome precisa ter entre 2 e 60 caracteres.",
     "passwordLength": "A senha precisa ter entre 8 e 72 caracteres.",
     "timezone": "Escolha um fuso horário válido."
-  },
-  "weight": {
-    "averageTitle": "Média do peso da semana",
-    "kgValue": "{kg} kg",
-    "fromWeighIns": "{n, plural, one {a partir de # pesagem} other {a partir de # pesagens}}",
-    "openWeight": "Ver o peso",
-    "title": "Meu peso da semana",
-    "label": "Peso em quilos",
-    "unit": "kg",
-    "placeholder": "0,0",
-    "invalid": "Digite o peso em kg, por exemplo 76,4.",
-    "delta": "{delta} em relação à semana anterior"
   },
   "notifications": {
     "push": {
@@ -307,10 +302,6 @@
       "confirmWithdraw": "Retirar",
       "cancel": "Cancelar",
       "grant": "Dar consentimento"
-    },
-    "wellbeingOff": {
-      "text": "O peso e a meta estão desativados porque você não deu consentimento para dados de saúde.",
-      "link": "Ativar nas configurações"
     },
     "export": {
       "title": "Exportar meus dados",
@@ -852,8 +843,6 @@
     "settings": "Configurações"
   },
   "welcome": {
-    "title": "Boas-vindas ao FitnessClub",
-    "text": "Registre treinos, séries e descansos, acompanhe o peso e veja seus recordes subirem.",
-    "start": "Começar"
+    "title": "Boas-vindas ao FitnessClub"
   }
 }
