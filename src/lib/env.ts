@@ -79,8 +79,10 @@ export function hasEmail(): boolean {
 }
 
 /** URL pública da app (links nos emails), sem barra final. */
+/** Sem APP_URL nem AUTH_URL, na Vercel usa o domínio de produção do projecto (variável de sistema da Vercel). */
 export function appUrl(): string {
-  return (process.env.APP_URL || process.env.AUTH_URL || 'http://localhost:3000').replace(/\/+$/, '');
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '';
+  return (process.env.APP_URL || process.env.AUTH_URL || vercel || 'http://localhost:3000').replace(/\/+$/, '');
 }
 
 /** Versões actuais dos Termos e da Política de Privacidade (re-aceitação quando mudam). */

@@ -26,7 +26,7 @@ As variáveis vivem só na Vercel (Project → Settings → Environment Variable
 2. **Banco:** separador Storage → Create → Neon (Postgres). A integração cria `DATABASE_URL` e `DATABASE_URL_UNPOOLED`;
    criar `DIRECT_URL` com o valor de `DATABASE_URL_UNPOOLED`. O primeiro deploy só passa depois de o banco existir.
 3. **Variáveis** (Production; Preview se quiser):
-   - `AUTH_SECRET` (novo: `npx auth secret`), `AUTH_URL` e `APP_URL` (o domínio do app, ex. `https://fitnessclub.vercel.app`);
+   - `AUTH_SECRET` (novo: `npx auth secret`); `AUTH_URL` e `APP_URL` só quando houver domínio próprio (sem elas, na Vercel usa-se o domínio `*.vercel.app` de produção);
    - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (par novo: `npx web-push generate-vapid-keys`);
    - `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` (app novo no Inngest, endpoint `https://<domínio>/api/inngest`; ou a integração Inngest da Vercel);
    - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO` (domínio verificado no Resend);
