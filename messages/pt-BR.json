@@ -1,0 +1,867 @@
+{
+  "common": {
+    "appName": "FitnessClub",
+    "tagline": "Seus treinos, séries e progresso em um só lugar.",
+    "description": "Treinos, sessões, exercícios, peso e meta, com descanso cronometrado e recordes.",
+    "loading": "Carregando…",
+    "saving": "Salvando…",
+    "save": "Salvar",
+    "saved": "Alterações salvas.",
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "edit": "Editar",
+    "close": "Fechar",
+    "done": "Feito",
+    "comingSoon": "Em breve",
+    "comingSoonBody": "Esta página está sendo preparada com todo o carinho. Volte em breve.",
+    "motto": "Uma série de cada vez.",
+    "skipToContent": "Pular para o conteúdo",
+    "retry": "Tentar de novo",
+    "reloadApp": "Recarregar o app",
+    "errors": {
+      "generic": "Algo deu errado. Tente de novo.",
+      "unauthorized": "Sua sessão expirou. Entre novamente."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Que bom ver você de novo",
+      "subtitle": "Entre para continuar sua jornada.",
+      "submit": "Entrar",
+      "noAccount": "Ainda não tem conta?",
+      "registerLink": "Cadastre-se"
+    },
+    "register": {
+      "title": "Crie sua conta",
+      "subtitle": "Comece hoje a registrar sua evolução, dia após dia.",
+      "submit": "Cadastrar",
+      "hasAccount": "Já tem conta?",
+      "loginLink": "Entrar"
+    },
+    "fields": {
+      "name": "Nome",
+      "namePlaceholder": "Qual é o seu nome?",
+      "email": "E-mail",
+      "emailPlaceholder": "nome@exemplo.com",
+      "password": "Senha",
+      "passwordHint": "No mínimo 8 caracteres.",
+      "locale": "Idioma"
+    },
+    "errors": {
+      "invalidCredentials": "E-mail ou senha incorretos.",
+      "emailTaken": "Já existe uma conta com esse e-mail."
+    },
+    "logout": "Sair"
+  },
+  "settings": {
+    "title": "Configurações",
+    "subtitle": "Deixe o FitnessClub do seu jeito.",
+    "profileSection": "Perfil",
+    "preferencesSection": "Preferências",
+    "name": "Nome",
+    "language": "Idioma",
+    "theme": "Tema",
+    "timezone": "Fuso horário",
+    "timezoneHint": "Usado para definir quando começa cada dia nos seus treinos e pesagens.",
+    "languageOptions": {
+      "PT_PT": "Português (PT)",
+      "PT_BR": "Português (BR)",
+      "EN": "English"
+    },
+    "themeOptions": {
+      "LIGHT": "Claro",
+      "DARK": "Escuro",
+      "SYSTEM": "Sistema"
+    },
+    "accountSection": "Conta",
+    "email": "E-mail",
+    "sections": {
+      "label": "Seções das configurações",
+      "profile": "Perfil",
+      "account": "Conta",
+      "preferences": "Preferências",
+      "notifications": "Notificações",
+      "privacy": "Privacidade",
+      "sessions": "Sessões",
+      "danger": "Zona de perigo"
+    }
+  },
+  "validation": {
+    "required": "Campo obrigatório.",
+    "email": "Informe um e-mail válido.",
+    "nameLength": "O nome precisa ter entre 2 e 60 caracteres.",
+    "passwordLength": "A senha precisa ter entre 8 e 72 caracteres.",
+    "timezone": "Escolha um fuso horário válido."
+  },
+  "weight": {
+    "averageTitle": "Média do peso da semana",
+    "kgValue": "{kg} kg",
+    "fromWeighIns": "{n, plural, one {a partir de # pesagem} other {a partir de # pesagens}}",
+    "openWeight": "Ver o peso",
+    "title": "Meu peso da semana",
+    "label": "Peso em quilos",
+    "unit": "kg",
+    "placeholder": "0,0",
+    "invalid": "Digite o peso em kg, por exemplo 76,4.",
+    "delta": "{delta} em relação à semana anterior"
+  },
+  "notifications": {
+    "push": {
+      "restDone": {
+        "title": "Descanso acabou",
+        "body": "Bora pra próxima série de {exercise}.",
+        "bodyGeneric": "Bora pra próxima série."
+      },
+      "test": {
+        "title": "Tudo pronto",
+        "body": "Os avisos do FitnessClub vão chegar assim."
+      }
+    },
+    "prompt": {
+      "title": "Aviso de fim do descanso",
+      "body": "Quer um aviso quando o descanso acabar? Ele só chega se você tiver saído do app durante a sessão.",
+      "enable": "Ativar",
+      "dismiss": "Agora não",
+      "enabling": "Ativando…",
+      "enabled": "Avisos ativos neste dispositivo.",
+      "denied": "As notificações estão bloqueadas neste navegador. Você pode permiti-las nas configurações do site.",
+      "error": "Não foi possível ativar os avisos. Tente de novo."
+    },
+    "install": {
+      "title": "Instale o FitnessClub",
+      "iosIntro": "No iPhone, o aviso de fim do descanso só funciona com o app instalado.",
+      "step1": "Toque em Compartilhar",
+      "step2": "Escolha “Adicionar à Tela de Início”",
+      "step3": "Abra o FitnessClub pelo ícone",
+      "button": "Instalar FitnessClub"
+    },
+    "settings": {
+      "title": "Lembretes",
+      "enabled": "Lembretes ativos",
+      "daily": "Todos os dias",
+      "morning": "Manhã",
+      "body": "Corpo",
+      "night": "Noite",
+      "grimoire": "Grimório",
+      "time": "Horário de {label}",
+      "periods": "Semana e mês",
+      "weekStart": "Planejamento e retrospectiva da semana",
+      "weekEnd": "Última chamada da reflexão da semana",
+      "monthStart": "Planejamento e retrospectiva do mês",
+      "monthEnd": "Última chamada da reflexão do mês",
+      "lastCall": "Última chamada",
+      "lastCallHint": "Um último aviso perto do fim do prazo (semana, mês e lições do Grimório), só se ainda faltar.",
+      "hint": "Os avisos só chegam se ainda houver algo a fazer. De manhã, aos domingos e no dia 1, trazem sua leitura quando ela já está pronta.",
+      "device": "Este dispositivo",
+      "deviceOn": "Notificações ativas neste dispositivo.",
+      "deviceOff": "Notificações desligadas neste dispositivo.",
+      "enableDevice": "Ativar neste dispositivo",
+      "disableDevice": "Desativar neste dispositivo",
+      "denied": "As notificações estão bloqueadas neste navegador. Você pode permiti-las nas configurações do site.",
+      "unsupported": "Este navegador não suporta notificações. Os avisos continuam na caixa do app.",
+      "devices": "Dispositivos",
+      "noDevices": "Nenhum dispositivo com notificações.",
+      "remove": "Remover",
+      "test": "Enviar notificação de teste",
+      "testSent": "Enviada! Deve chegar em segundos.",
+      "testFailed": "Não foi possível entregar a notificação. Tente de novo mais tarde.",
+      "testNone": "Ative as notificações em um dispositivo primeiro.",
+      "pushUnavailable": "O envio de notificações ainda não está configurado; os avisos ficam na caixa do app.",
+      "saved": "Salvo"
+    },
+    "errors": {
+      "invalid": "Não foi possível salvar. Confira os valores.",
+      "rateLimited": "Muitos testes seguidos. Tente de novo daqui a pouco.",
+      "unavailable": "As notificações não estão disponíveis no momento."
+    }
+  },
+  "emails": {
+    "common": {
+      "greeting": "Olá, {name}",
+      "ignore": "Se não foi você, ignore este e-mail.",
+      "linkFallback": "Se o botão não funcionar, copie este endereço no navegador:",
+      "footer": "FitnessClub · seus treinos, séries e progresso",
+      "openApp": "Abrir o FitnessClub"
+    },
+    "verify": {
+      "subject": "Confirme seu e-mail no FitnessClub",
+      "preview": "Falta só um passo para confirmar seu e-mail.",
+      "title": "Confirme seu e-mail",
+      "body": "Toque no botão para confirmar que este e-mail é seu. Assim você sempre consegue recuperar sua conta.",
+      "button": "Confirmar e-mail",
+      "expires": "O link vale por 24 horas."
+    },
+    "reset": {
+      "subject": "Redefinir sua senha do FitnessClub",
+      "preview": "Recebemos um pedido para redefinir sua senha.",
+      "title": "Redefinir senha",
+      "body": "Recebemos um pedido para redefinir a senha da sua conta. Toque no botão para escolher uma nova.",
+      "button": "Escolher nova senha",
+      "expires": "O link vale por 1 hora e só pode ser usado uma vez."
+    },
+    "emailChangeConfirm": {
+      "subject": "Confirme seu novo e-mail no FitnessClub",
+      "preview": "Confirme a mudança de e-mail da sua conta.",
+      "title": "Confirme o novo e-mail",
+      "body": "Você pediu para mudar o e-mail da sua conta MYGLOW para {email}. Toque no botão para confirmar.",
+      "button": "Confirmar novo e-mail",
+      "expires": "O link vale por 1 hora."
+    },
+    "emailChangedNotice": {
+      "subject": "O e-mail da sua conta FitnessClub foi alterado",
+      "preview": "O e-mail da sua conta mudou.",
+      "title": "Seu e-mail foi alterado",
+      "body": "O e-mail da sua conta agora é {email}. A partir de agora, é com ele que você entra e recupera a conta.",
+      "notYou": "Não foi você? Responda a este e-mail e ajudamos você a recuperar a conta."
+    },
+    "passwordChanged": {
+      "subject": "Sua senha do FitnessClub foi alterada",
+      "preview": "A senha da sua conta mudou.",
+      "title": "Senha alterada",
+      "body": "A senha da sua conta acabou de ser alterada e as sessões nos outros dispositivos foram encerradas.",
+      "notYou": "Não foi você? Responda a este e-mail e ajudamos você a recuperar a conta."
+    },
+    "accountDeleted": {
+      "subject": "Sua conta FitnessClub foi apagada",
+      "preview": "Sua conta e seus dados foram apagados.",
+      "title": "Conta apagada",
+      "body": "Sua conta e todos os seus dados foram apagados, como você pediu.",
+      "thanks": "Obrigado por ter treinado com a gente. Se um dia quiser voltar, a porta está aberta."
+    }
+  },
+  "account": {
+    "currentPassword": "Senha atual",
+    "banner": {
+      "label": "Confirmação de e-mail",
+      "text": "Confirme seu e-mail para poder recuperar a conta.",
+      "resend": "Reenviar e-mail",
+      "sent": "Enviamos um novo e-mail de confirmação.",
+      "dismiss": "Fechar"
+    },
+    "register": {
+      "acceptTerms": "Li e aceito os <terms>Termos</terms> e a <privacy>Política de Privacidade</privacy>.",
+      "wellbeingConsent": "Autorizo o tratamento dos dados de saúde que eu registrar (peso e meta de peso), para uso exclusivo no meu acompanhamento dentro do FitnessClub."
+    },
+    "forgot": {
+      "title": "Recuperar senha",
+      "subtitle": "Digite o e-mail da sua conta e enviaremos um link para você escolher uma senha nova.",
+      "submit": "Enviar link",
+      "sent": "Se existir uma conta com este e-mail, enviamos um link.",
+      "backToLogin": "Voltar para o login",
+      "link": "Esqueceu a senha?"
+    },
+    "reset": {
+      "title": "Nova senha",
+      "subtitle": "Escolha uma senha nova para a sua conta.",
+      "password": "Nova senha",
+      "submit": "Salvar senha",
+      "done": "Senha alterada. Agora você já pode entrar com a nova.",
+      "login": "Entrar",
+      "invalid": "Este link é inválido ou já expirou.",
+      "requestNew": "Pedir um link novo"
+    },
+    "verify": {
+      "pageTitle": "Confirmar e-mail",
+      "okTitle": "E-mail confirmado",
+      "okText": "Obrigada! Seu e-mail está confirmado e você sempre poderá recuperar a conta.",
+      "errorTitle": "Link inválido",
+      "errorText": "Este link é inválido, já foi usado ou expirou. Você pode pedir outro no app.",
+      "goToApp": "Ir para o FitnessClub",
+      "login": "Entrar"
+    },
+    "emailChange": {
+      "pageTitle": "Confirmar o novo e-mail",
+      "okTitle": "E-mail alterado",
+      "okText": "Seu e-mail foi alterado. Entre de novo com o e-mail novo.",
+      "errorTitle": "Link inválido",
+      "errorText": "Este link é inválido, já foi usado ou expirou.",
+      "takenText": "Este e-mail passou a ser usado em outra conta. Peça a alteração de novo com outro e-mail.",
+      "login": "Entrar"
+    },
+    "email": {
+      "verified": "confirmado",
+      "unverified": "não confirmado"
+    },
+    "changeEmail": {
+      "title": "Alterar e-mail",
+      "newEmail": "E-mail novo",
+      "submit": "Enviar confirmação",
+      "sent": "Enviamos um link para {email}. O e-mail só muda quando você confirmar."
+    },
+    "changePassword": {
+      "title": "Alterar senha",
+      "next": "Nova senha",
+      "submit": "Alterar senha",
+      "done": "Senha alterada. A sessão nos outros dispositivos foi encerrada."
+    },
+    "wellbeing": {
+      "title": "Dados de saúde",
+      "text": "O peso e a meta de peso só são registrados com o seu consentimento e só aparecem para você.",
+      "givenOn": "Consentimento dado em {date}.",
+      "none": "Sem consentimento: o peso e a meta estão desativados.",
+      "withdraw": "Retirar consentimento",
+      "withdrawTitle": "Retirar consentimento",
+      "withdrawText": "O peso e a meta ficam desativados; os treinos continuam iguais.",
+      "deleteData": "Apagar também as pesagens e a meta que já registrei",
+      "confirmWithdraw": "Retirar",
+      "cancel": "Cancelar",
+      "grant": "Dar consentimento"
+    },
+    "wellbeingOff": {
+      "text": "O peso e a meta estão desativados porque você não deu consentimento para dados de saúde.",
+      "link": "Ativar nas configurações"
+    },
+    "export": {
+      "title": "Exportar meus dados",
+      "text": "Baixe tudo o que guardamos sobre você em um arquivo JSON (sem senhas nem chaves).",
+      "button": "Exportar meus dados"
+    },
+    "links": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Uso"
+    },
+    "sessions": {
+      "text": "Se você usou o FitnessClub em um dispositivo que não é seu, saia de todos. Os outros dispositivos saem em poucos minutos.",
+      "button": "Sair de todos os dispositivos"
+    },
+    "danger": {
+      "text": "Apagar a conta remove imediatamente e para sempre:",
+      "list": [
+        "seus programas, treinos e exercícios próprios",
+        "as sessões, as séries e os recordes",
+        "as pesagens e a meta de peso",
+        "as preferências e os avisos"
+      ],
+      "exportFirst": "Não há como recuperar. Se quiser guardar uma cópia, exporte seus dados antes.",
+      "open": "Apagar conta",
+      "dialogTitle": "Apagar a conta?",
+      "dialogText": "Esta ação não pode ser desfeita.",
+      "confirmLabel": "Digite {word} para confirmar",
+      "submit": "Apagar para sempre"
+    },
+    "policy": {
+      "title": "Atualizamos nossos termos",
+      "text": "Para continuar usando o FitnessClub, leia e aceite a versão atual dos Termos de Uso e da Política de Privacidade.",
+      "terms": "Termos de Uso",
+      "privacy": "Política de Privacidade",
+      "wellbeing": "Autorizo o tratamento dos dados de saúde que eu registrar (peso e meta de peso), para uso exclusivo no meu acompanhamento dentro do FitnessClub. (Opcional)",
+      "accept": "Aceitar",
+      "error": "Não foi possível salvar. Tente de novo."
+    },
+    "goodbye": {
+      "title": "Conta apagada",
+      "text": "Sua conta foi apagada. Obrigado por ter treinado com a gente.",
+      "home": "Página inicial"
+    },
+    "errors": {
+      "invalidToken": "Este link é inválido ou já expirou.",
+      "wrongPassword": "A senha não está correta.",
+      "sameEmail": "Este já é o seu e-mail.",
+      "emailNoLongerFree": "Este e-mail já está em uso em outra conta.",
+      "rateLimited": "Pedidos demais. Tente de novo mais tarde.",
+      "emailFailed": "Não foi possível enviar o e-mail. Tente de novo mais tarde.",
+      "confirmText": "Digite a palavra exatamente como pedido.",
+      "acceptTerms": "Você precisa aceitar os Termos e a Política de Privacidade.",
+      "wellbeingConsent": "Este consentimento é necessário para criar a conta."
+    }
+  },
+  "legal": {
+    "privacyTitle": "Política de Privacidade",
+    "termsTitle": "Termos de Uso",
+    "meta": "Versão {version} · {date}",
+    "back": "Voltar para o FitnessClub"
+  },
+  "premium": {
+    "badge": "Premium",
+    "lockLabel": "Conteúdo premium",
+    "lockTitle": "O FitnessClub é premium",
+    "lockText": "Sua conta ainda não tem acesso aos treinos. Quando o acesso for liberado, tudo abre aqui, sem você perder nada."
+  },
+  "body": {
+    "title": "Corpo",
+    "weight": {
+      "title": "Peso",
+      "back": "Corpo",
+      "weekAverage": "Média desta semana",
+      "kg": "{kg} kg",
+      "vsLastWeek": "{delta} em relação à semana anterior",
+      "fromWeighIns": "{n, plural, one {a partir de # pesagem} other {a partir de # pesagens}}",
+      "lastEntry": "Último registro: {kg} kg em {date}",
+      "noEntries": "Ainda sem registros.",
+      "new": "Novo registro",
+      "date": "Data",
+      "kgLabel": "Peso (kg)",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "entries": "Registros",
+      "delete": "Apagar",
+      "deleteEntry": "Apagar o registro de {date}",
+      "range": "Período",
+      "rangeW": "Semana",
+      "rangeM": "Mês",
+      "range6M": "6 meses",
+      "rangeY": "A",
+      "chartEmpty": "Sem registros neste período.",
+      "chartHint": "Toque em um ponto para ver a data e o peso.",
+      "chartLabel": "Gráfico do peso com {n} registros e a tendência de 7 dias",
+      "pointTip": "{date}: {kg} kg",
+      "reminder": "Lembrete de pesagem",
+      "reminderTime": "Horário do lembrete"
+    },
+    "goal": {
+      "title": "Meta",
+      "button": "Meta",
+      "direction": "Direção",
+      "directions": {
+        "GAIN": "Ganhar",
+        "MAINTAIN": "Manter",
+        "LOSE": "Perder"
+      },
+      "rate": "Ritmo",
+      "rateOption": "{sign}{kg} kg por semana",
+      "target": "Peso-alvo (opcional, kg)",
+      "targetPlaceholder": "Ex.: 78,0",
+      "save": "Salvar",
+      "clear": "Remover meta",
+      "cancel": "Cancelar",
+      "summaryGain": "Meta: ganhar {kg} kg/semana",
+      "summaryLose": "Meta: perder {kg} kg/semana",
+      "summaryMaintain": "Meta: manter o peso",
+      "thisWeek": "Esta semana: {delta} ({status})",
+      "toTarget": "Faltam {kg} kg",
+      "toTargetWeeks": "Faltam {kg} kg (≈ {weeks, plural, one {# semana} other {# semanas}})",
+      "status": {
+        "on-track": "dentro do ritmo",
+        "above": "acima do ritmo",
+        "below": "abaixo do ritmo",
+        "not-enough-data": "Para o status da semana, são necessárias pesagens nesta semana e na anterior."
+      }
+    },
+    "map": {
+      "title": "Mapa muscular",
+      "front": "Frente",
+      "back": "Costas",
+      "just": "Acabou de treinar",
+      "mid": "Recuperando",
+      "rested": "Descansado",
+      "noneRecent": "Sem exercícios para este músculo nos últimos 60 dias.",
+      "close": "Fechar",
+      "unassigned": "{n, plural, one {# exercício sem músculo definido.} other {# exercícios sem músculo definido.}}",
+      "unassignedLink": "Editar",
+      "muscles": {
+        "trapezius": "Trapézio",
+        "upper-back": "Costas (parte superior)",
+        "lower-back": "Lombar",
+        "chest": "Peito",
+        "biceps": "Bíceps",
+        "triceps": "Tríceps",
+        "forearm": "Antebraço",
+        "back-deltoids": "Deltoide posterior",
+        "front-deltoids": "Deltoide anterior",
+        "abs": "Abdômen",
+        "obliques": "Oblíquos",
+        "adductor": "Adutores",
+        "abductors": "Abdutores",
+        "hamstring": "Posteriores da coxa",
+        "quadriceps": "Quadríceps",
+        "calves": "Panturrilha",
+        "gluteal": "Glúteos",
+        "neck": "Pescoço"
+      }
+    },
+    "guide": {
+      "title": "O Guia e o seu corpo",
+      "invite": "O seu Guia pode ler também o seu corpo: peso médio, meta e treinos. Quer ativar?",
+      "on": "O Guia lê a média semanal do peso, a meta e os treinos. Nunca as pesagens de cada dia.",
+      "enable": "Ativar",
+      "disable": "Desligar"
+    },
+    "errors": {
+      "consent": "Para registrar o peso, autorize primeiro os dados de bem-estar.",
+      "weight": "Digite o peso em kg, entre 30 e 300 (por exemplo 76,4).",
+      "date": "Escolha hoje ou um dia do último ano.",
+      "goal": "Escolha a direção e um dos ritmos.",
+      "noWeight": "Registre o peso primeiro para criar a meta.",
+      "guideConsent": "Ative primeiro o Guia nas Configurações."
+    }
+  },
+  "fitness": {
+    "units": {
+      "reps": "{n, plural, one {rep} other {reps}}",
+      "kg": "kg",
+      "seconds": "s"
+    },
+    "muscles": {
+      "abdominals": "Abdominais",
+      "abductors": "Abdutores",
+      "adductors": "Adutores",
+      "biceps": "Bíceps",
+      "calves": "Panturrilhas",
+      "chest": "Peito",
+      "forearms": "Antebraços",
+      "glutes": "Glúteos",
+      "hamstrings": "Posteriores da coxa",
+      "lats": "Dorsais",
+      "lower back": "Lombar",
+      "middle back": "Meio das costas",
+      "neck": "Pescoço",
+      "quadriceps": "Quadríceps",
+      "shoulders": "Ombros",
+      "traps": "Trapézio",
+      "triceps": "Tríceps"
+    },
+    "equipment": {
+      "barbell": "Barra",
+      "dumbbell": "Halteres",
+      "other": "Outro",
+      "body only": "Peso corporal",
+      "cable": "Polia",
+      "machine": "Máquina",
+      "kettlebells": "Kettlebell",
+      "bands": "Elásticos",
+      "medicine ball": "Medicine ball",
+      "exercise ball": "Bola de pilates",
+      "foam roll": "Rolo de espuma",
+      "e-z curl bar": "Barra W",
+      "none": "Sem equipamento"
+    },
+    "categories": {
+      "strength": "Força",
+      "stretching": "Alongamento",
+      "plyometrics": "Pliometria",
+      "powerlifting": "Powerlifting",
+      "olympic weightlifting": "Levantamento olímpico",
+      "strongman": "Strongman",
+      "cardio": "Cardio"
+    },
+    "templates": {
+      "ppl": {
+        "name": "Push · Pull · Legs",
+        "description": "Três treinos: empurrar, puxar e pernas.",
+        "workouts": {
+          "push": "Push (peito, ombros, tríceps)",
+          "pull": "Pull (costas, bíceps)",
+          "legs": "Legs (pernas)"
+        }
+      },
+      "fullbody": {
+        "name": "Corpo inteiro A/B",
+        "description": "Dois treinos de corpo inteiro, alternados.",
+        "workouts": {
+          "a": "Corpo inteiro A",
+          "b": "Corpo inteiro B"
+        }
+      },
+      "upperlower": {
+        "name": "Superior / Inferior",
+        "description": "Quatro dias: dois de tronco, dois de pernas.",
+        "workouts": {
+          "upperA": "Superior A",
+          "lowerA": "Inferior A",
+          "upperB": "Superior B",
+          "lowerB": "Inferior B"
+        }
+      },
+      "stretch": {
+        "name": "Alongamento diário",
+        "description": "Dez alongamentos de 30 segundos.",
+        "workouts": {
+          "daily": "Alongamento diário"
+        }
+      }
+    },
+    "title": "Treinos",
+    "backToApp": "MYGLOW",
+    "moveUp": "Subir",
+    "moveDown": "Descer",
+    "nav": {
+      "label": "Foco no corpo",
+      "workouts": "Treinos",
+      "sessions": "Sessões",
+      "exercises": "Exercícios",
+      "day": "Dia",
+      "body": "Corpo"
+    },
+    "home": {
+      "myExercises": "Meus exercícios ({n})",
+      "myExercisesHint": "Crie os seus e encontre-os aqui",
+      "programs": "Programas",
+      "freeWorkout": "Treino livre"
+    },
+    "measures": {
+      "REPS_WEIGHT": "Peso e repetições",
+      "REPS": "Só repetições",
+      "DURATION": "Tempo"
+    },
+    "levels": {
+      "beginner": "Iniciante",
+      "intermediate": "Intermediário",
+      "expert": "Avançado"
+    },
+    "target": {
+      "sets": "{sets} × {what}",
+      "setsOnly": "{sets, plural, one {# série} other {# séries}}",
+      "seconds": "{n} s",
+      "rest": "descanso {n} s"
+    },
+    "welcome": {
+      "hello": "Seu corpo, no ritmo dele",
+      "helloText": "Programas, treinos e sessões com cronômetro e descanso. Os checks do Hoje continuam iguais e são marcados sozinhos quando você termina uma sessão.",
+      "restTitle": "Quanto você descansa entre as séries?",
+      "seconds": "{n} s",
+      "restOther": "Outro valor (segundos)",
+      "restHint": "Dá para mudar por exercício ou por treino.",
+      "alertTitle": "Aviso de fim de descanso",
+      "alertText": "Com o app aberto, toca e vibra. Com o app em segundo plano, chega uma notificação.",
+      "alertToggle": "Avisar quando o descanso acaba",
+      "startTitle": "Por onde você quer começar?",
+      "fromScratch": "Do zero",
+      "fromScratchText": "Eu crio meus programas e treinos",
+      "back": "Voltar",
+      "next": "Próximo",
+      "finish": "Começar"
+    },
+    "programs": {
+      "new": "Novo programa",
+      "edit": "Editar programa",
+      "name": "Nome",
+      "description": "Descrição",
+      "kind": "Tipo",
+      "kinds": {
+        "STRENGTH": "Força",
+        "STRETCH": "Alongamentos",
+        "MIXED": "Misto"
+      },
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "archive": "Arquivar programa",
+      "archiveConfirm": "Arquivar \"{name}\"? As sessões feitas continuam no histórico.",
+      "fromTemplate": "Usar um modelo",
+      "empty": "Você ainda não tem programas. Crie um ou use um modelo.",
+      "workoutsCount": "{n, plural, =0 {sem treinos} one {# treino} other {# treinos}}"
+    },
+    "workouts": {
+      "new": "Novo treino",
+      "edit": "Editar treino",
+      "name": "Nome",
+      "notes": "Notas",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "archive": "Arquivar treino",
+      "archiveConfirm": "Arquivar \"{name}\"? As sessões feitas continuam no histórico.",
+      "empty": "Este programa ainda não tem treinos.",
+      "noItems": "Ainda sem exercícios. Adicione os primeiros.",
+      "exercisesCount": "{n, plural, =0 {sem exercícios} one {# exercício} other {# exercícios}}",
+      "addExercises": "+ Exercícios",
+      "add": "Adicionar",
+      "start": "Começar treino",
+      "editTarget": "Editar alvo",
+      "remove": "Remover",
+      "targetSets": "Séries",
+      "targetSec": "Segundos",
+      "repsMin": "Reps mín.",
+      "repsMax": "Reps máx.",
+      "restOwn": "Descanso (s, vazio = padrão)",
+      "lastDays": "{n, plural, =0 {feito hoje} one {há # dia} other {há # dias}}",
+      "lastWeeks": "{n, plural, one {há # semana} other {há # semanas}}"
+    },
+    "picker": {
+      "title": "Escolher exercícios",
+      "search": "Buscar (português ou inglês)",
+      "cancel": "Cancelar",
+      "none": "Nenhum exercício encontrado.",
+      "more": "Mais {n}. Refine a busca."
+    },
+    "filters": {
+      "muscle": "Músculo",
+      "equipment": "Equipamento",
+      "category": "Categoria",
+      "anyMuscle": "Todos os músculos",
+      "anyEquipment": "Todo o equipamento",
+      "anyCategory": "Todas as categorias"
+    },
+    "exercises": {
+      "details": "Detalhes e ações",
+      "title": "Exercícios",
+      "tabAll": "Biblioteca",
+      "tabMine": "Meus",
+      "search": "Buscar (português ou inglês)",
+      "none": "Nenhum exercício encontrado.",
+      "mineEmpty": "Você ainda não criou exercícios.",
+      "more": "Mostrar mais ({n})",
+      "addTo": "Adicionar a um treino",
+      "added": "Adicionado.",
+      "howTo": "Como se faz",
+      "imageAlt": "{name}, posição {n}",
+      "secondary": "{muscle} (secundário)"
+    },
+    "custom": {
+      "new": "+ Criar exercício",
+      "edit": "Editar exercício",
+      "name": "Nome",
+      "measure": "Como se regista",
+      "muscles": "Músculos (até 5)",
+      "equipment": "Equipamento",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "archive": "Arquivar",
+      "archiveConfirm": "Arquivar \"{name}\"? O histórico fica salvo."
+    },
+    "history": {
+      "title": "Histórico",
+      "empty": "Você ainda não fez este exercício.",
+      "reps": "{n} reps",
+      "kg": "{kg} kg",
+      "seconds": "{n} s"
+    },
+    "session": {
+      "title": "Sessão",
+      "free": "Treino livre",
+      "finish": "Terminar",
+      "more": "Mais opções",
+      "finishConfirm": "Terminar a sessão?",
+      "discard": "Descartar sessão",
+      "discardConfirm": "Descartar esta sessão sem séries?",
+      "notes": "Notas da sessão",
+      "elapsed": "Tempo de treino {time}",
+      "pill": "Sessão em andamento · {time}",
+      "pillLabel": "Voltar para a sessão em andamento, {time}",
+      "queued": "{n, plural, one {# série a enviar} other {# séries a enviar}}. Elas vão quando a internet voltar.",
+      "offlineFinish": "Sem internet. Termine quando as séries forem enviadas.",
+      "emptyFree": "Treino livre: adicione o primeiro exercício.",
+      "addExercise": "+ Exercício",
+      "addExerciseConfirm": "Adicionar",
+      "lastTime": "Última vez: {sets}",
+      "reps": "Reps",
+      "kg": "kg",
+      "seconds": "Segundos",
+      "repsShort": "{n} reps",
+      "kgShort": "{kg} kg",
+      "secondsShort": "{n} s",
+      "minus": "Menos {step} em {label}",
+      "plus": "Mais {step} em {label}",
+      "done": "Feita ✓",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "deleteSet": "Apagar série",
+      "editSet": "Editar série {n}",
+      "invalid": "Valor inválido."
+    },
+    "rest": {
+      "label": "Descanso",
+      "after": "Descanso depois de {name}",
+      "go": "Bora!",
+      "minus15": "−15 s",
+      "plus30": "+30 s",
+      "skip": "Pular",
+      "close": "Fechar"
+    },
+    "sessions": {
+      "title": "Sessões",
+      "empty": "Você ainda não terminou nenhuma sessão.",
+      "free": "Treino livre",
+      "sets": "{n, plural, one {# série} other {# séries}}"
+    },
+    "summary": {
+      "title": "Resumo da sessão",
+      "well": "Sessão terminada. Mandou bem!",
+      "duration": "Duração",
+      "exercises": "Exercícios",
+      "sets": "Séries",
+      "reps": "Reps",
+      "volume": "Volume",
+      "avgRest": "Descanso médio",
+      "kgValue": "{kg} kg",
+      "secondsShort": "{n} s",
+      "prs": "Recordes"
+    },
+    "errors": {
+      "name": "Digite um nome.",
+      "set": "Série inválida.",
+      "noSession": "Não há nenhuma sessão em andamento.",
+      "hasSets": "Esta sessão já tem séries: termine em vez de descartar.",
+      "missing-reps": "Informe as repetições.",
+      "missing-weight": "Informe o peso.",
+      "missing-duration": "Informe o tempo.",
+      "out-of-range": "Esse valor está fora do intervalo."
+    },
+    "day": {
+      "title": "Dia",
+      "today": "Hoje",
+      "week": "Semana",
+      "prevWeek": "Semana anterior",
+      "nextWeek": "Próxima semana",
+      "calendar": "Calendário de treinos",
+      "close": "Fechar",
+      "trainedOn": "{day}, com treino",
+      "details": "Detalhe das séries",
+      "sessions": "Sessões do dia",
+      "rest": "Dia de descanso.",
+      "start": "Começar treino",
+      "repsList": "{list} rep",
+      "secondsList": "{list} s",
+      "weightLine": "{kg} kg: {list}",
+      "prCount": "{n, plural, one {# recorde} other {# recordes}}",
+      "metrics": {
+        "sets": "Séries",
+        "reps": "Repetições",
+        "exercises": "Exercícios",
+        "volume": "Volume",
+        "duration": "Duração",
+        "rest": "Descanso médio",
+        "session": "Tempo de sessão",
+        "prs": "Recordes",
+        "kg": "{kg} kg"
+      }
+    },
+    "records": {
+      "trophy": "Recorde: {kinds}",
+      "kinds": {
+        "weight": "carga",
+        "e1rm": "1RM estimado",
+        "reps": "repetições"
+      },
+      "empty": "Ainda sem recordes neste exercício.",
+      "bestWeight": "Maior carga",
+      "bestE1rm": "Melhor 1RM estimado",
+      "repsAt": "Máx. reps com {kg} kg",
+      "repsBody": "Máx. reps",
+      "kg": "{kg} kg",
+      "reps": "{n} reps"
+    },
+    "compare": {
+      "title": "Comparado com a anterior",
+      "kg": "{kg} kg",
+      "rows": {
+        "sets": "Séries",
+        "reps": "Reps",
+        "volume": "Volume",
+        "kg": "kg por rep"
+      }
+    },
+    "progress": {
+      "metric": "Métrica",
+      "weight": "Maior carga",
+      "e1rm": "1RM estimado",
+      "volume": "Volume",
+      "notEnough": "Faça este exercício em 2 sessões para ver a evolução.",
+      "label": "{metric} em {n} sessões"
+    },
+    "exerciseTabs": {
+      "label": "Visões do exercício",
+      "sets": "Séries",
+      "progress": "Evolução",
+      "records": "Recordes"
+    }
+  },
+  "shell": {
+    "home": "FitnessClub — ir para os treinos",
+    "settings": "Configurações"
+  },
+  "welcome": {
+    "title": "Boas-vindas ao FitnessClub",
+    "text": "Registre treinos, séries e descansos, acompanhe o peso e veja seus recordes subirem.",
+    "start": "Começar"
+  }
+}

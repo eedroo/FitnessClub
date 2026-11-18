@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fonte dos ícones PWA do FitnessClub: círculo no acento do corpo (token body-accent) com um haltere claro. -->
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F08A5D"/>
+      <stop offset="0.55" stop-color="#D9582C"/>
+      <stop offset="1" stop-color="#B2431F"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.32" cy="0.28" r="0.6">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="256" cy="256" r="248" fill="url(#accent)"/>
+  <circle cx="256" cy="256" r="248" fill="url(#shine)"/>
+  <g fill="#FFF8F0" transform="rotate(-35 256 256)">
+    <rect x="176" y="238" width="160" height="36" rx="10"/>
+    <rect x="126" y="176" width="46" height="160" rx="16"/>
+    <rect x="340" y="176" width="46" height="160" rx="16"/>
+    <rect x="92" y="206" width="30" height="100" rx="12"/>
+    <rect x="390" y="206" width="30" height="100" rx="12"/>
+  </g>
+</svg>

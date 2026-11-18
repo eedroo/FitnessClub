@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ThemePref {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum Locale {
+  PT_PT
+  PT_BR
+  EN
+}
+
+// Plano e interruptor de premium (sem pagamentos ainda)
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+enum PlanSource {
+  MANUAL
+  GIFT
+  PAID // para quando houver pagamentos
+}
+
+enum FeatureRollout {
+  HIDDEN
+  PREMIUM
+  ALL
+}
+
+enum NotificationKind {
+  // Fim do descanso numa sessão de treino (só push; periodKey = sessionId:restEndsAt)
+  REST_DONE
+}
+
+model User {
+  id                 String     @id @default(cuid())
+  email              String     @unique
+  passwordHash       String
+  name               String
+  locale             Locale     @default(PT_PT)
+  theme              ThemePref  @default(LIGHT)
+  timezone           String     @default("Europe/Lisbon")
+  onboardedAt        DateTime? // boas-vindas do treino concluídas
+  emailVerifiedAt    DateTime?
+  sessionVersion     Int        @default(0) // incrementar invalida todos os JWT
+  termsAcceptedAt    DateTime?
+  termsVersion       String? // ex.: "2026-11"
+  privacyVersion     String?
+  wellbeingConsentAt DateTime? // consentimento explícito para dados de saúde (peso e meta)
+  lastActiveAt       DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  // Plano (lido do servidor por pedido, nunca no JWT) e excepções por funcionalidade
+  plan               Plan       @default(FREE)
+  planSource         PlanSource?
+  planSince          DateTime?
+  planExpiresAt      DateTime? // null = sem fim
+
+  authTokens        AuthToken[]
+  pushSubscriptions PushSubscription[]
+  notificationLogs  NotificationLog[]
+  activeDays        UserActiveDay[]
+  featureOverrides  FeatureOverride[]
+}
+
+enum AuthTokenType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+  EMAIL_CHANGE
+}
+
+// Tokens de email (confirmação, recuperação, alteração): só o hash SHA-256; uso único; com expiração.
+model AuthToken {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      AuthTokenType
+  tokenHash String        @unique
+  newEmail  String? // só EMAIL_CHANGE
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  @@index([userId, type])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+// Avisos enviados (idempotência por (userId, kind, periodKey))
+model NotificationLog {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      NotificationKind
+  periodKey String
+  sentAt    DateTime         @default(now())
+  title     String
+  body      String
+  url       String
+  pushed    Boolean          @default(false) // enviado por push com sucesso a ≥ 1 dispositivo
+
+  @@unique([userId, kind, periodKey])
+  @@index([userId, sentAt])
+}
+
+// Um registo por dia em que a pessoa abriu o app (métricas do admin)
+model UserActiveDay {
+  userId String
+  day    DateTime @db.Date // data no fuso do utilizador
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, day])
+  @@index([day])
+}
+
+// Estado global de cada funcionalidade (sem linha = valor por defeito do código)
+model FeatureFlag {
+  key       String         @id
+  rollout   FeatureRollout
+  updatedAt DateTime       @updatedAt
+}
+
+// Excepção por pessoa
+model FeatureOverride {
+  userId    String
+  key       String
+  enabled   Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, key])
+}

@@ -1,0 +1,30 @@
+/* Ponto de entrada: tokens → base → componentes */
+@import './tokens.css';
+@import './base.css';
+
+@import './components/card.css';
+@import './components/magic-icon.css';
+@import './components/button.css';
+@import './components/field.css';
+@import './components/input.css';
+@import './components/segmented.css';
+@import './components/check-chip.css';
+@import './components/toast.css';
+@import './components/shell.css';
+@import './components/weight.css';
+@import './components/admin.css';
+@import './components/notify-prompt.css';
+@import './components/install.css';
+@import './components/install-btn.css';
+@import './components/banner.css';
+@import './components/auth-form.css';
+@import './components/auth-result.css';
+@import './components/settings-nav.css';
+@import './components/form.css';
+@import './components/danger.css';
+@import './components/policy-dialog.css';
+@import './components/goodbye.css';
+@import './components/legal.css';
+@import './components/premium-badge.css';
+@import './components/premium-lock.css';
+@import './components/route-error.css';
