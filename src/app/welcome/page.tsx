@@ -18,7 +18,7 @@ export default async function WelcomePage() {
   const session = await auth();
   if (!session?.user) redirect('/login');
   if (session.user.onboarded) redirect('/');
-  const [t, tw, prefs] = await Promise.all([getTranslations('fitness'), getTranslations('welcome'), getFitnessPrefs(session.user.id)]);
+  const [t, tc, prefs] = await Promise.all([getTranslations('fitness'), getTranslations('common'), getFitnessPrefs(session.user.id)]);
   return (
     <>
       <AmbientBackground />
@@ -26,7 +26,7 @@ export default async function WelcomePage() {
       <div className="mg-body-shell" id="main">
         {/* Sem "voltar": até concluir, o middleware traz sempre aqui. */}
         <header className="mg-body-header">
-          <h1 className="mg-body-header__title">{tw('title')}</h1>
+          <h1 className="mg-body-header__title">{tc('appName')}</h1>
         </header>
         <div className="mg-body-shell__main">
           <BodyWelcome

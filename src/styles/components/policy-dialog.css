@@ -3,10 +3,10 @@
 .mg-policy-dialog {
   width: min(calc(100% - var(--space-6)), 480px);
   padding: var(--space-6) var(--space-5) var(--space-5);
-  border: var(--border-width) solid var(--gold-500);
+  border: 0;
   border-radius: var(--radius-lg);
-  background: var(--glass-bg-solid);
-  box-shadow: var(--shadow-card), var(--shadow-glow);
+  background: var(--system-elevated);
+  box-shadow: var(--shadow-menu);
   color: var(--text-primary);
 }
 

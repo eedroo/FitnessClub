@@ -1,4 +1,4 @@
-/* Button */
+/* Button — estilos de botão do iOS: preenchido (primary), tingido (ghost), simples (subtle) e destrutivo (danger) */
 
 .mg-btn {
   position: relative;
@@ -7,65 +7,73 @@
   justify-content: center;
   gap: var(--space-2);
   min-height: var(--control-height);
-  padding: 0 var(--space-5);
-  border: var(--border-width) solid transparent;
-  border-radius: var(--radius-pill);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
   background: transparent;
-  color: var(--text-primary);
+  color: var(--accent);
   font-family: var(--font-ui);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: var(--text-md);
+  font-weight: var(--weight-regular);
+  letter-spacing: -0.01em;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration) var(--ease), background var(--duration) var(--ease), opacity var(--duration) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: opacity var(--duration-fast) linear, background-color var(--duration-fast) linear, transform var(--duration-fast) var(--ease);
 }
 
 .mg-btn:focus-visible {
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
 }
 
 .mg-btn:active:not(:disabled) {
-  transform: translateY(1px);
+  opacity: 0.6;
 }
 
 .mg-btn:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.35;
 }
 
+/* Preenchido: acção principal do ecrã */
 .mg-btn--primary {
-  background: var(--gold-gradient);
-  color: var(--text-on-gold);
-  box-shadow: var(--shadow-button), inset 0 1px 0 var(--glass-highlight);
+  min-height: var(--button-height);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: var(--weight-semibold);
 }
 
-.mg-btn--primary:hover:not(:disabled) {
-  box-shadow: var(--shadow-button), var(--shadow-glow), inset 0 1px 0 var(--glass-highlight);
+.mg-btn--primary:active:not(:disabled) {
+  opacity: 1;
+  background: var(--accent-pressed);
+  transform: scale(0.98);
 }
 
+/* Tingido pequeno (cápsula de 34 pt), para acções secundárias em células e cartões */
 .mg-btn--ghost {
-  border-color: var(--glass-border-strong);
-  color: var(--gold-accent);
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
 }
 
-.mg-btn--ghost:hover:not(:disabled) {
-  background: var(--glass-bg);
+.mg-btn--ghost.mg-btn--block {
+  min-height: var(--button-height);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-md);
 }
 
+/* Simples (só texto no acento) */
 .mg-btn--subtle {
-  min-height: auto;
-  padding: var(--space-2) var(--space-3);
-  color: var(--text-secondary);
-  letter-spacing: normal;
-  text-transform: none;
-  font-weight: var(--weight-regular);
-}
-
-.mg-btn--subtle:hover:not(:disabled) {
-  color: var(--gold-accent);
-  background: var(--scrim);
+  min-height: var(--control-height);
+  padding: 0 var(--space-2);
+  color: var(--accent);
 }
 
 .mg-btn--block {
@@ -78,12 +86,12 @@
 }
 
 .mg-btn--loading .mg-btn__label {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .mg-btn__spinner {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: var(--radius-pill);
@@ -94,13 +102,12 @@
   to { transform: rotate(360deg); }
 }
 
-/* F9: acções destrutivas (apagar conta) */
+/* Acções destrutivas (apagar conta) */
 .mg-btn--danger {
+  min-height: var(--button-height);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-lg);
   background: var(--danger);
   color: var(--text-on-danger);
-  box-shadow: var(--shadow-button);
-}
-
-.mg-btn--danger:hover:not(:disabled) {
-  opacity: 0.9;
+  font-weight: var(--weight-semibold);
 }

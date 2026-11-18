@@ -1,13 +1,22 @@
-/* ProgramList, ProgramRow, ProgramForm (F16) */
+/* ProgramList, ProgramRow, ProgramForm — listas agrupadas (inset grouped) do iOS */
 
 .mg-program-list,
 .mg-workout-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
   list-style: none;
+}
+
+/* Separador fino, recolhido à esquerda como nas células do iOS */
+.mg-program-list > li + li,
+.mg-workout-list > li + li {
+  box-shadow: inset var(--space-4) var(--hairline) 0 var(--system-bg-2), inset 0 var(--hairline) 0 var(--separator);
 }
 
 .mg-program-row,
@@ -15,13 +24,31 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  min-height: 64px;
-  padding: var(--space-3) var(--space-4);
-  border: var(--border-width) solid var(--glass-border);
+  min-height: 60px;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--glass-bg);
+  background: var(--system-bg-2);
   color: var(--text-primary);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) linear;
+}
+
+.mg-program-list .mg-program-row,
+.mg-workout-list .mg-workout-row {
+  border-radius: 0;
+}
+
+a.mg-program-row:active,
+a.mg-workout-row:active {
+  background: var(--fill-3);
+}
+
+.mg-program-row > svg,
+.mg-workout-row > svg {
+  flex: none;
+  color: var(--text-tertiary);
 }
 
 .mg-program-row:focus-visible,
@@ -41,14 +68,15 @@
 
 .mg-program-row__name,
 .mg-workout-row__name {
-  font-weight: var(--weight-medium);
+  font-size: var(--text-md);
+  font-weight: var(--weight-regular);
 }
 
 .mg-program-row__meta,
 .mg-workout-row__meta {
   overflow: hidden;
   font-size: var(--text-sm);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -59,9 +87,18 @@
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-4);
-  border: var(--border-width) solid var(--glass-border-strong);
-  border-radius: var(--radius-lg);
-  background: var(--body-surface);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-program-form label,
+.mg-workout-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .mg-program-form__actions,

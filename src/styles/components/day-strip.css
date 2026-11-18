@@ -1,4 +1,4 @@
-/* DayStrip (F17): a semana (domingo a sábado) com os dias treinados */
+/* DayStrip: a semana (domingo a sábado) como no Calendário do iPhone; hoje no acento, o dia escolhido num círculo */
 
 .mg-day-strip {
   display: flex;
@@ -18,18 +18,28 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  min-height: 56px;
+  min-height: 64px;
   padding: var(--space-1) 0;
-  border: var(--border-width) solid transparent;
-  border-radius: var(--radius-md);
+  border: 0;
   color: var(--text-secondary);
-  font-size: var(--text-xs);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mg-day-strip__num {
-  font-size: var(--text-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
   font-variant-numeric: tabular-nums;
+  text-transform: none;
   color: var(--text-primary);
 }
 
@@ -41,16 +51,23 @@
 }
 
 .mg-day-strip__day--trained .mg-day-strip__dot {
-  background: var(--body-accent);
+  background: var(--system-gray);
 }
 
-.mg-day-strip__day--today {
-  border-color: var(--glass-border-strong);
+.mg-day-strip__day--today .mg-day-strip__num {
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
 }
 
-.mg-day-strip__day--selected {
-  background: var(--body-accent-soft);
-  border-color: var(--body-accent);
+.mg-day-strip__day--selected .mg-day-strip__num {
+  background: var(--text-primary);
+  color: var(--system-bg-2);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-day-strip__day--selected.mg-day-strip__day--today .mg-day-strip__num {
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .mg-day-strip__day:focus-visible,
@@ -68,7 +85,7 @@
   border: 0;
   border-radius: var(--radius-sm);
   background: none;
-  color: var(--text-secondary);
+  color: var(--accent);
   cursor: pointer;
   text-decoration: none;
 }

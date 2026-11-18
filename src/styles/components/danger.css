@@ -22,10 +22,9 @@
   width: min(calc(100% - var(--space-6)), 460px);
   padding: var(--space-5);
   border: var(--border-width) solid var(--danger);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--glass-bg-solid);
-  box-shadow: var(--shadow-card);
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 .mg-danger__dialog::backdrop {

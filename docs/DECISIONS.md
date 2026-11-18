@@ -10,11 +10,15 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Sem diário:** terminar uma sessão já não marca os checks do diário do MYGLOW; uma ponte futura seria uma API pequena com token por utilizador e autorização explícita (§8 do plano), nunca o banco partilhado.
 - **Rotas na raiz:** o que no MYGLOW vivia em `/body/*` passa para a raiz (`/`, `/session`, `/exercises`, …); as boas-vindas do treino são o onboarding (`/welcome`).
 
+## Linguagem visual
+- **App nativo do iPhone** (pedido da dona do projecto): segue as Human Interface Guidelines — fonte do sistema, cores de sistema claras e escuras, listas agrupadas, barra de navegação com título grande, tab bar e barras translúcidas, folhas que sobem de baixo, interruptores e segmented control do iOS, um único acento laranja. Sem fontes externas, dourado, vidro nem sombras nos cartões. O tema segue o do sistema por defeito (`User.theme` = `SYSTEM`).
+- **Página de entrada** (`/start`) para quem chega sem sessão, no padrão do ecrã de boas-vindas das apps da Apple.
+
 ## Stack
 - Next.js 14 App Router + TypeScript, Prisma + Neon (Postgres), Auth.js v5 (Credentials, JWT), Zod, Vercel
 - CSS próprio com CSS variables + classes de componente (sem Tailwind, sem shadcn); prefixo `mg-` herdado do MYGLOW
 - next-intl (sem prefixo de locale no URL, locale via cookie + preferência do user; `PT_PT`, `PT_BR`, `EN`)
-- next-themes (`data-theme`, opções LIGHT / DARK / SYSTEM, claro por defeito)
+- next-themes (`data-theme`, opções LIGHT / DARK / SYSTEM, sistema por defeito)
 - Luxon (datas e fusos)
 - Inngest (aviso de fim de descanso), Web Push (VAPID), Resend (emails), Upstash (rate limit), Sentry (UE)
 - Vitest

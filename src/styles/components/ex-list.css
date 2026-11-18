@@ -1,12 +1,20 @@
-/* ExerciseList, ExerciseRow, ExerciseFilters, CustomExerciseForm (F16) */
+/* ExerciseList, ExerciseRow, ExerciseFilters, CustomExerciseForm — lista agrupada com miniaturas */
 
 .mg-ex-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
   list-style: none;
+}
+
+/* Separador recolhido até ao texto (depois da miniatura) */
+.mg-ex-list > li + li {
+  box-shadow: inset 76px var(--hairline) 0 var(--system-bg-2), inset 0 var(--hairline) 0 var(--separator);
 }
 
 .mg-ex-row {
@@ -14,19 +22,20 @@
   align-items: center;
   gap: var(--space-3);
   min-height: 64px;
-  padding: var(--space-2);
-  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
   color: var(--text-primary);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) linear;
 }
 
-.mg-ex-row:hover {
-  background: var(--glass-bg);
+.mg-ex-row:active {
+  background: var(--fill-3);
 }
 
 .mg-ex-row:focus-visible {
   outline: none;
-  box-shadow: var(--focus-ring);
+  box-shadow: inset var(--focus-ring);
 }
 
 .mg-ex-row__text {
@@ -37,13 +46,14 @@
 }
 
 .mg-ex-row__name {
-  font-weight: var(--weight-medium);
+  font-size: var(--text-md);
+  font-weight: var(--weight-regular);
 }
 
 .mg-ex-row__meta {
   overflow: hidden;
   font-size: var(--text-sm);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -59,26 +69,35 @@
   min-height: 44px;
 }
 
+/* Separadores com aspecto de UISegmentedControl */
 .mg-ex-tabs {
   display: flex;
-  gap: var(--space-2);
+  gap: 0;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--fill-3);
 }
 
 .mg-ex-tabs__tab {
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
-  border: var(--border-width) solid var(--glass-border);
-  border-radius: var(--radius-pill);
-  background: var(--glass-bg);
-  color: var(--text-secondary);
+  flex: 1 1 0;
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-primary);
   font: inherit;
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-medium);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms var(--ease), box-shadow 200ms var(--ease);
 }
 
 .mg-ex-tabs__tab[aria-selected='true'] {
-  border-color: var(--body-accent);
-  background: var(--body-accent-soft);
-  color: var(--text-primary);
+  background: var(--segment-thumb);
+  box-shadow: var(--shadow-segment);
+  font-weight: var(--weight-semibold);
 }
 
 .mg-ex-form {
@@ -86,9 +105,9 @@
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-4);
-  border: var(--border-width) solid var(--glass-border-strong);
-  border-radius: var(--radius-lg);
-  background: var(--body-surface);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
 }
 
 .mg-ex-form__muscles {
@@ -98,12 +117,12 @@
 }
 
 .mg-chip-toggle {
-  min-height: 40px;
+  min-height: 34px;
   padding: var(--space-1) var(--space-3);
-  border: var(--border-width) solid var(--glass-border);
+  border: 0;
   border-radius: var(--radius-pill);
-  background: var(--glass-bg);
-  color: var(--text-secondary);
+  background: var(--fill-3);
+  color: var(--text-primary);
   font: inherit;
   font-size: var(--text-sm);
   cursor: pointer;
@@ -111,7 +130,6 @@
 
 .mg-chip-toggle[aria-pressed='true'],
 .mg-chip-toggle[aria-checked='true'] {
-  border-color: var(--body-accent);
-  background: var(--body-accent-soft);
-  color: var(--text-primary);
+  background: var(--accent);
+  color: var(--on-accent);
 }

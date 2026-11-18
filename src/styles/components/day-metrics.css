@@ -1,4 +1,4 @@
-/* DayMetrics (F17): métricas do dia, cor fixa por métrica */
+/* DayMetrics: mosaicos de resumo (rótulo pequeno na cor da métrica, número grande arredondado) */
 
 .mg-day-metrics {
   display: grid;
@@ -13,24 +13,25 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-3);
-  border: var(--border-width) solid var(--glass-border);
-  border-left: 4px solid var(--metric-color, var(--glass-border));
+  padding: var(--space-3) var(--space-4);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--body-surface);
+  background: var(--system-bg-2);
 }
 
 .mg-day-metrics__label {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-semibold);
+  color: var(--metric-color, var(--text-secondary));
 }
 
 .mg-day-metrics__value {
-  font-size: var(--text-xl);
+  font-family: var(--font-rounded);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: 1.1;
   font-variant-numeric: tabular-nums;
-  color: var(--metric-color, var(--text-primary));
+  color: var(--text-primary);
 }
 
 .mg-day-metrics__metric--sets { --metric-color: var(--metric-sets); }

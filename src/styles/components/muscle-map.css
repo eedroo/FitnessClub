@@ -19,8 +19,8 @@
   gap: var(--space-1);
   margin: 0;
   padding: var(--space-3) var(--space-2) var(--space-2);
-  border: var(--border-width) solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  border: 0;
+  border-radius: var(--radius-md);
   background: radial-gradient(ellipse at 50% 35%, var(--body-accent-soft), transparent 70%), var(--body-surface);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-label);

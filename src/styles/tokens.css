@@ -1,140 +1,197 @@
-/* FitnessClub — design tokens (herdados do MYGLOW). Única fonte de cores, espaços, raios, sombras, blur e tipografia. */
+/*
+ * FitnessClub — design tokens. Única fonte de cores, espaços, raios, sombras, blur e tipografia.
+ * Linguagem visual de app nativo do iPhone (Human Interface Guidelines): cores de sistema claras e escuras,
+ * fonte do sistema (SF Pro no iPhone e no Mac), listas agrupadas, barras translúcidas e um único acento.
+ * Os nomes antigos (gold-*, glass-*, body-*) mantêm-se como aliases para os componentes herdados do MYGLOW.
+ */
 
 :root,
 [data-theme="light"] {
   color-scheme: light;
 
-  /* Superfícies */
-  --bg-base: #FBF7EF;
-  --bg-base-2: #F4ECDD;
-  --bg-gradient: radial-gradient(ellipse at 20% 0%, var(--bg-base) 0%, var(--bg-base-2) 70%);
-  --glass-bg: rgba(255, 251, 243, 0.62);
-  --glass-bg-strong: rgba(255, 251, 243, 0.82);
-  --glass-bg-solid: #FFFBF3;
-  --glass-border: rgba(201, 162, 92, 0.38);
-  --glass-border-strong: rgba(201, 162, 92, 0.75);
-  --glass-highlight: rgba(255, 255, 255, 0.7);
-  --glass-blur: 18px;
-  --glass-saturate: 140%;
-  --input-bg: rgba(255, 255, 255, 0.55);
-  --input-bg-focus: rgba(255, 255, 255, 0.85);
-  --scrim: rgba(59, 47, 30, 0.08);
+  /* Acento (tint) da marca */
+  --accent: #F2541B;
+  --accent-pressed: #D2430F;
+  --accent-soft: rgba(242, 84, 27, 0.12);
+  --on-accent: #FFFFFF;
 
-  /* Dourados */
-  --gold-300: #E9D09A;
-  --gold-500: #C9A25C;
-  --gold-700: #9C7632;
-  --gold-gradient: linear-gradient(135deg, #F3DFAE 0%, #D4AE66 55%, #B58A42 100%);
-  --gold-gradient-soft: linear-gradient(135deg, rgba(243, 223, 174, 0.9) 0%, rgba(212, 174, 102, 0.9) 100%);
-  --gold-halo: radial-gradient(circle, rgba(233, 196, 120, 0.45) 0%, rgba(233, 196, 120, 0) 70%);
-  --gold-accent: var(--gold-700);       /* labels, ícones de UI, links */
-  --gold-icon: var(--gold-500);         /* ícones mágicos placeholder */
-  --line-rule: rgba(201, 162, 92, 0.28); /* linhas de caderno */
+  /* Fundos de sistema (agrupados) */
+  --system-bg: #F2F2F7; /* systemGroupedBackground */
+  --system-bg-2: #FFFFFF; /* secondarySystemGroupedBackground: células e cartões */
+  --system-bg-3: #F2F2F7; /* tertiarySystemGroupedBackground: dentro de células */
+  --system-elevated: #FFFFFF; /* folhas e menus */
+  --fill: rgba(120, 120, 128, 0.2); /* systemFill: interruptores desligados, trilhos */
+  --fill-2: rgba(120, 120, 128, 0.16);
+  --fill-3: rgba(118, 118, 128, 0.12); /* campos de texto, segmented control */
+  --separator: rgba(60, 60, 67, 0.29);
+  --separator-opaque: #C6C6C8;
+  --bar-bg: rgba(249, 249, 249, 0.94); /* barra de navegação e tab bar */
+  --bar-blur: saturate(180%) blur(20px);
+  --segment-thumb: #FFFFFF;
+  --switch-thumb: #FFFFFF;
+  --grabber: rgba(60, 60, 67, 0.3);
 
-  /* Orbes do fundo */
-  --orb-1: rgba(233, 196, 120, 0.55);
-  --orb-2: rgba(245, 222, 170, 0.6);
-  --orb-3: rgba(214, 170, 110, 0.35);
-  --orb-4: rgba(250, 232, 190, 0.5);
-  --orb-blur: 80px;
+  /* Texto (label, secondaryLabel, tertiaryLabel) */
+  --text-primary: #000000;
+  --text-secondary: rgba(60, 60, 67, 0.6);
+  --text-muted: #8A8A8E;
+  --text-tertiary: rgba(60, 60, 67, 0.3);
+  --text-on-gold: var(--on-accent);
 
-  /* Texto */
-  --text-primary: #3B2F1E;
-  --text-secondary: #6F5F47;
-  --text-muted: #8C7A60;
-  --text-on-gold: #3B2A10;
+  /* Cores de sistema */
+  --system-red: #FF3B30;
+  --system-green: #34C759;
+  --system-blue: #007AFF;
+  --system-orange: #FF9500;
+  --system-yellow: #FFCC00;
+  --system-teal: #30B0C7;
+  --system-indigo: #5856D6;
+  --system-pink: #FF2D55;
+  --system-gray: #8E8E93;
+
+  /* Superfícies (aliases dos nomes herdados) */
+  --bg-base: var(--system-bg);
+  --bg-base-2: var(--system-bg);
+  --bg-gradient: none;
+  --glass-bg: var(--system-bg-2);
+  --glass-bg-strong: var(--system-bg-2);
+  --glass-bg-solid: var(--system-elevated);
+  --glass-border: transparent;
+  --glass-border-strong: var(--separator);
+  --glass-highlight: transparent;
+  --glass-blur: 20px;
+  --glass-saturate: 180%;
+  --input-bg: var(--fill-3);
+  --input-bg-focus: var(--fill-3);
+  --scrim: rgba(0, 0, 0, 0.4);
+
+  /* "Dourados" herdados = acento */
+  --gold-300: var(--accent-soft);
+  --gold-500: var(--accent);
+  --gold-700: var(--accent);
+  --gold-gradient: linear-gradient(var(--accent), var(--accent));
+  --gold-gradient-soft: linear-gradient(var(--accent-soft), var(--accent-soft));
+  --gold-halo: none;
+  --gold-accent: var(--accent);
+  --gold-icon: var(--accent);
+  --line-rule: var(--separator);
+
+  /* Sem orbes de fundo */
+  --orb-1: transparent;
+  --orb-2: transparent;
+  --orb-3: transparent;
+  --orb-4: transparent;
+  --orb-blur: 0px;
 
   /* Estado */
-  --danger: #B5523B;
-  --danger-bg: rgba(181, 82, 59, 0.1);
-  --text-on-danger: #FFF8F0;
-  --success: #5E7A40;
-  --ready-on: #5E9A4A;
-  --ready-off: #B8AE9E;
+  --danger: var(--system-red);
+  --danger-bg: rgba(255, 59, 48, 0.12);
+  --text-on-danger: #FFFFFF;
+  --success: var(--system-green);
+  --ready-on: var(--system-green);
+  --ready-off: var(--fill);
 
-  /* Sombras */
-  --shadow-card: 0 8px 32px rgba(156, 118, 50, 0.12);
-  --shadow-card-hover: 0 14px 44px rgba(156, 118, 50, 0.2);
-  --shadow-glow: 0 0 24px rgba(233, 196, 120, 0.45);
-  --shadow-button: 0 4px 14px rgba(156, 118, 50, 0.28);
-  --focus-ring: 0 0 0 3px rgba(201, 162, 92, 0.45);
-  --premium-gold: #B8893A; /* selo e cadeado premium */
-  --premium-glow: 0 0 22px rgba(212, 174, 102, 0.45);
-  /* Treino: acento mais vivo que o dourado (a cor da marca FitnessClub) */
-  --body-accent: #D9582C;
-  --body-accent-soft: rgba(217, 88, 44, 0.12);
-  --body-surface: rgba(255, 248, 240, 0.72);
-  --body-timer: #2E2216;
-  --body-on-accent: #FFF8F0;
+  /* Sombras: só em folhas, menus e no polegar dos controlos */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-glow: none;
+  --shadow-button: none;
+  --shadow-sheet: 0 -1px 0 var(--separator), 0 -10px 40px rgba(0, 0, 0, 0.12);
+  --shadow-menu: 0 10px 40px rgba(0, 0, 0, 0.18);
+  --shadow-thumb: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06);
+  --shadow-segment: 0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
+  --shadow-app-icon: 0 0 0 var(--hairline) var(--separator), 0 10px 30px rgba(0, 0, 0, 0.14);
+  --focus-ring: 0 0 0 3px rgba(0, 122, 255, 0.45);
+  --premium-gold: var(--system-orange);
+  --premium-glow: none;
+
+  /* Treino */
+  --body-accent: var(--accent);
+  --body-accent-soft: var(--accent-soft);
+  --body-surface: var(--system-bg-2);
+  --body-timer: var(--text-primary);
+  --body-on-accent: var(--on-accent);
   /* Cores fixas por métrica (sem significado de bom/mau) */
-  --metric-reps: #1F8A7E;
-  --metric-kg: #B7790A;
-  --metric-volume: #6A54E0;
-  --metric-time: #2479C2;
-  /* Mais métricas, recuperação muscular e recordes */
-  --metric-sets: #C2417A;
-  --metric-exercises: #3E8E41;
-  --metric-rest: #8A6A4F;
-  --metric-weight: #5E6B78;
-  --recovery-just: #D9582C;
-  --recovery-mid: #F0A868;
-  --recovery-rested: #CFC6BA;
-  --pr-gold: #C9971A;
+  --metric-reps: #30B0C7;
+  --metric-kg: #FF9500;
+  --metric-volume: #5856D6;
+  --metric-time: #007AFF;
+  --metric-sets: #FF2D55;
+  --metric-exercises: #34C759;
+  --metric-rest: #A2845E;
+  --metric-weight: #8E8E93;
+  --recovery-just: var(--accent);
+  --recovery-mid: #FFB27A;
+  --recovery-rested: #D1D1D6;
+  --pr-gold: #FFB800;
 
-  /* Raios */
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  /* Raios (cantos contínuos do iOS aproximados) */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
   --radius-pill: 999px;
 
-  /* Espaços */
+  /* Espaços (grelha de 4 pt) */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
-  --space-5: 24px;
+  --space-5: 20px;
   --space-6: 32px;
   --space-7: 48px;
+  --space-8: 64px;
 
   /* Tamanhos */
   --icon-sm: 24px;
   --icon-md: 40px;
   --icon-lg: 56px;
   --icon-xl: 120px;
-  --control-height: 46px;
-  --topbar-height: 60px;
-  /* Espaço extra entre a barra de estado do iPhone e o conteúdo da TopBar (0 sem notch/safe-area) */
-  --topbar-safe-gap: min(var(--space-4), env(safe-area-inset-top));
-  /* Altura total ocupada pela TopBar (para o que fica fixo por baixo dela) */
-  --topbar-offset: calc(var(--topbar-height) + env(safe-area-inset-top) + var(--topbar-safe-gap));
-  --bottom-nav-height: 68px;
+  --control-height: 44px; /* alvo mínimo de toque */
+  --button-height: 50px;
+  --row-height: 44px;
+  --topbar-height: 44px;
+  --topbar-safe-gap: 0px;
+  --topbar-offset: calc(var(--topbar-height) + env(safe-area-inset-top));
+  --bottom-nav-height: 50px;
   --rail-width: 96px;
-  --content-max: 720px;
-  --border-width: 1px;
+  --content-max: 680px;
+  --border-width: 0.5px;
+  --hairline: 0.5px;
 
-  /* Tipografia */
-  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
-  --font-ui: var(--font-jost), 'Jost', system-ui, sans-serif;
-  --font-symbol: 'Segoe UI Symbol', 'Noto Sans Symbols', 'Apple Symbols', var(--font-ui);
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-md: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.5rem;
-  --leading-tight: 1.15;
-  --leading-normal: 1.5;
-  --weight-light: 300;
+  /* Tipografia: fonte do sistema (SF Pro no Apple, Roboto/Segoe noutros) e a escala de texto do iOS */
+  --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-ui: var(--font-system);
+  --font-rounded: ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-symbol: 'Apple Symbols', 'Segoe UI Symbol', 'Noto Sans Symbols', var(--font-ui);
+  --text-2xs: 0.6875rem; /* caption2 11 */
+  --text-xs: 0.75rem; /* caption1 12 */
+  --text-footnote: 0.8125rem; /* footnote 13 */
+  --text-sm: 0.9375rem; /* subheadline 15 */
+  --text-md: 1.0625rem; /* body 17 */
+  --text-base: var(--text-md);
+  --text-lg: 1.25rem; /* title3 20 */
+  --text-xl: 1.375rem; /* title2 22 */
+  --text-2xl: 1.75rem; /* title1 28 */
+  --text-3xl: 2.125rem; /* largeTitle 34 */
+  --leading-tight: 1.2;
+  --leading-normal: 1.35;
+  --weight-light: 400;
   --weight-regular: 400;
-  --weight-medium: 500;
-  --tracking-label: 0.14em;
-  --tracking-logo: 0.28em;
+  --weight-medium: 600;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --tracking-label: 0;
+  --tracking-logo: -0.02em;
+  --tracking-title: -0.022em;
 
-  /* Movimento */
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Movimento (molas do UIKit aproximadas) */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
   --duration-fast: 150ms;
-  --duration: 280ms;
+  --duration: 320ms;
   --z-ambient: 0;
   --z-content: 1;
   --z-nav: 20;
@@ -142,67 +199,60 @@
   --z-toast: 40;
 }
 
+/* Escuro: cores de sistema escuras do iOS (preto verdadeiro e cinzentos elevados) */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg-base: #15110B;
-  --bg-base-2: #1E1810;
-  --glass-bg: rgba(44, 35, 22, 0.55);
-  --glass-bg-strong: rgba(44, 35, 22, 0.78);
-  --glass-bg-solid: #2A2115;
-  --glass-border: rgba(226, 190, 120, 0.28);
-  --glass-border-strong: rgba(226, 190, 120, 0.6);
-  --glass-highlight: rgba(255, 236, 200, 0.08);
-  --input-bg: rgba(20, 16, 10, 0.45);
-  --input-bg-focus: rgba(20, 16, 10, 0.7);
-  --scrim: rgba(0, 0, 0, 0.3);
+  --accent: #FF6A33;
+  --accent-pressed: #FF8255;
+  --accent-soft: rgba(255, 106, 51, 0.2);
+  --on-accent: #FFFFFF;
 
-  --gold-300: #F0D69C;
-  --gold-500: #E2BE78;
-  --gold-700: #B8904A;
-  --gold-halo: radial-gradient(circle, rgba(226, 190, 120, 0.28) 0%, rgba(226, 190, 120, 0) 70%);
-  --gold-accent: var(--gold-300);
-  --gold-icon: var(--gold-300);
-  --line-rule: rgba(226, 190, 120, 0.18);
+  --system-bg: #000000;
+  --system-bg-2: #1C1C1E;
+  --system-bg-3: #2C2C2E;
+  --system-elevated: #1C1C1E;
+  --fill: rgba(120, 120, 128, 0.36);
+  --fill-2: rgba(120, 120, 128, 0.32);
+  --fill-3: rgba(118, 118, 128, 0.24);
+  --separator: rgba(84, 84, 88, 0.65);
+  --separator-opaque: #38383A;
+  --bar-bg: rgba(22, 22, 24, 0.9);
+  --segment-thumb: #636366;
+  --switch-thumb: #FFFFFF;
+  --grabber: rgba(235, 235, 245, 0.3);
 
-  --orb-1: rgba(226, 180, 90, 0.28);
-  --orb-2: rgba(180, 130, 60, 0.22);
-  --orb-3: rgba(240, 210, 150, 0.14);
-  --orb-4: rgba(200, 150, 80, 0.16);
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(235, 235, 245, 0.6);
+  --text-muted: #98989F;
+  --text-tertiary: rgba(235, 235, 245, 0.3);
 
-  --text-primary: #F3E9D6;
-  --text-secondary: #CDBE9F;
-  --text-muted: #A69679;
+  --system-red: #FF453A;
+  --system-green: #30D158;
+  --system-blue: #0A84FF;
+  --system-orange: #FF9F0A;
+  --system-yellow: #FFD60A;
+  --system-teal: #40C8E0;
+  --system-indigo: #5E5CE6;
+  --system-pink: #FF375F;
+  --system-gray: #8E8E93;
 
-  --danger: #E08A72;
-  --danger-bg: rgba(224, 138, 114, 0.14);
-  --text-on-danger: #1E140C;
-  --success: #A9C98A;
-  --ready-on: #8FC77A;
-  --ready-off: #6A5F4F;
+  --danger-bg: rgba(255, 69, 58, 0.2);
+  --scrim: rgba(0, 0, 0, 0.6);
+  --shadow-sheet: 0 -1px 0 var(--separator);
+  --shadow-menu: 0 10px 40px rgba(0, 0, 0, 0.6);
+  --shadow-thumb: 0 3px 8px rgba(0, 0, 0, 0.35);
+  --focus-ring: 0 0 0 3px rgba(10, 132, 255, 0.6);
 
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-card-hover: 0 14px 44px rgba(0, 0, 0, 0.55);
-  --shadow-glow: 0 0 28px rgba(226, 190, 120, 0.3);
-  --shadow-button: 0 4px 18px rgba(0, 0, 0, 0.4);
-  --focus-ring: 0 0 0 3px rgba(226, 190, 120, 0.5);
-  --premium-gold: #E2BE78;
-  --premium-glow: 0 0 26px rgba(226, 190, 120, 0.32);
-  --body-accent: #FF8657;
-  --body-accent-soft: rgba(255, 134, 87, 0.16);
-  --body-surface: rgba(30, 24, 16, 0.78);
-  --body-timer: #FFF3E3;
-  --body-on-accent: #1E140C;
-  --metric-reps: #4FD1C5;
-  --metric-kg: #F6B93B;
-  --metric-volume: #A594FF;
-  --metric-time: #5DB3F5;
-  --metric-sets: #F07AAE;
-  --metric-exercises: #7BD17F;
-  --metric-rest: #D2B394;
-  --metric-weight: #B4C0CC;
-  --recovery-just: #FF8657;
-  --recovery-mid: #B9784A;
-  --recovery-rested: #4A4238;
-  --pr-gold: #F6C445;
+  --metric-reps: #40C8E0;
+  --metric-kg: #FF9F0A;
+  --metric-volume: #7D7AFF;
+  --metric-time: #0A84FF;
+  --metric-sets: #FF375F;
+  --metric-exercises: #30D158;
+  --metric-rest: #AC8E68;
+  --metric-weight: #98989F;
+  --recovery-mid: #A85A33;
+  --recovery-rested: #3A3A3C;
+  --pr-gold: #FFD60A;
 }

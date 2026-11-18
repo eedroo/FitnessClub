@@ -1,21 +1,22 @@
-/* VerifyEmailBanner (F9): aviso no topo da app */
+/* VerifyEmailBanner: aviso discreto no topo, como uma célula agrupada */
 
 .mg-banner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2) var(--space-3);
+  margin: calc(env(safe-area-inset-top) + var(--space-2)) var(--space-4) 0;
   padding: var(--space-3) var(--space-4);
-  border: var(--border-width) solid var(--glass-border);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--glass-bg-strong);
+  background: var(--system-bg-2);
   color: var(--text-primary);
   font-size: var(--text-sm);
 }
 
-.mg-banner--info {
-  border-color: var(--glass-border-strong);
-  box-shadow: var(--shadow-card);
+/* Dentro de uma página (definições) não precisa da margem da barra de estado */
+.mg-form .mg-banner__actions {
+  margin: 0;
 }
 
 .mg-banner__icon {
@@ -53,7 +54,6 @@
   cursor: pointer;
 }
 
-.mg-banner__close:hover {
-  background: var(--scrim);
-  color: var(--text-primary);
+.mg-banner__close:active {
+  background: var(--fill-3);
 }

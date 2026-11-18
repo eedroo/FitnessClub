@@ -14,7 +14,7 @@
 .mg-auth-form__sent {
   margin: 0;
   padding: var(--space-3) var(--space-4);
-  border: var(--border-width) solid var(--glass-border);
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--glass-bg);
   color: var(--text-primary);

@@ -844,5 +844,30 @@
   },
   "welcome": {
     "title": "Boas-vindas ao FitnessClub"
+  },
+  "start": {
+    "title": "Boas-vindas ao {app}",
+    "features": {
+      "programs": {
+        "title": "Programas e treinos",
+        "body": "Crie os seus ou comece por um modelo: Push · Pull · Legs, corpo inteiro, superior e inferior."
+      },
+      "sessions": {
+        "title": "Sessões com descanso",
+        "body": "Cronômetro, descanso com aviso e cada série já preenchida com o que você fez da última vez."
+      },
+      "records": {
+        "title": "Recordes e evolução",
+        "body": "Melhor carga, 1RM estimado e repetições por exercício, sempre comparados com a vez anterior."
+      },
+      "weight": {
+        "title": "Peso e meta",
+        "body": "Média semanal, tendência e uma meta no seu ritmo. Só você vê esses dados."
+      }
+    },
+    "privacy": "Seus dados são seus: sem anúncios e sem compartilhamento.",
+    "privacyLink": "Privacidade",
+    "register": "Criar conta",
+    "login": "Já tenho conta"
   }
 }

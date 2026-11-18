@@ -3,7 +3,7 @@
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next';
 
 /** Só estas páginas públicas contam; dentro da app nada é enviado (nem depois de entrar sem recarregar). */
-const PUBLIC_PATHS = new Set(['/', '/login', '/register', '/privacy', '/terms']);
+const PUBLIC_PATHS = new Set(['/start', '/login', '/register', '/privacy', '/terms']);
 
 function onlyPublic(event: BeforeSendEvent): BeforeSendEvent | null {
   try {

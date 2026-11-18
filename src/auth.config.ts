@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 
 const AUTH_PAGES = ['/login', '/register'];
 /** Páginas abertas com ou sem sessão (links dos emails e documentos legais). */
-const PUBLIC_PAGES = ['/forgot-password', '/reset-password', '/verify-email', '/confirm-email-change', '/privacy', '/terms', '/goodbye'];
+const PUBLIC_PAGES = ['/start', '/forgot-password', '/reset-password', '/verify-email', '/confirm-email-change', '/privacy', '/terms', '/goodbye'];
 
 export const authConfig = {
   trustHost: true,
@@ -27,6 +27,8 @@ export const authConfig = {
 
       if (!user) {
         if (isAuthPage) return true;
+        // Primeira visita (sem sessão) à raiz: a página de entrada em vez do login.
+        if (pathname === '/') return NextResponse.redirect(new URL('/start', request.nextUrl));
         if (isApi) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
         return false; // → /login
       }

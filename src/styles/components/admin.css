@@ -27,7 +27,7 @@
   flex-direction: column;
   gap: var(--space-1);
   padding: var(--space-3) var(--space-4);
-  border: var(--border-width) solid var(--glass-border);
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--glass-bg);
 }
@@ -108,7 +108,7 @@
 
 .mg-admin-nav__link {
   padding: var(--space-1) var(--space-3);
-  border: var(--border-width) solid var(--glass-border);
+  border: 0;
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
   color: var(--text-secondary);
@@ -117,7 +117,6 @@
 
 .mg-admin-nav__link:hover,
 .mg-admin-nav__link--active {
-  border-color: var(--glass-border-strong);
   background: var(--glass-bg);
   color: var(--text-primary);
 }
@@ -132,7 +131,7 @@
   flex: 1;
   min-width: 0;
   padding: var(--space-2) var(--space-3);
-  border: var(--border-width) solid var(--glass-border-strong);
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--glass-bg);
   color: var(--text-primary);
@@ -257,7 +256,7 @@
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-4);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--bg-gradient);
   color: var(--text-primary);
 }

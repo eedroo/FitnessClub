@@ -21,7 +21,7 @@ export function BackButton({ fallback, label, className }: { fallback: string; l
         router.back();
       }}
     >
-      <ChevronLeft size={18} strokeWidth={1.75} aria-hidden="true" />
+      <ChevronLeft size={28} strokeWidth={2.25} aria-hidden="true" />
       {label}
     </Link>
   );

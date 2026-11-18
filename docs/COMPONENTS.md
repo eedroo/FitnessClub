@@ -10,6 +10,8 @@ Fonte de verdade da UI. Todo o componente listado aqui tem:
 
 **Inline style** só é permitido para um ajuste pontual numa instância de um componente reutilizado. Nunca Tailwind.
 
+**Linguagem visual: app nativo do iPhone** (Human Interface Guidelines). Fonte do sistema (SF Pro no Apple) e a escala de texto do iOS (corpo 17, título grande 34 bold); cores de sistema claras e escuras (`--system-bg` agrupado, `--system-bg-2` nas células, `--fill-*` em campos e trilhos, `--separator` em traços finos de 0,5 pt); um único acento (`--accent`, laranja da marca); sem dourado, vidro nem sombras nos cartões (sombra só em folhas, menus e no polegar dos controlos). Padrões: listas agrupadas (inset grouped) com separador recolhido e chevron cinzento, barra de navegação translúcida com título grande, tab bar translúcida, folhas que sobem de baixo com pega, interruptores verdes, segmented control com polegar branco, números arredondados (`--font-rounded`) nos temporizadores e métricas. Tema por defeito: o do sistema.
+
 Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam a fase do MYGLOW em que nasceram.
 
 ---
@@ -19,7 +21,8 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 ### GlassCard — F1
 - **TSX:** `GlassCard.tsx` (Server) · **CSS:** `card.css`
 - **Classes:** `mg-card`, `mg-card__header`, `mg-card__title`, `mg-card__body`
-- **Variantes:** `mg-card--accent` (borda dourada mais forte + brilho), `mg-card--flat` (sem blur, fundo opaco), `mg-card--interactive` (hover/focus elevado)
+- Secção agrupada do iOS: fundo `--system-bg-2`, cantos de 12 pt, sem contorno nem sombra
+- **Variantes:** `mg-card--accent` e `mg-card--flat` (iguais ao base, mantidas por compatibilidade), `mg-card--interactive` (escurece ao tocar)
 - **Props:** `as?: 'section' | 'div' | 'article'`, `variant?: 'accent' | 'flat' | 'interactive' | Array<…>`, `title?: ReactNode`, `header?: ReactNode`, `className?`, `children`
 - Fallback `@supports not (backdrop-filter: blur(1px))` → `var(--glass-bg-strong)`
 
@@ -28,12 +31,12 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 - **Classes:** `mg-magic-icon`, `mg-magic-icon--sm | --md | --lg | --xl` (24 / 40 / 56 / 120 px), `mg-magic-icon--placeholder`, `mg-magic-icon--glyph`, `mg-magic-icon__img`, `mg-magic-icon__svg`
 - **Props:** `name: MagicIconName`, `size?: 'sm' | 'md' | 'lg' | 'xl'`, `decorative?: boolean`, `label?: string` (obrigatório se `decorative = false`), `className?`
 - `ready: true` → `next/image` com `/icons/magic/<name>.png`; glifos prontos usam `mask-image` para herdar a cor
-- `ready: false` → fallback (lucide ou glifo SVG) em `--gold-500` / `--gold-300` (escuro), `strokeWidth` 1.5, com halo radial dourado
+- `ready: false` → fallback lucide no acento
 - Registo em `src/lib/icons.ts`, tabela em `docs/ICONS.md`. **Nenhum componente usa lucide directamente para ícones mágicos.**
 
 ### Button — F1
 - **TSX:** `Button.tsx` (Server-compatible; sem estado) · **CSS:** `button.css`
-- **Classes:** `mg-btn`, `mg-btn--primary` (gradiente dourado), `mg-btn--ghost`, `mg-btn--subtle`, `mg-btn--block`, `mg-btn--loading`, `mg-btn__spinner`, `mg-btn__label`
+- **Classes:** `mg-btn`, `mg-btn--primary` (preenchido no acento, 50 pt), `mg-btn--ghost` (tingido, cápsula de 34 pt; com `--block`, 50 pt), `mg-btn--subtle` (só texto no acento), `mg-btn--block`, `mg-btn--loading`, `mg-btn__spinner`, `mg-btn__label`; carregar baixa a opacidade como no UIKit
 - **Props:** `variant?: 'primary' | 'ghost' | 'subtle' | 'danger'`, `block?: boolean`, `loading?: boolean`, `loadingLabel?: string` + atributos nativos de `<button>`
 - **F9:** `mg-btn--danger` (vermelho, para acções destrutivas: apagar conta)
 
@@ -56,8 +59,8 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 
 ### CheckChip — F2 (showcase F1)
 - **TSX:** `CheckChip.tsx` (`'use client'`) · **CSS:** `check-chip.css`
-- **Classes:** `mg-check-chip`, `mg-check-chip__input`, `mg-check-chip__box`, `mg-check-chip__label`, `mg-check-chip--checked`
-- Check pequeno inline com ícone (alongamento, treino, água)
+- **Classes:** `mg-check-chip`, `mg-check-chip__input`, `mg-check-chip__icon`, `mg-check-chip__label`, `mg-check-chip__box`, `mg-check-chip__thumb`, `mg-check-chip--checked`
+- Linha com interruptor do iOS (ícone num quadrado de cor, texto e switch de 51 × 31 pt, verde quando ligado); por baixo, checkbox nativa com `role="switch"`
 - **Props:** `icon: MagicIconName`, `label`, `checked`, `onCheckedChange`
 
 ### Toast — F1
@@ -73,7 +76,7 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 ### AmbientBackground — F1
 - **TSX:** `AmbientBackground.tsx` (Server)
 - **Classes:** `mg-ambient`, `mg-ambient__orb`, `mg-ambient__orb--1 … --4`
-- 4 orbes dourados desfocados, animação lenta (40–60 s); parado com `prefers-reduced-motion`
+- Mantido por compatibilidade: as orbes ficam transparentes (fundo liso de sistema)
 - `aria-hidden`, `position: fixed`, atrás de tudo
 
 ### PageHeader — F1
@@ -172,7 +175,7 @@ Plano lido do servidor por pedido (`getEntitlements`, `cache()` do React; nunca 
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
 | `EntitlementsProvider` | client | — | — | no layout `(app)`; `useEntitlements()` → `{ plan, can('pro') }` |
-| `PremiumBadge` | server | `premium-badge.css` | `mg-premium-badge` | pílula pequena dourada "Premium"; no perfil, ao lado do nível, só para quem é premium |
+| `PremiumBadge` | server | `premium-badge.css` | `mg-premium-badge` | cápsula pequena preenchida "Premium", nas definições (Perfil), só para quem é premium |
 | `PremiumLock` | client | `premium-lock.css` | `mg-premium-lock`, `__icon`, `__title`, `__text` | cartão em vidro com cadeado e brilho suave; `title` + `teaser`; em `/locked`, para onde vão as páginas do treino sem o recurso `pro` |
 | `SentryUser` | client | — | — | (`components/providers/`) `Sentry.setUser({ id })` no layout `(app)`, só o id interno |
 | `PublicAnalytics` | client | — | — | (`components/providers/`) `@vercel/analytics` (sem cookies) só em `/login`, `/register`, `/privacy`, `/terms`: montado nos layouts `(public)` e `(auth)`; `beforeSend` descarta qualquer outra rota (ex.: depois de entrar na app) |
@@ -184,7 +187,7 @@ Recurso premium `pro` com navegação própria, inspirado no Setgraph: bibliotec
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
 | `BodyShell` | server | `body-shell.css` | `mg-body-shell`, `__main` | layout do grupo `(train)`: fundo, conteúdo, `ActiveSessionPill` e `BodyNav`; entrada com fade e brilho |
-| `BodyHeader` | server | `body-shell.css` | `mg-body-header`, `__back`, `__title`, `__actions` | nas páginas de topo, o link das Definições (⚙); nas outras, o voltar da secção; título e acções |
+| `BodyHeader` | server | `body-shell.css` | `mg-body-header`, `__back`, `__title`, `__actions`, `__icon` | barra de navegação do iOS: ‹ e o nome da secção à esquerda, acções à direita (nas páginas de topo, o ⚙ das definições) e o título grande por baixo; translúcida e fixa no topo |
 | `BodyNav` | client | `body-nav.css` | `mg-body-nav`, `__item`, `--active` | Treinos · Sessões · Dia · Corpo |
 | `useNow` / `formatClock` | client (hook) | — | — | hora actual a cada segundo (e ao voltar à app); `formatClock` ("1:02:05") vive em `src/lib/fitness/session.ts` (usado também nos componentes servidor) |
 | `ActiveSessionPill` | client | `session-pill.css` | `mg-session-pill` | "Sessão em curso · 00:32:10" acima da `BodyNav`; toca para voltar (escondida no ecrã da sessão) |
@@ -250,3 +253,11 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
 | `RouteError` | client | `route-error.css` | `mg-route-error`, `__title`, `__actions` | `error.tsx` do grupo `(app)`: mensagem em cartão de vidro dentro do layout (a navegação continua à vista), "Tentar de novo" (refresca e repõe) e "Recarregar a app"; erros de rede ou de versão nova (`isRecoverableError`) recarregam sozinhos, no máximo uma vez por minuto |
+
+### Página de entrada (`src/components/start/`, rota `/start`)
+
+Quem abre o app sem sessão em `/` vai para `/start` (middleware); com sessão, `/start` leva aos treinos.
+
+| Componente | Tipo | CSS | Classes | Conteúdo |
+|---|---|---|---|---|
+| `StartScreen` | server | `start.css` | `mg-start`, `__content`, `__icon`, `__title`, `__features`, `__feature`, `--programs`/`--sessions`/`--records`/`--weight`, `__feature-icon`, `__feature-text`, `__feature-title`, `__feature-body`, `__actions`, `__privacy` | ecrã de boas-vindas ao estilo das apps do iPhone: ícone do app, "Boas-vindas ao FitnessClub", quatro linhas com ícone de cor (programas, sessões, recordes, peso) e, em baixo, a nota de privacidade, "Criar conta" (preenchido) e "Já tenho conta" (simples) |

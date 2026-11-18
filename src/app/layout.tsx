@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
@@ -11,21 +10,6 @@ import { SYSTEM_COLORS, prefToNextTheme } from '@/lib/theme';
 import { appUrl } from '@/lib/env';
 import '@/styles/index.css';
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500'],
-  style: ['normal', 'italic'],
-  variable: '--font-cormorant',
-  display: 'swap',
-});
-
-const jost = Jost({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
-  variable: '--font-jost',
-  display: 'swap',
-});
-
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('common');
   const appName = t('appName');
@@ -34,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: appName, template: `%s · ${appName}` },
     description: t('description'),
     applicationName: appName,
-    appleWebApp: { capable: true, title: appName, statusBarStyle: 'black-translucent' },
+    appleWebApp: { capable: true, title: appName, statusBarStyle: 'default' },
     icons: {
       icon: [
         { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
@@ -62,7 +46,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const defaultTheme = session?.user ? prefToNextTheme(session.user.theme) : 'system';
 
   return (
-    <html lang={locale} className={`${cormorant.variable} ${jost.variable}`} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme={defaultTheme}>
           <AuthSessionProvider session={session}>

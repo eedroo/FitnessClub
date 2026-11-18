@@ -1,18 +1,24 @@
-/* RestTimer (F16): faixa fixa com a contagem decrescente do descanso */
+/* RestTimer: cartão flutuante acima da tab bar (como uma Live Activity), com anel e contagem grande */
 
 .mg-rest {
   position: fixed;
-  right: 0;
-  bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
-  left: 0;
+  right: var(--space-2);
+  bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-2));
+  left: var(--space-2);
   z-index: var(--z-popover);
   display: flex;
   align-items: center;
   gap: var(--space-4);
+  max-width: calc(var(--content-max) - var(--space-4));
+  margin: 0 auto;
   padding: var(--space-3) var(--space-4);
-  border-top: var(--border-width) solid var(--body-accent);
-  background: var(--glass-bg-solid);
-  box-shadow: var(--shadow-card);
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: var(--bar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
+  box-shadow: var(--shadow-menu), 0 0 0 var(--hairline) var(--separator);
+  animation: mg-sheet-up var(--duration) var(--ease);
 }
 
 .mg-rest__ring {
@@ -30,7 +36,7 @@
 
 .mg-rest__track {
   fill: none;
-  stroke: var(--glass-border);
+  stroke: var(--fill);
   stroke-width: 6;
 }
 
@@ -48,7 +54,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-rounded);
   font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
   font-variant-numeric: tabular-nums;
   color: var(--body-timer);
 }
@@ -73,7 +81,23 @@
 }
 
 .mg-rest__actions .mg-btn {
-  min-height: 48px;
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--fill-3);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-rest__actions .mg-btn--ghost {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.mg-rest__actions .mg-btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .mg-rest--done {
@@ -87,17 +111,8 @@
 }
 
 @keyframes mg-rest-blink {
-  0%, 100% { background: var(--glass-bg-solid); }
-  50% { background: var(--body-accent-soft); }
-}
-
-@media (min-width: 960px) {
-  .mg-rest {
-    left: 50%;
-    width: min(100%, var(--content-max));
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    transform: translateX(-50%);
-  }
+  0%, 100% { background: var(--bar-bg); }
+  50% { background: var(--accent-soft); }
 }
 
 @media (prefers-reduced-motion: reduce) {

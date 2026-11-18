@@ -844,5 +844,30 @@
   },
   "welcome": {
     "title": "Welcome to FitnessClub"
+  },
+  "start": {
+    "title": "Welcome to {app}",
+    "features": {
+      "programs": {
+        "title": "Programmes and workouts",
+        "body": "Build your own or start from a template: Push · Pull · Legs, full body, upper and lower."
+      },
+      "sessions": {
+        "title": "Sessions with rest timer",
+        "body": "A session timer, rest alerts and every set pre-filled with what you did last time."
+      },
+      "records": {
+        "title": "Records and progress",
+        "body": "Best weight, estimated 1RM and reps for every exercise, always compared with last time."
+      },
+      "weight": {
+        "title": "Weight and goal",
+        "body": "Weekly average, trend and a goal at your own pace. Only you see this data."
+      }
+    },
+    "privacy": "Your data is yours: no ads and no sharing.",
+    "privacyLink": "Privacy",
+    "register": "Create account",
+    "login": "I already have an account"
   }
 }

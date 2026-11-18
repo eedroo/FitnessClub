@@ -1,15 +1,29 @@
-/* ExercisePicker (F16): folha com pesquisa, filtros e selecção múltipla */
+/* ExercisePicker: folha grande (large detent) com pesquisa, filtros e selecção múltipla com visto */
 
 .mg-ex-picker {
   width: min(100%, 640px);
   max-width: 100%;
-  height: min(92dvh, 820px);
+  height: calc(100dvh - env(safe-area-inset-top) - var(--space-3));
   margin: auto auto 0;
   padding: 0;
-  border: var(--border-width) solid var(--glass-border-strong);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: var(--glass-bg-solid);
+  border: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--system-bg);
+  box-shadow: var(--shadow-sheet);
   color: var(--text-primary);
+  animation: mg-sheet-up var(--duration) var(--ease);
+}
+
+.mg-ex-picker::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 36px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--grabber);
+  transform: translateX(-50%);
 }
 
 .mg-ex-picker::backdrop {
@@ -26,44 +40,68 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-4);
-  border-bottom: var(--border-width) solid var(--glass-border);
+  padding: var(--space-5) var(--space-4) var(--space-3);
+  border-bottom: 0;
 }
 
 .mg-ex-picker__list {
   flex: 1;
-  margin: 0;
-  padding: var(--space-2) var(--space-3);
+  margin: 0 var(--space-4);
+  padding: 0;
   overflow-y: auto;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
   list-style: none;
 }
 
+.mg-ex-picker__list > li + li {
+  box-shadow: inset 76px var(--hairline) 0 var(--system-bg-2), inset 0 var(--hairline) 0 var(--separator);
+}
+
 .mg-ex-picker__item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  min-height: 56px;
-  padding: var(--space-2);
-  border: var(--border-width) solid transparent;
-  border-radius: var(--radius-md);
+  min-height: 60px;
+  padding: var(--space-2) var(--space-7) var(--space-2) var(--space-4);
+  border: 0;
   background: none;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.mg-ex-picker__item--selected {
-  border-color: var(--body-accent);
-  background: var(--body-accent-soft);
+.mg-ex-picker__item:active {
+  background: var(--fill-3);
+}
+
+/* Visto no acento à direita (checkmark do iOS) */
+.mg-ex-picker__item--selected::after {
+  content: '';
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  width: 16px;
+  height: 14px;
+  background: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 14'%3E%3Cpath d='M1.5 7.5l4.5 4.5L14.5 1.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 14'%3E%3Cpath d='M1.5 7.5l4.5 4.5L14.5 1.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: translateY(-50%);
 }
 
 .mg-ex-picker__footer {
   display: flex;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
-  border-top: var(--border-width) solid var(--glass-border);
+  border-top: 0;
+  background: var(--bar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
+  box-shadow: 0 calc(-1 * var(--hairline)) 0 var(--separator);
 }
 
 .mg-ex-picker__footer .mg-btn {

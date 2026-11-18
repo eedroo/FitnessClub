@@ -1,0 +1,111 @@
+/* StartScreen: ecrã de boas-vindas ao estilo das apps do iPhone (ícone, título grande, novidades e botões fixos em baixo) */
+
+.mg-start {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: calc(env(safe-area-inset-top) + var(--space-7)) var(--space-6) 0;
+  background: var(--system-bg-2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mg-start__content > * {
+    animation: mg-start-in 600ms var(--ease) both;
+  }
+
+  .mg-start__content > :nth-child(2) { animation-delay: 80ms; }
+  .mg-start__content > :nth-child(3) { animation-delay: 160ms; }
+}
+
+@keyframes mg-start-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+.mg-start__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mg-start__icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  box-shadow: var(--shadow-app-icon);
+}
+
+.mg-start__title {
+  margin: var(--space-5) 0 var(--space-6);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.mg-start__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-start__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.mg-start__feature-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--feature-color, var(--accent));
+}
+
+.mg-start__feature--programs { --feature-color: var(--accent); }
+.mg-start__feature--sessions { --feature-color: var(--system-blue); }
+.mg-start__feature--records { --feature-color: var(--system-orange); }
+.mg-start__feature--weight { --feature-color: var(--system-green); }
+
+.mg-start__feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-start__feature-title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-start__feature-body {
+  font-size: var(--text-sm);
+  line-height: 1.3;
+  color: var(--text-secondary);
+}
+
+.mg-start__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: var(--space-6) calc(-1 * var(--space-6)) 0;
+  padding: var(--space-4) var(--space-6) calc(env(safe-area-inset-bottom) + var(--space-4));
+  background: var(--system-bg-2);
+}
+
+.mg-start__privacy {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  text-align: center;
+}

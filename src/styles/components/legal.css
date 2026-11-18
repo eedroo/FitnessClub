@@ -30,8 +30,8 @@
   max-width: 68ch;
   margin: 0 auto;
   padding: var(--space-6) var(--space-5);
-  border: var(--border-width) solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  border: 0;
+  border-radius: var(--radius-md);
   background: var(--glass-bg-strong);
   color: var(--text-primary);
   font-family: var(--font-ui);

@@ -49,7 +49,7 @@ model User {
   passwordHash       String
   name               String
   locale             Locale      @default(PT_PT)
-  theme              ThemePref   @default(LIGHT)
+  theme              ThemePref   @default(SYSTEM) // segue o tema do iPhone por defeito
   timezone           String      @default("Europe/Lisbon")
   onboardedAt        DateTime? // boas-vindas do treino concluídas
   emailVerifiedAt    DateTime?

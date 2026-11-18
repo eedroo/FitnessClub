@@ -1,4 +1,4 @@
-/* BodyNav (F16): Treinos · Sessões · Exercícios */
+/* BodyNav — UITabBar: translúcida, linha fina em cima, ícone e rótulo de 10 pt; o separador activo no acento */
 
 .mg-body-nav {
   position: fixed;
@@ -9,10 +9,11 @@
   display: flex;
   height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
   padding: 0 var(--space-2) env(safe-area-inset-bottom);
-  border-top: var(--border-width) solid var(--glass-border);
-  background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-top: 0;
+  background: var(--bar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
+  box-shadow: 0 calc(-1 * var(--hairline)) 0 var(--separator);
 }
 
 .mg-body-nav__item {
@@ -20,17 +21,24 @@
   flex: 1 1 0;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  min-height: 48px;
-  color: var(--text-secondary);
-  font-size: var(--text-xs);
-  letter-spacing: 0.04em;
+  justify-content: flex-start;
+  gap: 2px;
+  padding-top: 6px;
+  color: var(--system-gray);
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mg-body-nav__item svg {
+  width: 26px;
+  height: 26px;
 }
 
 .mg-body-nav__item--active {
-  color: var(--body-accent);
+  color: var(--accent);
 }
 
 .mg-body-nav__item:focus-visible {

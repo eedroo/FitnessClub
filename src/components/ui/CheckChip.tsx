@@ -1,6 +1,5 @@
 'use client';
 
-import { Check } from 'lucide-react';
 import type { MagicIconName } from '@/lib/icons';
 import { MagicIcon } from './MagicIcon';
 
@@ -11,20 +10,24 @@ interface CheckChipProps {
   onCheckedChange: (checked: boolean) => void;
 }
 
-/** Check pequeno inline com ícone (alongamento, treino, água). */
+/** Linha com interruptor ao estilo iOS (ícone, texto e switch à direita); por baixo é uma checkbox nativa com `role="switch"`. */
 export function CheckChip({ icon, label, checked, onCheckedChange }: CheckChipProps) {
   return (
     <label className={checked ? 'mg-check-chip mg-check-chip--checked' : 'mg-check-chip'}>
       <input
         className="mg-check-chip__input"
         type="checkbox"
+        role="switch"
+        aria-checked={checked}
         checked={checked}
         onChange={(e) => onCheckedChange(e.target.checked)}
       />
-      <MagicIcon name={icon} size="sm" decorative />
+      <span className="mg-check-chip__icon" aria-hidden="true">
+        <MagicIcon name={icon} size="sm" decorative />
+      </span>
       <span className="mg-check-chip__label">{label}</span>
       <span className="mg-check-chip__box" aria-hidden="true">
-        <Check size={12} strokeWidth={2.5} />
+        <span className="mg-check-chip__thumb" />
       </span>
     </label>
   );

@@ -20,7 +20,7 @@ export async function ProgramRow({ program }: { program: ProgramItem }) {
           {program.description ? ` · ${program.description}` : ''}
         </span>
       </span>
-      <ChevronRight size={18} strokeWidth={1.75} aria-hidden="true" />
+      <ChevronRight size={20} strokeWidth={2.25} aria-hidden="true" />
     </Link>
   );
 }

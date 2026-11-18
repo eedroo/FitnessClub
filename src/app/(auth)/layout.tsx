@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { AmbientBackground } from '@/components/shell/AmbientBackground';
-import { MagicIcon } from '@/components/ui/MagicIcon';
 import { PublicAnalytics } from '@/components/providers/PublicAnalytics';
 
 export default async function AuthLayout({ children }: { children: ReactNode }) {
@@ -11,7 +10,8 @@ export default async function AuthLayout({ children }: { children: ReactNode }) 
       <AmbientBackground />
       <main className="mg-auth">
         <div className="mg-auth__brand">
-          <MagicIcon name="dumbbell" size="lg" decorative />
+          {/* eslint-disable-next-line @next/next/no-img-element -- ícone do app, estático e pequeno */}
+          <img className="mg-auth__appicon" src="/icons/apple-touch-icon.png" alt="" width={88} height={88} />
           <p className="mg-auth__wordmark">{t('appName')}</p>
           <p className="mg-auth__tagline">{t('tagline')}</p>
         </div>

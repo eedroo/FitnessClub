@@ -16,10 +16,10 @@ export function nextThemeToPref(theme: string | undefined): ThemePref | undefine
 
 /**
  * Cores que o browser/SO precisam fora do CSS (theme-color, manifest).
- * Espelham `--bg-base` e `--gold-500` de src/styles/tokens.css — manter em sincronia.
+ * Espelham `--system-bg` e `--accent` de src/styles/tokens.css — manter em sincronia.
  */
 export const SYSTEM_COLORS = {
-  lightBackground: '#FBF7EF',
-  darkBackground: '#15110B',
-  gold: '#C9A25C',
+  lightBackground: '#F2F2F7',
+  darkBackground: '#000000',
+  accent: '#F2541B',
 } as const;

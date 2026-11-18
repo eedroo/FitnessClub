@@ -57,15 +57,15 @@ body {
 body {
   min-height: 100dvh;
   overscroll-behavior-y: none;
-  background: var(--bg-base);
-  background-image: var(--bg-gradient);
-  background-attachment: fixed;
+  background: var(--system-bg);
   color: var(--text-primary);
   font-family: var(--font-ui);
   font-weight: var(--weight-regular);
   font-size: var(--text-md);
   line-height: var(--leading-normal);
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
   -moz-osx-font-smoothing: grayscale;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
@@ -73,13 +73,18 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-title);
 }
 
 a {
-  color: var(--gold-accent);
-  text-underline-offset: 3px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:active {
+  opacity: 0.6;
 }
 
 :focus-visible {
@@ -89,8 +94,7 @@ a {
 }
 
 ::selection {
-  background: var(--gold-300);
-  color: var(--text-on-gold);
+  background: var(--accent-soft);
 }
 
 .mg-visually-hidden {
@@ -105,13 +109,14 @@ a {
   border: 0;
 }
 
+/* Cabeçalho de secção agrupada do iOS: footnote, maiúsculas, cinzento */
 .mg-label {
   font-family: var(--font-ui);
-  font-weight: var(--weight-medium);
-  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-footnote);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--gold-accent);
+  letter-spacing: 0;
+  color: var(--text-secondary);
 }
 
 .mg-stack {
