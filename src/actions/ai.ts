@@ -60,7 +60,7 @@ export async function requestAiProgram(): Promise<Result<{ id: string }>> {
   const blocked = await ready(id);
   if (blocked) return fail(blocked);
   if (!(await db.trainingProfile.findUnique({ where: { userId: id }, select: { userId: true } }))) return fail('ai.errors.profile');
-  const pending = await db.aiRequest.findFirst({ where: { userId: id, kind: 'PROGRAM', status: 'PENDING', createdAt: { gte: new Date(Date.now() - 10 * 60_000) } }, select: { id: true } });
+  const pending = await db.aiRequest.findFirst({ where: { userId: id, kind: 'PROGRAM', status: 'PENDING', createdAt: { gte: new Date(Date.now() - 4 * 60_000) } }, select: { id: true } });
   if (pending) return { ok: true, data: { id: pending.id } };
   if (!(await programQuota(id)).allowed) return fail('ai.errors.limit');
   const req = await db.aiRequest.create({ data: { userId: id, kind: 'PROGRAM' }, select: { id: true } });

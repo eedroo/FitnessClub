@@ -20,9 +20,13 @@ export default async function InsightPage({ params }: { params: { id: string } }
   const { userId, locale } = await bodyPage();
   const [t, req] = await Promise.all([
     getTranslations('ai.insights'),
-    db.aiRequest.findFirst({ where: { id: params.id, userId, kind: 'INSIGHT' }, select: { id: true, status: true, weekStart: true, facts: true, result: true } }),
+    db.aiRequest.findFirst({ where: { id: params.id, userId, kind: 'INSIGHT' }, select: { id: true, status: true, weekStart: true, facts: true, result: true, createdAt: true } }),
   ]);
   if (!req || !req.weekStart) notFound();
+  if (req.status === 'PENDING' && Date.now() - req.createdAt.getTime() > 4 * 60_000) {
+    await db.aiRequest.updateMany({ where: { id: req.id, status: 'PENDING' }, data: { status: 'FAILED', error: 'sem resposta do job', finishedAt: new Date() } });
+    req.status = 'FAILED';
+  }
   const start = fromDbDate(req.weekStart);
   const range = formatDateRange(start, addDays(start, 6), locale);
   const facts = req.facts as WeekFacts | null;
