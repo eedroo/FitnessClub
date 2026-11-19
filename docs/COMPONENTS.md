@@ -295,8 +295,9 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 
 ### Gamificação — Fase D (`src/components/gamification/`, lógica em `src/lib/gamification/`, rota `/achievements`; classes em `gamification.css`)
 - **LevelCard** — selo com o número do nível, barra de XP até ao próximo e a sequência de semanas; em Treinos leva às conquistas. `mg-level`.
-- **BadgeGrid** — emblemas em grelha: ganhos com a data; os outros em cinzento com a barra de progresso. `mg-badges`.
+- **BadgeGrid** — emblemas numa grelha de medalhas centradas (3 ou mais por linha, sem caixas): ganhos com a data; os outros em cinzento com a barra de progresso. `mg-badges`.
 - **StrengthTier** — selo pequeno do nível de força (bolinha na cor do nível + nome); `compact` ao lado do nome do exercício na sessão. `mg-tier`.
+- **ExerciseStrength** — na página do exercício: medalha, nível, valor e próximo nível (ou o aviso para registar o peso). `mg-strength-card`.
 - **SessionRewards** — no resumo da sessão: +XP, subida de nível e emblemas novos. `mg-rewards`.
 - Página `/achievements`: de onde veio o XP (lista agrupada), emblemas e níveis de força (só a pessoa vê; `mg-game__strength`).
 

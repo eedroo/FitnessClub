@@ -15,6 +15,9 @@ import { ExerciseTabs } from '@/components/body/ExerciseTabs';
 import { CompareBlock } from '@/components/body/CompareBlock';
 import { ExerciseProgressChart } from '@/components/body/ExerciseProgressChart';
 import { ExerciseRecords } from '@/components/body/ExerciseRecords';
+import { getStrengthBests } from '@/lib/gamification/server';
+import { STRENGTH_STANDARDS, strengthLevel } from '@/lib/gamification/strength';
+import { ExerciseStrength } from '@/components/gamification/ExerciseStrength';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness.exercises');
@@ -25,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ExerciseRoute({ params }: { params: { id: string } }) {
   const { userId, locale } = await bodyPage();
   const id = decodeURIComponent(params.id).slice(0, 191);
-  const [t, detail, history, user, workouts, progress, note] = await Promise.all([
+  const [t, detail, history, user, workouts, progress, note, strength] = await Promise.all([
     getTranslations('fitness'),
     getExerciseDetail(userId, id, locale),
     getExerciseHistory(userId, id),
@@ -37,7 +40,11 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
     }),
     getExerciseProgress(userId, id),
     getExerciseNote(userId, id),
+    getStrengthBests(userId, [id]),
   ]);
+  const best = strength.best[id];
+  const strengthLvl = best ? strengthLevel(id, best, strength.bodyGrams) : null;
+  const needsWeight = !strengthLvl && !!best?.e1rmGrams && STRENGTH_STANDARDS[id]?.by === 'ratio' && !strength.bodyGrams;
   if (!detail) notFound();
   const { view } = detail;
   return (
@@ -51,6 +58,7 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
             <CustomExerciseForm exercise={{ id: view.id, name: view.name, measure: view.measure, primaryMuscles: view.primaryMuscles, equipment: view.equipment }} />
           )}
         </ExerciseDetail>
+        <ExerciseStrength level={strengthLvl} needsWeight={needsWeight} locale={locale} />
         <NotesCard kind="exercise" targetId={view.id} initial={note?.text ?? null} byAi={note?.byAi ?? false} />
         {/* Séries (histórico + comparação com a anterior) · Evolução · Recordes */}
         <ExerciseTabs

@@ -17,8 +17,8 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
 }
 
 .mg-level__frame {
@@ -31,11 +31,15 @@
 .mg-level__num {
   position: relative;
   font-family: var(--font-rounded);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
   font-variant-numeric: tabular-nums;
-  color: var(--text-primary);
-  text-shadow: 0 1px 2px var(--system-bg);
+  letter-spacing: 0.02em;
+  /* Prata iridescente, como o vidro da moldura */
+  background: linear-gradient(160deg, var(--text-secondary) 10%, var(--highlight) 55%, var(--text-tertiary) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .mg-level__text {
@@ -92,28 +96,31 @@
 .mg-game__fill--diamond { background: var(--tier-diamond); }
 .mg-game__fill--none { background: var(--tier-none); }
 
-/* Emblemas */
+/* Emblemas: grelha de medalhas sem caixas, centradas (como os prémios do app Fitness) */
 .mg-badges {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--space-4) var(--space-2);
   margin: 0;
-  padding: 0;
+  padding: var(--space-4) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
   list-style: none;
 }
 
 .mg-badges__item {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--system-bg-2);
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  text-align: center;
 }
 
 .mg-badges__art {
   width: 72px;
   height: 72px;
+  margin-bottom: var(--space-1);
 }
 
 .mg-badges__item:not(.mg-badges__item--earned) .mg-badges__art {
@@ -122,8 +129,9 @@
 }
 
 .mg-badges__name {
-  font-size: var(--text-sm);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-semibold);
+  line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
@@ -132,6 +140,66 @@
 }
 
 .mg-badges__meta {
+  font-size: var(--text-2xs);
+  line-height: 1.2;
+  color: var(--text-secondary);
+}
+
+.mg-badges__item .mg-badges__bar {
+  width: 56px;
+  height: 4px;
+  margin-top: var(--space-1);
+}
+
+/* Nível de força na página do exercício */
+.mg-strength-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mg-strength-card--empty {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.mg-strength-card__medal {
+  flex: none;
+  width: 56px;
+  height: 56px;
+}
+
+.mg-strength-card__medal--none {
+  border-radius: var(--radius-pill);
+  background: var(--separator);
+}
+
+.mg-strength-card__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-strength-card__label {
+  font-size: var(--text-footnote);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mg-strength-card__tier {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-strength-card__meta {
   font-size: var(--text-footnote);
   color: var(--text-secondary);
 }

@@ -10,12 +10,10 @@ export function BadgeGrid({ badges, formatDate }: { badges: BadgeState[]; format
     <ul className="mg-badges">
       {badges.map((b) => {
         return (
-          <li key={b.id} className={b.earnedOn ? 'mg-badges__item mg-badges__item--earned' : 'mg-badges__item'}>
+          <li key={b.id} title={b.earnedOn ? undefined : t(`${b.id}.how`)} className={b.earnedOn ? 'mg-badges__item mg-badges__item--earned' : 'mg-badges__item'}>
             <Image className="mg-badges__art" src={badgeArt(b.id)} alt="" width={72} height={72} />
             <span className="mg-badges__name">{t(`${b.id}.name`)}</span>
-            <span className="mg-badges__meta">
-              {b.earnedOn ? formatDate(b.earnedOn) : t(`${b.id}.how`)}
-            </span>
+            {b.earnedOn && <span className="mg-badges__meta">{formatDate(b.earnedOn)}</span>}
             {!b.earnedOn && (
               <span className="mg-badges__bar" aria-hidden="true">
                 <span className="mg-badges__fill" style={{ width: `${Math.round(b.progress * 100)}%` }} />
