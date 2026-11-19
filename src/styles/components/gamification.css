@@ -1,0 +1,210 @@
+/* Gamificação (Fase D): nível e XP, emblemas, selo do nível de força e recompensas da sessão */
+
+.mg-level {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mg-level__seal {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(145deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--highlight)));
+  box-shadow: var(--shadow-app-icon);
+  color: var(--on-accent);
+  font-family: var(--font-rounded);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-level__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mg-level__title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-level__bar,
+.mg-badges__bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--separator);
+}
+
+.mg-level__fill,
+.mg-badges__fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--highlight);
+}
+
+.mg-level__meta {
+  font-size: var(--text-footnote);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.mg-game__xp {
+  flex: none;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.mg-game__strength {
+  gap: var(--space-3);
+}
+
+.mg-game__fill--bronze { background: var(--tier-bronze); }
+.mg-game__fill--silver { background: var(--tier-silver); }
+.mg-game__fill--gold { background: var(--tier-gold); }
+.mg-game__fill--platinum { background: var(--tier-platinum); }
+.mg-game__fill--diamond { background: var(--tier-diamond); }
+.mg-game__fill--none { background: var(--tier-none); }
+
+/* Emblemas */
+.mg-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-badges__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-badges__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--separator);
+  color: var(--text-tertiary);
+}
+
+.mg-badges__item--earned .mg-badges__icon {
+  background: var(--highlight-soft);
+  color: var(--highlight);
+}
+
+.mg-badges__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.mg-badges__item:not(.mg-badges__item--earned) .mg-badges__name {
+  color: var(--text-secondary);
+}
+
+.mg-badges__meta {
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+/* Selo do nível de força */
+.mg-tier {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--tier-color) 16%, transparent);
+  color: var(--text-primary);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.mg-tier__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--tier-color);
+}
+
+.mg-tier--compact {
+  margin-left: var(--space-2);
+}
+
+.mg-tier--bronze { --tier-color: var(--tier-bronze); }
+.mg-tier--silver { --tier-color: var(--tier-silver); }
+.mg-tier--gold { --tier-color: var(--tier-gold); }
+.mg-tier--platinum { --tier-color: var(--tier-platinum); }
+.mg-tier--diamond { --tier-color: var(--tier-diamond); }
+
+/* Recompensas no resumo da sessão */
+.mg-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--highlight-soft);
+}
+
+.mg-rewards__xp,
+.mg-rewards__badge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-rewards__xp {
+  color: var(--highlight);
+}
+
+.mg-rewards__up {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--highlight);
+  color: var(--on-accent);
+  font-size: var(--text-footnote);
+}
+
+.mg-rewards__badge {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+}
+
+.mg-game__strength .mg-program-row__meta {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}

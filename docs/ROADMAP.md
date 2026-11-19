@@ -30,7 +30,7 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - **Decidido (19/11):** cada post escolhe público ou só amigos; os convites de treino mostram um pino no mapa sobre a academia ou a região escolhida (nunca a posição exacta).
 - Tab bar sugerida: Treinos · Feed · Sessão/Dia · Comunidade (grupos e convites) · Perfil.
 
-## Fase D — Gamificação
+## Fase D — Gamificação — feita (19/11)
 - **Externo (todos vêem):** nível por XP ganho com consistência e esforço — treinos feitos, séries, semanas seguidas, metas de grupo, recordes pessoais — nunca com a carga absoluta (justo para qualquer corpo). Emblemas por feitos (1.º treino, 10/50/100 treinos, 4 semanas seguidas, 1.º recorde, meta de grupo…).
 - **Interno (só a pessoa vê):** níveis por exercício (Bronze → Prata → Ouro → Platina → Diamante) pela força **relativa**: 1RM estimado ÷ peso do corpo, com limiares por exercício (e opcionalmente por sexo e idade, se a pessoa os indicar). Assim o "Ouro no supino" de uma pessoa de 55 kg e de uma de 95 kg são comparáveis.
 - Pode ser mostrado no perfil se a pessoa quiser ("partilhar os meus níveis de força"), desligado por defeito.

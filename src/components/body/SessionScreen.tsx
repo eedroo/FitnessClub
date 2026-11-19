@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/Button';
 import { ExercisePicker } from './ExercisePicker';
 import { RestTimer } from './RestTimer';
 import { SessionExerciseCard, type ShownSet } from './SessionExerciseCard';
+import type { StrengthBest } from '@/lib/gamification/strength';
 import { canSync, newSetId, postSession, readQueue, writeQueue, type QueuedSet } from './sessionQueue';
 import type { SetValues } from './SetRow';
 import { formatClock, useNow } from './useNow';
@@ -61,7 +62,18 @@ function useWakeLock(on: boolean) {
 }
 
 /** A sessão activa: tudo o que se faz no ginásio, com fila sem rede. */
-export function SessionScreen({ session, exercises, keepAwake }: { session: ActiveSessionView; exercises: ExerciseView[]; keepAwake: boolean }) {
+export function SessionScreen({
+  session,
+  exercises,
+  keepAwake,
+  strength,
+}: {
+  session: ActiveSessionView;
+  exercises: ExerciseView[];
+  keepAwake: boolean;
+  /** Melhores marcas e peso do corpo para o selo de nível de força em cada exercício (Fase D). */
+  strength?: { bodyGrams: number | null; best: Record<string, StrengthBest> };
+}) {
   const t = useTranslations('fitness.session');
   const te = useTranslations();
   const router = useRouter();
@@ -276,6 +288,7 @@ export function SessionScreen({ session, exercises, keepAwake }: { session: Acti
           item={item}
           sets={shown(item.exercise.id)}
           current={focusId === item.exercise.id}
+          strength={strength ? { bodyGrams: strength.bodyGrams, best: strength.best[item.exercise.id] } : undefined}
           onLog={(v) => log(item.exercise.id, item.target.restSec, v)}
           onUpdate={async (setId, v) => {
             const res = await updateSet(setId, { reps: v.reps ?? null, weightGrams: v.weightGrams ?? null, durationSec: v.durationSec ?? null });

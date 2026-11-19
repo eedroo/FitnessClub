@@ -7,6 +7,8 @@ import { prefillSet } from '@/lib/fitness/session';
 import { suggestProgression } from '@/lib/fitness/progression';
 import { compareWithPrevious, summarize } from '@/lib/fitness/progress';
 import { CompareCard } from './CompareCard';
+import { mergeBest, strengthLevel, type StrengthBest } from '@/lib/gamification/strength';
+import { StrengthTier } from '@/components/gamification/StrengthTier';
 import type { ActiveSessionView } from '@/lib/fitness/types';
 import { SetInputRow, SetRow, useKg, type SetValues } from './SetRow';
 import { useTargetText } from './WorkoutItemRow';
@@ -26,6 +28,7 @@ export function SessionExerciseCard({
   item,
   sets,
   current,
+  strength,
   onLog,
   onUpdate,
   onDelete,
@@ -34,6 +37,8 @@ export function SessionExerciseCard({
   sets: ShownSet[];
   /** Em foco: o exercício que se está a fazer (passa ao seguinte quando as séries do alvo estão feitas). */
   current: boolean;
+  /** Para o selo do nível de força (muda logo que uma série nova o faz subir). */
+  strength?: { bodyGrams: number | null; best: StrengthBest | undefined };
   onLog: (v: SetValues) => string | null;
   onUpdate: (setId: string, v: SetValues) => Promise<string | null>;
   onDelete: (setId: string) => Promise<void>;
@@ -71,10 +76,15 @@ export function SessionExerciseCard({
     ? suggestion.sets.map((s) => s.reps).join(' · ') + (suggestion.sets[0]?.weightGrams != null ? ` × ${t('kgShort', { kg: kg(suggestion.sets[0].weightGrams) })}` : '')
     : null;
 
+  const tier = strength
+    ? (strengthLevel(exercise.id, sets.reduce<StrengthBest>((b, s) => mergeBest(b, { reps: s.reps ?? null, weightGrams: s.weightGrams ?? null }), strength.best ?? { e1rmGrams: null, maxReps: null }), strength.bodyGrams)?.tier ?? null)
+    : null;
+
   return (
     <article ref={ref} className={`mg-session-ex${current ? ' mg-session-ex--current' : ''}`} aria-current={current ? 'step' : undefined}>
       <h2 className="mg-session-ex__name">
         <Link href={`/exercises/${encodeURIComponent(exercise.id)}`}>{exercise.name}</Link>
+        <StrengthTier tier={tier} compact />
       </h2>
       {hasTarget && (
         <p className="mg-session-ex__target">

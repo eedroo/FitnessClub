@@ -1110,5 +1110,92 @@
       "next": "Next",
       "create": "Create programme"
     }
+  },
+  "game": {
+    "title": "Achievements",
+    "level": "Level {n}",
+    "toNext": "Progress to the next level",
+    "xpToNext": "{into}/{span} XP to level {next}",
+    "streak": "{n, plural, one {# week in a row} other {# weeks in a row}}",
+    "xp": "{n} XP",
+    "from": {
+      "sessions": "{n, plural, one {# workout done} other {# workouts done}}",
+      "sets": "{n, plural, one {# set} other {# sets}}",
+      "prs": "{n, plural, one {# record} other {# records}}",
+      "weeks": "{n, plural, one {# week completed} other {# weeks completed}}"
+    },
+    "fair": "XP comes from consistency and effort, never from how much you lift, so it's fair for every body. A week counts when you do your planned workouts (up to 2).",
+    "badgesTitle": "Badges",
+    "rewards": "Rewards",
+    "xpGained": "+{n} XP",
+    "levelUp": "You reached level {n}!",
+    "newBadge": "New badge: {name}",
+    "tiers": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum",
+      "diamond": "Diamond"
+    },
+    "badges": {
+      "first_workout": {
+        "name": "First workout",
+        "how": "Finish your first workout."
+      },
+      "workouts_10": {
+        "name": "10 workouts",
+        "how": "Do 10 workouts."
+      },
+      "workouts_50": {
+        "name": "50 workouts",
+        "how": "Do 50 workouts."
+      },
+      "workouts_100": {
+        "name": "100 workouts",
+        "how": "Do 100 workouts."
+      },
+      "workouts_250": {
+        "name": "250 workouts",
+        "how": "Do 250 workouts."
+      },
+      "first_pr": {
+        "name": "First record",
+        "how": "Beat a personal record."
+      },
+      "prs_25": {
+        "name": "25 records",
+        "how": "Beat 25 personal records."
+      },
+      "prs_100": {
+        "name": "100 records",
+        "how": "Beat 100 personal records."
+      },
+      "sets_1000": {
+        "name": "1,000 sets",
+        "how": "Log 1,000 sets."
+      },
+      "streak_4": {
+        "name": "4 weeks in a row",
+        "how": "Complete 4 weeks in a row."
+      },
+      "streak_12": {
+        "name": "12 weeks in a row",
+        "how": "Complete 12 weeks in a row."
+      },
+      "streak_26": {
+        "name": "26 weeks in a row",
+        "how": "Complete half a year of weeks in a row."
+      }
+    },
+    "strength": {
+      "title": "Strength level",
+      "private": "Only you see this. It compares your estimated 1RM with your body weight (or reps, for bodyweight exercises), with the same standard for everyone.",
+      "needsWeight": "Log your weight to see your level in loaded exercises.",
+      "ratio": "{v}× your body weight",
+      "reps": "{n, plural, one {# rep} other {# reps}}",
+      "next": "next: {v}",
+      "belowBronze": "Almost bronze",
+      "empty": "Do bench press, squats, deadlifts, overhead press, rows, pull-ups or push-ups to see your level."
+    }
   }
 }

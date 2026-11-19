@@ -1110,5 +1110,92 @@
       "next": "Seguinte",
       "create": "Criar programa"
     }
+  },
+  "game": {
+    "title": "Conquistas",
+    "level": "Nível {n}",
+    "toNext": "Progresso até ao próximo nível",
+    "xpToNext": "{into}/{span} XP para o nível {next}",
+    "streak": "{n, plural, one {# semana seguida} other {# semanas seguidas}}",
+    "xp": "{n} XP",
+    "from": {
+      "sessions": "{n, plural, one {# treino feito} other {# treinos feitos}}",
+      "sets": "{n, plural, one {# série} other {# séries}}",
+      "prs": "{n, plural, one {# recorde} other {# recordes}}",
+      "weeks": "{n, plural, one {# semana cumprida} other {# semanas cumpridas}}"
+    },
+    "fair": "O XP vem da constância e do esforço, nunca do peso que levantas: é justo para qualquer corpo. Uma semana conta quando fazes os treinos do teu plano (até 2).",
+    "badgesTitle": "Emblemas",
+    "rewards": "Recompensas",
+    "xpGained": "+{n} XP",
+    "levelUp": "Subiste ao nível {n}!",
+    "newBadge": "Emblema novo: {name}",
+    "tiers": {
+      "bronze": "Bronze",
+      "silver": "Prata",
+      "gold": "Ouro",
+      "platinum": "Platina",
+      "diamond": "Diamante"
+    },
+    "badges": {
+      "first_workout": {
+        "name": "Primeiro treino",
+        "how": "Termina o teu primeiro treino."
+      },
+      "workouts_10": {
+        "name": "10 treinos",
+        "how": "Faz 10 treinos."
+      },
+      "workouts_50": {
+        "name": "50 treinos",
+        "how": "Faz 50 treinos."
+      },
+      "workouts_100": {
+        "name": "100 treinos",
+        "how": "Faz 100 treinos."
+      },
+      "workouts_250": {
+        "name": "250 treinos",
+        "how": "Faz 250 treinos."
+      },
+      "first_pr": {
+        "name": "Primeiro recorde",
+        "how": "Bate um recorde pessoal."
+      },
+      "prs_25": {
+        "name": "25 recordes",
+        "how": "Bate 25 recordes pessoais."
+      },
+      "prs_100": {
+        "name": "100 recordes",
+        "how": "Bate 100 recordes pessoais."
+      },
+      "sets_1000": {
+        "name": "1000 séries",
+        "how": "Regista 1000 séries."
+      },
+      "streak_4": {
+        "name": "4 semanas seguidas",
+        "how": "Cumpre 4 semanas seguidas."
+      },
+      "streak_12": {
+        "name": "12 semanas seguidas",
+        "how": "Cumpre 12 semanas seguidas."
+      },
+      "streak_26": {
+        "name": "26 semanas seguidas",
+        "how": "Cumpre meio ano de semanas seguidas."
+      }
+    },
+    "strength": {
+      "title": "Nível de força",
+      "private": "Só tu vês. Compara o teu 1RM estimado com o teu peso do corpo (ou as repetições, nos exercícios com o peso do corpo), com o mesmo padrão para toda a gente.",
+      "needsWeight": "Regista o teu peso para veres o nível nos exercícios com carga.",
+      "ratio": "{v}× o teu peso",
+      "reps": "{n, plural, one {# repetição} other {# repetições}}",
+      "next": "próximo: {v}",
+      "belowBronze": "Quase bronze",
+      "empty": "Faz supino, agachamento, terra, desenvolvimento, remada, barra fixa ou flexões para veres o teu nível."
+    }
   }
 }

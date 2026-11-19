@@ -10,6 +10,8 @@ import { ProgramForm } from '@/components/body/ProgramForm';
 import { StartSessionButton } from '@/components/body/StartSessionButton';
 import { db } from '@/lib/db';
 import { getAiAccess } from '@/lib/ai/server';
+import { getGamification } from '@/lib/gamification/server';
+import { LevelCard } from '@/components/gamification/LevelCard';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness');
@@ -19,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Treinos: programas, os meus exercícios e um treino livre (as boas-vindas são o onboarding, em `/welcome`). */
 export default async function BodyHome() {
   const { userId } = await bodyPage();
-  const [t, ti, programs, custom, profile, ai, insight] = await Promise.all([
+  const [t, ti, programs, custom, profile, ai, insight, game] = await Promise.all([
     getTranslations('fitness'),
     getTranslations('ai.insights'),
     listPrograms(userId),
@@ -31,6 +33,7 @@ export default async function BodyHome() {
       orderBy: { weekStart: 'desc' },
       select: { id: true, result: true, readAt: true },
     }),
+    getGamification(userId),
   ]);
   const insightHeadline = (insight?.result as { headline?: string } | null)?.headline;
   const templates = FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }));
@@ -39,6 +42,7 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
+        <LevelCard summary={game.summary} href="/achievements" />
         {/* Retrospectiva da semana (IA): a mais recente, com ponto azul enquanto não foi lida. */}
         {ai.feature && (
           <Link href={insight && !insight.readAt ? `/insights/${insight.id}` : '/insights'} className="mg-program-row">

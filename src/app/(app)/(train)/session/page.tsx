@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { bodyPage } from '@/lib/fitness/page';
 import { getActiveSession, getFitnessPrefs, listExercises } from '@/lib/fitness/queries';
 import { SessionScreen } from '@/components/body/SessionScreen';
+import { getStrengthBests } from '@/lib/gamification/server';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness.session');
@@ -15,9 +16,11 @@ export default async function SessionRoute() {
   const { userId, locale } = await bodyPage();
   const [session, exercises, prefs] = await Promise.all([getActiveSession(userId, locale), listExercises(userId, locale), getFitnessPrefs(userId)]);
   if (!session) redirect('/');
+  // Níveis de força ao vivo (só os exercícios com padrão): melhores marcas e peso do corpo.
+  const strength = await getStrengthBests(userId, session.items.map((i) => i.exercise.id));
   return (
     <div className="mg-body-shell__main">
-      <SessionScreen session={session} exercises={exercises} keepAwake={prefs.keepAwake} />
+      <SessionScreen session={session} exercises={exercises} keepAwake={prefs.keepAwake} strength={strength} />
     </div>
   );
 }

@@ -136,6 +136,13 @@
   --recovery-mid: #8DB8FF;
   --recovery-rested: #D1D1D6;
   --pr-gold: #FFB800;
+  /* Níveis de força (Fase D): bronze, prata, ouro, platina, diamante */
+  --tier-bronze: #B0703A;
+  --tier-silver: #8E9AA6;
+  --tier-gold: #D9A400;
+  --tier-platinum: #4FA3A5;
+  --tier-diamond: #5B7CFF;
+  --tier-none: var(--text-tertiary);
 
   /* Raios (cantos contínuos do iOS aproximados) */
   --radius-xs: 6px;
@@ -279,4 +286,9 @@
   --recovery-mid: #2D5A9E;
   --recovery-rested: #3A3A3C;
   --pr-gold: #FFD60A;
+  --tier-bronze: #D48A4E;
+  --tier-silver: #C3CCD6;
+  --tier-gold: #FFD24A;
+  --tier-platinum: #6FD3D5;
+  --tier-diamond: #8CA4FF;
 }

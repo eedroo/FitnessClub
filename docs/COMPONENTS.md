@@ -292,3 +292,10 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **InsightRead** (client) — marca a retrospectiva como lida ao abrir.
 - **AiSettingsCard** (client) — Definições › Privacidade: consentimento da IA e a retrospectiva ao domingo.
 - Revisão do programa (`mg-ai-program`, `mg-ai-workout`), espera (`mg-ai-wait`), listas da retrospectiva (`mg-ai-insight__list`) e ponto de não lida (`mg-ai-dot`) vivem nas páginas, com as classes de `ai.css`; os números da retrospectiva usam os mosaicos de `day-metrics.css`.
+
+### Gamificação — Fase D (`src/components/gamification/`, lógica em `src/lib/gamification/`, rota `/achievements`; classes em `gamification.css`)
+- **LevelCard** — selo com o número do nível, barra de XP até ao próximo e a sequência de semanas; em Treinos leva às conquistas. `mg-level`.
+- **BadgeGrid** — emblemas em grelha: ganhos com a data; os outros em cinzento com a barra de progresso. `mg-badges`.
+- **StrengthTier** — selo pequeno do nível de força (bolinha na cor do nível + nome); `compact` ao lado do nome do exercício na sessão. `mg-tier`.
+- **SessionRewards** — no resumo da sessão: +XP, subida de nível e emblemas novos. `mg-rewards`.
+- Página `/achievements`: de onde veio o XP (lista agrupada), emblemas e níveis de força (só a pessoa vê; `mg-game__strength`).

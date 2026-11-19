@@ -127,3 +127,10 @@ export function lastFinishedWeekStart(today: DateISO): DateISO {
 export function shiftWeek(start: DateISO, n: number): DateISO {
   return iso(dt(start).minus({ days: 7 * n }));
 }
+
+/** Domingos de `from` até `to` (inclusive), por ordem. Ambos têm de ser domingos. */
+export function sundaysBetween(from: DateISO, to: DateISO): DateISO[] {
+  const out: DateISO[] = [];
+  for (let d = dt(from); d <= dt(to); d = d.plus({ days: 7 })) out.push(iso(d));
+  return out;
+}
