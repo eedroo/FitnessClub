@@ -1,4 +1,4 @@
-version: 2026-11-19.3
+version: 2026-11-19.4
 date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
@@ -17,6 +17,7 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 
 - **Account:** name, email, password (stored only as an irreversible hash), language, theme, time zone, and the dates you signed up and accepted these documents.
 - **Training:** programmes, workouts and exercises you create, sessions (start, end, notes), sets (weight, reps, time or distance, effort) and the records calculated from them.
+- **Groups and planned workouts:** the groups you're in, and the workouts you plan or join (date, time, type and the place chosen in a search — gym, park or neighbourhood — never your GPS location). "Near me" uses your location only on your phone to centre the map; it isn't stored or sent.
 - **Profile and community:** every account has a profile (@, name, bio, photo if you add one, whether you show strength levels), friendships, blocks, posts (text and the workout summary you choose to share), likes, comments, reports and notifications.
 - **Training profile:** goals, level, equipment, focus muscles, training days and session length, and what you write in your requests and in what you want to avoid.
 - **Artificial intelligence (with consent):** the programmes and weekly reviews created by AI, and the cost of each request.
@@ -53,6 +54,7 @@ We use these providers, who process data only on our behalf and according to our
 - **Vercel** — hosting for the app and the exercise images;
 - **Neon** — database;
 - **Inngest** — scheduled tasks (end-of-rest alert, AI requests);
+- **OpenStreetMap** — map and place search for planned workouts: receives only the text you search for and, when showing the map, your device's IP address (like any website);
 - **Google (Gemini API)** — artificial intelligence, only with your consent (see section 4);
 - **Upstash** — usage limits (security);
 - **Resend** — sending emails;

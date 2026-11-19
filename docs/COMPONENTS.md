@@ -325,3 +325,9 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **GroupForm** (client) — nome, descrição, público ou só por link, meta semanal (tipo e número); editar e apagar.
 - **GroupActions** / **RemoveMemberButton** / **JoinByCode** (client) — entrar, sair, convidar (partilhar o link), tirar membros.
 - Meta da semana (`mg-group-goal`) e ranking (`mg-ranking`) vivem na página do grupo.
+
+### Treinos marcados — Fase C4 (`src/components/invites/`, lógica em `src/lib/social/invites*.ts`, rotas `/invites`, `/invites/new`, `/invites/[id]`)
+- **InviteMap** (client) — mapa do OpenStreetMap (Leaflet) com pinos (`mg-map-pin`) e "Perto de mim" (só no telemóvel). `mg-map`.
+- **MapClient** (client) — carrega o mapa só no browser.
+- **InviteForm** (client) — título, tipo, dia e hora, duração, máx. pessoas, pesquisa do local (com pré-visualização no mapa), quem vê, amigos a convidar e detalhes. `mg-invite-search`, `mg-invite-place`.
+- **InviteActions** / **RequestButtons** (client) — quero ir, vou / não posso, já não vou, retirar pedido, cancelar; o anfitrião aceita ou recusa pedidos.

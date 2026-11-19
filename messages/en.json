@@ -129,6 +129,18 @@
         "COMMENT": {
           "title": "New comment",
           "body": "{name} commented on your post."
+        },
+        "INVITE": {
+          "title": "Workout invite",
+          "body": "{name} invited you to a workout."
+        },
+        "INVITE_REQUEST": {
+          "title": "Join request",
+          "body": "{name} wants to join your workout."
+        },
+        "INVITE_ACCEPTED": {
+          "title": "Workout confirmed",
+          "body": "{name} confirmed the workout."
         }
       }
     },
@@ -1463,7 +1475,10 @@
         "FRIEND_REQUEST": "{name} wants to be your friend",
         "FRIEND_ACCEPTED": "{name} accepted your request",
         "LIKE": "{name} liked your post",
-        "COMMENT": "{name} commented on your post"
+        "COMMENT": "{name} commented on your post",
+        "INVITE": "{name} invited you to a workout",
+        "INVITE_REQUEST": "{name} wants to join your workout",
+        "INVITE_ACCEPTED": "{name} confirmed the workout"
       }
     },
     "errors": {
@@ -1539,6 +1554,76 @@
       "tooMany": "You're already in 20 groups, the maximum.",
       "full": "This group is full (50 people).",
       "notFound": "This group no longer exists."
+    }
+  },
+  "invites": {
+    "title": "Workout meetups",
+    "new": "Plan a workout",
+    "list": "List",
+    "mapTab": "Map",
+    "empty": "No workouts planned in the coming days. Plan one and invite friends!",
+    "going": "{n, plural, one {# going} other {# going}}",
+    "minutes": "{n} min",
+    "canceled": "canceled",
+    "canceledLong": "This workout was canceled.",
+    "hosting": "you're hosting",
+    "status": {
+      "INVITED": "you're invited",
+      "REQUESTED": "request sent",
+      "GOING": "you're going",
+      "DECLINED": "not going"
+    },
+    "visibility": {
+      "PUBLIC": "Public",
+      "FRIENDS": "Friends",
+      "DIRECT": "Invite only"
+    },
+    "openMap": "Open in maps",
+    "who": "Who's going",
+    "host": "Host",
+    "requests": "Requests to join",
+    "waiting": "Awaiting reply",
+    "map": {
+      "label": "Workouts map",
+      "nearMe": "Near me",
+      "locError": "Couldn't get your location. It's only used on this phone to centre the map."
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "Run in the park",
+      "type": "Workout type",
+      "date": "Date",
+      "time": "Time",
+      "duration": "Length (min)",
+      "maxPeople": "Max people",
+      "place": "Where",
+      "placePlaceholder": "Gym, park or neighbourhood",
+      "placeHint": "Pick a public place (gym, park, neighbourhood). The pin goes there, never on your location.",
+      "search": "Search",
+      "noPlaces": "Nothing found. Try adding the city.",
+      "changePlace": "Change place",
+      "who": "Who can see it",
+      "inviteFriends": "Invite friends",
+      "description": "Details (optional)",
+      "create": "Plan workout"
+    },
+    "actions": {
+      "ask": "I want to go",
+      "accept": "I'm in",
+      "decline": "Can't make it",
+      "leave": "I can't go anymore",
+      "withdraw": "Withdraw request",
+      "cancel": "Cancel workout",
+      "cancelConfirm": "Cancel this workout for everyone?",
+      "approve": "Accept",
+      "reject": "Decline"
+    },
+    "errors": {
+      "invalid": "Check the title, date and place.",
+      "date": "Pick a date between today and 60 days from now.",
+      "place": "Choose the place.",
+      "search": "Place search failed. Please try again.",
+      "full": "This workout is full."
     }
   }
 }

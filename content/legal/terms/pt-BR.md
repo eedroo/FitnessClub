@@ -1,4 +1,4 @@
-version: 2026-11-19.3
+version: 2026-11-19.4
 date: 2026-11-19
 
 > **Rascunho — revisar com advogado antes do lançamento.**

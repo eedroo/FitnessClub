@@ -21,7 +21,7 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - **Privacidade:** a Política e os Termos dizem hoje "sem IA"; é preciso actualizá-los (nova versão = re-aceitação) e pedir consentimento próprio para enviar dados de treino à IA. Nunca nome, email nem fotos.
 - **Decidido (19/11):** Gemini 2.5 Flash (Google AI Studio; a chave só na Vercel), só para premium; a Política de Privacidade e os Termos são actualizados (re-aceitação) antes de ligar.
 
-## Fase C — Rede social (C1 feita a 19/11: perfis, amigos, feed, gostos, comentários, denúncias; faltam C2 fotos, C3 grupos, C4 convites e mapa)
+## Fase C — Rede social — feita (19/11: C1 perfis, amigos, feed; C2 fotos; C3 grupos; C4 treinos marcados com mapa)
 - Perfil público com @, foto/avatar, nível, emblemas; amigos mútuos (pedido/aceitar), bloquear e denunciar.
 - Feed (novo separador na tab bar): posts de texto e fotos; um treino terminado pode virar post (resumo + fotos); gosto e comentários; visibilidade pública, só amigos ou privado.
 - Grupos com metas (frequência, Glow/XP) e competições internas com ranking.

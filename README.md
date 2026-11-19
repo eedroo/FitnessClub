@@ -79,3 +79,4 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Comunidade: Feed → entrar (@, nome, regras) → publicar um treino (só amigos / público) → outra conta pede amizade, gosta e comenta → avisos no sino → aceitar → bloquear e denunciar → Admin › Denúncias esconde.
 - [ ] Fotos: + no Feed → até 4 fotos → publicar; foto de perfil em Eu → Editar perfil; apagar a publicação apaga as fotos.
 - [ ] Grupos: Feed → bandeira → Criar grupo (meta) → Convidar (link) → outra conta entra → ranking da semana.
+- [ ] Treinos marcados: Feed → pino → Marcar um treino → procurar o local → convidar amigos → outra conta "Quero ir" → anfitrião aceita → aviso → mapa com os pinos e "Perto de mim".

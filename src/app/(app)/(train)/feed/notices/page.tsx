@@ -26,7 +26,7 @@ export default async function NoticesPage() {
           <ul className="mg-program-list">
             {notices.map((n) => (
               <li key={n.id}>
-                <Link href={n.postId ? `/p/${n.postId}` : n.kind === 'FRIEND_REQUEST' ? '/friends' : `/u/${n.actor.handle}`} className="mg-program-row mg-notice">
+                <Link href={n.inviteId ? `/invites/${n.inviteId}` : n.postId ? `/p/${n.postId}` : n.kind === 'FRIEND_REQUEST' ? '/friends' : `/u/${n.actor.handle}`} className="mg-program-row mg-notice">
                   {!n.read && <span className="mg-ai-dot" aria-label={t('new')} />}
                   <Avatar name={n.actor.displayName} url={n.actor.avatarUrl} size={36} />
                   <span className="mg-program-row__text">

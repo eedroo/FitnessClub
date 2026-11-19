@@ -129,6 +129,18 @@
         "COMMENT": {
           "title": "Novo comentário",
           "body": "{name} comentou a tua publicação."
+        },
+        "INVITE": {
+          "title": "Convite para treinar",
+          "body": "{name} convidou-te para um treino."
+        },
+        "INVITE_REQUEST": {
+          "title": "Pedido para treinar",
+          "body": "{name} quer ir ao teu treino."
+        },
+        "INVITE_ACCEPTED": {
+          "title": "Treino confirmado",
+          "body": "{name} confirmou o treino."
         }
       }
     },
@@ -1463,7 +1475,10 @@
         "FRIEND_REQUEST": "{name} quer ser teu amigo",
         "FRIEND_ACCEPTED": "{name} aceitou o teu pedido",
         "LIKE": "{name} gostou da tua publicação",
-        "COMMENT": "{name} comentou a tua publicação"
+        "COMMENT": "{name} comentou a tua publicação",
+        "INVITE": "{name} convidou-te para um treino",
+        "INVITE_REQUEST": "{name} quer ir ao teu treino",
+        "INVITE_ACCEPTED": "{name} confirmou o treino"
       }
     },
     "errors": {
@@ -1539,6 +1554,76 @@
       "tooMany": "Já estás em 20 grupos, o máximo.",
       "full": "Este grupo está cheio (50 pessoas).",
       "notFound": "Este grupo já não existe."
+    }
+  },
+  "invites": {
+    "title": "Treinos marcados",
+    "new": "Marcar um treino",
+    "list": "Lista",
+    "mapTab": "Mapa",
+    "empty": "Nenhum treino marcado nos próximos dias. Marca um e convida amigos!",
+    "going": "{n, plural, one {# vai} other {# vão}}",
+    "minutes": "{n} min",
+    "canceled": "cancelado",
+    "canceledLong": "Este treino foi cancelado.",
+    "hosting": "és o anfitrião",
+    "status": {
+      "INVITED": "foste convidado",
+      "REQUESTED": "pedido enviado",
+      "GOING": "vais",
+      "DECLINED": "não vais"
+    },
+    "visibility": {
+      "PUBLIC": "Público",
+      "FRIENDS": "Amigos",
+      "DIRECT": "Só convidados"
+    },
+    "openMap": "Abrir no mapa",
+    "who": "Quem vai",
+    "host": "Anfitrião",
+    "requests": "Pedidos para ir",
+    "waiting": "À espera de resposta",
+    "map": {
+      "label": "Mapa dos treinos",
+      "nearMe": "Perto de mim",
+      "locError": "Não foi possível saber onde estás. A localização só é usada neste telemóvel para centrar o mapa."
+    },
+    "form": {
+      "title": "Título",
+      "titlePlaceholder": "Corrida no parque",
+      "type": "Tipo de treino",
+      "date": "Dia",
+      "time": "Hora",
+      "duration": "Duração (min)",
+      "maxPeople": "Máx. pessoas",
+      "place": "Onde",
+      "placePlaceholder": "Academia, parque ou bairro",
+      "placeHint": "Escolhe um sítio público (a academia, um parque, o bairro). O pino fica nesse sítio, nunca na tua localização.",
+      "search": "Procurar",
+      "noPlaces": "Nada encontrado. Tenta com o nome da cidade.",
+      "changePlace": "Mudar o local",
+      "who": "Quem pode ver",
+      "inviteFriends": "Convidar amigos",
+      "description": "Detalhes (opcional)",
+      "create": "Marcar treino"
+    },
+    "actions": {
+      "ask": "Quero ir",
+      "accept": "Vou",
+      "decline": "Não posso",
+      "leave": "Já não vou",
+      "withdraw": "Retirar o pedido",
+      "cancel": "Cancelar o treino",
+      "cancelConfirm": "Cancelar este treino para toda a gente?",
+      "approve": "Aceitar",
+      "reject": "Recusar"
+    },
+    "errors": {
+      "invalid": "Verifica o título, o dia e o local.",
+      "date": "Escolhe um dia entre hoje e daqui a 60 dias.",
+      "place": "Escolhe o local.",
+      "search": "A pesquisa de locais falhou. Tenta outra vez.",
+      "full": "Este treino já está cheio."
     }
   }
 }

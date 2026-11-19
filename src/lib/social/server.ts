@@ -241,5 +241,5 @@ export async function getNotices(userId: string) {
   });
   return rows
     .filter((r) => r.actor.socialProfile)
-    .map((r) => ({ id: r.id, kind: r.kind, postId: r.postId, read: !!r.readAt, createdAt: r.createdAt.toISOString(), actor: r.actor.socialProfile! }));
+    .map((r) => ({ id: r.id, kind: r.kind, postId: r.postId, inviteId: r.inviteId, read: !!r.readAt, createdAt: r.createdAt.toISOString(), actor: r.actor.socialProfile! }));
 }

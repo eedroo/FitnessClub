@@ -1,4 +1,4 @@
-version: 2026-11-19.3
+version: 2026-11-19.4
 date: 2026-11-19
 
 > **Rascunho — revisar com advogado antes do lançamento.**
@@ -20,6 +20,7 @@ Para qualquer dúvida sobre privacidade, escreva para [privacidade@onda.work](ma
 - **Dados de saúde (com consentimento explícito):** pesagens e a sua meta de peso (objetivo e ritmo).
 - **Perfil de treino:** objetivos, nível, equipamento, músculos em foco, dias e tempo de treino, e o que você escreve nos pedidos e no que quer evitar.
 - **Inteligência artificial (com consentimento):** os programas propostos e as retrospectivas semanais criados pela IA, e o custo de cada pedido.
+- **Grupos e treinos marcados:** os grupos em que você está e os treinos que você marca ou vai (dia, hora, tipo e o local escolhido numa busca — academia, parque ou bairro — nunca a sua localização GPS). "Perto de mim" usa a localização só no seu celular para centralizar o mapa; ela não é guardada nem enviada.
 - **Perfil e comunidade:** toda conta tem um perfil (@, nome, bio, foto se você colocar, se mostra os níveis de força), amizades, bloqueios, publicações (texto e o resumo do treino que você escolhe compartilhar), curtidas, comentários, denúncias e avisos.
 - **Preferências:** tempo de descanso padrão, aviso de fim do descanso e tela acesa durante o treino.
 - **Notificações:** inscrições de notificações push dos seus dispositivos (endereço técnico do serviço de push e chaves de criptografia).
@@ -53,6 +54,7 @@ Usamos estes prestadores, que tratam dados apenas em nosso nome e segundo as nos
 - **Vercel** — hospedagem do app e das imagens dos exercícios;
 - **Neon** — banco de dados;
 - **Inngest** — tarefas agendadas (aviso de fim do descanso, pedidos à IA);
+- **OpenStreetMap** — mapa e busca de locais dos treinos marcados: recebe só o texto que você busca e, ao mostrar o mapa, o endereço IP do seu dispositivo (como qualquer site);
 - **Google (Gemini API)** — inteligência artificial, só com o seu consentimento (veja a seção 4);
 - **Upstash** — limites de uso (segurança);
 - **Resend** — envio de e-mails;

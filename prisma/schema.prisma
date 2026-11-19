@@ -98,6 +98,8 @@ model User {
   socialNoticesSent SocialNotice[]     @relation("NoticeFrom")
   groupsOwned       Group[]
   groupMemberships  GroupMember[]
+  invitesHosted     WorkoutInvite[]
+  inviteGuests      InviteGuest[]
 }
 
 enum AuthTokenType {
@@ -560,6 +562,9 @@ enum SocialNoticeKind {
   FRIEND_ACCEPTED
   LIKE
   COMMENT
+  INVITE // convidaram-me para um treino
+  INVITE_REQUEST // alguém quer ir ao meu treino
+  INVITE_ACCEPTED // o anfitrião aceitou-me / aceitaram o meu convite
 }
 
 // Avisos da comunidade dentro da app (sino do Feed).
@@ -569,6 +574,7 @@ model SocialNotice {
   actorId   String
   kind      SocialNoticeKind
   postId    String?
+  inviteId  String?
   readAt    DateTime?
   createdAt DateTime         @default(now())
   user      User             @relation("NoticeTo", fields: [userId], references: [id], onDelete: Cascade)
@@ -610,4 +616,55 @@ model GroupMember {
 
   @@id([groupId, userId])
   @@index([userId])
+}
+
+// ─── Fase C4: convites de treino com o local no mapa ─────────────────────────────────────────────
+
+enum InviteVisibility {
+  PUBLIC // qualquer pessoa com conta vê e pode pedir para ir
+  FRIENDS // os amigos do anfitrião
+  DIRECT // só as pessoas convidadas
+}
+
+enum GuestStatus {
+  INVITED // o anfitrião convidou; falta a resposta
+  REQUESTED // pediu para ir; falta o anfitrião aceitar
+  GOING
+  DECLINED
+}
+
+// Treino marcado: o local é uma academia ou uma região escolhida numa pesquisa (nunca a posição GPS de ninguém).
+model WorkoutInvite {
+  id           String           @id @default(cuid())
+  hostId       String
+  title        String
+  description  String?
+  activityType String // chave de src/lib/activities/types.ts
+  startsAt     DateTime
+  durationMin  Int?
+  placeName    String
+  placeLat     Float // arredondado a ~100 m
+  placeLng     Float
+  visibility   InviteVisibility @default(FRIENDS)
+  maxPeople    Int?
+  canceledAt   DateTime?
+  createdAt    DateTime         @default(now())
+  host         User             @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  guests       InviteGuest[]
+
+  @@index([startsAt])
+  @@index([hostId, startsAt])
+}
+
+model InviteGuest {
+  inviteId  String
+  userId    String
+  status    GuestStatus
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  invite    WorkoutInvite @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([inviteId, userId])
+  @@index([userId, status])
 }

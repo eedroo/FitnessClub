@@ -130,7 +130,6 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Limites por dia:** 20 posts, 200 comentários, 50 pedidos de amizade, 30 denúncias.
 - **Navegação:** 5 separadores — Feed · Treinos · Sessões · Dia · Eu (o Corpo passou a Eu: o meu perfil e o corpo).
 - Termos e Política na versão `2026-11-19.2` (regras da comunidade e dados sociais). Entra tudo na exportação; apagar a conta apaga tudo em cascata.
-- **Próximas partes:** C4 convites de treino com pino no mapa (OpenStreetMap; academia ou região, nunca a posição exacta).
 - **Treinos:** cabeçalho com o nível e a barra de XP; depois os programas, "Novo programa", os meus exercícios e a retrospectiva da semana. Na página do exercício só o selo do nível de força (leva às conquistas).
 
 ## Fotos — Fase C2
@@ -143,3 +142,10 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Ranking da semana** pela meta (empates por XP e minutos), com a barra até à meta e "X de N já cumpriram". Só os membros vêem o ranking.
 - **Entrar:** grupos públicos aparecem na lista e entra-se logo; privados só com o link de convite (`/groups/join/<código>`). Máx. 50 pessoas por grupo e 20 grupos por pessoa; 5 grupos novos por dia.
 - O dono edita, apaga e tira membros; quem não é dono sai quando quer. Entra na exportação.
+
+## Treinos marcados — Fase C4
+- **Convite de treino:** título, tipo (lista das atividades), dia e hora (até 60 dias), duração, máximo de pessoas, detalhes e o **local escolhido numa pesquisa** (academia, parque ou bairro), arredondado a ~100 m. Nunca a posição GPS de ninguém.
+- **Quem vê:** público (qualquer pessoa com conta pode pedir para ir), amigos do anfitrião, ou só convidados. Convidam-se amigos; os outros pedem "Quero ir" e o anfitrião aceita ou recusa. O anfitrião cancela.
+- **Mapa:** OpenStreetMap com Leaflet (créditos no mapa), pinos próprios; "Perto de mim" usa a localização só no telemóvel para centrar o mapa (não é guardada nem enviada). A pesquisa de locais usa o Nominatim (só o texto escrito, com o pedido explícito "Procurar", sem pesquisa a cada letra).
+- **Avisos:** convite, pedido para ir e confirmação, no sino e por push.
+- Política na versão `2026-11-19.4` (OpenStreetMap como subcontratante; dados dos grupos e treinos marcados).
