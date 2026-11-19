@@ -36,3 +36,10 @@ describe('amizade', () => {
     expect([initials('Ana Maria Silva'), initials('carla'), initials('  ')]).toEqual(['AS', 'C', '?']);
   });
 });
+
+describe('@ automático', () => {
+  it('a partir do nome', async () => {
+    const { handleBase } = await import('./rules');
+    expect([handleBase('Ana Lúcia Silva'), handleBase('JOÃO'), handleBase('  '), handleBase('Admin')]).toEqual(['ana.silva', 'joao', 'atleta', 'atleta']);
+  });
+});

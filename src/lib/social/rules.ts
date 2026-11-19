@@ -97,3 +97,18 @@ export function initials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   return ((parts[0]?.[0] ?? '') + (parts.length > 1 ? parts[parts.length - 1]![0] : '')).toUpperCase() || '?';
 }
+
+/** Base para um @ automático a partir do nome: "Ana Lúcia Silva" → "ana.silva"; vazio → "atleta". */
+export function handleBase(name: string): string {
+  const words = name
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  const base = (words.length > 1 ? `${words[0]}.${words[words.length - 1]}` : (words[0] ?? '')).slice(0, 16);
+  const ok = handleSchema.safeParse(base);
+  return ok.success ? ok.data : 'atleta';
+}

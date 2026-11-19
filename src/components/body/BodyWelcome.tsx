@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { completeFitnessOnboarding } from '@/actions/fitness';
+import { saveSocialProfile } from '@/actions/social';
 import { recommendTemplate, type TrainingProfileData } from '@/lib/fitness/profile';
 import { Button } from '@/components/ui/Button';
 import { CheckChip } from '@/components/ui/CheckChip';
@@ -13,8 +14,8 @@ import { NotificationsPromptCard } from '@/components/notifications/Notification
 
 const RESTS = [60, 90, 120, 180];
 // As perguntas do perfil de treino passaram para "Novo programa com IA" (cada programa tem as suas respostas).
-type FlowStep = 'hello' | 'rest' | 'alert' | 'start';
-const FLOW: FlowStep[] = ['hello', 'rest', 'alert', 'start'];
+type FlowStep = 'hello' | 'profile' | 'rest' | 'alert' | 'start';
+const FLOW: FlowStep[] = ['hello', 'profile', 'rest', 'alert', 'start'];
 const STEPS = FLOW.length;
 
 /**
@@ -25,8 +26,11 @@ export function BodyWelcome({
   initialRest,
   templates,
   initialProfile,
+  initialPublic,
 }: {
   initialRest: number;
+  /** O perfil público (toda a conta é um perfil): @ sugerido e nome. */
+  initialPublic: { handle: string; displayName: string };
   templates: { id: string; name: string; description: string }[];
   initialProfile: TrainingProfileData;
 }) {
@@ -36,6 +40,7 @@ export function BodyWelcome({
   const { update } = useSession();
   const [step, setStep] = useState(0);
   const cur = FLOW[step]!;
+  const [pub, setPub] = useState(initialPublic);
   const [rest, setRest] = useState(initialRest);
   const [custom, setCustom] = useState(RESTS.includes(initialRest) ? '' : String(initialRest));
   const [alert, setAlert] = useState(true);
@@ -45,6 +50,11 @@ export function BodyWelcome({
 
   const finish = () =>
     start(async () => {
+      const saved = await saveSocialProfile({ handle: pub.handle, displayName: pub.displayName, bio: null });
+      if (!saved.ok) {
+        setStep(FLOW.indexOf('profile'));
+        return setError(te(saved.error));
+      }
       const res = await completeFitnessOnboarding({ defaultRestSec: rest, restAlert: alert, templateId: template });
       if (!res.ok) return setError(te(res.error));
       // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos.
@@ -65,6 +75,21 @@ export function BodyWelcome({
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('hello')}</h2>
           <p className="mg-body-welcome__text">{t('helloText')}</p>
+        </section>
+      )}
+
+      {cur === 'profile' && (
+        <section className="mg-body-welcome__step" aria-live="polite">
+          <h2 className="mg-body-welcome__title">{t('profileTitle')}</h2>
+          <p className="mg-body-welcome__text">{t('profileText')}</p>
+          <label className="mg-activity-form__field">
+            {t('profileHandle')}
+            <TextInput value={pub.handle} maxLength={21} autoCapitalize="none" spellCheck={false} onChange={(e) => setPub({ ...pub, handle: e.target.value })} />
+          </label>
+          <label className="mg-activity-form__field">
+            {t('profileName')}
+            <TextInput value={pub.displayName} maxLength={40} onChange={(e) => setPub({ ...pub, displayName: e.target.value })} />
+          </label>
         </section>
       )}
 

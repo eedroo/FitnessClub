@@ -1,4 +1,4 @@
-version: 2026-11-19.2
+version: 2026-11-19.3
 date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
@@ -47,7 +47,7 @@ You may not use FitnessClub for illegal activities, try to access other people's
 
 ### Community
 
-If you join the community (Feed), you get a public profile with your @, name, bio, level and badges. For each post you choose public (anyone with an account can see it) or friends only. When you post or comment, you agree to:
+Every account has a profile with your @, name, bio, photo (if you add one), level and badges, visible to people with an account. For each post you choose public (anyone with an account can see it) or friends only. When you post or comment, you agree to:
 
 - treat others with respect: no harassment, insults, threats, hate speech or discrimination;
 - not post nudity, sexual content or violence, nor encourage self-harm or eating disorders;

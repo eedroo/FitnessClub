@@ -1,12 +1,37 @@
 import 'server-only';
 import type { Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
-import { workoutSnapshotSchema, type Visibility, type WorkoutSnapshot } from './rules';
+import { handleBase, workoutSnapshotSchema, type Visibility, type WorkoutSnapshot } from './rules';
 
 /** Leitura da rede social (Fase C). Toda a filtragem por amizade, bloqueio e moderação acontece aqui, no servidor. */
 
 export async function getMyProfile(userId: string) {
   return db.socialProfile.findUnique({ where: { userId } });
+}
+
+/** Um @ livre a partir do nome: "ana.silva", senão "ana.silva" + 2–4 algarismos. */
+export async function freeHandle(name: string): Promise<string> {
+  const base = handleBase(name);
+  if (!(await db.socialProfile.findUnique({ where: { handle: base }, select: { userId: true } }))) return base;
+  for (let i = 0; i < 20; i++) {
+    const h = `${base.slice(0, 15)}${Math.floor(10 + Math.random() * (i < 10 ? 90 : 9990))}`;
+    if (!(await db.socialProfile.findUnique({ where: { handle: h }, select: { userId: true } }))) return h;
+  }
+  return `${base.slice(0, 12)}${Date.now().toString(36).slice(-6)}`;
+}
+
+/** Toda a conta é um perfil: quem ainda não tem (contas antigas) recebe um @ automático, que pode mudar no "Eu". */
+export async function ensureProfile(userId: string) {
+  const existing = await db.socialProfile.findUnique({ where: { userId } });
+  if (existing) return existing;
+  const user = await db.user.findUnique({ where: { id: userId }, select: { name: true } });
+  const name = user?.name?.trim() || 'Atleta';
+  try {
+    return await db.socialProfile.create({ data: { userId, handle: await freeHandle(name), displayName: name.slice(0, 40) } });
+  } catch {
+    // corrida com outro pedido: lê o que ficou
+    return (await db.socialProfile.findUnique({ where: { userId } }))!;
+  }
 }
 
 export async function friendIds(userId: string): Promise<Set<string>> {

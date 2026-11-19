@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CalendarDays, History, ListChecks, PersonStanding, Users } from 'lucide-react';
+import { CalendarDays, CircleUserRound, History, ListChecks, Users } from 'lucide-react';
 
-const ICONS = [ListChecks, Users, History, CalendarDays, PersonStanding];
+const ICONS = [Users, ListChecks, History, CalendarDays, CircleUserRound];
 
-/** Navegação: Treinos · Feed · Sessões · Dia · Corpo (a biblioteca de exercícios abre-se a partir dos treinos). */
+/** Navegação: Feed · Treinos · Sessões · Dia · Eu (a biblioteca de exercícios abre-se a partir dos treinos). */
 export function BodyNav({ label, items }: { label: string; items: { href: string; label: string; match: string[] }[] }) {
   const pathname = usePathname();
   const isActive = (match: string[]) =>

@@ -297,7 +297,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **LevelCard** — selo com o número do nível, barra de XP até ao próximo e a sequência de semanas; em Treinos leva às conquistas. `mg-level`.
 - **BadgeGrid** — emblemas numa grelha de medalhas centradas (3 ou mais por linha, sem caixas): ganhos com a data; os outros em cinzento com a barra de progresso. `mg-badges`.
 - **StrengthTier** — selo pequeno do nível de força (bolinha na cor do nível + nome); `compact` ao lado do nome do exercício na sessão. `mg-tier`.
-- **ExerciseStrength** — na página do exercício: medalha, nível, valor e próximo nível (ou o aviso para registar o peso). `mg-strength-card`.
+- **ExerciseStrength** — na página do exercício: só o selo do nível de força, que leva às conquistas. `mg-strength-link`.
 - **SessionRewards** — no resumo da sessão: +XP, subida de nível e emblemas novos. `mg-rewards`.
 - Página `/achievements`: de onde veio o XP (lista agrupada), emblemas e níveis de força (só a pessoa vê; `mg-game__strength`).
 
@@ -308,7 +308,8 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 
 ### Rede social — Fase C1 (`src/components/social/`, lógica em `src/lib/social/`, rotas `/feed`, `/feed/notices`, `/feed/profile`, `/friends`, `/p/[id]`, `/u/[handle]`, `/admin/reports`; classes em `social.css`)
 - **Avatar** — iniciais num círculo grafite (fotos de perfil na C2). `mg-avatar`.
-- **JoinCommunity** (client) — entrar na comunidade (@, nome, bio, regras) e editar o perfil público. `mg-social-join`.
+- **JoinCommunity** (client) — editar o perfil (@, nome, bio). `mg-social-join`.
+- **ProfileOverview** — um perfil (o meu no Eu, com o corpo no meio; o dos outros em `/u/[handle]`): avatar, @, bio, nível, amigos, emblemas, níveis de força, acções e publicações.
 - **PostComposer** (client) — texto, treino a partilhar (últimas sessões e atividades), público ou só amigos. `mg-composer`.
 - **PostCard** — autor, tempo relativo, visibilidade, texto, treino partilhado, gostos e comentários. `mg-post`.
 - **WorkoutAttachment** — retrato do treino partilhado (sessão ou atividade). `mg-post-workout`.

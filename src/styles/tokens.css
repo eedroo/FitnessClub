@@ -143,6 +143,11 @@
   --tier-platinum: #4FA3A5;
   --tier-diamond: #5B7CFF;
   --tier-none: var(--text-tertiary);
+  /* Número do nível: branco com um toque de ciano e rosa (como o vidro das molduras) */
+  --level-num-a: #FFFFFF;
+  --level-num-b: #DDF8FF;
+  --level-num-c: #FFE3F3;
+  --level-num-shadow: rgba(40, 60, 110, 0.55);
 
   /* Raios (cantos contínuos do iOS aproximados) */
   --radius-xs: 6px;
@@ -291,4 +296,5 @@
   --tier-gold: #FFD24A;
   --tier-platinum: #6FD3D5;
   --tier-diamond: #8CA4FF;
+  --level-num-shadow: rgba(0, 0, 0, 0.6);
 }

@@ -582,7 +582,7 @@
       "sessions": "Sessions",
       "exercises": "Exercises",
       "day": "Day",
-      "body": "Body",
+      "body": "Me",
       "feed": "Feed"
     },
     "home": {
@@ -622,7 +622,11 @@
       "fromScratchText": "I'll build my own programs and workouts",
       "back": "Back",
       "next": "Next",
-      "finish": "Let's go"
+      "finish": "Let's go",
+      "profileTitle": "Your profile",
+      "profileText": "This is how friends find you and see your level and badges. You can change it anytime in the Me tab.",
+      "profileHandle": "Your @",
+      "profileName": "Display name"
     },
     "programs": {
       "new": "New program",
@@ -1472,6 +1476,9 @@
       "post": "Couldn't post.",
       "empty": "Write something or share a workout.",
       "comment": "Comments must be 1–500 characters."
-    }
+    },
+    "me": "Me",
+    "noPostsMine": "You haven't posted yet. Tap + in Feed to share a workout.",
+    "editProfile": "Edit profile"
   }
 }

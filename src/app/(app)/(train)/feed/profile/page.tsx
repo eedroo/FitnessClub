@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
-import { getMyProfile } from '@/lib/social/server';
+import { ensureProfile } from '@/lib/social/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { JoinCommunity } from '@/components/social/JoinCommunity';
 import { ShareLevelsToggle } from '@/components/social/ShareLevelsToggle';
@@ -20,13 +19,12 @@ export default async function EditSocialProfilePage() {
   const [t, ts, profile, blocked] = await Promise.all([
     getTranslations('social.edit'),
     getTranslations('social'),
-    getMyProfile(userId),
+    ensureProfile(userId),
     db.block.findMany({ where: { blockerId: userId }, include: { blocked: { select: { id: true, name: true, socialProfile: { select: { handle: true, displayName: true } } } } } }),
   ]);
-  if (!profile) redirect('/feed');
   return (
     <>
-      <BodyHeader title={t('title')} backHref="/feed" backLabel={ts('feed')} />
+      <BodyHeader title={t('title')} backHref="/corpo" backLabel={ts('me')} />
       <div className="mg-body-shell__main">
         <JoinCommunity edit initial={{ handle: profile.handle, displayName: profile.displayName, bio: profile.bio ?? '' }} />
         <ShareLevelsToggle initial={profile.shareLevels} />

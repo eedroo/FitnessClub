@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { bodyPage } from '@/lib/fitness/page';
-import { getMyProfile, getPost } from '@/lib/social/server';
+import { getPost } from '@/lib/social/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { Avatar } from '@/components/social/Avatar';
 import { PostCard, relTime } from '@/components/social/PostCard';
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Um post com os comentários. */
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { userId, locale } = await bodyPage();
-  const [t, data, me] = await Promise.all([getTranslations('social'), getPost(userId, params.id), getMyProfile(userId)]);
+  const [t, data] = await Promise.all([getTranslations('social'), getPost(userId, params.id)]);
   if (!data) notFound();
   return (
     <>
@@ -43,7 +43,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             ))}
           </ul>
         )}
-        {me ? <CommentForm postId={data.post.id} /> : <Link href="/feed">{t('joinToComment')}</Link>}
+        <CommentForm postId={data.post.id} />
       </div>
     </>
   );

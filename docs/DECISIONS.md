@@ -119,7 +119,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Entram na exportação e apagam-se com a conta.
 
 ## Rede social — Fase C1
-- **Entrar é opcional:** o Feed pede o @ (3–20 de a-z, 0-9, _ e ., alguns reservados), o nome e a aceitação das regras da comunidade (nos Termos). Sem perfil, ninguém vê a pessoa e ela não publica, comenta nem pede amizade.
+- **Toda a conta é um perfil (pedido da dona do projecto):** o @ (3–20 de a-z, 0-9, _ e ., alguns reservados) e o nome escolhem-se nas boas-vindas; contas antigas recebem um @ automático (a partir do nome) que podem mudar no Eu. As regras da comunidade estão nos Termos (aceites no registo). Publicar é sempre opcional.
+- **Feed:** as publicações em destaque; o "+" abre a nova publicação (texto, fotos, treino, quem vê).
 - **Visibilidade por publicação:** pública (qualquer pessoa com conta) ou só amigos (por defeito). Feed = as minhas, as dos amigos e as públicas, filtro Todos/Amigos. Nunca sem sessão iniciada (nada é público na web).
 - **Amizade mútua** (pedido e aceitação; pedir a quem já me pediu aceita logo). **Bloquear** esconde as duas pessoas uma da outra (perfil, posts, comentários, pesquisa, avisos) e desfaz a amizade.
 - **Treino partilhado:** retrato guardado no post (nome, data, duração, séries, volume, recordes e exercícios; ou tipo, duração e distância da atividade) — nunca o peso do corpo. "Partilhar no feed" no resumo da sessão e na atividade.
@@ -127,6 +128,7 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Avisos:** sino no Feed (pedido, amizade aceite, gosto, comentário); push só para pedido, aceite e comentário.
 - **Moderação:** denúncias (8 motivos) de posts, comentários e pessoas; `/admin/reports` esconde ou volta a mostrar e fecha as denúncias. O autor vê o seu post escondido com o aviso.
 - **Limites por dia:** 20 posts, 200 comentários, 50 pedidos de amizade, 30 denúncias.
-- **Navegação:** 5 separadores — Treinos · Feed · Sessões · Dia · Corpo.
+- **Navegação:** 5 separadores — Feed · Treinos · Sessões · Dia · Eu (o Corpo passou a Eu: o meu perfil e o corpo).
 - Termos e Política na versão `2026-11-19.2` (regras da comunidade e dados sociais). Entra tudo na exportação; apagar a conta apaga tudo em cascata.
 - **Próximas partes:** C2 fotos (Vercel Blob), C3 grupos com metas e rankings, C4 convites de treino com pino no mapa (academia ou região, nunca a posição exacta).
+- **Treinos:** cabeçalho com o nível e a barra de XP; depois os programas, "Novo programa", os meus exercícios e a retrospectiva da semana. Na página do exercício só o selo do nível de força (leva às conquistas).

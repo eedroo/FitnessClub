@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { bodyPage } from '@/lib/fitness/page';
-import { getFriendsPage, getMyProfile, searchProfiles } from '@/lib/social/server';
+import { ensureProfile, getFriendsPage, searchProfiles } from '@/lib/social/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { Avatar } from '@/components/social/Avatar';
 import { FriendRequestButtons } from '@/components/social/FriendRequestRow';
@@ -16,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Amigos: procurar pelo @ ou nome, pedidos recebidos e enviados, e a lista de amigos. */
 export default async function FriendsPage({ searchParams }: { searchParams: { q?: string } }) {
   const { userId } = await bodyPage();
-  if (!(await getMyProfile(userId))) redirect('/feed');
+  await ensureProfile(userId);
   const q = (searchParams.q ?? '').slice(0, 40);
   const [t, data, found] = await Promise.all([getTranslations('social'), getFriendsPage(userId), q ? searchProfiles(userId, q) : Promise.resolve([])]);
   const row = (p: { handle: string; displayName: string }, extra?: React.ReactNode) => (

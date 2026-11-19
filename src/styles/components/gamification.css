@@ -29,17 +29,22 @@
 }
 
 .mg-level__num {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-rounded);
-  font-size: var(--text-md);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  /* Prata iridescente, como o vidro da moldura */
-  background: linear-gradient(160deg, var(--text-secondary) 10%, var(--highlight) 55%, var(--text-tertiary) 95%);
+  line-height: 1;
+  /* Branco perolado com ciano e rosa muito leves; a sombra separa-o do vidro em fundo claro */
+  background: linear-gradient(135deg, var(--level-num-b) 0%, var(--level-num-a) 45%, var(--level-num-c) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 1px 1.5px var(--level-num-shadow));
 }
 
 .mg-level__text {
@@ -151,57 +156,10 @@
   margin-top: var(--space-1);
 }
 
-/* Nível de força na página do exercício */
-.mg-strength-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--system-bg-2);
-  color: inherit;
+/* Nível de força na página do exercício: só o selo, que leva às conquistas */
+.mg-strength-link {
+  align-self: flex-start;
   text-decoration: none;
-}
-
-.mg-strength-card--empty {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-1);
-}
-
-.mg-strength-card__medal {
-  flex: none;
-  width: 56px;
-  height: 56px;
-}
-
-.mg-strength-card__medal--none {
-  border-radius: var(--radius-pill);
-  background: var(--separator);
-}
-
-.mg-strength-card__text {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.mg-strength-card__label {
-  font-size: var(--text-footnote);
-  text-transform: uppercase;
-  color: var(--text-secondary);
-}
-
-.mg-strength-card__tier {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
-}
-
-.mg-strength-card__meta {
-  font-size: var(--text-footnote);
-  color: var(--text-secondary);
 }
 
 /* Selo do nível de força */

@@ -8,17 +8,22 @@ import { WellbeingConsentCard } from '@/components/account/WellbeingConsentCard'
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { BodyWeightCard } from '@/components/body/BodyWeightCard';
 import { MuscleMap } from '@/components/body/MuscleMap';
+import { ensureProfile, friendIds } from '@/lib/social/server';
+import { ProfileOverview } from '@/components/social/ProfileOverview';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('body');
   return { title: t('title') };
 }
 
-/** Tab Corpo: peso (com consentimento de dados de saúde) e mapa muscular. */
+/** Tab Eu: o meu perfil (@, nível, emblemas, níveis de força, publicações) e o corpo (peso e mapa muscular). */
 export default async function BodyRoute() {
   const { userId, locale } = await bodyPage();
-  const [t, user, muscles] = await Promise.all([
+  const [t, tn, profile, friends, user, muscles] = await Promise.all([
     getTranslations('body'),
+    getTranslations('fitness.nav'),
+    ensureProfile(userId),
+    friendIds(userId),
     db.user.findUnique({ where: { id: userId }, select: { wellbeingConsentAt: true } }),
     getMuscleData(userId, locale),
   ]);
@@ -26,8 +31,10 @@ export default async function BodyRoute() {
   const weight = consent ? await getWeightData(userId) : null;
   return (
     <>
-      <BodyHeader title={t('title')} />
+      <BodyHeader title={tn('body')} />
       <div className="mg-body-shell__main">
+        <ProfileOverview viewerId={userId} profile={profile} rel="self" friendshipId={null} friendsCount={friends.size} locale={locale}>
+        <h2 className="mg-body-section-title">{t('title')}</h2>
         {weight ? <BodyWeightCard data={weight} /> : <WellbeingConsentCard consentedOn={null} />}
         <h2 className="mg-body-section-title">{t('map.title')}</h2>
         <MuscleMap recovery={muscles.recovery} recent={muscles.recent} />
@@ -37,6 +44,7 @@ export default async function BodyRoute() {
             <Link href="/exercises?tab=mine">{t('map.unassignedLink')}</Link>
           </p>
         )}
+        </ProfileOverview>
       </div>
     </>
   );

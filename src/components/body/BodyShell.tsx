@@ -13,11 +13,11 @@ export async function BodyShell({ children, activeSession }: { children: ReactNo
       <BodyNav
         label={t('nav.label')}
         items={[
+          { href: '/feed', label: t('nav.feed'), match: ['/feed', '/friends', '/u', '/p', '/groups', '/invites'] },
           { href: '/', label: t('nav.workouts'), match: ['/', '/programs', '/workouts'] },
-          { href: '/feed', label: t('nav.feed'), match: ['/feed', '/friends', '/u', '/p'] },
           { href: '/sessions', label: t('nav.sessions'), match: ['/sessions', '/session', '/activities'] },
           { href: '/day', label: t('nav.day'), match: ['/day'] },
-          { href: '/corpo', label: t('nav.body'), match: ['/corpo', '/weight'] },
+          { href: '/corpo', label: t('nav.body'), match: ['/corpo', '/weight', '/achievements'] },
         ]}
       />
     </div>

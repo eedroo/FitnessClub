@@ -582,7 +582,7 @@
       "sessions": "Sessões",
       "exercises": "Exercícios",
       "day": "Dia",
-      "body": "Corpo",
+      "body": "Eu",
       "feed": "Feed"
     },
     "home": {
@@ -622,7 +622,11 @@
       "fromScratchText": "Eu crio meus programas e treinos",
       "back": "Voltar",
       "next": "Próximo",
-      "finish": "Começar"
+      "finish": "Começar",
+      "profileTitle": "Seu perfil",
+      "profileText": "É assim que os amigos encontram você e veem seu nível e emblemas. Dá para mudar quando quiser na aba Eu.",
+      "profileHandle": "Seu @",
+      "profileName": "Nome que aparece"
     },
     "programs": {
       "new": "Novo programa",
@@ -1472,6 +1476,9 @@
       "post": "Não foi possível publicar.",
       "empty": "Escreva algo ou compartilhe um treino.",
       "comment": "O comentário precisa ter entre 1 e 500 caracteres."
-    }
+    },
+    "me": "Eu",
+    "noPostsMine": "Você ainda não publicou nada. Toque no + do Feed para compartilhar um treino.",
+    "editProfile": "Editar perfil"
   }
 }

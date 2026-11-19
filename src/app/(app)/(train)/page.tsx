@@ -43,7 +43,17 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
+        {/* Cabeçalho: nível e barra de XP. Depois: programas, novo programa, os meus exercícios e a retrospectiva. */}
         <LevelCard summary={game.summary} href="/achievements" />
+        <h2 className="mg-body-section-title">{t('home.programs')}</h2>
+        <ProgramList programs={programs} />
+        <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured }} />
+        <Link href="/exercises?tab=mine" className="mg-program-row">
+          <span className="mg-program-row__text">
+            <span className="mg-program-row__name">{t('home.myExercises', { n: custom })}</span>
+            <span className="mg-program-row__meta">{t('home.myExercisesHint')}</span>
+          </span>
+        </Link>
         {/* Retrospectiva da semana (IA): a mais recente, com ponto azul enquanto não foi lida. */}
         {ai.feature && (
           <Link href={insight && !insight.readAt ? `/insights/${insight.id}` : '/insights'} className="mg-program-row">
@@ -56,15 +66,6 @@ export default async function BodyHome() {
             </span>
           </Link>
         )}
-        <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured }} />
-        <Link href="/exercises?tab=mine" className="mg-program-row">
-          <span className="mg-program-row__text">
-            <span className="mg-program-row__name">{t('home.myExercises', { n: custom })}</span>
-            <span className="mg-program-row__meta">{t('home.myExercisesHint')}</span>
-          </span>
-        </Link>
-        <h2 className="mg-body-section-title">{t('home.programs')}</h2>
-        <ProgramList programs={programs} />
         <StartSessionButton workoutId={null} label={t('home.freeWorkout')} variant="subtle" />
         <Link href="/activities/new" className="mg-btn mg-btn--subtle mg-btn--block">
           {ta('add')}

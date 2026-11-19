@@ -1,4 +1,4 @@
-version: 2026-11-19.2
+version: 2026-11-19.3
 date: 2026-11-19
 
 > **Rascunho — rever com jurista antes do lançamento.**
@@ -20,7 +20,7 @@ Para qualquer questão sobre privacidade, escreve para [privacidade@onda.work](m
 - **Dados de saúde (com consentimento explícito):** pesagens e a tua meta de peso (objectivo e ritmo).
 - **Perfil de treino:** objectivos, nível, equipamento, músculos em foco, dias e tempo de treino, e o que escreves nos pedidos e no que queres evitar.
 - **Inteligência artificial (com consentimento):** os programas propostos e as retrospectivas semanais criados pela IA, e o custo de cada pedido.
-- **Comunidade (se entrares):** o teu perfil público (@, nome, bio, se mostras os níveis de força), amizades, bloqueios, publicações (texto e o resumo do treino que escolhes partilhar), gostos, comentários, denúncias e avisos.
+- **Perfil e comunidade:** toda a conta tem um perfil (@, nome, bio, foto se a puseres, se mostras os níveis de força), amizades, bloqueios, publicações (texto e o resumo do treino que escolhes partilhar), gostos, comentários, denúncias e avisos.
 - **Preferências:** tempo de descanso por defeito, aviso de fim de descanso e ecrã aceso durante o treino.
 - **Notificações:** subscrições de notificações push dos teus dispositivos (endereço técnico do serviço de push e chaves de cifra).
 - **Dados técnicos mínimos:** endereço IP e informação do browser, usados apenas para segurança e para limitar abusos (por exemplo, demasiadas tentativas de login), e os dias em que abriste a app (contagens agregadas no admin).
@@ -30,7 +30,7 @@ Para qualquer questão sobre privacidade, escreve para [privacidade@onda.work](m
 - **Prestar o serviço** (conta, treinos, sessões, progresso, avisos de descanso, exportação): execução do contrato que aceitas ao criar a conta.
 - **Peso e meta** (dados de saúde): **consentimento explícito**, usado exclusivamente para te mostrar o peso, as médias e a meta. Podes retirá-lo a qualquer momento nas Definições, sem afectar o resto da app.
 - **Inteligência artificial** (programas propostos e retrospectiva semanal, no plano Premium): **consentimento**, pedido antes do primeiro uso e retirável a qualquer momento em Definições › Privacidade, sem afectar o resto da app.
-- **Comunidade:** execução do contrato quando decides entrar e publicar. O teu perfil, nível e emblemas ficam visíveis para quem tem conta; cada publicação é vista por quem escolheres (pública ou só amigos). O peso, a meta e os níveis de força nunca aparecem sem a tua autorização. As denúncias são vistas apenas pela moderação.
+- **Perfil e comunidade:** execução do contrato. O teu perfil (@, nome, bio, foto, nível e emblemas) fica visível para quem tem conta no FitnessClub (nunca fora da app); publicar é sempre uma escolha tua e cada publicação é vista por quem escolheres (pública ou só amigos). O peso, a meta e os níveis de força nunca aparecem sem a tua autorização. As denúncias são vistas apenas pela moderação.
 - **Segurança e prevenção de abuso** (limites de tentativas, registos técnicos): interesse legítimo em proteger a conta e o serviço.
 - **Emails de serviço** (confirmação de email, recuperação de palavra-passe, avisos de segurança): execução do contrato. Não enviamos marketing.
 

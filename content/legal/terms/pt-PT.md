@@ -1,4 +1,4 @@
-version: 2026-11-19.2
+version: 2026-11-19.3
 date: 2026-11-19
 
 > **Rascunho — rever com jurista antes do lançamento.**
@@ -47,7 +47,7 @@ Não podes usar o FitnessClub para actividades ilegais, tentar aceder a contas o
 
 ### Comunidade
 
-Se entrares na comunidade (Feed), tens um perfil público com o teu @, nome, bio, nível e emblemas. Em cada publicação escolhes se é pública (qualquer pessoa com conta a vê) ou só para amigos. Ao publicar ou comentar, comprometes-te a:
+Cada conta tem um perfil com o teu @, nome, bio, foto (se a puseres), nível e emblemas, visível para quem tem conta. Em cada publicação escolhes se é pública (qualquer pessoa com conta a vê) ou só para amigos. Ao publicar ou comentar, comprometes-te a:
 
 - tratar as outras pessoas com respeito: nada de assédio, insultos, ameaças, discurso de ódio ou discriminação;
 - não publicar nudez, conteúdo sexual, violência, nem incentivar auto-lesão ou distúrbios alimentares;

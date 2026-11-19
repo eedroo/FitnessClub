@@ -29,7 +29,7 @@ export default async function ActivityPage({ params }: { params: { id: string } 
     <>
       <BodyHeader title={t(`types.${form.type}`)} backHref="/sessions" backLabel={tf('nav.sessions')} />
       <div className="mg-body-shell__main">
-        <Link href={`/feed?share=activity:${form.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
+        <Link href={`/feed/new?share=activity:${form.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
           {t('share')}
         </Link>
         <ActivityForm today={todayInTz(tz)} initial={form} />

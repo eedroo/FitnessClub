@@ -10,7 +10,7 @@ import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { dbToAppLocale } from '@/i18n/locales';
 import { socialNotification } from '@/lib/notifications/content';
 import { pushToUser } from '@/lib/notifications/send';
-import { blockedIds, friendIds } from '@/lib/social/server';
+import { blockedIds, ensureProfile, friendIds } from '@/lib/social/server';
 import { commentSchema, postTextSchema, profileSchema, reportReasonSchema, type WorkoutSnapshot } from '@/lib/social/rules';
 
 /**
@@ -29,12 +29,12 @@ async function me(): Promise<string | null> {
   return s.user.id;
 }
 
-/** Com perfil na comunidade (senão não se publica, comenta, nem pede amizade). */
+/** Toda a conta é um perfil (criado na hora para contas antigas). */
 async function member(): Promise<{ id: string; displayName: string; handle: string } | null> {
   const uid = await me();
   if (!uid) return null;
-  const p = await db.socialProfile.findUnique({ where: { userId: uid }, select: { displayName: true, handle: true } });
-  return p ? { id: uid, ...p } : null;
+  const p = await ensureProfile(uid);
+  return { id: uid, displayName: p.displayName, handle: p.handle };
 }
 
 const since24h = () => new Date(Date.now() - 24 * 3600_000);
@@ -50,13 +50,12 @@ async function notify(userId: string, actorId: string, kind: 'FRIEND_REQUEST' | 
 
 // ─── Perfil ──────────────────────────────────────────────────────────────────────────────────────
 
-export async function saveSocialProfile(input: { handle: string; displayName: string; bio: string | null; acceptRules?: boolean }): Promise<Result> {
-  const uid = await me();
+export async function saveSocialProfile(input: { handle: string; displayName: string; bio: string | null }): Promise<Result> {
+  // Aberto a quem tem sessão (as boas-vindas gravam o perfil mesmo sem o recurso `pro`).
+  const uid = (await auth())?.user?.id ?? null;
   if (!uid) return fail('common.errors.unauthorized');
   const p = profileSchema.safeParse(input);
   if (!p.success) return fail(p.error.issues.some((i) => i.message === 'reserved') ? 'social.errors.handleReserved' : 'social.errors.handle');
-  const existing = await db.socialProfile.findUnique({ where: { userId: uid } });
-  if (!existing && input.acceptRules !== true) return fail('social.errors.rules');
   const taken = await db.socialProfile.findUnique({ where: { handle: p.data.handle }, select: { userId: true } });
   if (taken && taken.userId !== uid) return fail('social.errors.handleTaken');
   await db.socialProfile.upsert({ where: { userId: uid }, create: { userId: uid, ...p.data }, update: p.data });

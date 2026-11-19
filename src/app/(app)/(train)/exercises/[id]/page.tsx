@@ -16,7 +16,7 @@ import { CompareBlock } from '@/components/body/CompareBlock';
 import { ExerciseProgressChart } from '@/components/body/ExerciseProgressChart';
 import { ExerciseRecords } from '@/components/body/ExerciseRecords';
 import { getStrengthBests } from '@/lib/gamification/server';
-import { STRENGTH_STANDARDS, strengthLevel } from '@/lib/gamification/strength';
+import { strengthLevel } from '@/lib/gamification/strength';
 import { ExerciseStrength } from '@/components/gamification/ExerciseStrength';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -44,7 +44,6 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
   ]);
   const best = strength.best[id];
   const strengthLvl = best ? strengthLevel(id, best, strength.bodyGrams) : null;
-  const needsWeight = !strengthLvl && !!best?.e1rmGrams && STRENGTH_STANDARDS[id]?.by === 'ratio' && !strength.bodyGrams;
   if (!detail) notFound();
   const { view } = detail;
   return (
@@ -52,13 +51,13 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
       {/* Voltar regressa a onde se veio (sessão, treino, mapa, biblioteca); só sem histórico vai à biblioteca. */}
       <BodyHeader title={view.name} backHref="/exercises" historyBack />
       <div className="mg-body-shell__main">
+        <ExerciseStrength level={strengthLvl} />
         <ExerciseDetail exercise={view} level={detail.level}>
           {!detail.archived && <AddToWorkout exerciseId={view.id} workouts={workouts.map((w) => ({ id: w.id, label: `${w.program.name} · ${w.name}` }))} />}
           {view.source === 'CUSTOM' && !detail.archived && (
             <CustomExerciseForm exercise={{ id: view.id, name: view.name, measure: view.measure, primaryMuscles: view.primaryMuscles, equipment: view.equipment }} />
           )}
         </ExerciseDetail>
-        <ExerciseStrength level={strengthLvl} needsWeight={needsWeight} locale={locale} />
         <NotesCard kind="exercise" targetId={view.id} initial={note?.text ?? null} byAi={note?.byAi ?? false} />
         {/* Séries (histórico + comparação com a anterior) · Evolução · Recordes */}
         <ExerciseTabs

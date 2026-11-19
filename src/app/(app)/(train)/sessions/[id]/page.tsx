@@ -25,7 +25,7 @@ export default async function SessionSummaryRoute({ params, searchParams }: { pa
       <div className="mg-body-shell__main">
         {rewards && <SessionRewards {...rewards} />}
         <SessionSummary summary={summary} fresh={searchParams.done === '1'} />
-        <Link href={`/feed?share=session:${summary.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
+        <Link href={`/feed/new?share=session:${summary.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
           {t('summary.share')}
         </Link>
       </div>

@@ -433,3 +433,31 @@
 .mg-notice {
   gap: var(--space-3);
 }
+
+.mg-feed-bar__icon--new {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.mg-avatar--photo {
+  object-fit: cover;
+  background: var(--system-bg-2);
+}
+
+.mg-profile-head__name {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.mg-profile-head__handle {
+  color: var(--text-secondary);
+}
+
+a.mg-profile-head__meta,
+a.mg-profile-badges,
+a.mg-level__seal {
+  color: inherit;
+  text-decoration: none;
+}
