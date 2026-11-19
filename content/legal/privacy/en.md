@@ -1,4 +1,4 @@
-version: 2026-11-19
+version: 2026-11-19.2
 date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
@@ -17,6 +17,7 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 
 - **Account:** name, email, password (stored only as an irreversible hash), language, theme, time zone, and the dates you signed up and accepted these documents.
 - **Training:** programmes, workouts and exercises you create, sessions (start, end, notes), sets (weight, reps, time or distance, effort) and the records calculated from them.
+- **Community (if you join):** your public profile (@, name, bio, whether you show strength levels), friendships, blocks, posts (text and the workout summary you choose to share), likes, comments, reports and notifications.
 - **Training profile:** goals, level, equipment, focus muscles, training days and session length, and what you write in your requests and in what you want to avoid.
 - **Artificial intelligence (with consent):** the programmes and weekly reviews created by AI, and the cost of each request.
 - **Health data (with explicit consent):** weigh-ins and your weight goal (direction and pace).
@@ -29,6 +30,7 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 - **Providing the service** (account, workouts, sessions, progress, rest alerts, export): performance of the contract you accept when creating your account.
 - **Weight and goal** (health data): **explicit consent**, used solely to show you your weight, averages and goal. You can withdraw it at any time in Settings without affecting the rest of the app.
 - **Artificial intelligence** (proposed programmes and the weekly review, on the Premium plan): **consent**, asked before first use and withdrawable at any time in Settings › Privacy without affecting the rest of the app.
+- **Community:** performance of the contract when you choose to join and post. Your profile, level and badges are visible to people with an account; each post is seen by whoever you choose (public or friends only). Weight, goal and strength levels never show without your permission. Reports are seen only by moderators.
 - **Security and abuse prevention** (attempt limits, technical logs): legitimate interest in protecting your account and the service.
 - **Service emails** (email confirmation, password recovery, security notices): performance of the contract. We do not send marketing.
 

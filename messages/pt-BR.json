@@ -116,6 +116,20 @@
       "aiInsight": {
         "title": "Sua semana em revista",
         "body": "O que deu certo e um foco para a próxima semana."
+      },
+      "social": {
+        "FRIEND_REQUEST": {
+          "title": "Pedido de amizade",
+          "body": "{name} quer ser seu amigo no FitnessClub."
+        },
+        "FRIEND_ACCEPTED": {
+          "title": "Novo amigo",
+          "body": "{name} aceitou seu pedido."
+        },
+        "COMMENT": {
+          "title": "Novo comentário",
+          "body": "{name} comentou sua publicação."
+        }
       }
     },
     "prompt": {
@@ -568,7 +582,8 @@
       "sessions": "Sessões",
       "exercises": "Exercícios",
       "day": "Dia",
-      "body": "Corpo"
+      "body": "Corpo",
+      "feed": "Feed"
     },
     "home": {
       "myExercises": "Meus exercícios ({n})",
@@ -774,7 +789,8 @@
       "secondsShort": "{n} s",
       "prs": "Recordes",
       "byExercise": "Por exercício",
-      "firstTime": "Primeira vez"
+      "firstTime": "Primeira vez",
+      "share": "Compartilhar no feed"
     },
     "errors": {
       "name": "Digite um nome.",
@@ -1326,6 +1342,136 @@
       "winter": "Neve e gelo",
       "outdoor": "Ao ar livre",
       "other": "Outros"
+    },
+    "share": "Compartilhar no feed"
+  },
+  "social": {
+    "feed": "Feed",
+    "friends": "Amigos",
+    "postTitle": "Publicação",
+    "posts": "Publicações",
+    "search": "Buscar por @ ou nome",
+    "results": "Resultados",
+    "noResults": "Ninguém encontrado.",
+    "requests": "Pedidos de amizade",
+    "friendsList": "{n, plural, =0 {Amigos} one {# amigo} other {# amigos}}",
+    "noFriends": "Ainda sem amigos. Procure pelo @.",
+    "sent": "Pedidos enviados",
+    "empty": "Ainda não tem nada por aqui. Compartilhe seu primeiro treino!",
+    "more": "Ver mais",
+    "friendsCount": "{n, plural, one {# amigo} other {# amigos}}",
+    "onlyPublic": "Sem publicações públicas. Os amigos também veem as publicações só para amigos.",
+    "noPosts": "Ainda sem publicações.",
+    "joinToComment": "Entre na comunidade para comentar.",
+    "scope": {
+      "label": "Mostrar",
+      "all": "Todos",
+      "friends": "Amigos"
+    },
+    "join": {
+      "title": "Entre na comunidade",
+      "text": "Compartilhe treinos, acompanhe os amigos e dê força a eles. Você escolhe, em cada publicação, se é pública ou só para amigos. Seu peso e seus níveis de força nunca aparecem sem a sua autorização.",
+      "handle": "Seu @",
+      "handleHint": "3 a 20 letras, números, _ ou .",
+      "name": "Nome que aparece",
+      "bio": "Sobre você (opcional)",
+      "rules": "Li e aceito as regras da comunidade:",
+      "rulesLink": "respeito, nada de assédio, ódio, nudez nem spam.",
+      "join": "Entrar"
+    },
+    "edit": {
+      "title": "Perfil público",
+      "shareLevels": "Mostrar meus níveis de força",
+      "blocked": "Pessoas bloqueadas",
+      "noBlocked": "Você não bloqueou ninguém."
+    },
+    "workout": {
+      "free": "Treino livre",
+      "sets": "{n, plural, one {# série} other {# séries}}",
+      "prs": "{n, plural, one {# recorde} other {# recordes}}"
+    },
+    "post": {
+      "like": "Curtir",
+      "unlike": "Descurtir",
+      "more": "Mais opções",
+      "delete": "Apagar publicação",
+      "deleteConfirm": "Apagar esta publicação?",
+      "report": "Denunciar",
+      "by": "Publicação de {name}",
+      "visibility": {
+        "PUBLIC": "Pública",
+        "FRIENDS": "Só amigos"
+      },
+      "hidden": "Escondida pela moderação: só você vê.",
+      "comments": "{n, plural, =0 {Comentar} one {# comentário} other {# comentários}}"
+    },
+    "report": {
+      "title": "Por que você está denunciando?",
+      "thanks": "Obrigado. A moderação vai analisar.",
+      "close": "Fechar",
+      "cancel": "Cancelar",
+      "send": "Denunciar",
+      "reasons": {
+        "spam": "Spam ou propaganda",
+        "harassment": "Assédio ou bullying",
+        "hate": "Discurso de ódio",
+        "nudity": "Nudez ou conteúdo sexual",
+        "violence": "Violência ou ameaças",
+        "self_harm": "Automutilação ou transtornos alimentares",
+        "misinformation": "Informação falsa perigosa",
+        "other": "Outro"
+      }
+    },
+    "composer": {
+      "title": "Nova publicação",
+      "placeholder": "Como foi o treino?",
+      "attach": "Compartilhar um treino",
+      "noAttach": "Nenhum",
+      "visibility": "Quem vê",
+      "friends": "Só amigos",
+      "public": "Público",
+      "publish": "Publicar"
+    },
+    "comments": {
+      "title": "{n, plural, =0 {Comentários} one {# comentário} other {# comentários}}",
+      "placeholder": "Escreva um comentário",
+      "send": "Comentar",
+      "delete": "Apagar",
+      "report": "Denunciar"
+    },
+    "profile": {
+      "add": "Adicionar amigo",
+      "cancel": "Cancelar pedido",
+      "accept": "Aceitar",
+      "decline": "Recusar",
+      "remove": "Remover amigo",
+      "removeConfirm": "Desfazer a amizade?",
+      "block": "Bloquear",
+      "blockConfirm": "Bloquear? Vocês deixam de se ver e a amizade é desfeita.",
+      "unblock": "Desbloquear",
+      "report": "Denunciar"
+    },
+    "notices": {
+      "title": "Avisos",
+      "new": "Novo",
+      "empty": "Sem avisos.",
+      "kinds": {
+        "FRIEND_REQUEST": "{name} quer ser seu amigo",
+        "FRIEND_ACCEPTED": "{name} aceitou seu pedido",
+        "LIKE": "{name} curtiu sua publicação",
+        "COMMENT": "{name} comentou sua publicação"
+      }
+    },
+    "errors": {
+      "handle": "Esse @ não serve: 3 a 20 letras, números, _ ou .",
+      "handleReserved": "Esse @ está reservado.",
+      "handleTaken": "Esse @ já está em uso.",
+      "rules": "Aceite as regras da comunidade para entrar.",
+      "join": "Entre primeiro na comunidade (no Feed).",
+      "limit": "Você chegou ao limite de hoje. Tente amanhã.",
+      "post": "Não foi possível publicar.",
+      "empty": "Escreva algo ou compartilhe um treino.",
+      "comment": "O comentário precisa ter entre 1 e 500 caracteres."
     }
   }
 }

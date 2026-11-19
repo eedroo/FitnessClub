@@ -1,4 +1,4 @@
-version: 2026-11-19
+version: 2026-11-19.2
 date: 2026-11-19
 
 > **Rascunho — revisar com advogado antes do lançamento.**
@@ -20,6 +20,7 @@ Para qualquer dúvida sobre privacidade, escreva para [privacidade@onda.work](ma
 - **Dados de saúde (com consentimento explícito):** pesagens e a sua meta de peso (objetivo e ritmo).
 - **Perfil de treino:** objetivos, nível, equipamento, músculos em foco, dias e tempo de treino, e o que você escreve nos pedidos e no que quer evitar.
 - **Inteligência artificial (com consentimento):** os programas propostos e as retrospectivas semanais criados pela IA, e o custo de cada pedido.
+- **Comunidade (se você entrar):** seu perfil público (@, nome, bio, se mostra os níveis de força), amizades, bloqueios, publicações (texto e o resumo do treino que você escolhe compartilhar), curtidas, comentários, denúncias e avisos.
 - **Preferências:** tempo de descanso padrão, aviso de fim do descanso e tela acesa durante o treino.
 - **Notificações:** inscrições de notificações push dos seus dispositivos (endereço técnico do serviço de push e chaves de criptografia).
 - **Dados técnicos mínimos:** endereço IP e informações do navegador, usados só para segurança e para limitar abusos (por exemplo, tentativas de login demais), e os dias em que você abriu o app (contagens agregadas no admin).
@@ -29,6 +30,7 @@ Para qualquer dúvida sobre privacidade, escreva para [privacidade@onda.work](ma
 - **Prestar o serviço** (conta, treinos, sessões, progresso, avisos de descanso, exportação): execução do contrato que você aceita ao criar a conta.
 - **Peso e meta** (dados de saúde): **consentimento explícito**, usado exclusivamente para mostrar a você o peso, as médias e a meta. Você pode retirá-lo a qualquer momento nas Configurações, sem afetar o resto do app.
 - **Inteligência artificial** (programas propostos e retrospectiva semanal, no plano Premium): **consentimento**, pedido antes do primeiro uso e revogável a qualquer momento em Configurações › Privacidade, sem afetar o resto do app.
+- **Comunidade:** execução do contrato quando você decide entrar e publicar. Seu perfil, nível e emblemas ficam visíveis para quem tem conta; cada publicação é vista por quem você escolher (pública ou só amigos). Peso, meta e níveis de força nunca aparecem sem a sua autorização. As denúncias são vistas apenas pela moderação.
 - **Segurança e prevenção de abuso** (limites de tentativas, registros técnicos): legítimo interesse em proteger a conta e o serviço.
 - **E-mails de serviço** (confirmação de e-mail, recuperação de senha, avisos de segurança): execução do contrato. Não enviamos marketing.
 

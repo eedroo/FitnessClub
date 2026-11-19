@@ -14,7 +14,8 @@ export async function BodyShell({ children, activeSession }: { children: ReactNo
         label={t('nav.label')}
         items={[
           { href: '/', label: t('nav.workouts'), match: ['/', '/programs', '/workouts'] },
-          { href: '/sessions', label: t('nav.sessions'), match: ['/sessions', '/session'] },
+          { href: '/feed', label: t('nav.feed'), match: ['/feed', '/friends', '/u', '/p'] },
+          { href: '/sessions', label: t('nav.sessions'), match: ['/sessions', '/session', '/activities'] },
           { href: '/day', label: t('nav.day'), match: ['/day'] },
           { href: '/corpo', label: t('nav.body'), match: ['/corpo', '/weight'] },
         ]}

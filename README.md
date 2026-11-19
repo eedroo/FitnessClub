@@ -75,3 +75,4 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Admin › IA: custo do mês, por tipo e por pessoa.
 - [ ] Gamificação: nível e XP em Treinos → Conquistas (de onde veio o XP, emblemas, níveis de força); +XP e emblemas novos no resumo da sessão; selo do nível de força ao lado do exercício durante o treino (com o peso registado).
 - [ ] Atividades: Treinos ou Sessões → "+ Registar atividade" → escolher (ex.: Corrida) → distância, esforço → aparece nas Sessões e no Dia; XP em Conquistas; editar e apagar.
+- [ ] Comunidade: Feed → entrar (@, nome, regras) → publicar um treino (só amigos / público) → outra conta pede amizade, gosta e comenta → avisos no sino → aceitar → bloquear e denunciar → Admin › Denúncias esconde.

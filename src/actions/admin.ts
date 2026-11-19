@@ -113,3 +113,28 @@ export async function testAiModel(model: string): Promise<AiModelTest> {
     return { ok: false, model: m.data, ms: Date.now() - started, error: (err instanceof Error ? err.message : String(err)).slice(0, 600) };
   }
 }
+
+// ─── Moderação da comunidade (Fase C) ────────────────────────────────────────────────────────────
+
+/** Esconder ou voltar a mostrar um post ou comentário denunciado e fechar as denúncias dele. */
+export async function moderate(target: 'POST' | 'COMMENT', id: string, hide: boolean): Promise<AdminResult> {
+  await requireAdmin();
+  const p = z.object({ target: z.enum(['POST', 'COMMENT']), id: z.string().min(1).max(191) }).safeParse({ target, id });
+  if (!p.success) return { ok: false, error: 'Dados inválidos.' };
+  const data = { hiddenAt: hide ? new Date() : null };
+  if (p.data.target === 'POST') await db.post.updateMany({ where: { id: p.data.id }, data });
+  else await db.postComment.updateMany({ where: { id: p.data.id }, data });
+  await db.report.updateMany({ where: { target: p.data.target, targetId: p.data.id, resolvedAt: null }, data: { resolvedAt: new Date() } });
+  revalidatePath('/admin/reports');
+  return { ok: true };
+}
+
+/** Fechar uma denúncia sem acção. */
+export async function dismissReport(id: string): Promise<AdminResult> {
+  await requireAdmin();
+  const p = z.string().min(1).max(191).safeParse(id);
+  if (!p.success) return { ok: false, error: 'Dados inválidos.' };
+  await db.report.updateMany({ where: { id: p.data }, data: { resolvedAt: new Date() } });
+  revalidatePath('/admin/reports');
+  return { ok: true };
+}

@@ -31,12 +31,29 @@ export async function GET() {
     },
   });
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const [profile, friendships, posts, comments, likes] = await Promise.all([
+    db.socialProfile.findUnique({ where: { userId }, select: { handle: true, displayName: true, bio: true, shareLevels: true, createdAt: true } }),
+    db.friendship.findMany({
+      where: { status: 'ACCEPTED', OR: [{ requesterId: userId }, { addresseeId: userId }] },
+      select: { requesterId: true, acceptedAt: true, requester: { select: { socialProfile: { select: { handle: true } } } }, addressee: { select: { socialProfile: { select: { handle: true } } } } },
+    }),
+    db.post.findMany({ where: { authorId: userId }, orderBy: { createdAt: 'asc' }, select: { text: true, visibility: true, workout: true, createdAt: true } }),
+    db.postComment.findMany({ where: { authorId: userId }, orderBy: { createdAt: 'asc' }, select: { postId: true, text: true, createdAt: true } }),
+    db.postLike.findMany({ where: { userId }, orderBy: { createdAt: 'asc' }, select: { postId: true, createdAt: true } }),
+  ]);
 
   const data = buildExport({
     user,
     activeDays: user.activeDays,
     ai: user.aiRequests,
     activities: user.activities,
+    social: {
+      profile,
+      friends: friendships.map((f) => ({ handle: (f.requesterId === userId ? f.addressee : f.requester).socialProfile?.handle ?? null, since: f.acceptedAt })),
+      posts,
+      comments,
+      likes,
+    },
     fitness: {
       prefs: user.fitnessPrefs,
       programs: user.fitnessPrograms,

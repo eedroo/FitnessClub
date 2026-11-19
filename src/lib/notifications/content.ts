@@ -28,3 +28,9 @@ export function aiInsightNotification(locale: Locale, id: string): NotificationC
   const t = translatorFor(locale);
   return { title: t('notifications.push.aiInsight.title'), body: t('notifications.push.aiInsight.body'), url: `/insights/${id}` };
 }
+
+/** Rede social: pedido de amizade, amizade aceite, comentário (os gostos ficam só no sino da app). */
+export function socialNotification(locale: Locale, kind: 'FRIEND_REQUEST' | 'FRIEND_ACCEPTED' | 'COMMENT', name: string, url: string): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t(`notifications.push.social.${kind}.title`), body: t(`notifications.push.social.${kind}.body`, { name }), url };
+}

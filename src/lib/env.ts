@@ -87,7 +87,7 @@ export function appUrl(): string {
 
 /** Versões actuais dos Termos e da Política de Privacidade (re-aceitação quando mudam). */
 /** A versão do código (a dos ficheiros em `content/legal`) ganha a uma variável mais antiga na Vercel. */
-export const DEFAULT_LEGAL_VERSION = '2026-11-19';
+export const DEFAULT_LEGAL_VERSION = '2026-11-19.2';
 const newest = (env: string | undefined) => (env && env > DEFAULT_LEGAL_VERSION ? env : DEFAULT_LEGAL_VERSION);
 export function legalVersions(): { terms: string; privacy: string } {
   return { terms: newest(process.env.LEGAL_TERMS_VERSION), privacy: newest(process.env.LEGAL_PRIVACY_VERSION) };

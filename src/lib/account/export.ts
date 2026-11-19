@@ -14,6 +14,14 @@ export interface ExportSource {
     | 'name' | 'email' | 'locale' | 'theme' | 'timezone' | 'emailVerifiedAt' | 'termsAcceptedAt' | 'termsVersion' | 'privacyVersion'
     | 'wellbeingConsentAt' | 'createdAt' | 'onboardedAt' | 'plan' | 'planSince' | 'planExpiresAt'
   > & Partial<Pick<User, 'aiConsentAt'>>;
+  /** Comunidade: perfil público, amizades, publicações, gostos e comentários (meus). */
+  social?: {
+    profile: { handle: string; displayName: string; bio: string | null; shareLevels: boolean; createdAt: Date } | null;
+    friends: { handle: string | null; since: Date | null }[];
+    posts: { text: string | null; visibility: string; workout: unknown; createdAt: Date }[];
+    comments: { postId: string; text: string; createdAt: Date }[];
+    likes: { postId: string; createdAt: Date }[];
+  };
   /** Outras atividades registadas (corrida, yoga…). */
   activities?: Activity[];
   /** Pedidos à IA (programas propostos e retrospectivas), sem custos internos. */
@@ -62,6 +70,15 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
       planExpiresAt: iso(u.planExpiresAt),
     },
     activeDays: data.activeDays.map((a) => day(a.day)),
+    social: data.social
+      ? {
+          profile: data.social.profile && { ...data.social.profile, createdAt: iso(data.social.profile.createdAt) },
+          friends: data.social.friends.map((f) => ({ handle: f.handle, since: iso(f.since) })),
+          posts: data.social.posts.map((p) => ({ ...p, createdAt: iso(p.createdAt) })),
+          comments: data.social.comments.map((c) => ({ ...c, createdAt: iso(c.createdAt) })),
+          likes: data.social.likes.map((l) => ({ ...l, createdAt: iso(l.createdAt) })),
+        }
+      : null,
     activities: (data.activities ?? []).map((a) => ({
       type: a.type,
       date: day(a.date),

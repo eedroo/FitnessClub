@@ -7,6 +7,7 @@ import { todayInTz } from '@/lib/dates';
 import { getActivityForm } from '@/lib/activities/queries';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { ActivityForm } from '@/components/activities/ActivityForm';
+import Link from 'next/link';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('activities');
@@ -28,6 +29,9 @@ export default async function ActivityPage({ params }: { params: { id: string } 
     <>
       <BodyHeader title={t(`types.${form.type}`)} backHref="/sessions" backLabel={tf('nav.sessions')} />
       <div className="mg-body-shell__main">
+        <Link href={`/feed?share=activity:${form.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
+          {t('share')}
+        </Link>
         <ActivityForm today={todayInTz(tz)} initial={form} />
       </div>
     </>

@@ -1,4 +1,4 @@
-version: 2026-11-19
+version: 2026-11-19.2
 date: 2026-11-19
 
 > **Rascunho — rever com jurista antes do lançamento.**
@@ -44,6 +44,17 @@ Tudo o que registas no FitnessClub **é teu**. Damos-nos apenas a autorização 
 ## 8. Uso aceitável
 
 Não podes usar o FitnessClub para actividades ilegais, tentar aceder a contas ou dados de outras pessoas, sobrecarregar ou atacar o serviço, nem automatizar pedidos de forma abusiva.
+
+### Comunidade
+
+Se entrares na comunidade (Feed), tens um perfil público com o teu @, nome, bio, nível e emblemas. Em cada publicação escolhes se é pública (qualquer pessoa com conta a vê) ou só para amigos. Ao publicar ou comentar, comprometes-te a:
+
+- tratar as outras pessoas com respeito: nada de assédio, insultos, ameaças, discurso de ódio ou discriminação;
+- não publicar nudez, conteúdo sexual, violência, nem incentivar auto-lesão ou distúrbios alimentares;
+- não publicar spam, publicidade, dados pessoais de outras pessoas nem conteúdo que não tens direito a partilhar;
+- não fazer comentários sobre o corpo ou o peso de outras pessoas.
+
+Qualquer pessoa pode denunciar uma publicação, um comentário ou um perfil, e bloquear quem quiser. Podemos esconder conteúdos que violem estas regras e suspender ou apagar contas em casos graves ou repetidos.
 
 ## 9. Disponibilidade do serviço
 

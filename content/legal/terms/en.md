@@ -1,4 +1,4 @@
-version: 2026-11-19
+version: 2026-11-19.2
 date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
@@ -44,6 +44,17 @@ Everything you log in FitnessClub **is yours**. We only take the permission we n
 ## 8. Acceptable use
 
 You may not use FitnessClub for illegal activities, try to access other people's accounts or data, overload or attack the service, or automate requests abusively.
+
+### Community
+
+If you join the community (Feed), you get a public profile with your @, name, bio, level and badges. For each post you choose public (anyone with an account can see it) or friends only. When you post or comment, you agree to:
+
+- treat others with respect: no harassment, insults, threats, hate speech or discrimination;
+- not post nudity, sexual content or violence, nor encourage self-harm or eating disorders;
+- not post spam, ads, other people's personal data or content you have no right to share;
+- not comment on other people's bodies or weight.
+
+Anyone can report a post, a comment or a profile, and block anyone. We may hide content that breaks these rules and suspend or delete accounts in serious or repeated cases.
 
 ## 9. Service availability
 

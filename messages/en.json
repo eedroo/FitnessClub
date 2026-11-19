@@ -116,6 +116,20 @@
       "aiInsight": {
         "title": "Your week in review",
         "body": "What went well and one focus for next week."
+      },
+      "social": {
+        "FRIEND_REQUEST": {
+          "title": "Friend request",
+          "body": "{name} wants to be your friend on FitnessClub."
+        },
+        "FRIEND_ACCEPTED": {
+          "title": "New friend",
+          "body": "{name} accepted your request."
+        },
+        "COMMENT": {
+          "title": "New comment",
+          "body": "{name} commented on your post."
+        }
       }
     },
     "prompt": {
@@ -568,7 +582,8 @@
       "sessions": "Sessions",
       "exercises": "Exercises",
       "day": "Day",
-      "body": "Body"
+      "body": "Body",
+      "feed": "Feed"
     },
     "home": {
       "myExercises": "My exercises ({n})",
@@ -774,7 +789,8 @@
       "secondsShort": "{n}s",
       "prs": "Records",
       "byExercise": "By exercise",
-      "firstTime": "First time"
+      "firstTime": "First time",
+      "share": "Share to feed"
     },
     "errors": {
       "name": "Enter a name.",
@@ -1326,6 +1342,136 @@
       "winter": "Snow and ice",
       "outdoor": "Outdoors",
       "other": "Other"
+    },
+    "share": "Share to feed"
+  },
+  "social": {
+    "feed": "Feed",
+    "friends": "Friends",
+    "postTitle": "Post",
+    "posts": "Posts",
+    "search": "Search by @ or name",
+    "results": "Results",
+    "noResults": "No one found.",
+    "requests": "Friend requests",
+    "friendsList": "{n, plural, =0 {Friends} one {# friend} other {# friends}}",
+    "noFriends": "No friends yet. Look them up by @.",
+    "sent": "Sent requests",
+    "empty": "Nothing here yet. Share your first workout!",
+    "more": "Show more",
+    "friendsCount": "{n, plural, one {# friend} other {# friends}}",
+    "onlyPublic": "No public posts. Friends also see friends-only posts.",
+    "noPosts": "No posts yet.",
+    "joinToComment": "Join the community to comment.",
+    "scope": {
+      "label": "Show",
+      "all": "Everyone",
+      "friends": "Friends"
+    },
+    "join": {
+      "title": "Join the community",
+      "text": "Share workouts, follow friends and cheer them on. For each post you choose public or friends only. Your weight and strength levels never show without your permission.",
+      "handle": "Your @",
+      "handleHint": "3 to 20 letters, numbers, _ or .",
+      "name": "Display name",
+      "bio": "About you (optional)",
+      "rules": "I've read and accept the community rules:",
+      "rulesLink": "respect, no harassment, hate, nudity or spam.",
+      "join": "Join"
+    },
+    "edit": {
+      "title": "Public profile",
+      "shareLevels": "Show my strength levels",
+      "blocked": "Blocked people",
+      "noBlocked": "You haven't blocked anyone."
+    },
+    "workout": {
+      "free": "Free workout",
+      "sets": "{n, plural, one {# set} other {# sets}}",
+      "prs": "{n, plural, one {# record} other {# records}}"
+    },
+    "post": {
+      "like": "Like",
+      "unlike": "Unlike",
+      "more": "More options",
+      "delete": "Delete post",
+      "deleteConfirm": "Delete this post?",
+      "report": "Report",
+      "by": "Post by {name}",
+      "visibility": {
+        "PUBLIC": "Public",
+        "FRIENDS": "Friends only"
+      },
+      "hidden": "Hidden by moderation: only you can see it.",
+      "comments": "{n, plural, =0 {Comment} one {# comment} other {# comments}}"
+    },
+    "report": {
+      "title": "Why are you reporting this?",
+      "thanks": "Thanks. Our moderators will take a look.",
+      "close": "Close",
+      "cancel": "Cancel",
+      "send": "Report",
+      "reasons": {
+        "spam": "Spam or ads",
+        "harassment": "Harassment or bullying",
+        "hate": "Hate speech",
+        "nudity": "Nudity or sexual content",
+        "violence": "Violence or threats",
+        "self_harm": "Self-harm or eating disorders",
+        "misinformation": "Dangerous misinformation",
+        "other": "Other"
+      }
+    },
+    "composer": {
+      "title": "New post",
+      "placeholder": "How was your workout?",
+      "attach": "Share a workout",
+      "noAttach": "None",
+      "visibility": "Who can see",
+      "friends": "Friends",
+      "public": "Public",
+      "publish": "Post"
+    },
+    "comments": {
+      "title": "{n, plural, =0 {Comments} one {# comment} other {# comments}}",
+      "placeholder": "Write a comment",
+      "send": "Comment",
+      "delete": "Delete",
+      "report": "Report"
+    },
+    "profile": {
+      "add": "Add friend",
+      "cancel": "Cancel request",
+      "accept": "Accept",
+      "decline": "Decline",
+      "remove": "Remove friend",
+      "removeConfirm": "Remove this friend?",
+      "block": "Block",
+      "blockConfirm": "Block? You'll stop seeing each other and the friendship ends.",
+      "unblock": "Unblock",
+      "report": "Report"
+    },
+    "notices": {
+      "title": "Notifications",
+      "new": "New",
+      "empty": "No notifications.",
+      "kinds": {
+        "FRIEND_REQUEST": "{name} wants to be your friend",
+        "FRIEND_ACCEPTED": "{name} accepted your request",
+        "LIKE": "{name} liked your post",
+        "COMMENT": "{name} commented on your post"
+      }
+    },
+    "errors": {
+      "handle": "That @ won't work: 3 to 20 letters, numbers, _ or .",
+      "handleReserved": "That @ is reserved.",
+      "handleTaken": "That @ is already taken.",
+      "rules": "Accept the community rules to join.",
+      "join": "Join the community first (in Feed).",
+      "limit": "You've hit today's limit. Try again tomorrow.",
+      "post": "Couldn't post.",
+      "empty": "Write something or share a workout.",
+      "comment": "Comments must be 1–500 characters."
     }
   }
 }

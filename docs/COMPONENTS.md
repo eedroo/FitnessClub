@@ -305,3 +305,15 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **ActivityIcon** — ícone de linha (lucide) do grupo da atividade num círculo azul. `mg-activity-icon`.
 - **ActivityForm** (client) — tipo (lista do app Saúde com pesquisa e grupos, `mg-activity-picker`), dia e hora, duração, esforço 1–10, distância quando faz sentido, notas; editar e apagar. `mg-activity-form`.
 - **ActivityRow** — uma atividade nas listas (Sessões, Dia), na linha agrupada das sessões. `mg-activity-row`.
+
+### Rede social — Fase C1 (`src/components/social/`, lógica em `src/lib/social/`, rotas `/feed`, `/feed/notices`, `/feed/profile`, `/friends`, `/p/[id]`, `/u/[handle]`, `/admin/reports`; classes em `social.css`)
+- **Avatar** — iniciais num círculo grafite (fotos de perfil na C2). `mg-avatar`.
+- **JoinCommunity** (client) — entrar na comunidade (@, nome, bio, regras) e editar o perfil público. `mg-social-join`.
+- **PostComposer** (client) — texto, treino a partilhar (últimas sessões e atividades), público ou só amigos. `mg-composer`.
+- **PostCard** — autor, tempo relativo, visibilidade, texto, treino partilhado, gostos e comentários. `mg-post`.
+- **WorkoutAttachment** — retrato do treino partilhado (sessão ou atividade). `mg-post-workout`.
+- **LikeButton** (client), **PostMenu** (client, apagar/denunciar), **ReportDialog** (client, motivos; `mg-social-sheet`).
+- **CommentForm** / **CommentActions** (client) — comentar; apagar (o meu ou no meu post) ou denunciar. `mg-comment`.
+- **ProfileActions** (client) — amizade (pedir, cancelar, aceitar, recusar, remover), bloquear/desbloquear e denunciar. `mg-profile-actions`.
+- **FriendRequestButtons** (client), **MarkNoticesRead** (client), **ShareLevelsToggle** (client).
+- Barra do feed (`mg-feed-bar`, com contadores de pedidos e avisos) e o filtro Todos/Amigos (`mg-feed-scope`) vivem na página `/feed`.

@@ -9,6 +9,7 @@ const LINKS = [
   { href: '/admin/features', label: 'Funcionalidades' },
   { href: '/admin/push', label: 'Notificações' },
   { href: '/admin/ai', label: 'IA' },
+  { href: '/admin/reports', label: 'Denúncias' },
 ];
 
 /** Navegação da área de administração (só PT-PT: área interna). */

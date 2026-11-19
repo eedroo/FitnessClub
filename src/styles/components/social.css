@@ -1,0 +1,435 @@
+/* Rede social (Fase C): avatar, entrar na comunidade, feed, posts, comentários, perfis, amigos e avisos */
+
+.mg-avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(145deg, var(--accent), color-mix(in srgb, var(--accent) 60%, var(--highlight)));
+  color: var(--on-accent);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.mg-social-join {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-social-join__title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+}
+
+.mg-social-join__text {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.mg-social-join__hint {
+  font-size: var(--text-2xs);
+  color: var(--text-tertiary);
+}
+
+/* Barra do feed: o meu @, amigos, avisos, perfil */
+.mg-feed-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mg-feed-bar__me {
+  flex: 1;
+  font-weight: var(--weight-semibold);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mg-feed-bar__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--system-bg-2);
+  color: inherit;
+}
+
+.mg-feed-bar__count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--highlight);
+  color: var(--on-accent);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  line-height: 18px;
+  text-align: center;
+}
+
+.mg-feed-scope {
+  display: flex;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--system-bg-2);
+}
+
+.mg-feed-scope__tab {
+  flex: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: calc(var(--radius-sm) - 2px);
+  color: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-align: center;
+  text-decoration: none;
+}
+
+.mg-feed-scope__tab--on {
+  background: var(--system-bg);
+  box-shadow: var(--shadow-segment);
+}
+
+/* Escrever */
+.mg-composer,
+.mg-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-composer__text {
+  min-height: 72px;
+  padding: var(--space-2) var(--space-3);
+  resize: vertical;
+  line-height: var(--leading-normal);
+}
+
+/* Post */
+.mg-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-post__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mg-post__author {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mg-post__who {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.mg-post__name {
+  font-weight: var(--weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mg-post__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-post__text {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mg-post__hidden {
+  margin: 0;
+  font-size: var(--text-footnote);
+  color: var(--danger);
+}
+
+.mg-post__actions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.mg-post__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mg-post__action--liked {
+  color: var(--danger);
+}
+
+.mg-post__menu {
+  position: relative;
+}
+
+.mg-post__menu-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 5;
+  min-width: 180px;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--system-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+.mg-post__menu-item {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mg-post__menu-item--danger {
+  color: var(--danger);
+}
+
+/* Treino partilhado */
+.mg-post-workout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--highlight-soft);
+}
+
+.mg-post-workout__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-post-workout__name {
+  font-weight: var(--weight-semibold);
+}
+
+.mg-post-workout__stats {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-post-workout__list {
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+/* Denunciar */
+.mg-social-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--system-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+.mg-social-sheet__title {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+}
+
+.mg-social-sheet__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mg-social-sheet__option {
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--system-bg-2);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mg-social-sheet__option--on {
+  box-shadow: inset 0 0 0 2px var(--highlight);
+}
+
+/* Comentários */
+.mg-comments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-comment {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.mg-comment__body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-comment__meta {
+  margin: 0;
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-comment__meta a {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+.mg-comment__text {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mg-comment__link {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-tertiary);
+  font: inherit;
+  font-size: var(--text-2xs);
+  cursor: pointer;
+}
+
+/* Perfil */
+.mg-profile-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.mg-profile-head__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-profile-head__handle {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+}
+
+.mg-profile-head__bio {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  overflow-wrap: anywhere;
+}
+
+.mg-profile-head__meta {
+  margin: 0;
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.mg-profile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Amigos e avisos */
+.mg-friend-search .mg-input {
+  width: 100%;
+}
+
+.mg-friend-row {
+  gap: var(--space-2);
+}
+
+.mg-friend-row__who {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mg-notice {
+  gap: var(--space-3);
+}
