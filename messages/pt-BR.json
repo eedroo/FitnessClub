@@ -92,16 +92,7 @@
       "restCustom": "Agora: {n} s. Escolha um dos valores para mudar.",
       "keepAwake": "Tela acesa durante a sessão"
     },
-    "notificationsHint": "O único aviso é o de fim do descanso, e ele só chega quando você sai do app durante a sessão.",
-    "accent": "Cor de destaque",
-    "accentOptions": {
-      "orange": "Laranja",
-      "blue": "Azul",
-      "pink": "Rosa",
-      "violet": "Violeta",
-      "green": "Verde",
-      "graphite": "Grafite"
-    }
+    "notificationsHint": "O único aviso é o de fim do descanso, e ele só chega quando você sai do app durante a sessão."
   },
   "validation": {
     "required": "Campo obrigatório.",
@@ -840,8 +831,9 @@
         "kg": "kg por rep",
         "top": "Carga máxima"
       },
-      "titleTotals": "Comparado com {date}",
-      "same": "igual"
+      "titleTotals": "Comparado com a última vez ({date})",
+      "same": "igual",
+      "titleWorkout": "{name} · comparado com {date}"
     },
     "progress": {
       "metric": "Métrica",

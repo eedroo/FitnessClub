@@ -50,7 +50,6 @@ model User {
   name               String
   locale             Locale      @default(PT_PT)
   theme              ThemePref   @default(SYSTEM) // segue o tema do iPhone por defeito
-  accent             String      @default("orange") // cor de destaque: orange | blue | pink | violet | green | graphite
   timezone           String      @default("Europe/Lisbon")
   onboardedAt        DateTime? // boas-vindas do treino concluídas
   emailVerifiedAt    DateTime?

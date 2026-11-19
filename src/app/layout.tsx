@@ -8,8 +8,6 @@ import { AuthSessionProvider } from '@/components/providers/AuthSessionProvider'
 import { ServiceWorkerRegister } from '@/components/providers/ServiceWorkerRegister';
 import { SYSTEM_COLORS, prefToNextTheme } from '@/lib/theme';
 import { appUrl } from '@/lib/env';
-import { cookies } from 'next/headers';
-import { ACCENT_COOKIE, accentOrDefault } from '@/lib/accent';
 import '@/styles/index.css';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -48,7 +46,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const defaultTheme = session?.user ? prefToNextTheme(session.user.theme) : 'system';
 
   return (
-    <html lang={locale} data-accent={accentOrDefault(cookies().get(ACCENT_COOKIE)?.value)} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme={defaultTheme}>
           <AuthSessionProvider session={session}>

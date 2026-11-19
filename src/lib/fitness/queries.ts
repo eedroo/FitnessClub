@@ -293,7 +293,7 @@ export interface SessionSummary {
   reps: number;
   volumeGrams: number; // kg × reps, em gramas
   avgRestSec: number | null;
-  /** Totais desta sessão e da anterior do mesmo treino (treino livre: a sessão anterior qualquer). */
+  /** Totais desta sessão e da anterior do mesmo treino (treino livre: a anterior também livre). */
   totals: SessionTotals;
   previous: { id: string; date: DateISO; totals: SessionTotals } | null;
   /** Por exercício: as séries desta sessão e as da última vez que foi feito antes dela. */
@@ -303,6 +303,19 @@ export interface SessionSummary {
 type SetValuesView = { reps: number | null; weightGrams: number | null; durationSec: number | null };
 
 const nn = (s: SetValuesView) => ({ reps: s.reps ?? undefined, weightGrams: s.weightGrams ?? undefined, durationSec: s.durationSec ?? undefined });
+
+/**
+ * A sessão anterior do mesmo treino (treino livre: a anterior também livre), terminada e com séries: é contra ela que
+ * se compara uma sessão (no resumo e na tab Dia).
+ */
+export async function previousSessionOf(userId: string, s: { id: string; workoutId: string | null; startedAt: Date }) {
+  const prev = await db.fitnessSession.findFirst({
+    where: { userId, id: { not: s.id }, endedAt: { not: null }, startedAt: { lt: s.startedAt }, workoutId: s.workoutId, sets: { some: {} } },
+    orderBy: { startedAt: 'desc' },
+    select: { id: true, date: true, sets: { select: { reps: true, weightGrams: true, durationSec: true } } },
+  });
+  return prev ? { id: prev.id, date: fromDbDate(prev.date), totals: sessionTotals(prev.sets.map(nn)) } : null;
+}
 
 /** Última vez de cada exercício antes de `before` (as séries dessa sessão). */
 async function previousByExercise(userId: string, exerciseIds: string[], before: Date) {
@@ -340,11 +353,7 @@ export async function getSessionSummary(userId: string, id: string, locale: AppL
     groups.set(x.exerciseId, g);
   }
   const [prevSession, prevByEx] = await Promise.all([
-    db.fitnessSession.findFirst({
-      where: { userId, id: { not: s.id }, endedAt: { not: null }, startedAt: { lt: s.startedAt }, ...(s.workoutId && { workoutId: s.workoutId }), sets: { some: {} } },
-      orderBy: { startedAt: 'desc' },
-      select: { id: true, date: true, sets: { select: { reps: true, weightGrams: true, durationSec: true } } },
-    }),
+    previousSessionOf(userId, s),
     previousByExercise(userId, [...groups.keys()], s.startedAt),
   ]);
   return {
@@ -359,7 +368,7 @@ export async function getSessionSummary(userId: string, id: string, locale: AppL
     volumeGrams: s.sets.reduce((n, x) => n + (x.reps ?? 0) * (x.weightGrams ?? 0), 0),
     avgRestSec: rests.length ? Math.round(rests.reduce((a, b) => a + b, 0) / rests.length) : null,
     totals: sessionTotals(s.sets.map(nn)),
-    previous: prevSession ? { id: prevSession.id, date: fromDbDate(prevSession.date), totals: sessionTotals(prevSession.sets.map(nn)) } : null,
+    previous: prevSession,
     byExercise: [...groups.entries()].map(([exId, g]) => {
       const prev = prevByEx.get(exId);
       return { ...g, previous: prev ? { date: prev.date, sets: prev.sets } : null };

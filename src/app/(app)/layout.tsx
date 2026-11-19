@@ -9,8 +9,8 @@ import { getEntitlements } from '@/lib/entitlements/server';
 import { AmbientBackground } from '@/components/shell/AmbientBackground';
 import { ThemeSync } from '@/components/providers/ThemeSync';
 import { SentryUser } from '@/components/providers/SentryUser';
-import { AccentSync } from '@/components/providers/AccentSync';
-import { accentOrDefault } from '@/lib/accent';
+import { NavTracker } from '@/components/providers/NavTracker';
+import { Suspense } from 'react';
 import { EntitlementsProvider } from '@/components/premium/EntitlementsProvider';
 import { VerifyEmailBanner } from '@/components/account/VerifyEmailBanner';
 import { PolicyUpdateDialog } from '@/components/account/PolicyUpdateDialog';
@@ -26,7 +26,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
     getTranslations(),
     db.user.findUnique({
       where: { id: session.user.id },
-      select: { lastActiveAt: true, timezone: true, emailVerifiedAt: true, termsVersion: true, privacyVersion: true, wellbeingConsentAt: true, accent: true },
+      select: { lastActiveAt: true, timezone: true, emailVerifiedAt: true, termsVersion: true, privacyVersion: true, wellbeingConsentAt: true },
     }),
     getEntitlements(session.user.id),
   ]);
@@ -44,7 +44,9 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <AmbientBackground />
       <ThemeSync theme={session.user.theme} />
       <SentryUser id={session.user.id} />
-      <AccentSync accent={accentOrDefault(user?.accent)} />
+      <Suspense fallback={null}>
+        <NavTracker />
+      </Suspense>
       <EntitlementsProvider value={entitlements}>
         <VerifyEmailBanner verified={!user || user.emailVerifiedAt !== null} />
         {children}

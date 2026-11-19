@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { addDays, fromDbDate, toDbDate, todayInTz, type DateISO } from '@/lib/dates';
 import { weekDays, weekStartOf } from '@/lib/weeks';
 import type { AppLocale } from '@/i18n/locales';
-import { EXERCISE_VIEW, toExerciseView } from '@/lib/fitness/queries';
+import { EXERCISE_VIEW, previousSessionOf, toExerciseView } from '@/lib/fitness/queries';
 import { bestsOf, compareWithPrevious, dayStats, e1rm, sessionTotals, summarize, type Comparison, type DayStats, type SessionExerciseSummary, type SessionTotals } from '@/lib/fitness/progress';
 import type { ExerciseView } from '@/lib/fitness/types';
 import { goalStatus, weekAverage, type GoalStatus, type WeightPoint } from './weight';
@@ -64,9 +64,8 @@ export interface DayPageData {
   today: DateISO;
   week: { date: DateISO; trained: boolean }[];
   stats: DayStats | null;
-  /** Totais do dia e do dia de treino anterior (para comparar volume e carga). */
-  totals: SessionTotals | null;
-  previous: { date: DateISO; totals: SessionTotals } | null;
+  /** Cada sessão do dia contra a última vez desse mesmo treino (volume, carga máxima, reps, séries). */
+  comparisons: { sessionId: string; name: string | null; totals: SessionTotals; previous: { date: DateISO; totals: SessionTotals } }[];
   details: DaySetDetail[];
   sessions: { id: string; name: string | null; startedAt: string; durationSec: number | null; sets: number }[];
 }
@@ -74,7 +73,7 @@ export interface DayPageData {
 export async function getDayData(userId: string, date: DateISO, locale: AppLocale): Promise<DayPageData> {
   const tz = await userTz(userId);
   const days = weekDays(weekStartOf(date));
-  const [sessions, weekSessions, prevSession] = await Promise.all([
+  const [sessions, weekSessions] = await Promise.all([
     db.fitnessSession.findMany({
       where: { userId, date: toDbDate(date), sets: { some: {} } },
       orderBy: { startedAt: 'asc' },
@@ -84,15 +83,8 @@ export async function getDayData(userId: string, date: DateISO, locale: AppLocal
       where: { userId, date: { gte: toDbDate(days[0]!), lte: toDbDate(days[6]!) }, sets: { some: {} } },
       select: { date: true },
     }),
-    db.fitnessSession.findFirst({
-      where: { userId, date: { lt: toDbDate(date) }, sets: { some: {} } },
-      orderBy: { date: 'desc' },
-      select: { date: true },
-    }),
   ]);
-  const prevSets = prevSession
-    ? await db.sessionSet.findMany({ where: { userId, session: { date: prevSession.date } }, select: { reps: true, weightGrams: true, durationSec: true } })
-    : [];
+  const previous = await Promise.all(sessions.map((s) => previousSessionOf(userId, s)));
   const vals = (x: { reps: number | null; weightGrams: number | null; durationSec: number | null }) => ({ reps: x.reps ?? undefined, weightGrams: x.weightGrams ?? undefined, durationSec: x.durationSec ?? undefined });
   const trained = new Set(weekSessions.map((s) => fromDbDate(s.date)));
   const details = new Map<string, DaySetDetail>();
@@ -114,8 +106,10 @@ export async function getDayData(userId: string, date: DateISO, locale: AppLocal
     stats: sessions.length
       ? dayStats(sessions.map((s) => ({ startedAt: s.startedAt, endedAt: s.endedAt, sets: s.sets.map((x) => ({ exerciseId: x.exerciseId, reps: x.reps ?? undefined, weightGrams: x.weightGrams ?? undefined, durationSec: x.durationSec ?? undefined, completedAt: x.completedAt, prKinds: x.prKinds })) })))
       : null,
-    totals: sessions.length ? sessionTotals(sessions.flatMap((s) => s.sets.map(vals))) : null,
-    previous: prevSession && prevSets.length ? { date: fromDbDate(prevSession.date), totals: sessionTotals(prevSets.map(vals)) } : null,
+    comparisons: sessions.flatMap((s, i) => {
+      const prev = previous[i];
+      return prev ? [{ sessionId: s.id, name: s.workout?.name ?? null, totals: sessionTotals(s.sets.map(vals)), previous: { date: prev.date, totals: prev.totals } }] : [];
+    }),
     details: [...details.values()],
     sessions: sessions.map((s) => ({
       id: s.id,

@@ -11,8 +11,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Rotas na raiz:** o que no MYGLOW vivia em `/body/*` passa para a raiz (`/`, `/session`, `/exercises`, …); as boas-vindas do treino são o onboarding (`/welcome`).
 
 ## Linguagem visual
-- **App nativo do iPhone** (pedido da dona do projecto): segue as Human Interface Guidelines — fonte do sistema, cores de sistema claras e escuras, listas agrupadas, barra de navegação com título grande, tab bar e barras translúcidas, folhas que sobem de baixo, interruptores e segmented control do iOS, um único acento laranja. Sem fontes externas, dourado, vidro nem sombras nos cartões. O tema segue o do sistema por defeito (`User.theme` = `SYSTEM`).
-- **Vidro líquido** (pedido da dona do projecto): superfícies translúcidas e desfocadas sobre orbes tingidas pelo acento, cápsulas, tab bar flutuante. A cor de destaque é da pessoa (`User.accent`: laranja, azul, rosa, violeta, verde, grafite; laranja por defeito), guardada também no cookie `fc_accent` para o <html> sair já com ela.
+- **App nativo do iPhone** (pedido da dona do projecto): segue as Human Interface Guidelines — fonte do sistema, cores de sistema claras e escuras, listas agrupadas, barra de navegação com título grande, tab bar e barras translúcidas, folhas que sobem de baixo, interruptores e segmented control do iOS, um único acento grafite. Sem fontes externas, dourado, vidro nem sombras nos cartões. O tema segue o do sistema por defeito (`User.theme` = `SYSTEM`).
+- **Vidro líquido** (pedido da dona do projecto): superfícies translúcidas e desfocadas sobre orbes tingidas pelo acento, cápsulas, tab bar flutuante. Cor oficial grafite (prata no escuro), escolhida pela dona do projecto, sem escolha de cor pela pessoa; azul (`--highlight`) só nos detalhes do corpo (mapa muscular, exercício em foco, descanso, gráficos). Ícone: haltere prateado sobre placa de grafite.
 - **Página de entrada** (`/start`) para quem chega sem sessão, no padrão do ecrã de boas-vindas das apps da Apple.
 
 ## Stack
@@ -85,5 +85,5 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 
 ## Progressão e comparação (pedido da dona do projecto)
 - **Progressão dupla:** com um alvo de reps (ex.: 3 × 5–8), cada sessão soma uma rep à última vez na primeira série que a pode receber sem ficar mais de 1 rep acima da seguinte (6,5,5 → 6,6,5 → 7,6,5 → … → 8,8,8). Tudo no máximo → sobe a carga (+2,5 kg; halteres e kettlebells +2 kg) e as reps voltam ao mínimo. Da última vez com séries em falta → primeiro completá-las. Peso do corpo no topo → "torna-o mais difícil". Lógica pura em `src/lib/fitness/progression.ts`; a próxima série vem preenchida com a sugestão.
-- **Comparação nos resumos:** o resumo da sessão compara volume, carga máxima, reps e séries com a sessão anterior do mesmo treino (treino livre: a anterior qualquer) e cada exercício com a última vez; a tab Dia compara com o dia de treino anterior.
+- **Comparação nos resumos:** o resumo da sessão compara volume, carga máxima, reps e séries com a última vez do mesmo treino (treino livre: o treino livre anterior) e cada exercício com a última vez; na tab Dia, cada sessão do dia compara-se da mesma forma (nunca com o dia anterior, que pode ser de descanso ou de outro treino).
 - **Notas pessoais:** programa (`FitnessProgram.notes`), treino (`FitnessWorkout.notes`) e exercício (`ExerciseNote`, uma por pessoa e exercício, também da biblioteca), escritas pela pessoa ou pela IA (`notesByAi`/`byAi`; editar à mão tira a marca). Entram na exportação.

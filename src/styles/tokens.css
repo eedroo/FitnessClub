@@ -2,7 +2,8 @@
  * FitnessClub — design tokens. Única fonte de cores, espaços, raios, sombras, blur e tipografia.
  * Linguagem visual de app nativo do iPhone (Human Interface Guidelines) com materiais de vidro líquido: superfícies
  * translúcidas e desfocadas sobre um fundo vivo (orbes tingidas pelo acento), brilho fino nas arestas, cápsulas.
- * Fonte do sistema (SF Pro no iPhone e no Mac). O acento escolhe-se nas definições (`data-accent` no <html>).
+ * Fonte do sistema (SF Pro no iPhone e no Mac). Cor oficial: grafite com reflexos de prata; o azul (`--highlight`,
+ * `--body-accent`) fica só para os detalhes do corpo (mapa muscular, exercício em foco, descanso, gráficos).
  * Os nomes antigos (gold-*, glass-*, body-*) mantêm-se como aliases para os componentes herdados do MYGLOW.
  */
 
@@ -10,12 +11,15 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  /* Acento (tint) da marca */
-  --accent: #F2541B;
-  --accent-pressed: #D2430F;
-  --accent-soft: rgba(242, 84, 27, 0.12);
-  --accent-2: #FF9F6B; /* segunda cor das orbes */
+  /* Acento da marca: grafite (prata no escuro) */
+  --accent: #1E2026;
+  --accent-pressed: #000000;
+  --accent-soft: rgba(30, 32, 38, 0.08);
+  --accent-2: #AEB5C2; /* prata: segunda cor das orbes */
   --on-accent: #FFFFFF;
+  /* Destaque do corpo: azul (o "glow" do corpo) */
+  --highlight: #2F7BFF;
+  --highlight-soft: rgba(47, 123, 255, 0.12);
 
   /* Fundos de sistema (agrupados) */
   --system-bg: #ECEEF4; /* fundo por baixo das orbes */
@@ -84,10 +88,10 @@
   --line-rule: var(--separator);
 
   /* Fundo vivo: orbes desfocadas tingidas pelo acento */
-  --orb-1: color-mix(in srgb, var(--accent) 38%, transparent);
-  --orb-2: color-mix(in srgb, var(--accent-2) 34%, transparent);
-  --orb-3: color-mix(in srgb, var(--accent) 22%, transparent);
-  --orb-4: color-mix(in srgb, var(--accent-2) 26%, transparent);
+  --orb-1: color-mix(in srgb, var(--accent-2) 55%, transparent);
+  --orb-2: color-mix(in srgb, var(--highlight) 18%, transparent);
+  --orb-3: color-mix(in srgb, var(--accent) 12%, transparent);
+  --orb-4: color-mix(in srgb, var(--accent-2) 40%, transparent);
   --orb-blur: 90px;
 
   /* Estado */
@@ -114,8 +118,8 @@
   --premium-glow: none;
 
   /* Treino */
-  --body-accent: var(--accent);
-  --body-accent-soft: var(--accent-soft);
+  --body-accent: var(--highlight);
+  --body-accent-soft: var(--highlight-soft);
   --body-surface: var(--system-bg-2);
   --body-timer: var(--text-primary);
   --body-on-accent: var(--on-accent);
@@ -128,8 +132,8 @@
   --metric-exercises: #34C759;
   --metric-rest: #A2845E;
   --metric-weight: #8E8E93;
-  --recovery-just: var(--accent);
-  --recovery-mid: #FFB27A;
+  --recovery-just: var(--highlight);
+  --recovery-mid: #8DB8FF;
   --recovery-rested: #D1D1D6;
   --pr-gold: #FFB800;
 
@@ -211,15 +215,17 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --accent: #FF6A33;
-  --accent-pressed: #FF8255;
-  --accent-soft: rgba(255, 106, 51, 0.2);
-  --accent-2: #B8431B;
-  --on-accent: #FFFFFF;
-  --orb-1: color-mix(in srgb, var(--accent) 30%, transparent);
-  --orb-2: color-mix(in srgb, var(--accent-2) 40%, transparent);
-  --orb-3: color-mix(in srgb, var(--accent) 16%, transparent);
-  --orb-4: color-mix(in srgb, var(--accent-2) 24%, transparent);
+  --accent: #E8EAEE;
+  --accent-pressed: #FFFFFF;
+  --accent-soft: rgba(232, 234, 238, 0.14);
+  --accent-2: #4A5262;
+  --on-accent: #0B0C10;
+  --highlight: #4C9BFF;
+  --highlight-soft: rgba(76, 155, 255, 0.2);
+  --orb-1: color-mix(in srgb, var(--accent-2) 55%, transparent);
+  --orb-2: color-mix(in srgb, var(--highlight) 22%, transparent);
+  --orb-3: color-mix(in srgb, var(--accent) 8%, transparent);
+  --orb-4: color-mix(in srgb, var(--accent-2) 35%, transparent);
 
   --system-bg: #05060B;
   --system-bg-2: rgba(255, 255, 255, 0.07);
@@ -270,25 +276,7 @@
   --metric-exercises: #30D158;
   --metric-rest: #AC8E68;
   --metric-weight: #98989F;
-  --recovery-mid: #A85A33;
+  --recovery-mid: #2D5A9E;
   --recovery-rested: #3A3A3C;
   --pr-gold: #FFD60A;
 }
-
-/*
- * Cores de destaque à escolha (Definições → Preferências). Cada uma define o acento, a cor quando se carrega,
- * o fundo suave, a segunda cor das orbes e o texto sobre o acento; claro e escuro.
- */
-[data-accent="orange"] { --accent: #F2541B; --accent-pressed: #D2430F; --accent-soft: rgba(242, 84, 27, 0.12); --accent-2: #FF9F6B; --on-accent: #FFFFFF; }
-[data-accent="blue"] { --accent: #0A7AFF; --accent-pressed: #0062CC; --accent-soft: rgba(10, 122, 255, 0.12); --accent-2: #7CC4FF; --on-accent: #FFFFFF; }
-[data-accent="pink"] { --accent: #E5487A; --accent-pressed: #C93163; --accent-soft: rgba(229, 72, 122, 0.12); --accent-2: #F7A6BF; --on-accent: #FFFFFF; }
-[data-accent="violet"] { --accent: #7B5CF0; --accent-pressed: #6243D6; --accent-soft: rgba(123, 92, 240, 0.12); --accent-2: #C3B2FF; --on-accent: #FFFFFF; }
-[data-accent="green"] { --accent: #1FA35C; --accent-pressed: #168447; --accent-soft: rgba(31, 163, 92, 0.12); --accent-2: #8EE0B0; --on-accent: #FFFFFF; }
-[data-accent="graphite"] { --accent: #2C2F36; --accent-pressed: #15171C; --accent-soft: rgba(44, 47, 54, 0.1); --accent-2: #A9B0BF; --on-accent: #FFFFFF; }
-
-[data-theme="dark"][data-accent="orange"] { --accent: #FF6A33; --accent-pressed: #FF8255; --accent-soft: rgba(255, 106, 51, 0.2); --accent-2: #B8431B; }
-[data-theme="dark"][data-accent="blue"] { --accent: #3D9BFF; --accent-pressed: #6BB3FF; --accent-soft: rgba(61, 155, 255, 0.2); --accent-2: #1648A8; }
-[data-theme="dark"][data-accent="pink"] { --accent: #FF6B9A; --accent-pressed: #FF8FB2; --accent-soft: rgba(255, 107, 154, 0.2); --accent-2: #8E2350; }
-[data-theme="dark"][data-accent="violet"] { --accent: #9B85FF; --accent-pressed: #B5A6FF; --accent-soft: rgba(155, 133, 255, 0.2); --accent-2: #3D2A99; }
-[data-theme="dark"][data-accent="green"] { --accent: #34D27A; --accent-pressed: #5CDD95; --accent-soft: rgba(52, 210, 122, 0.2); --accent-2: #0E5A31; }
-[data-theme="dark"][data-accent="graphite"] { --accent: #F2F3F5; --accent-pressed: #FFFFFF; --accent-soft: rgba(242, 243, 245, 0.14); --accent-2: #3A3F4B; --on-accent: #0B0C10; }

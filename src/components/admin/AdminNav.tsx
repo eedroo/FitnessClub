@@ -7,6 +7,7 @@ const LINKS = [
   { href: '/admin', label: 'Métricas' },
   { href: '/admin/users', label: 'Utilizadores' },
   { href: '/admin/features', label: 'Funcionalidades' },
+  { href: '/admin/push', label: 'Notificações' },
 ];
 
 /** Navegação da área de administração (só PT-PT: área interna). */

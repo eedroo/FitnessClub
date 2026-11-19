@@ -21,5 +21,5 @@ export function nextThemeToPref(theme: string | undefined): ThemePref | undefine
 export const SYSTEM_COLORS = {
   lightBackground: '#F2F2F7',
   darkBackground: '#000000',
-  accent: '#F2541B',
+  accent: '#1E2026',
 } as const;

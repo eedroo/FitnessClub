@@ -11,8 +11,6 @@ import { Field, describedBy } from '@/components/ui/Field';
 import { TextInput } from '@/components/ui/TextInput';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { Toast } from '@/components/ui/Toast';
-import { AccentPicker } from '@/components/settings/AccentPicker';
-import { ACCENTS, type Accent } from '@/lib/accent';
 import { DB_LOCALES, type DbLocale } from '@/i18n/locales';
 import { prefToNextTheme, type ThemePref } from '@/lib/theme';
 import type { SettingsInput } from '@/lib/validation/settings';
@@ -37,7 +35,6 @@ export function SettingsForm({ initial, timezones, part }: SettingsFormProps) {
   const [locale, setLocale] = useState<DbLocale>(initial.locale);
   const [theme, setThemePref] = useState<ThemePref>(initial.theme);
   const [timezone, setTimezone] = useState(initial.timezone);
-  const [accent, setAccent] = useState<Accent>(initial.accent);
   const [errors, setErrors] = useState<Partial<Record<keyof SettingsInput, string>>>({});
   const [toast, setToast] = useState<{ variant: 'success' | 'error'; messageKey: string } | null>(null);
 
@@ -46,7 +43,7 @@ export function SettingsForm({ initial, timezones, part }: SettingsFormProps) {
     setToast(null);
 
     startTransition(async () => {
-      const result = await saveSettings(part === 'profile' ? { name } : { locale, theme, timezone, accent });
+      const result = await saveSettings(part === 'profile' ? { name } : { locale, theme, timezone });
       if (!result.ok) {
         setErrors(result.fieldErrors ?? {});
         setToast({ variant: 'error', messageKey: result.formError ?? 'common.errors.generic' });
@@ -105,12 +102,6 @@ export function SettingsForm({ initial, timezones, part }: SettingsFormProps) {
         options={THEMES.map((value) => ({ value, label: t(`settings.themeOptions.${value}`) }))}
       />
 
-      <AccentPicker
-        value={accent}
-        onChange={setAccent}
-        legend={t('settings.accent')}
-        labels={Object.fromEntries(ACCENTS.map((a) => [a, t(`settings.accentOptions.${a}`)])) as Record<Accent, string>}
-      />
 
       <Field id="settings-timezone" label={t('settings.timezone')} hint={tzHint} error={err(errors.timezone)}>
         <select

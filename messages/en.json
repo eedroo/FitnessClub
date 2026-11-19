@@ -92,16 +92,7 @@
       "restCustom": "Currently {n} s. Pick one of the values to change it.",
       "keepAwake": "Keep the screen on during a session"
     },
-    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session.",
-    "accent": "Accent colour",
-    "accentOptions": {
-      "orange": "Orange",
-      "blue": "Blue",
-      "pink": "Pink",
-      "violet": "Violet",
-      "green": "Green",
-      "graphite": "Graphite"
-    }
+    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session."
   },
   "validation": {
     "required": "This field is required.",
@@ -840,8 +831,9 @@
         "kg": "kg per rep",
         "top": "Top weight"
       },
-      "titleTotals": "Compared with {date}",
-      "same": "same"
+      "titleTotals": "Compared with last time ({date})",
+      "same": "same",
+      "titleWorkout": "{name} · compared with {date}"
     },
     "progress": {
       "metric": "Metric",

@@ -1,6 +1,6 @@
 # FitnessClub — Plano das próximas fases
 
-Pedidos da dona do projecto (19/11/2026) ainda por fazer, por ordem sugerida. Cada fase fecha com um commit, testes e build a passar.
+Pedidos da dona do projecto (19/11/2026) ainda por fazer, pela ordem decidida: **A → B → D → C**. Cada fase fecha com um commit, testes e build a passar.
 As decisões em aberto estão no fim de cada fase; nada aqui é definitivo até serem respondidas.
 
 ## Já feito (19/11)
@@ -19,7 +19,7 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - **Insights semanais:** no domingo, uma retrospectiva da semana (frequência, volume e carga contra a semana anterior, recordes, exercícios parados) com o que correu bem e o que melhorar, à luz do objectivo. A app calcula os números; a IA só interpreta (validação com Zod contra os factos, como no Guia do MYGLOW).
 - Jobs no Inngest (nunca num pedido de página), limite por pessoa, custo no admin.
 - **Privacidade:** a Política e os Termos dizem hoje "sem IA"; é preciso actualizá-los (nova versão = re-aceitação) e pedir consentimento próprio para enviar dados de treino à IA. Nunca nome, email nem fotos.
-- **Decisões:** fornecedor (Claude da Anthropic é o natural; a chave vai só para a Vercel), modelo e orçamento mensal; se é premium ou para todos.
+- **Decidido (19/11):** Gemini 2.5 Flash (Google AI Studio; a chave só na Vercel), só para premium; a Política de Privacidade e os Termos são actualizados (re-aceitação) antes de ligar.
 
 ## Fase C — Rede social
 - Perfil público com @, foto/avatar, nível, emblemas; amigos mútuos (pedido/aceitar), bloquear e denunciar.
@@ -27,6 +27,7 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - Grupos com metas (frequência, Glow/XP) e competições internas com ranking.
 - Convites de treino: post "sábado de manhã" público, para amigos ou directo a pessoas; pedidos para juntar-se; lista e mapa de treinos próximos nos próximos dias.
 - Precisa de: armazenamento de fotos (Vercel Blob), moderação (denúncias + admin), notificações (pedidos, gostos, comentários, convites), localização **aproximada** (bairro/ginásio escolhido, nunca a posição exacta), idade mínima e regras da comunidade nos Termos.
+- **Decidido (19/11):** cada post escolhe público ou só amigos; os convites de treino mostram um pino no mapa sobre a academia ou a região escolhida (nunca a posição exacta).
 - Tab bar sugerida: Treinos · Feed · Sessão/Dia · Comunidade (grupos e convites) · Perfil.
 
 ## Fase D — Gamificação
@@ -35,6 +36,6 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - Pode ser mostrado no perfil se a pessoa quiser ("partilhar os meus níveis de força"), desligado por defeito.
 
 ## Outros pendentes
-- Traduções dos exercícios (pt-PT, pt-BR): os ficheiros vieram vazios do MYGLOW; os nomes estão em inglês. Podem ser feitas pela IA (Fase B) e revistas.
+- Traduções dos exercícios (pt-PT, pt-BR): os ficheiros vieram vazios do MYGLOW; os nomes estão em inglês. Ficam para depois (pela IA, na Fase B, e revistas).
 - Imagens dos exercícios: apontam para o Blob do MYGLOW; correr `import-images.ts --reupload` antes de o apagar.
-- Resend, VAPID/Inngest (aviso de descanso), Upstash e Sentry na Vercel.
+- VAPID (gerar em `/admin/push`) e Inngest (aviso de descanso) agora; Resend (emails de confirmação e recuperação), Upstash e Sentry mais tarde.

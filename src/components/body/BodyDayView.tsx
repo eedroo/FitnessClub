@@ -25,7 +25,9 @@ export async function BodyDayView({ data, trained }: { data: DayPageData; traine
         {data.stats ? (
           <>
             <DayMetrics stats={data.stats} />
-            {data.totals && data.previous && <TotalsCompare comparison={compareTotals(data.totals, data.previous.totals)} previousDate={data.previous.date} />}
+            {data.comparisons.map((c) => (
+              <TotalsCompare key={c.sessionId} name={c.name ?? undefined} comparison={compareTotals(c.totals, c.previous.totals)} previousDate={c.previous.date} />
+            ))}
             <GlassCard title={t('details')}>
               <SetDetails details={data.details} />
             </GlassCard>

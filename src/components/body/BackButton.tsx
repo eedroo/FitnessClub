@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import { NAV_STACK_KEY, canGoBack, readStack } from '@/lib/nav-history';
 
 /**
  * Voltar à página de onde se veio (sessão, treino, mapa muscular, biblioteca…). Sem histórico dentro da app (link
@@ -15,7 +16,12 @@ export function BackButton({ fallback, label, className }: { fallback: string; l
       href={fallback}
       className={className}
       onClick={(e) => {
-        const fromApp = typeof document !== 'undefined' && document.referrer.startsWith(window.location.origin) && window.history.length > 1;
+        let fromApp = false;
+        try {
+          fromApp = canGoBack(readStack(sessionStorage.getItem(NAV_STACK_KEY)));
+        } catch {
+          /* sem armazenamento: vai para o fallback */
+        }
         if (!fromApp) return;
         e.preventDefault();
         router.back();

@@ -8,10 +8,11 @@ import { isAppLocale, intlLocale } from '@/i18n/locales';
 import type { Comparison, SessionTotals } from '@/lib/fitness/progress';
 
 /**
- * Totais de uma sessão (ou de um dia) contra a anterior: séries, reps, volume e carga máxima, com a data da anterior.
+ * Totais de uma sessão contra a última vez do mesmo treino: volume, carga máxima, reps e séries, com a data da anterior
+ * (e o nome do treino, na tab Dia).
  * Mesmo desenho do `CompareCard` (▲ verde quando sobe; ▼ e igual neutros).
  */
-export function TotalsCompare({ comparison, previousDate }: { comparison: Record<keyof SessionTotals, Comparison | null>; previousDate: string }) {
+export function TotalsCompare({ comparison, previousDate, name }: { comparison: Record<keyof SessionTotals, Comparison | null>; previousDate: string; name?: string }) {
   const t = useTranslations('fitness.compare');
   const raw = useLocale();
   const locale = isAppLocale(raw) ? raw : 'pt-PT';
@@ -26,10 +27,11 @@ export function TotalsCompare({ comparison, previousDate }: { comparison: Record
   ];
   const shown = cells.filter((c) => comparison[c.key]);
   if (!shown.length) return null;
+  const title = name ? t('titleWorkout', { name, date: formatDayMonth(previousDate, locale) }) : t('titleTotals', { date: formatDayMonth(previousDate, locale) });
   return (
-    <section className="mg-compare mg-compare--totals" aria-label={t('titleTotals', { date: formatDayMonth(previousDate, locale) })}>
+    <section className="mg-compare mg-compare--totals" aria-label={title}>
       <p className="mg-compare__head">
-        <ArrowLeftRight size={16} aria-hidden="true" /> {t('titleTotals', { date: formatDayMonth(previousDate, locale) })}
+        <ArrowLeftRight size={16} aria-hidden="true" /> {title}
       </p>
       <dl className="mg-compare__grid">
         {shown.map(({ kind, key, fmt }) => {
