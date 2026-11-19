@@ -12,20 +12,30 @@
 }
 
 .mg-level__seal {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(145deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--highlight)));
-  box-shadow: var(--shadow-app-icon);
-  color: var(--on-accent);
+  width: 64px;
+  height: 64px;
+}
+
+.mg-level__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mg-level__num {
+  position: relative;
   font-family: var(--font-rounded);
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px var(--system-bg);
 }
 
 .mg-level__text {
@@ -101,20 +111,14 @@
   background: var(--system-bg-2);
 }
 
-.mg-badges__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-pill);
-  background: var(--separator);
-  color: var(--text-tertiary);
+.mg-badges__art {
+  width: 72px;
+  height: 72px;
 }
 
-.mg-badges__item--earned .mg-badges__icon {
-  background: var(--highlight-soft);
-  color: var(--highlight);
+.mg-badges__item:not(.mg-badges__item--earned) .mg-badges__art {
+  filter: grayscale(1);
+  opacity: 0.35;
 }
 
 .mg-badges__name {
@@ -148,11 +152,10 @@
   vertical-align: middle;
 }
 
-.mg-tier__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-pill);
-  background: var(--tier-color);
+.mg-tier__medal {
+  width: 18px;
+  height: 18px;
+  margin: -2px 0;
 }
 
 .mg-tier--compact {

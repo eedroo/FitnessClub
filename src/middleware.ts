@@ -8,6 +8,6 @@ export const config = {
   // robots é público.
   // /api/health (monitorização externa, sem sessão) e /monitoring (túnel do Sentry).
   matcher: [
-    '/((?!_next/|icons/|api/auth|api/inngest|api/health|monitoring|manifest.webmanifest|sw.js|favicon.ico|robots.txt|sitemap.xml|opengraph-image).*)',
+    '/((?!_next/|icons/|game/|api/auth|api/inngest|api/health|monitoring|manifest.webmanifest|sw.js|favicon.ico|robots.txt|sitemap.xml|opengraph-image).*)',
   ],
 };

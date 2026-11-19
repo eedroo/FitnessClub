@@ -1,9 +1,7 @@
 import { useTranslations } from 'next-intl';
-import { BADGES, type BadgeState } from '@/lib/gamification/badges';
-import type { MagicIconName } from '@/lib/icons';
-import { MagicIcon } from '@/components/ui/MagicIcon';
-
-const ICON: Record<(typeof BADGES)[number]['kind'], MagicIconName> = { sessions: 'dumbbell', prs: 'trophy', sets: 'star', streak: 'flame' };
+import type { BadgeState } from '@/lib/gamification/badges';
+import Image from 'next/image';
+import { badgeArt } from '@/lib/gamification/art';
 
 /** Emblemas: ganhos com a data; os que faltam em cinzento, com a barra de progresso. */
 export function BadgeGrid({ badges, formatDate }: { badges: BadgeState[]; formatDate: (d: string) => string }) {
@@ -11,12 +9,9 @@ export function BadgeGrid({ badges, formatDate }: { badges: BadgeState[]; format
   return (
     <ul className="mg-badges">
       {badges.map((b) => {
-        const def = BADGES.find((x) => x.id === b.id)!;
         return (
           <li key={b.id} className={b.earnedOn ? 'mg-badges__item mg-badges__item--earned' : 'mg-badges__item'}>
-            <span className="mg-badges__icon" aria-hidden="true">
-              <MagicIcon name={ICON[def.kind]} size="md" decorative />
-            </span>
+            <Image className="mg-badges__art" src={badgeArt(b.id)} alt="" width={72} height={72} />
             <span className="mg-badges__name">{t(`${b.id}.name`)}</span>
             <span className="mg-badges__meta">
               {b.earnedOn ? formatDate(b.earnedOn) : t(`${b.id}.how`)}
