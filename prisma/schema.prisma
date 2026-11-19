@@ -96,6 +96,8 @@ model User {
   reports           Report[]
   socialNotices     SocialNotice[]     @relation("NoticeTo")
   socialNoticesSent SocialNotice[]     @relation("NoticeFrom")
+  groupsOwned       Group[]
+  groupMemberships  GroupMember[]
 }
 
 enum AuthTokenType {
@@ -573,4 +575,39 @@ model SocialNotice {
   actor     User             @relation("NoticeFrom", fields: [actorId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt, createdAt])
+}
+
+// ─── Fase C3: grupos com meta semanal e ranking ──────────────────────────────────────────────────
+
+enum GroupGoalKind {
+  SESSIONS // treinos (sessões + atividades) por pessoa e semana
+  MINUTES // minutos de treino por pessoa e semana
+  XP // XP por pessoa e semana
+}
+
+model Group {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  isPublic    Boolean       @default(false) // público: aparece na lista e entra-se logo; privado: só com o link
+  code        String        @unique // código do link de convite
+  goalKind    GroupGoalKind @default(SESSIONS)
+  goalTarget  Int           @default(3)
+  createdAt   DateTime      @default(now())
+  owner       User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  members     GroupMember[]
+
+  @@index([isPublic, createdAt])
+}
+
+model GroupMember {
+  groupId  String
+  userId   String
+  joinedAt DateTime @default(now())
+  group    Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, userId])
+  @@index([userId])
 }

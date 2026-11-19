@@ -31,7 +31,7 @@ export async function GET() {
     },
   });
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const [profile, friendships, posts, comments, likes] = await Promise.all([
+  const [profile, friendships, posts, comments, likes, groups] = await Promise.all([
     db.socialProfile.findUnique({ where: { userId }, select: { handle: true, displayName: true, bio: true, shareLevels: true, createdAt: true } }),
     db.friendship.findMany({
       where: { status: 'ACCEPTED', OR: [{ requesterId: userId }, { addresseeId: userId }] },
@@ -40,6 +40,7 @@ export async function GET() {
     db.post.findMany({ where: { authorId: userId }, orderBy: { createdAt: 'asc' }, select: { text: true, visibility: true, workout: true, createdAt: true } }),
     db.postComment.findMany({ where: { authorId: userId }, orderBy: { createdAt: 'asc' }, select: { postId: true, text: true, createdAt: true } }),
     db.postLike.findMany({ where: { userId }, orderBy: { createdAt: 'asc' }, select: { postId: true, createdAt: true } }),
+    db.groupMember.findMany({ where: { userId }, select: { joinedAt: true, group: { select: { name: true, ownerId: true, goalKind: true, goalTarget: true } } } }),
   ]);
 
   const data = buildExport({
@@ -53,6 +54,7 @@ export async function GET() {
       posts,
       comments,
       likes,
+      groups: groups.map((g) => ({ name: g.group.name, owner: g.group.ownerId === userId, goal: `${g.group.goalTarget} ${g.group.goalKind}`, joinedAt: g.joinedAt })),
     },
     fitness: {
       prefs: user.fitnessPrefs,

@@ -320,3 +320,8 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **ProfileActions** (client) — amizade (pedir, cancelar, aceitar, recusar, remover), bloquear/desbloquear e denunciar. `mg-profile-actions`.
 - **FriendRequestButtons** (client), **MarkNoticesRead** (client), **ShareLevelsToggle** (client).
 - Barra do feed (`mg-feed-bar`, com contadores de pedidos e avisos) e o filtro Todos/Amigos (`mg-feed-scope`) vivem na página `/feed`.
+
+### Grupos — Fase C3 (`src/components/groups/`, lógica em `src/lib/social/groups.ts`, rotas `/groups`, `/groups/new`, `/groups/[id]`, `/groups/[id]/edit`, `/groups/join/[code]`)
+- **GroupForm** (client) — nome, descrição, público ou só por link, meta semanal (tipo e número); editar e apagar.
+- **GroupActions** / **RemoveMemberButton** / **JoinByCode** (client) — entrar, sair, convidar (partilhar o link), tirar membros.
+- Meta da semana (`mg-group-goal`) e ranking (`mg-ranking`) vivem na página do grupo.

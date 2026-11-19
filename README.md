@@ -78,3 +78,4 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Atividades: Treinos ou Sessões → "+ Registar atividade" → escolher (ex.: Corrida) → distância, esforço → aparece nas Sessões e no Dia; XP em Conquistas; editar e apagar.
 - [ ] Comunidade: Feed → entrar (@, nome, regras) → publicar um treino (só amigos / público) → outra conta pede amizade, gosta e comenta → avisos no sino → aceitar → bloquear e denunciar → Admin › Denúncias esconde.
 - [ ] Fotos: + no Feed → até 4 fotos → publicar; foto de perfil em Eu → Editar perfil; apagar a publicação apaga as fotos.
+- [ ] Grupos: Feed → bandeira → Criar grupo (meta) → Convidar (link) → outra conta entra → ranking da semana.

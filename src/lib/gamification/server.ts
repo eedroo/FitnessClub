@@ -1,9 +1,10 @@
 import 'server-only';
 import { db } from '@/lib/db';
-import { addDays, fromDbDate, todayInTz } from '@/lib/dates';
+import { addDays, fromDbDate, toDbDate, todayInTz } from '@/lib/dates';
 import { shiftWeek, sundaysBetween, weekStartOf } from '@/lib/weeks';
 import { badgeStates, type BadgeId, type BadgeState } from './badges';
-import { counts, sessionXp, xpSummary, type XpSession, type XpSummary } from './xp';
+import { counts, sessionXp, weekGoal, XP, xpSummary, type XpSession, type XpSummary } from './xp';
+import type { WeekStat } from '@/lib/social/groups';
 import { STRENGTH_STANDARDS, mergeBest, strengthLevel, type StrengthBest, type StrengthLevel } from './strength';
 
 /** Sessões terminadas da pessoa, em ordem, com nº de séries e de recordes (base de todo o XP e emblemas). */
@@ -102,4 +103,35 @@ export async function getStrengthLevels(userId: string): Promise<{ levels: Stren
     else if (STRENGTH_STANDARDS[id]?.by === 'ratio' && b.e1rmGrams && !bodyGrams) needsWeight = true;
   }
   return { levels, needsWeight };
+}
+
+/** Números de uma semana (domingo `weekStart`) para várias pessoas: treinos, minutos e XP (para os grupos). */
+export async function weekStats(userIds: string[], weekStart: string): Promise<WeekStat[]> {
+  if (!userIds.length) return [];
+  const range = { gte: toDbDate(weekStart), lte: toDbDate(addDays(weekStart, 6)) };
+  const [sessions, activities, profiles] = await Promise.all([
+    db.fitnessSession.findMany({
+      where: { userId: { in: userIds }, endedAt: { not: null }, date: range },
+      select: { id: true, userId: true, startedAt: true, endedAt: true, _count: { select: { sets: true } } },
+    }),
+    db.activity.findMany({ where: { userId: { in: userIds }, date: range }, select: { userId: true, durationSec: true } }),
+    db.trainingProfile.findMany({ where: { userId: { in: userIds } }, select: { userId: true, trainingDays: true } }),
+  ]);
+  const prs = sessions.length
+    ? await db.sessionSet.groupBy({ by: ['sessionId'], where: { sessionId: { in: sessions.map((s) => s.id) }, NOT: { prKinds: { isEmpty: true } } }, _count: { _all: true } })
+    : [];
+  const prBy = new Map(prs.map((p) => [p.sessionId, p._count._all]));
+  const planned = new Map(profiles.map((p) => [p.userId, p.trainingDays.length || null]));
+  return userIds.map((userId) => {
+    const mine = sessions.filter((s) => s.userId === userId && s._count.sets > 0);
+    const acts = activities.filter((a) => a.userId === userId);
+    const count = mine.length + acts.filter((a) => a.durationSec >= 60).length;
+    const minutes =
+      mine.reduce((n, s) => n + Math.round((s.endedAt!.getTime() - s.startedAt.getTime()) / 60000), 0) + acts.reduce((n, a) => n + Math.floor(a.durationSec / 60), 0);
+    const xp =
+      mine.reduce((n, s) => n + sessionXp({ sets: s._count.sets, prs: prBy.get(s.id) ?? 0 }), 0) +
+      acts.reduce((n, a) => n + sessionXp({ sets: 0, prs: 0, activityMinutes: Math.floor(a.durationSec / 60) }), 0) +
+      (count >= weekGoal(planned.get(userId) ?? null) ? XP.week : 0);
+    return { userId, sessions: count, minutes, xp };
+  });
 }

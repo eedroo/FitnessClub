@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Bell, Plus, Users } from 'lucide-react';
+import { Bell, Flag, Plus, Users } from 'lucide-react';
 import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
 import { ensureProfile, getFeed, unreadNotices } from '@/lib/social/server';
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Feed: as publicações em destaque (todas ou só de amigos); o "+" abre a nova publicação. */
 export default async function FeedPage({ searchParams }: { searchParams: { scope?: string; before?: string } }) {
   const { userId, locale } = await bodyPage();
-  const [t, profile] = await Promise.all([getTranslations('social'), ensureProfile(userId)]);
+  const [t, tg, profile] = await Promise.all([getTranslations('social'), getTranslations('groups'), ensureProfile(userId)]);
   const scope = searchParams.scope === 'friends' ? 'friends' : 'all';
   const before = searchParams.before && !Number.isNaN(Date.parse(searchParams.before)) ? new Date(searchParams.before) : undefined;
   const [posts, unread, pending] = await Promise.all([
@@ -37,6 +37,9 @@ export default async function FeedPage({ searchParams }: { searchParams: { scope
           <Link href="/friends" className="mg-feed-bar__icon" aria-label={t('friends')}>
             <Users size={22} strokeWidth={1.75} aria-hidden="true" />
             {pending > 0 && <span className="mg-feed-bar__count">{pending}</span>}
+          </Link>
+          <Link href="/groups" className="mg-feed-bar__icon" aria-label={tg('title')}>
+            <Flag size={22} strokeWidth={1.75} aria-hidden="true" />
           </Link>
           <Link href="/feed/notices" className="mg-feed-bar__icon" aria-label={t('notices.title')}>
             <Bell size={22} strokeWidth={1.75} aria-hidden="true" />

@@ -1489,5 +1489,56 @@
       "changeAvatar": "Change photo",
       "removeAvatar": "Remove photo"
     }
+  },
+  "groups": {
+    "title": "Groups",
+    "new": "Create group",
+    "edit": "Edit group",
+    "mine": "My groups",
+    "public": "Public groups",
+    "noneMine": "You're not in any group yet. Create one and invite friends, or join a public one.",
+    "members": "{n, plural, one {# member} other {# members}}",
+    "goalLine": "{target} {kind} a week",
+    "goal": {
+      "SESSIONS": "workouts",
+      "MINUTES": "minutes",
+      "XP": "XP"
+    },
+    "unit": {
+      "SESSIONS": "workouts",
+      "MINUTES": "min",
+      "XP": "XP"
+    },
+    "weekGoal": "This week's goal · {range}",
+    "metCount": "{met} of {n} have hit it",
+    "met": "Goal met",
+    "ranking": "This week's ranking",
+    "membersOnly": "{n, plural, one {# member} other {# members}}. Join to see the ranking.",
+    "join": "Join group",
+    "leave": "Leave group",
+    "leaveConfirm": "Leave this group?",
+    "invite": "Invite",
+    "inviteTitle": "Group invite",
+    "copied": "Link copied",
+    "remove": "Remove",
+    "removeConfirm": "Remove this person from the group?",
+    "form": {
+      "name": "Name",
+      "description": "Description (optional)",
+      "public": "Public group",
+      "publicHint": "Shows in the list and anyone can join.",
+      "privateHint": "Only people with the invite link can join.",
+      "goal": "Weekly goal per person",
+      "target": "How many {kind} a week",
+      "create": "Create group",
+      "delete": "Delete group",
+      "deleteConfirm": "Delete this group for everyone?"
+    },
+    "errors": {
+      "invalid": "Check the name and the goal.",
+      "tooMany": "You're already in 20 groups, the maximum.",
+      "full": "This group is full (50 people).",
+      "notFound": "This group no longer exists."
+    }
   }
 }

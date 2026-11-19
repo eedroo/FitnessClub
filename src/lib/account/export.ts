@@ -21,6 +21,7 @@ export interface ExportSource {
     posts: { text: string | null; visibility: string; workout: unknown; createdAt: Date }[];
     comments: { postId: string; text: string; createdAt: Date }[];
     likes: { postId: string; createdAt: Date }[];
+    groups?: { name: string; owner: boolean; goal: string; joinedAt: Date }[];
   };
   /** Outras atividades registadas (corrida, yoga…). */
   activities?: Activity[];
@@ -77,6 +78,7 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
           posts: data.social.posts.map((p) => ({ ...p, createdAt: iso(p.createdAt) })),
           comments: data.social.comments.map((c) => ({ ...c, createdAt: iso(c.createdAt) })),
           likes: data.social.likes.map((l) => ({ ...l, createdAt: iso(l.createdAt) })),
+          groups: (data.social.groups ?? []).map((g) => ({ ...g, joinedAt: iso(g.joinedAt) })),
         }
       : null,
     activities: (data.activities ?? []).map((a) => ({

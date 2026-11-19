@@ -1489,5 +1489,56 @@
       "changeAvatar": "Mudar a foto",
       "removeAvatar": "Tirar a foto"
     }
+  },
+  "groups": {
+    "title": "Grupos",
+    "new": "Criar grupo",
+    "edit": "Editar grupo",
+    "mine": "Os meus grupos",
+    "public": "Grupos públicos",
+    "noneMine": "Ainda não estás em nenhum grupo. Cria um e convida amigos, ou entra num público.",
+    "members": "{n, plural, one {# membro} other {# membros}}",
+    "goalLine": "{target} {kind} por semana",
+    "goal": {
+      "SESSIONS": "treinos",
+      "MINUTES": "minutos",
+      "XP": "XP"
+    },
+    "unit": {
+      "SESSIONS": "treinos",
+      "MINUTES": "min",
+      "XP": "XP"
+    },
+    "weekGoal": "Meta da semana · {range}",
+    "metCount": "{met} de {n} já cumpriram",
+    "met": "Meta cumprida",
+    "ranking": "Ranking da semana",
+    "membersOnly": "{n, plural, one {# membro} other {# membros}}. Entra para veres o ranking.",
+    "join": "Entrar no grupo",
+    "leave": "Sair do grupo",
+    "leaveConfirm": "Sair deste grupo?",
+    "invite": "Convidar",
+    "inviteTitle": "Convite para um grupo",
+    "copied": "Link copiado",
+    "remove": "Tirar",
+    "removeConfirm": "Tirar esta pessoa do grupo?",
+    "form": {
+      "name": "Nome",
+      "description": "Descrição (opcional)",
+      "public": "Grupo público",
+      "publicHint": "Aparece na lista e qualquer pessoa pode entrar.",
+      "privateHint": "Só entra quem tiver o link de convite.",
+      "goal": "Meta semanal por pessoa",
+      "target": "Quantos {kind} por semana",
+      "create": "Criar grupo",
+      "delete": "Apagar grupo",
+      "deleteConfirm": "Apagar este grupo para toda a gente?"
+    },
+    "errors": {
+      "invalid": "Verifica o nome e a meta.",
+      "tooMany": "Já estás em 20 grupos, o máximo.",
+      "full": "Este grupo está cheio (50 pessoas).",
+      "notFound": "Este grupo já não existe."
+    }
   }
 }

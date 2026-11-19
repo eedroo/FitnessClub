@@ -130,10 +130,16 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Limites por dia:** 20 posts, 200 comentários, 50 pedidos de amizade, 30 denúncias.
 - **Navegação:** 5 separadores — Feed · Treinos · Sessões · Dia · Eu (o Corpo passou a Eu: o meu perfil e o corpo).
 - Termos e Política na versão `2026-11-19.2` (regras da comunidade e dados sociais). Entra tudo na exportação; apagar a conta apaga tudo em cascata.
-- **Próximas partes:** C3 grupos com metas e rankings, C4 convites de treino com pino no mapa (OpenStreetMap; academia ou região, nunca a posição exacta).
+- **Próximas partes:** C4 convites de treino com pino no mapa (OpenStreetMap; academia ou região, nunca a posição exacta).
 - **Treinos:** cabeçalho com o nível e a barra de XP; depois os programas, "Novo programa", os meus exercícios e a retrospectiva da semana. Na página do exercício só o selo do nível de força (leva às conquistas).
 
 ## Fotos — Fase C2
 - **Vercel Blob** (store público; a variável `BLOB_READ_WRITE_TOKEN` vem da integração). Os URLs são longos e impossíveis de adivinhar; uma foto de uma publicação "só amigos" abre para quem tiver o link (como noutras redes).
 - **Envio directo do telemóvel** (`@vercel/blob/client`): o servidor (`/api/blob/upload`) só dá o token depois de verificar a sessão, o caminho da própria pessoa (`posts/<id>/…`, `avatars/<id>/…`), o tipo (JPEG, PNG, WebP) e o tamanho (6 MB). Antes de enviar, o browser reduz para 1600 px (avatar 512 px) em WebP.
 - **Até 4 fotos por publicação** e uma foto de perfil; ao publicar, cada URL é conferido (nosso Blob e da própria pessoa). Apagar a publicação, trocar a foto de perfil ou apagar a conta apaga as fotos do Blob.
+
+## Grupos — Fase C3
+- **Meta semanal por pessoa:** treinos (sessões com séries + atividades), minutos ou XP, escolhida por quem cria (limites: 1–14 treinos, 10–1500 min, 50–5000 XP). Semana de domingo a sábado.
+- **Ranking da semana** pela meta (empates por XP e minutos), com a barra até à meta e "X de N já cumpriram". Só os membros vêem o ranking.
+- **Entrar:** grupos públicos aparecem na lista e entra-se logo; privados só com o link de convite (`/groups/join/<código>`). Máx. 50 pessoas por grupo e 20 grupos por pessoa; 5 grupos novos por dia.
+- O dono edita, apaga e tira membros; quem não é dono sai quando quer. Entra na exportação.

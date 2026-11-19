@@ -560,3 +560,65 @@ a.mg-level__seal {
   align-items: center;
   gap: var(--space-4);
 }
+
+/* Grupos: meta da semana e ranking */
+.mg-group-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--highlight-soft);
+}
+
+.mg-group-goal__label {
+  font-size: var(--text-footnote);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mg-group-goal__value {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-group-goal__meta {
+  font-size: var(--text-sm);
+  color: var(--highlight);
+}
+
+.mg-ranking {
+  counter-reset: none;
+}
+
+.mg-ranking__row {
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.mg-ranking__row--me {
+  box-shadow: inset 3px 0 0 var(--highlight);
+}
+
+.mg-ranking__place {
+  flex: none;
+  width: 22px;
+  font-family: var(--font-rounded);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.mg-ranking__value {
+  flex: none;
+  font-family: var(--font-rounded);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-ranking__value small {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+}
