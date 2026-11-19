@@ -14,7 +14,7 @@ Recolher o que a IA vai precisar, já útil sem ela.
 - Onboarding em passos (o `BodyWelcome` cresce) e uma página "O meu perfil de treino" nas definições para mudar depois.
 - **Sem IA:** a escolha de modelo de programa passa a filtrar pelo equipamento e frequência.
 
-## Fase B — IA
+## Fase B — IA — feita (19/11)
 - **Gerar programa:** a partir do perfil, a IA propõe um programa com treinos, exercícios **só da biblioteca** (ids validados), alvos (séries × reps, descanso) e notas no programa, em cada treino e em cada exercício. A pessoa revê antes de guardar.
 - **Insights semanais:** no domingo, uma retrospectiva da semana (frequência, volume e carga contra a semana anterior, recordes, exercícios parados) com o que correu bem e o que melhorar, à luz do objectivo. A app calcula os números; a IA só interpreta (validação com Zod contra os factos, como no Guia do MYGLOW).
 - Jobs no Inngest (nunca num pedido de página), limite por pessoa, custo no admin.

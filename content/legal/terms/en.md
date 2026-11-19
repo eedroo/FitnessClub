@@ -1,5 +1,5 @@
-version: 2026-11
-date: 2026-11-18
+version: 2026-11-19
+date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
 
@@ -16,6 +16,8 @@ The service is provided by **Onda**, Av. Miguel Bombarda, 110, Lisbon, Portugal,
 ## 2. Not medical advice
 
 FitnessClub records what you do and shows numbers (volume, records, weight averages). It is not a health service: it gives no diagnoses, diet plans or training prescriptions, and it does not replace a doctor, a dietitian or a coach. The workout templates included are general examples.
+
+On the Premium plan, and only with your consent, AI can propose programmes and write a weekly review. These are automatic suggestions that may contain mistakes: review them before following them and adapt them to your body.
 
 ## 3. Training safely
 

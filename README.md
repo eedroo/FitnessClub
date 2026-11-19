@@ -28,11 +28,12 @@ As variáveis vivem só na Vercel (Project → Settings → Environment Variable
 3. **Variáveis** (Production; Preview se quiser):
    - `AUTH_SECRET` (novo: `npx auth secret`); `AUTH_URL` e `APP_URL` só quando houver domínio próprio (sem elas, na Vercel usa-se o domínio `*.vercel.app` de produção);
    - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (par novo: `npx web-push generate-vapid-keys`);
+   - `GEMINI_API_KEY` (Secret; Google AI Studio, com faturação activa para os dados não serem usados no treino dos modelos da Google);
    - `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` (app novo no Inngest, endpoint `https://<domínio>/api/inngest`; ou a integração Inngest da Vercel);
    - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO` (domínio verificado no Resend);
    - `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (base nova; ou a integração Upstash da Vercel);
    - `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN` (projecto Sentry novo, região UE) — opcional;
-   - `LEGAL_TERMS_VERSION=2026-11`, `LEGAL_PRIVACY_VERSION=2026-11`, `ADMIN_EMAILS` (o teu email);
+   - `LEGAL_TERMS_VERSION=2026-11-19`, `LEGAL_PRIVACY_VERSION=2026-11-19` (opcionais: sem elas vale a versão do código), `ADMIN_EMAILS` (o teu email);
    - `BLOB_READ_WRITE_TOKEN` só para reenviar as imagens (ver abaixo).
    Não são precisas: `OPENAI_*`, `GUIDE_CONSENT_VERSION`, `BETA*`.
 4. **Primeiro acesso:** registar a conta com o email de `ADMIN_EMAILS`. O app está aberto a todos (recurso `pro` em
@@ -68,3 +69,7 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Definições: língua, tema, fuso, descanso por defeito, retirar o consentimento de saúde (com e sem apagar).
 - [ ] Email de confirmação e recuperação de palavra-passe a chegarem (Resend).
 - [ ] Admin: métricas, utilizadores, plano, interruptor `pro`.
+- [ ] IA (Premium): nova Política aceite uma vez; Treinos → "Criar com IA" → consentimento → programa proposto (só exercícios da biblioteca) → Guardar → notas marcadas "IA" no programa, treinos e exercícios.
+- [ ] Retrospectiva: Treinos → "Retrospectiva da semana" → pedir a da semana passada → números e texto; ao domingo às 9h chega sozinha (push).
+- [ ] Conta grátis: o cartão da IA mostra "Premium" e não pede nada; Definições › Privacidade › IA: retirar o consentimento.
+- [ ] Admin › IA: custo do mês, por tipo e por pessoa.

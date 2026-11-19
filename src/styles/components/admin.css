@@ -74,6 +74,7 @@
 .mg-admin-table__num {
   text-align: right;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .mg-admin-table th.mg-admin-table__num {

@@ -22,3 +22,9 @@ export function testNotification(locale: Locale): NotificationContent {
   const t = translatorFor(locale);
   return { title: t('notifications.push.test.title'), body: t('notifications.push.test.body'), url: '/settings' };
 }
+
+/** Retrospectiva semanal da IA pronta. */
+export function aiInsightNotification(locale: Locale, id: string): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t('notifications.push.aiInsight.title'), body: t('notifications.push.aiInsight.body'), url: `/insights/${id}` };
+}

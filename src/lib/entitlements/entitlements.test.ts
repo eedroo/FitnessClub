@@ -21,13 +21,15 @@ describe('direitos', () => {
   });
 
   it('buildEntitlements: sem linha de FeatureFlag usa o defaultRollout (ALL: aberto a todos)', () => {
-    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, {}, {}, now)).toEqual({ plan: 'FREE', features: { pro: true } });
+    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, {}, {}, now)).toEqual({ plan: 'FREE', features: { pro: true, ai: false } });
     expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'PREMIUM' }, {}, now).features.pro).toBe(false);
     expect(buildEntitlements({ plan: 'PREMIUM', planExpiresAt: null }, { pro: 'PREMIUM' }, {}, now).features.pro).toBe(true);
     // Interruptor global em "Todos": grátis também usa.
     expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'ALL' }, {}, now).features.pro).toBe(true);
     // Excepção por pessoa com a funcionalidade escondida para todos.
-    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'HIDDEN' }, { pro: true }, now).features).toEqual({ pro: true });
+    expect(buildEntitlements({ plan: 'FREE', planExpiresAt: null }, { pro: 'HIDDEN' }, { pro: true }, now).features).toEqual({ pro: true, ai: false });
+    // IA: só premium por defeito.
+    expect(buildEntitlements({ plan: 'PREMIUM', planExpiresAt: null }, {}, {}, now).features.ai).toBe(true);
     // Premium expirado conta como grátis.
     expect(buildEntitlements({ plan: 'PREMIUM', planExpiresAt: yesterday }, {}, {}, now).plan).toBe('FREE');
   });

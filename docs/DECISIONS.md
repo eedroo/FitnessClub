@@ -44,7 +44,7 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Peso e meta são dados de saúde: consentimento explícito (`wellbeingConsentAt`), pedido no registo e retirável; sem ele o peso e a meta ficam desactivados (nem se mostram nem se gravam).
 - Idade mínima 16 anos (nos Termos).
 - Versões dos Termos e da Política de Privacidade com re-aceitação quando mudam. Textos legais são rascunho até revisão jurídica. Responsável pelos dados: Onda.
-- Sem IA: nenhum dado sai para serviços de IA.
+- IA (Fase B) só com consentimento próprio (`User.aiConsentAt`), pedido antes do primeiro uso e retirável nas Definições. Vai para o Gemini só o perfil de treino e os números dos treinos; nunca o nome, o email, o peso do corpo, a meta nem fotos.
 
 ## Premium e operação
 - Plano `FREE`/`PREMIUM` lido do servidor por pedido (nunca no JWT), com origem (`MANUAL`, `GIFT`, `PAID` mais tarde) e data de fim opcional. Sem pagamentos por agora.
@@ -93,3 +93,11 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - O peso dado no perfil vai para o peso diário de hoje, só com o consentimento de dados de saúde.
 - Sem IA, o perfil escolhe o modelo sugerido (`recommendTemplate`): 4+ dias → superior/inferior; 3 → push · pull · legs (iniciante: corpo inteiro); 1–2 → corpo inteiro; só saúde sem ginásio → alongamentos.
 - "Voltar" na página do exercício regressa à página de onde se veio (histórico do app em `sessionStorage`; o `document.referrer` não muda nas navegações do Next).
+
+## IA (Fase B)
+- **Modelo:** Gemini 2.5 Flash por REST (`src/lib/ai/gemini.ts`), chave só na Vercel (`GEMINI_API_KEY`), saída JSON com `responseSchema` e validação com Zod. `AI_FAKE=1` (só fora de produção) responde sem chave, para testar.
+- **Acesso:** recurso `ai`, por defeito só Premium; o consentimento e a chave também contam. Política de Privacidade e Termos na versão `2026-11-19` (re-aceitação); a versão do código ganha a uma `LEGAL_*_VERSION` mais antiga na Vercel.
+- **Jobs:** a IA corre só no Inngest (`ai-program`, `ai-insight`, `ai-insight-cron` de hora a hora); sem Inngest, fora de produção, o job corre no próprio processo; em produção o pedido fica "falhado".
+- **Programa:** candidatos da biblioteca filtrados pelo equipamento e nível (até 320, primeiro os dos modelos e com imagens); a IA só pode usar esses ids — os outros caem fora e, acima de 20 %, o pedido falha (uma nova tentativa com o motivo). A pessoa revê antes de guardar; ao guardar, as notas do programa e dos treinos ficam marcadas como da IA e as notas de exercício só entram onde a pessoa não escreveu a sua. Limite: 3 por dia, 15 por mês.
+- **Retrospectiva semanal:** ao domingo às 9h no fuso da pessoa, para a semana (domingo a sábado) que acabou, só se houve treinos; também pedida à mão (uma por semana). A app calcula os factos (`weekFacts`: sessões, séries, reps, volume contra a semana anterior, recordes, exercícios principais, exercícios parados há 3+ semanas); a IA só interpreta e cada número do texto tem de existir nos factos (`checkInsight`). Push "A tua semana em revista" a quem tem notificações.
+- **Custo:** cada pedido guarda tokens e custo (US$ 0,30 / 2,50 por milhão de tokens de entrada / saída); `/admin/ai` mostra o mês, os 30 dias por tipo e por pessoa. Nunca se guarda o prompt.

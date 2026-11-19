@@ -1,5 +1,5 @@
-version: 2026-11
-date: 2026-11-18
+version: 2026-11-19
+date: 2026-11-19
 
 > **Draft — to be reviewed by a lawyer before launch.**
 
@@ -17,6 +17,8 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 
 - **Account:** name, email, password (stored only as an irreversible hash), language, theme, time zone, and the dates you signed up and accepted these documents.
 - **Training:** programmes, workouts and exercises you create, sessions (start, end, notes), sets (weight, reps, time or distance, effort) and the records calculated from them.
+- **Training profile:** goals, level, equipment, focus muscles, training days and session length, and what you write in your requests and in what you want to avoid.
+- **Artificial intelligence (with consent):** the programmes and weekly reviews created by AI, and the cost of each request.
 - **Health data (with explicit consent):** weigh-ins and your weight goal (direction and pace).
 - **Preferences:** default rest time, end-of-rest alert and keeping the screen on during workouts.
 - **Notifications:** push notification subscriptions for your devices (the push service's technical address and encryption keys).
@@ -26,12 +28,17 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 
 - **Providing the service** (account, workouts, sessions, progress, rest alerts, export): performance of the contract you accept when creating your account.
 - **Weight and goal** (health data): **explicit consent**, used solely to show you your weight, averages and goal. You can withdraw it at any time in Settings without affecting the rest of the app.
+- **Artificial intelligence** (proposed programmes and the weekly review, on the Premium plan): **consent**, asked before first use and withdrawable at any time in Settings › Privacy without affecting the rest of the app.
 - **Security and abuse prevention** (attempt limits, technical logs): legitimate interest in protecting your account and the service.
 - **Service emails** (email confirmation, password recovery, security notices): performance of the contract. We do not send marketing.
 
-## 4. No artificial intelligence, no sharing
+## 4. Artificial intelligence and sharing
 
-FitnessClub does not send your data to artificial intelligence services, does not sell it, and does not share it with other people or companies beyond the processors below, who only handle it to provide the service.
+AI is optional and only works with your consent. When you ask for a programme or get your weekly review, we send **Gemini** (Google) only your training profile and your workout numbers (sets, reps, loads, records and the names of exercises and workouts). **We never send** your name, email, body weight, weight goal or photos. We use Google's paid API, under which data is not used to train Google's models.
+
+AI text is an automatically generated suggestion: the numbers are calculated by the app and the text is checked against them, but it may contain mistakes. It is not medical advice.
+
+We do not sell your data or share it with other people or companies beyond the processors below, who only handle it to provide the service.
 
 ## 5. Connecting to other apps
 
@@ -43,7 +50,8 @@ We use these providers, who process data only on our behalf and according to our
 
 - **Vercel** — hosting for the app and the exercise images;
 - **Neon** — database;
-- **Inngest** — scheduled tasks (end-of-rest alert);
+- **Inngest** — scheduled tasks (end-of-rest alert, AI requests);
+- **Google (Gemini API)** — artificial intelligence, only with your consent (see section 4);
 - **Upstash** — usage limits (security);
 - **Resend** — sending emails;
 - **Sentry** — technical error logging, on servers in the EU, without your workout content or weight;
@@ -62,7 +70,7 @@ You have the right to:
 - **access** and **portability** — in Settings › Privacy, "Export my data" downloads everything as a JSON file;
 - **rectification** — you can edit your data in the app at any time;
 - **erasure** — in Settings › Danger zone, "Delete account" removes everything;
-- **withdraw consent** for health data, in Settings, without affecting the lawfulness of earlier processing (you can also delete your weigh-ins and goal);
+- **withdraw consent** for AI and for health data, in Settings, without affecting the lawfulness of earlier processing (you can also delete your weigh-ins and goal);
 - **object to** and **restrict** processing, where the law allows;
 - lodge a **complaint** with the Portuguese data protection authority (CNPD) or the supervisory authority in your country.
 

@@ -112,6 +112,10 @@
       "test": {
         "title": "Tudo pronto",
         "body": "Os avisos do FitnessClub vão chegar assim."
+      },
+      "aiInsight": {
+        "title": "A tua semana em revista",
+        "body": "O que correu bem e um foco para a próxima semana."
       }
     },
     "prompt": {
@@ -1026,5 +1030,76 @@
     "privacyLink": "Privacidade",
     "register": "Criar conta",
     "login": "Já tenho conta"
+  },
+  "ai": {
+    "errors": {
+      "premium": "A IA está disponível no plano Premium.",
+      "consent": "Para usar a IA, dá primeiro o teu consentimento.",
+      "unavailable": "A IA não está disponível de momento. Tenta mais tarde.",
+      "profile": "Preenche primeiro o teu perfil de treino.",
+      "limit": "Chegaste ao limite de pedidos à IA por agora. Tenta amanhã."
+    },
+    "consent": {
+      "title": "Usar a IA",
+      "text": "Para criar programas e analisar a tua semana, o FitnessClub envia dados de treino ao Gemini, o modelo de IA da Google.",
+      "sends": "Vai: o perfil de treino (objectivos, nível, equipamento, dias, pedidos) e os números dos treinos (séries, repetições, cargas, recordes).",
+      "never": "Nunca vai: o nome, o email, o peso do corpo nem fotos.",
+      "withdraw": "Podes retirar o consentimento quando quiseres em Definições › Privacidade.",
+      "policy": "Ler a Política de Privacidade",
+      "cancel": "Agora não",
+      "accept": "Concordo e continuar"
+    },
+    "program": {
+      "title": "Programa feito pela IA",
+      "text": "A IA monta um programa à tua medida a partir do teu perfil de treino.",
+      "premium": "Um programa à tua medida, criado pela IA a partir do teu perfil.",
+      "premiumBadge": "Premium",
+      "create": "Criar com IA",
+      "needProfile": "Preencher o perfil de treino",
+      "reviewTitle": "Programa proposto",
+      "pendingTitle": "A montar o teu programa…",
+      "pendingText": "Demora uns segundos. Podes sair desta página: o programa fica aqui à tua espera.",
+      "failedTitle": "Não foi possível criar o programa",
+      "failedText": "Pede outro; se continuar a falhar, tenta mais tarde.",
+      "byAi": "Criado pela IA",
+      "rest": "descanso {sec} s",
+      "reviewHint": "Revê antes de guardar. Depois de guardado, é um programa teu como os outros: podes mudar tudo.",
+      "save": "Guardar programa",
+      "again": "Pedir outro",
+      "discard": "Descartar"
+    },
+    "insights": {
+      "title": "Retrospectiva da semana",
+      "intro": "Ao domingo de manhã, a IA olha para a semana que acabou: o que correu bem, o que melhorar e um foco para a próxima. Os números são calculados pela app.",
+      "premium": "A retrospectiva semanal com IA está disponível no plano Premium.",
+      "request": "Ver a retrospectiva da semana passada",
+      "unread": "Por ler",
+      "pending": "A preparar…",
+      "empty": "Ainda não tens retrospectivas. A primeira chega no domingo depois de uma semana com treinos.",
+      "homeText": "O que correu bem e o que melhorar, todos os domingos.",
+      "pendingTitle": "A IA está a ler a tua semana…",
+      "failed": "Não foi possível preparar esta retrospectiva. Tenta mais tarde.",
+      "wins": "Correu bem",
+      "improve": "A melhorar",
+      "nextWeek": "Foco da próxima semana",
+      "disclaimer": "Texto gerado por IA a partir dos teus números. Não é aconselhamento médico.",
+      "facts": {
+        "sessions": "Sessões",
+        "volume": "Volume",
+        "sets": "Séries",
+        "prs": "Recordes",
+        "planned": "de {n} planeadas",
+        "note": "Comparado com a semana anterior."
+      }
+    },
+    "settings": {
+      "title": "Inteligência artificial",
+      "text": "Com o teu consentimento, o perfil de treino e os números dos treinos vão para o Gemini (Google) para criar programas e a retrospectiva da semana. Nunca o nome, o email, o peso nem fotos.",
+      "givenOn": "Consentimento dado a {date}.",
+      "none": "Sem consentimento: nenhum dado vai para a IA.",
+      "grant": "Dar consentimento",
+      "withdraw": "Retirar consentimento",
+      "weekly": "Retrospectiva ao domingo"
+    }
   }
 }

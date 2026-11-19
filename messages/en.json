@@ -112,6 +112,10 @@
       "test": {
         "title": "All set",
         "body": "FitnessClub alerts will arrive like this."
+      },
+      "aiInsight": {
+        "title": "Your week in review",
+        "body": "What went well and one focus for next week."
       }
     },
     "prompt": {
@@ -1026,5 +1030,76 @@
     "privacyLink": "Privacy",
     "register": "Create account",
     "login": "I already have an account"
+  },
+  "ai": {
+    "errors": {
+      "premium": "AI is available on the Premium plan.",
+      "consent": "To use AI, please give your consent first.",
+      "unavailable": "AI isn't available right now. Please try again later.",
+      "profile": "Fill in your training profile first.",
+      "limit": "You've reached the AI request limit for now. Try again tomorrow."
+    },
+    "consent": {
+      "title": "Use AI",
+      "text": "To build programmes and review your week, FitnessClub sends training data to Gemini, Google's AI model.",
+      "sends": "What's sent: your training profile (goals, level, equipment, days, requests) and your workout numbers (sets, reps, loads, records).",
+      "never": "Never sent: your name, email, body weight or photos.",
+      "withdraw": "You can withdraw consent at any time in Settings › Privacy.",
+      "policy": "Read the Privacy Policy",
+      "cancel": "Not now",
+      "accept": "Agree and continue"
+    },
+    "program": {
+      "title": "AI-built programme",
+      "text": "AI builds a programme around your training profile.",
+      "premium": "A programme made for you by AI, based on your profile.",
+      "premiumBadge": "Premium",
+      "create": "Create with AI",
+      "needProfile": "Fill in your training profile",
+      "reviewTitle": "Proposed programme",
+      "pendingTitle": "Building your programme…",
+      "pendingText": "This takes a few seconds. You can leave this page; the programme will be waiting here.",
+      "failedTitle": "Couldn't create the programme",
+      "failedText": "Ask for another one; if it keeps failing, try again later.",
+      "byAi": "Made by AI",
+      "rest": "rest {sec} s",
+      "reviewHint": "Review it before saving. Once saved, it's your programme like any other, and you can change everything.",
+      "save": "Save programme",
+      "again": "Try another",
+      "discard": "Discard"
+    },
+    "insights": {
+      "title": "Weekly review",
+      "intro": "On Sunday morning, AI looks at the week that just ended: what went well, what to improve and one focus for next week. The numbers are calculated by the app.",
+      "premium": "The AI weekly review is available on the Premium plan.",
+      "request": "See last week's review",
+      "unread": "Unread",
+      "pending": "Preparing…",
+      "empty": "No reviews yet. The first one arrives on the Sunday after a week with workouts.",
+      "homeText": "What went well and what to improve, every Sunday.",
+      "pendingTitle": "AI is reading your week…",
+      "failed": "Couldn't prepare this review. Please try again later.",
+      "wins": "What went well",
+      "improve": "To improve",
+      "nextWeek": "Focus for next week",
+      "disclaimer": "AI-generated from your numbers. Not medical advice.",
+      "facts": {
+        "sessions": "Sessions",
+        "volume": "Volume",
+        "sets": "Sets",
+        "prs": "Records",
+        "planned": "of {n} planned",
+        "note": "Compared with the week before."
+      }
+    },
+    "settings": {
+      "title": "Artificial intelligence",
+      "text": "With your consent, your training profile and workout numbers go to Gemini (Google) to build programmes and the weekly review. Never your name, email, weight or photos.",
+      "givenOn": "Consent given on {date}.",
+      "none": "No consent: no data goes to AI.",
+      "grant": "Give consent",
+      "withdraw": "Withdraw consent",
+      "weekly": "Sunday review"
+    }
   }
 }

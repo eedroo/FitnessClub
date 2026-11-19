@@ -117,3 +117,13 @@ export function monthRange(year: number, month: number): { from: DateISO; to: Da
 export function weeksBetween(a: DateISO, b: DateISO): number {
   return Math.round(dt(b).diff(dt(a), 'days').days / 7);
 }
+
+/** Domingo da última semana completa (domingo a sábado) antes de `today`: a semana que a retrospectiva analisa. */
+export function lastFinishedWeekStart(today: DateISO): DateISO {
+  return iso(dt(weekStartOf(today)).minus({ days: 7 }));
+}
+
+/** Domingo `n` semanas antes (n > 0) ou depois (n < 0) de `start`. */
+export function shiftWeek(start: DateISO, n: number): DateISO {
+  return iso(dt(start).minus({ days: 7 * n }));
+}

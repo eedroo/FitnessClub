@@ -282,3 +282,13 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 | `NavTracker` | client | — | — | (`components/providers/`) no layout `(app)`: regista as páginas abertas em `sessionStorage` (`src/lib/nav-history.ts`) para o `BackButton` regressar à anterior |
 | `VapidGenerator` | client | `admin.css` | `mg-admin-form`, `__field` | `/admin/push`: gera o par de chaves VAPID no próprio dispositivo (Web Crypto, P-256), sem passar pelo servidor |
 | `PushTestButton` | client | `admin.css` | `mg-admin-form` | `/admin/push`: envia a notificação de teste aos dispositivos da conta e diz quantos a receberam |
+
+### IA — Fase B (`src/components/ai/`, lógica em `src/lib/ai/`, rotas `/ai/program/[id]`, `/insights`, `/insights/[id]`, `/admin/ai`; classes em `ai.css`)
+- **AiConsentPanel** (client) — pedido de consentimento antes do primeiro uso: o que vai para o Gemini, o que nunca vai, como retirar. `mg-ai-consent`.
+- **AiProgramCard** (client) — "Programa feito pela IA" em Treinos: premium (sem `ai` mostra o selo), sem perfil leva ao perfil, sem consentimento abre o painel. `mg-ai-card`.
+- **AiPendingRefresh** (client) — relê a página de 3 em 3 s enquanto o job corre (até 3 min).
+- **AiProgramActions** (client) — guardar, pedir outro, descartar. `mg-ai-actions`.
+- **InsightButton** (client) — pede a retrospectiva da última semana completa (com consentimento).
+- **InsightRead** (client) — marca a retrospectiva como lida ao abrir.
+- **AiSettingsCard** (client) — Definições › Privacidade: consentimento da IA e a retrospectiva ao domingo.
+- Revisão do programa (`mg-ai-program`, `mg-ai-workout`), espera (`mg-ai-wait`), listas da retrospectiva (`mg-ai-insight__list`) e ponto de não lida (`mg-ai-dot`) vivem nas páginas, com as classes de `ai.css`; os números da retrospectiva usam os mosaicos de `day-metrics.css`.

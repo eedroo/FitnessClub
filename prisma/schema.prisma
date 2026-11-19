@@ -58,6 +58,7 @@ model User {
   termsVersion       String? // ex.: "2026-11"
   privacyVersion     String?
   wellbeingConsentAt DateTime? // consentimento explícito para dados de saúde (peso e meta)
+  aiConsentAt        DateTime? // consentimento para enviar dados de treino à IA (Fase B)
   lastActiveAt       DateTime?
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
@@ -81,6 +82,7 @@ model User {
   bodyGoal          BodyGoal?
   exerciseNotes     ExerciseNote[]
   trainingProfile   TrainingProfile?
+  aiRequests        AiRequest[]
 }
 
 enum AuthTokenType {
@@ -208,6 +210,7 @@ model FitnessPrefs {
   keepAwake       Boolean   @default(true) // manter o ecrã ligado durante o treino
   weighInReminder Boolean   @default(false) // lembrete de pesagem (sem envio por agora)
   weighInTime     String    @default("08:00")
+  aiWeeklyInsights Boolean  @default(true) // retrospectiva semanal da IA (com o recurso `ai` e o consentimento)
   onboardedAt     DateTime?
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -363,4 +366,43 @@ model TrainingProfile {
   avoid          String? // o que não quer (exercícios de que não gosta, limitações)
   updatedAt      DateTime      @updatedAt
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Fase B: IA (Gemini) ─────────────────────────────────────────────────────────────────────────
+
+enum AiKind {
+  PROGRAM // programa proposto a partir do perfil de treino
+  INSIGHT // retrospectiva da semana
+}
+
+enum AiStatus {
+  PENDING
+  DONE
+  FAILED
+  APPLIED // programa guardado
+  DISCARDED
+}
+
+// Cada pedido à IA: o resultado validado, o custo e os tokens (admin). Nunca guarda o prompt com dados pessoais.
+model AiRequest {
+  id           String    @id @default(cuid())
+  userId       String
+  kind         AiKind
+  status       AiStatus  @default(PENDING)
+  weekStart    DateTime? @db.Date // INSIGHT: domingo da semana analisada
+  facts        Json? // INSIGHT: os números calculados pela app (a IA só os interpreta)
+  result       Json? // saída validada com Zod
+  error        String?
+  model        String?
+  inputTokens  Int       @default(0)
+  outputTokens Int       @default(0)
+  costMicroUsd Int       @default(0) // milionésimos de dólar
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+  finishedAt   DateTime?
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kind, weekStart])
+  @@index([userId, kind, createdAt])
+  @@index([createdAt])
 }

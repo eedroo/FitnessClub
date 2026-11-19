@@ -86,12 +86,11 @@ export function appUrl(): string {
 }
 
 /** Versões actuais dos Termos e da Política de Privacidade (re-aceitação quando mudam). */
-export const DEFAULT_LEGAL_VERSION = '2026-11';
+/** A versão do código (a dos ficheiros em `content/legal`) ganha a uma variável mais antiga na Vercel. */
+export const DEFAULT_LEGAL_VERSION = '2026-11-19';
+const newest = (env: string | undefined) => (env && env > DEFAULT_LEGAL_VERSION ? env : DEFAULT_LEGAL_VERSION);
 export function legalVersions(): { terms: string; privacy: string } {
-  return {
-    terms: process.env.LEGAL_TERMS_VERSION || DEFAULT_LEGAL_VERSION,
-    privacy: process.env.LEGAL_PRIVACY_VERSION || DEFAULT_LEGAL_VERSION,
-  };
+  return { terms: newest(process.env.LEGAL_TERMS_VERSION), privacy: newest(process.env.LEGAL_PRIVACY_VERSION) };
 }
 
 /** Há chaves VAPID para enviar push? (sem elas não sai nenhum aviso) */

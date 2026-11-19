@@ -1,0 +1,282 @@
+/* IA (Fase B): cartão "Criar com IA", consentimento, espera, revisão do programa e retrospectiva. O azul marca a IA. */
+
+.mg-ai-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-ai-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.mg-ai-card__icon,
+.mg-ai-wait__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--highlight-soft);
+  color: var(--highlight);
+}
+
+.mg-ai-card__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-ai-card__title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-ai-card__meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.mg-ai-card__badge {
+  flex: none;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-ai-card__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Consentimento antes do primeiro uso */
+.mg-ai-consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--highlight-soft);
+}
+
+.mg-ai-consent__title {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-ai-consent__text {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.mg-ai-consent__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: var(--space-5);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.mg-ai-consent__actions,
+.mg-ai-actions__row {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.mg-ai-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* À espera do job */
+.mg-ai-wait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+  text-align: center;
+}
+
+.mg-ai-wait__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  animation: mg-ai-pulse 1.6s ease-in-out infinite;
+}
+
+.mg-ai-wait__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-ai-wait__text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+@keyframes mg-ai-pulse {
+  50% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-ai-wait__icon {
+    animation: none;
+  }
+}
+
+/* Programa proposto */
+.mg-ai-program {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mg-ai-program__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-semibold);
+  color: var(--highlight);
+}
+
+.mg-ai-program__name {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+}
+
+.mg-ai-program__desc,
+.mg-ai-program__hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.mg-ai-program__notes {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  white-space: pre-wrap;
+}
+
+.mg-ai-workout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-ai-workout--focus {
+  box-shadow: inset 0 0 0 1px var(--highlight);
+}
+
+.mg-ai-workout__name {
+  margin: 0;
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-regular);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mg-ai-workout__notes {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.mg-ai-workout__items {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-ai-workout__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) 0;
+  border-top: 0.5px solid var(--separator);
+}
+
+.mg-ai-workout__item:first-child {
+  border-top: 0;
+}
+
+.mg-ai-workout__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.mg-ai-workout__ex {
+  min-width: 0;
+  font-size: var(--text-md);
+  overflow-wrap: anywhere;
+}
+
+.mg-ai-workout__target {
+  flex: none;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.mg-ai-workout__cue {
+  font-size: var(--text-footnote);
+  color: var(--text-tertiary);
+}
+
+/* Retrospectiva */
+.mg-ai-insight__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-5);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+}
+
+.mg-ai-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--highlight);
+  vertical-align: middle;
+}

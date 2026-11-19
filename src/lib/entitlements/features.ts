@@ -1,7 +1,7 @@
 import type { FeatureRollout } from '@prisma/client';
 
 /** Funcionalidades premium. Sem linha em `FeatureFlag`, vale o `defaultRollout` daqui. */
-export type FeatureKey = 'pro';
+export type FeatureKey = 'pro' | 'ai';
 
 export interface FeatureDef {
   key: FeatureKey;
@@ -12,6 +12,8 @@ export const FEATURES: Record<FeatureKey, FeatureDef> = {
   // O app inteiro (treinos, sessões, exercícios, peso e meta). Aberto a todos por decisão da dona do projecto;
   // o interruptor global e as excepções ficam no admin. Funcionalidades novas decidem-se uma a uma (grátis ou premium).
   pro: { key: 'pro', defaultRollout: 'ALL' },
+  // IA (Gemini): programa gerado a partir do perfil e retrospectiva semanal. Só premium (decisão de 19/11).
+  ai: { key: 'ai', defaultRollout: 'PREMIUM' },
 };
 
 export const FEATURE_KEYS = Object.keys(FEATURES) as FeatureKey[];

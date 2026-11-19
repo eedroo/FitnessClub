@@ -1,4 +1,4 @@
-import type { TrainingProfile, BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
+import type { AiRequest, TrainingProfile, BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
 import { fromDbDate } from '@/lib/dates';
 
 /**
@@ -13,7 +13,9 @@ export interface ExportSource {
     User,
     | 'name' | 'email' | 'locale' | 'theme' | 'timezone' | 'emailVerifiedAt' | 'termsAcceptedAt' | 'termsVersion' | 'privacyVersion'
     | 'wellbeingConsentAt' | 'createdAt' | 'onboardedAt' | 'plan' | 'planSince' | 'planExpiresAt'
-  >;
+  > & Partial<Pick<User, 'aiConsentAt'>>;
+  /** Pedidos à IA (programas propostos e retrospectivas), sem custos internos. */
+  ai?: AiRequest[];
   /** Dias em que a pessoa abriu o app. */
   activeDays: UserActiveDay[];
   /** Preferências, programas, treinos, sessões com séries, exercícios próprios, peso diário e meta. */
@@ -50,6 +52,7 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
       termsVersion: u.termsVersion,
       privacyVersion: u.privacyVersion,
       wellbeingConsentAt: iso(u.wellbeingConsentAt),
+      aiConsentAt: iso(u.aiConsentAt),
       onboardedAt: iso(u.onboardedAt),
       createdAt: iso(u.createdAt),
       plan: u.plan,
@@ -57,6 +60,14 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
       planExpiresAt: iso(u.planExpiresAt),
     },
     activeDays: data.activeDays.map((a) => day(a.day)),
+    ai: (data.ai ?? []).map((r) => ({
+      kind: r.kind,
+      status: r.status,
+      weekStart: r.weekStart ? day(r.weekStart) : null,
+      facts: r.facts,
+      result: r.result,
+      createdAt: iso(r.createdAt),
+    })),
     fitness: {
       prefs: data.fitness.prefs && {
         defaultRestSec: data.fitness.prefs.defaultRestSec,
@@ -65,6 +76,7 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
         weighInReminder: data.fitness.prefs.weighInReminder,
         weighInTime: data.fitness.prefs.weighInTime,
         onboardedAt: iso(data.fitness.prefs.onboardedAt),
+        aiWeeklyInsights: data.fitness.prefs.aiWeeklyInsights,
       },
       customExercises: data.fitness.customExercises.map((e) => ({
         id: e.id,

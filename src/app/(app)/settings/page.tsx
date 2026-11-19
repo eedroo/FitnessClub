@@ -17,6 +17,7 @@ import { ChangeEmailForm } from '@/components/account/ChangeEmailForm';
 import { ChangePasswordForm } from '@/components/account/ChangePasswordForm';
 import { ResendVerificationButton } from '@/components/account/ResendVerificationButton';
 import { WellbeingConsentCard } from '@/components/account/WellbeingConsentCard';
+import { AiSettingsCard } from '@/components/ai/AiSettingsCard';
 import { DeleteAccountDialog } from '@/components/account/DeleteAccountDialog';
 import { NotificationsPromptCard } from '@/components/notifications/NotificationsPromptCard';
 import { InstallButton } from '@/components/notifications/InstallButton';
@@ -54,7 +55,7 @@ export default async function SettingsPage() {
     getLocale(),
     db.user.findUnique({
       where: { id: session.user.id },
-      select: { name: true, email: true, locale: true, theme: true, timezone: true, emailVerifiedAt: true, wellbeingConsentAt: true },
+      select: { name: true, email: true, locale: true, theme: true, timezone: true, emailVerifiedAt: true, wellbeingConsentAt: true, aiConsentAt: true, fitnessPrefs: { select: { aiWeeklyInsights: true } } },
     }),
     getTrainingProfile(session.user.id),
   ]);
@@ -72,6 +73,9 @@ export default async function SettingsPage() {
   const intl = intlLocale(isAppLocale(locale) ? locale : 'pt-PT');
   const consentedOn = user.wellbeingConsentAt
     ? new Intl.DateTimeFormat(intl, { dateStyle: 'long', timeZone: user.timezone }).format(user.wellbeingConsentAt)
+    : null;
+  const aiConsentedOn = user.aiConsentAt
+    ? new Intl.DateTimeFormat(intl, { dateStyle: 'long', timeZone: user.timezone }).format(user.aiConsentAt)
     : null;
   const formInitial = { name: user.name, locale: user.locale, theme: user.theme, timezone: user.timezone };
   const timezones = supportedTimezones(user.timezone);
@@ -148,6 +152,8 @@ export default async function SettingsPage() {
           <GlassCard id="privacy" className="mg-settings__section" title={t('sections.privacy')}>
             <div className="mg-form">
               <WellbeingConsentCard consentedOn={consentedOn} />
+              <hr className="mg-form__divider" />
+              <AiSettingsCard consentedOn={aiConsentedOn} feature={entitlements.features.ai} weekly={user.fitnessPrefs?.aiWeeklyInsights ?? true} />
               <hr className="mg-form__divider" />
               <div className="mg-form">
                 <h3 className="mg-form__title">{ta('export.title')}</h3>

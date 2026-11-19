@@ -26,6 +26,7 @@ export async function GET() {
       bodyGoal: true,
       exerciseNotes: { orderBy: { exerciseId: 'asc' } },
       trainingProfile: true,
+      aiRequests: { orderBy: { createdAt: 'asc' } },
     },
   });
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
@@ -33,6 +34,7 @@ export async function GET() {
   const data = buildExport({
     user,
     activeDays: user.activeDays,
+    ai: user.aiRequests,
     fitness: {
       prefs: user.fitnessPrefs,
       programs: user.fitnessPrograms,

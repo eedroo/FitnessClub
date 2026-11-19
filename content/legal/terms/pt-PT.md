@@ -1,5 +1,5 @@
-version: 2026-11
-date: 2026-11-18
+version: 2026-11-19
+date: 2026-11-19
 
 > **Rascunho — rever com jurista antes do lançamento.**
 
@@ -16,6 +16,8 @@ O serviço é prestado pela **Onda**, Av. Miguel Bombarda, 110, Lisboa, Portugal
 ## 2. Não é aconselhamento médico
 
 O FitnessClub regista o que fazes e mostra números (volume, recordes, médias de peso). Não é um serviço de saúde: não dá diagnósticos, planos de dieta nem prescrições de treino, e não substitui um médico, um nutricionista ou um treinador. Os modelos de treino incluídos são exemplos gerais.
+
+No plano Premium, e só com o teu consentimento, a IA pode propor programas e escrever uma retrospectiva da semana. São sugestões automáticas, que podem ter erros: revê-as antes de as seguires e adapta-as ao teu corpo.
 
 ## 3. Treinar em segurança
 
