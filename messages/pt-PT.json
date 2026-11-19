@@ -626,7 +626,12 @@
       "archiveConfirm": "Arquivar \"{name}\"? As sessões feitas ficam no histórico.",
       "fromTemplate": "Usar um modelo",
       "empty": "Ainda não tens programas. Cria um ou usa um modelo.",
-      "workoutsCount": "{n, plural, =0 {sem treinos} one {# treino} other {# treinos}}"
+      "workoutsCount": "{n, plural, =0 {sem treinos} one {# treino} other {# treinos}}",
+      "withAi": "Criar com IA",
+      "withAiText": "Respondes a umas perguntas e a IA monta o programa.",
+      "withAiUnavailable": "A IA não está disponível de momento.",
+      "withAiPremium": "Disponível no plano Premium.",
+      "manual": "Ou monta tu"
     },
     "workouts": {
       "new": "Novo treino",
@@ -1051,11 +1056,8 @@
     },
     "program": {
       "title": "Programa feito pela IA",
-      "text": "A IA monta um programa à tua medida a partir do teu perfil de treino.",
       "premium": "Um programa à tua medida, criado pela IA a partir do teu perfil.",
       "premiumBadge": "Premium",
-      "create": "Criar com IA",
-      "needProfile": "Preencher o perfil de treino",
       "reviewTitle": "Programa proposto",
       "pendingTitle": "A montar o teu programa…",
       "pendingText": "Demora uns segundos. Podes sair desta página: o programa fica aqui à tua espera.",
@@ -1100,6 +1102,13 @@
       "grant": "Dar consentimento",
       "withdraw": "Retirar consentimento",
       "weekly": "Retrospectiva ao domingo"
+    },
+    "wizard": {
+      "title": "Programa com IA",
+      "intro": "Conta-me como queres este programa. As respostas da última vez já vêm preenchidas: muda só o que for diferente.",
+      "back": "Voltar",
+      "next": "Seguinte",
+      "create": "Criar programa"
     }
   }
 }

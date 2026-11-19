@@ -40,7 +40,6 @@ export default async function WelcomePage() {
           <BodyWelcome
             initialRest={prefs.defaultRestSec}
             initialProfile={toProfileData(profile)}
-            weightAllowed={!!user?.wellbeingConsentAt}
             templates={FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }))}
           />
         </div>

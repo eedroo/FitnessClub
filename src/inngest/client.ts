@@ -23,6 +23,17 @@ export function hasJobs(): boolean {
  * Envia eventos sem nunca falhar o request que os disparou (best-effort; sem Inngest configurado em
  * desenvolvimento, só regista o aviso; com o dev server local usar `INNGEST_DEV=1`).
  */
+/** Como `sendSafely`, mas devolve o motivo da falha (null = enviado), para o mostrar no admin. */
+export async function sendWithReason(events: AppEvent[]): Promise<string | null> {
+  if (!hasJobs()) return 'Inngest não configurado (sem INNGEST_EVENT_KEY neste deploy)';
+  try {
+    await inngest.send(events);
+    return null;
+  } catch (err) {
+    return `Inngest recusou o evento: ${err instanceof Error ? err.message : String(err)}`.slice(0, 400);
+  }
+}
+
 export async function sendSafely(events: AppEvent[]): Promise<boolean> {
   if (!events.length) return true;
   if (!hasJobs()) {

@@ -5,35 +5,30 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { completeFitnessOnboarding } from '@/actions/fitness';
-import { saveTrainingProfile } from '@/actions/profile';
 import { recommendTemplate, type TrainingProfileData } from '@/lib/fitness/profile';
-import { ProfileStep, type ProfileStepId } from '@/components/profile/ProfileStep';
 import { Button } from '@/components/ui/Button';
 import { CheckChip } from '@/components/ui/CheckChip';
 import { TextInput } from '@/components/ui/TextInput';
 import { NotificationsPromptCard } from '@/components/notifications/NotificationsPromptCard';
 
 const RESTS = [60, 90, 120, 180];
-const PROFILE_STEPS: ProfileStepId[] = ['goals', 'level', 'weight', 'equipment', 'focus', 'days', 'wishes'];
-type FlowStep = 'hello' | ProfileStepId | 'rest' | 'alert' | 'start';
-const FLOW: FlowStep[] = ['hello', ...PROFILE_STEPS, 'rest', 'alert', 'start'];
+// As perguntas do perfil de treino passaram para "Novo programa com IA" (cada programa tem as suas respostas).
+type FlowStep = 'hello' | 'rest' | 'alert' | 'start';
+const FLOW: FlowStep[] = ['hello', 'rest', 'alert', 'start'];
 const STEPS = FLOW.length;
-const isProfileStep = (s: FlowStep): s is ProfileStepId => (PROFILE_STEPS as string[]).includes(s);
 
 /**
- * Boas-vindas (onboarding): olá, o perfil de treino (objectivos, nível, peso, equipamento, músculos em foco, dias e
- * duração, pedidos e o que evitar), descanso, aviso de fim de descanso e por onde começar (com o modelo sugerido).
+ * Boas-vindas (onboarding): olá, descanso, aviso de fim de descanso e por onde começar (com o modelo sugerido pelo
+ * perfil de treino, se já existir). As perguntas do perfil fazem-se ao criar um programa com IA.
  */
 export function BodyWelcome({
   initialRest,
   templates,
   initialProfile,
-  weightAllowed,
 }: {
   initialRest: number;
   templates: { id: string; name: string; description: string }[];
   initialProfile: TrainingProfileData;
-  weightAllowed: boolean;
 }) {
   const t = useTranslations('fitness.welcome');
   const te = useTranslations();
@@ -41,8 +36,6 @@ export function BodyWelcome({
   const { update } = useSession();
   const [step, setStep] = useState(0);
   const cur = FLOW[step]!;
-  const [profile, setProfile] = useState<TrainingProfileData>(initialProfile);
-  const [weightKg, setWeightKg] = useState('');
   const [rest, setRest] = useState(initialRest);
   const [custom, setCustom] = useState(RESTS.includes(initialRest) ? '' : String(initialRest));
   const [alert, setAlert] = useState(true);
@@ -52,8 +45,6 @@ export function BodyWelcome({
 
   const finish = () =>
     start(async () => {
-      const saved = await saveTrainingProfile({ ...profile, weightKg });
-      if (!saved.ok) return setError(te(saved.error));
       const res = await completeFitnessOnboarding({ defaultRestSec: rest, restAlert: alert, templateId: template });
       if (!res.ok) return setError(te(res.error));
       // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos.
@@ -75,10 +66,6 @@ export function BodyWelcome({
           <h2 className="mg-body-welcome__title">{t('hello')}</h2>
           <p className="mg-body-welcome__text">{t('helloText')}</p>
         </section>
-      )}
-
-      {isProfileStep(cur) && (
-        <ProfileStep id={cur} value={profile} onChange={setProfile} weightKg={weightKg} onWeightKg={setWeightKg} weightAllowed={weightAllowed} />
       )}
 
       {cur === 'rest' && (
@@ -171,7 +158,7 @@ export function BodyWelcome({
             className="mg-btn--body"
             onClick={() => {
               // Ao chegar a "por onde começar", sugere o modelo que combina com o perfil.
-              if (FLOW[step + 1] === 'start') setTemplate(recommendTemplate(profile));
+              if (FLOW[step + 1] === 'start') setTemplate(recommendTemplate(initialProfile));
               setStep(step + 1);
             }}
           >

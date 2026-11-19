@@ -8,7 +8,6 @@ import { BodyHeader } from '@/components/body/BodyHeader';
 import { ProgramList } from '@/components/body/ProgramList';
 import { ProgramForm } from '@/components/body/ProgramForm';
 import { StartSessionButton } from '@/components/body/StartSessionButton';
-import { AiProgramCard } from '@/components/ai/AiProgramCard';
 import { db } from '@/lib/db';
 import { getAiAccess } from '@/lib/ai/server';
 
@@ -40,15 +39,6 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
-        {/* Quem entrou antes das boas-vindas novas: convite a preencher o perfil de treino. */}
-        {!profile && (
-          <Link href="/training-profile" className="mg-program-row">
-            <span className="mg-program-row__text">
-              <span className="mg-program-row__name">{t('profile.homeTitle')}</span>
-              <span className="mg-program-row__meta">{t('profile.homeText')}</span>
-            </span>
-          </Link>
-        )}
         {/* Retrospectiva da semana (IA): a mais recente, com ponto azul enquanto não foi lida. */}
         {ai.feature && (
           <Link href={insight && !insight.readAt ? `/insights/${insight.id}` : '/insights'} className="mg-program-row">
@@ -61,8 +51,7 @@ export default async function BodyHome() {
             </span>
           </Link>
         )}
-        <AiProgramCard feature={ai.feature && ai.configured} consent={ai.consent} hasProfile={!!profile} />
-        <ProgramForm templates={templates} />
+        <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured }} />
         <Link href="/exercises?tab=mine" className="mg-program-row">
           <span className="mg-program-row__text">
             <span className="mg-program-row__name">{t('home.myExercises', { n: custom })}</span>

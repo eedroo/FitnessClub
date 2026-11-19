@@ -9,10 +9,10 @@ import { getEntitlements } from '@/lib/entitlements/server';
 import { dbToAppLocale } from '@/i18n/locales';
 import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
-import { toProfileData } from '@/lib/fitness/profile';
+import { toProfileData, trainingProfileSchema } from '@/lib/fitness/profile';
 import { aiInsightNotification } from '@/lib/notifications/content';
 import { pushToUser } from '@/lib/notifications/send';
-import { hasJobs, sendSafely, type AppEvent } from '@/inngest/client';
+import { sendWithReason, type AppEvent } from '@/inngest/client';
 import { AiError, costMicroUsd, generateJson, hasAi, type AiCall } from './gemini';
 import { AI_PROGRAM_RESPONSE_SCHEMA, PROGRAM_SYSTEM, checkAiProgram, fakeProgram, pickCandidates, programPrompt, type CandidateExercise } from './program';
 import { INSIGHT_RESPONSE_SCHEMA, INSIGHT_SYSTEM, checkInsight, fakeInsight, insightPrompt, weekFacts, type FactSession, type WeekFacts } from './insights';
@@ -55,12 +55,14 @@ export async function programQuota(userId: string): Promise<{ day: number; month
  * em produção marca o pedido como falhado (nunca corre a IA num pedido de página).
  */
 export async function dispatchAi(event: AppEvent, onNoJobs: () => Promise<unknown>, failId?: string): Promise<void> {
-  if (hasJobs() && (await sendSafely([event]))) return;
+  const reason = await sendWithReason([event]);
+  if (!reason) return;
   if (process.env.NODE_ENV !== 'production') {
     void onNoJobs().catch((err) => console.error('[ai] job local falhou:', err));
     return;
   }
-  if (failId) await db.aiRequest.update({ where: { id: failId }, data: { status: 'FAILED', error: 'Inngest não configurado', finishedAt: new Date() } });
+  console.error('[ai]', reason);
+  if (failId) await db.aiRequest.update({ where: { id: failId }, data: { status: 'FAILED', error: reason, finishedAt: new Date() } });
 }
 
 /** Chama a IA até 2 vezes (a 2.ª só se a validação falhar), somando tokens e custo. */
@@ -99,7 +101,7 @@ const usage = (r: { inputTokens: number; outputTokens: number; model: string }) 
 // ─── Programa ────────────────────────────────────────────────────────────────────────────────────
 
 export async function runProgramRequest(requestId: string): Promise<'done' | 'failed' | 'skipped'> {
-  const req = await db.aiRequest.findUnique({ where: { id: requestId }, select: { userId: true, status: true, kind: true } });
+  const req = await db.aiRequest.findUnique({ where: { id: requestId }, select: { userId: true, status: true, kind: true, facts: true } });
   if (!req || req.kind !== 'PROGRAM' || req.status !== 'PENDING') return 'skipped';
   const fail = async (error: string, extra: Prisma.AiRequestUpdateInput = {}) => {
     await db.aiRequest.update({ where: { id: requestId }, data: { status: 'FAILED', error: error.slice(0, 500), finishedAt: new Date(), ...extra } });
@@ -117,7 +119,9 @@ export async function runProgramRequest(requestId: string): Promise<'done' | 'fa
     }),
   ]);
   const locale = dbToAppLocale(user?.locale ?? 'PT_PT');
-  const profile = toProfileData(profileRow);
+  // As respostas deste pedido; sem elas (pedidos antigos), o perfil de treino.
+  const brief = trainingProfileSchema.safeParse(req.facts);
+  const profile = brief.success ? brief.data : toProfileData(profileRow);
   const preferred = new Set(FITNESS_TEMPLATES.flatMap((t) => t.workouts.flatMap((w) => w.items.map((i) => i.exerciseId))));
   const candidates = pickCandidates(
     library.map(

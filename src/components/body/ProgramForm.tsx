@@ -1,11 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { archiveProgram, copyTemplate, createProgram, updateProgram } from '@/actions/fitness';
 import { Button } from '@/components/ui/Button';
 import { TextInput } from '@/components/ui/TextInput';
+import { MagicIcon } from '@/components/ui/MagicIcon';
 
 type Kind = 'STRENGTH' | 'STRETCH' | 'MIXED';
 
@@ -13,10 +15,12 @@ interface ProgramFormProps {
   /** Editar um programa existente (senão, "Novo programa"). */
   program?: { id: string; name: string; description: string | null; kind: Kind };
   templates?: { id: string; name: string; description: string }[];
+  /** "Com IA" no novo programa: `available` = recurso `ai` e chave; sem o recurso mostra o selo Premium. */
+  ai?: { feature: boolean; available: boolean };
 }
 
 /** Novo programa (do zero ou a partir de um modelo) ou edição de um programa. */
-export function ProgramForm({ program, templates = [] }: ProgramFormProps) {
+export function ProgramForm({ program, templates = [], ai }: ProgramFormProps) {
   const t = useTranslations('fitness.programs');
   const te = useTranslations();
   const router = useRouter();
@@ -58,6 +62,33 @@ export function ProgramForm({ program, templates = [] }: ProgramFormProps) {
 
   return (
     <section className="mg-program-form" aria-label={program ? t('edit') : t('new')}>
+      {!program && ai && (
+        <div className="mg-program-form__ai">
+          {ai.available ? (
+            <Link href="/ai/new" className="mg-program-form__ai-link">
+              <span className="mg-ai-card__icon" aria-hidden="true">
+                <MagicIcon name="sparkles" size="sm" decorative />
+              </span>
+              <span className="mg-ai-card__text">
+                <span className="mg-ai-card__title">{t('withAi')}</span>
+                <span className="mg-ai-card__meta">{t('withAiText')}</span>
+              </span>
+            </Link>
+          ) : (
+            <div className="mg-program-form__ai-link" aria-disabled="true">
+              <span className="mg-ai-card__icon" aria-hidden="true">
+                <MagicIcon name="sparkles" size="sm" decorative />
+              </span>
+              <span className="mg-ai-card__text">
+                <span className="mg-ai-card__title">{t('withAi')}</span>
+                <span className="mg-ai-card__meta">{ai.feature ? t('withAiUnavailable') : t('withAiPremium')}</span>
+              </span>
+              {!ai.feature && <span className="mg-ai-card__badge">{te('ai.program.premiumBadge')}</span>}
+            </div>
+          )}
+          <h3 className="mg-body-section-title">{t('manual')}</h3>
+        </div>
+      )}
       <label>
         {t('name')}
         <TextInput value={name} maxLength={80} onChange={(e) => setName(e.target.value)} autoFocus />

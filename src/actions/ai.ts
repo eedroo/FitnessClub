@@ -9,6 +9,7 @@ import { toDbDate, todayInTz } from '@/lib/dates';
 import { lastFinishedWeekStart } from '@/lib/weeks';
 import { getEntitlements } from '@/lib/entitlements/server';
 import { aiProgramSchema } from '@/lib/ai/program';
+import { trainingProfileSchema, type TrainingProfileData, type TrainingProfileInput } from '@/lib/fitness/profile';
 import { buildWeekFacts, dispatchAi, getAiAccess, programQuota, runInsight, runProgramRequest } from '@/lib/ai/server';
 
 /**
@@ -45,6 +46,8 @@ export async function setWeeklyInsights(on: boolean): Promise<Result> {
   return { ok: true };
 }
 
+const requestId = z.string().min(1).max(191);
+
 async function ready(id: string): Promise<string | null> {
   const access = await getAiAccess(id);
   if (!access.feature) return 'ai.errors.premium';
@@ -53,22 +56,43 @@ async function ready(id: string): Promise<string | null> {
   return null;
 }
 
-/** Pede um programa à IA a partir do perfil de treino. Devolve o id do pedido (a página de revisão espera o job). */
-export async function requestAiProgram(): Promise<Result<{ id: string }>> {
+/**
+ * Pede um programa à IA com as respostas desta vez (objectivos, nível, equipamento, foco, dias, tempo, pedidos):
+ * cada programa pode ser diferente (2× por semana, segunda a sexta, na praça…). As respostas ficam no pedido e
+ * passam a ser as sugestões da próxima vez (perfil de treino). Devolve o id do pedido (a revisão espera o job).
+ */
+export async function requestAiProgram(input: TrainingProfileInput): Promise<Result<{ id: string }>> {
   const id = await uid();
   if (!id) return fail('common.errors.unauthorized');
+  const brief = trainingProfileSchema.safeParse(input);
+  if (!brief.success) return fail('fitness.profile.errors.invalid');
+  return startProgram(id, brief.data);
+}
+
+/** "Pedir outro": as mesmas respostas do pedido anterior. */
+export async function retryAiProgram(input: string): Promise<Result<{ id: string }>> {
+  const id = await uid();
+  if (!id) return fail('common.errors.unauthorized');
+  const rid = requestId.safeParse(input);
+  if (!rid.success) return fail();
+  const prev = await db.aiRequest.findFirst({ where: { id: rid.data, userId: id, kind: 'PROGRAM' }, select: { facts: true } });
+  const brief = trainingProfileSchema.safeParse(prev?.facts);
+  if (!brief.success) return fail('ai.errors.profile');
+  await db.aiRequest.updateMany({ where: { id: rid.data, userId: id, status: { in: ['DONE', 'FAILED'] } }, data: { status: 'DISCARDED' } });
+  return startProgram(id, brief.data);
+}
+
+async function startProgram(id: string, brief: TrainingProfileData): Promise<Result<{ id: string }>> {
   const blocked = await ready(id);
   if (blocked) return fail(blocked);
-  if (!(await db.trainingProfile.findUnique({ where: { userId: id }, select: { userId: true } }))) return fail('ai.errors.profile');
   const pending = await db.aiRequest.findFirst({ where: { userId: id, kind: 'PROGRAM', status: 'PENDING', createdAt: { gte: new Date(Date.now() - 4 * 60_000) } }, select: { id: true } });
   if (pending) return { ok: true, data: { id: pending.id } };
   if (!(await programQuota(id)).allowed) return fail('ai.errors.limit');
-  const req = await db.aiRequest.create({ data: { userId: id, kind: 'PROGRAM' }, select: { id: true } });
+  await db.trainingProfile.upsert({ where: { userId: id }, create: { userId: id, ...brief }, update: brief });
+  const req = await db.aiRequest.create({ data: { userId: id, kind: 'PROGRAM', facts: brief as unknown as Prisma.InputJsonValue }, select: { id: true } });
   await dispatchAi({ name: 'ai/program.requested', data: { requestId: req.id } }, () => runProgramRequest(req.id), req.id);
   return { ok: true, data: { id: req.id } };
 }
-
-const requestId = z.string().min(1).max(191);
 
 /**
  * Guarda o programa proposto: programa, treinos e itens como os da pessoa, com as notas marcadas como da IA.

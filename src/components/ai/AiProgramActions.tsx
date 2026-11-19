@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { discardAiProgram, requestAiProgram, saveAiProgram } from '@/actions/ai';
+import { discardAiProgram, retryAiProgram, saveAiProgram } from '@/actions/ai';
 import { Button } from '@/components/ui/Button';
 
 /** Revisão do programa da IA: guardar (vai para o programa), pedir outro ou descartar. */
@@ -24,8 +24,7 @@ export function AiProgramActions({ requestId, canSave }: { requestId: string; ca
         if (!res.ok) return setError(te(res.error));
         router.push(`/programs/${res.data.programId}`);
       } else if (kind === 'again') {
-        await discardAiProgram(requestId);
-        const res = await requestAiProgram();
+        const res = await retryAiProgram(requestId);
         if (!res.ok) return setError(te(res.error));
         router.push(`/ai/program/${res.data.id}`);
       } else {

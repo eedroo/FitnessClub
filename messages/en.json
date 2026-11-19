@@ -626,7 +626,12 @@
       "archiveConfirm": "Archive \"{name}\"? Finished sessions stay in your history.",
       "fromTemplate": "Use a template",
       "empty": "No programs yet. Create one or use a template.",
-      "workoutsCount": "{n, plural, =0 {no workouts} one {# workout} other {# workouts}}"
+      "workoutsCount": "{n, plural, =0 {no workouts} one {# workout} other {# workouts}}",
+      "withAi": "Create with AI",
+      "withAiText": "Answer a few questions and AI builds the programme.",
+      "withAiUnavailable": "AI isn't available right now.",
+      "withAiPremium": "Available on the Premium plan.",
+      "manual": "Or build it yourself"
     },
     "workouts": {
       "new": "New workout",
@@ -1051,11 +1056,8 @@
     },
     "program": {
       "title": "AI-built programme",
-      "text": "AI builds a programme around your training profile.",
       "premium": "A programme made for you by AI, based on your profile.",
       "premiumBadge": "Premium",
-      "create": "Create with AI",
-      "needProfile": "Fill in your training profile",
       "reviewTitle": "Proposed programme",
       "pendingTitle": "Building your programme…",
       "pendingText": "This takes a few seconds. You can leave this page; the programme will be waiting here.",
@@ -1100,6 +1102,13 @@
       "grant": "Give consent",
       "withdraw": "Withdraw consent",
       "weekly": "Sunday review"
+    },
+    "wizard": {
+      "title": "AI programme",
+      "intro": "Tell me how you want this programme. Your last answers are already filled in, so just change what's different.",
+      "back": "Back",
+      "next": "Next",
+      "create": "Create programme"
     }
   }
 }

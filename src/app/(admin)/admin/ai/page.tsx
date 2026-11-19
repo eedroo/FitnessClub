@@ -88,7 +88,7 @@ export default async function AdminAiPage() {
               ))}
             </tbody>
           </table>
-          <p className="mg-admin__note">«Inngest não configurado» = falta a INNGEST_EVENT_KEY; «sem resposta do job» = o Inngest não chega à app (protecção de deploy).</p>
+          <p className="mg-admin__note">«Inngest não configurado» = o deploy não tem a INNGEST_EVENT_KEY (falta Redeploy?); «Inngest recusou o evento» = chave errada ou de outra conta/ambiente; «sem resposta do job» = o evento chegou mas o Inngest não chega à app (protecção de deploy ou app por sincronizar).</p>
         </GlassCard>
       )}
       <GlassCard title="Por pessoa (30 dias)">

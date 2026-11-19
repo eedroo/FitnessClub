@@ -285,7 +285,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 
 ### IA — Fase B (`src/components/ai/`, lógica em `src/lib/ai/`, rotas `/ai/program/[id]`, `/insights`, `/insights/[id]`, `/admin/ai`; classes em `ai.css`)
 - **AiConsentPanel** (client) — pedido de consentimento antes do primeiro uso: o que vai para o Gemini, o que nunca vai, como retirar. `mg-ai-consent`.
-- **AiProgramCard** (client) — "Programa feito pela IA" em Treinos: premium (sem `ai` mostra o selo), sem perfil leva ao perfil, sem consentimento abre o painel. `mg-ai-card`.
+- **AiProgramWizard** (client) — `/ai/new`: as perguntas de cada programa (objectivos, nível, onde e com quê, foco, dias e tempo, pedidos), sugeridas com as da última vez; consentimento no fim se faltar. Entra-se por "Novo programa" → "Criar com IA" (`mg-program-form__ai`; sem o recurso `ai`, selo Premium). Usa `ProfileStep` e as classes `mg-body-welcome`.
 - **AiPendingRefresh** (client) — relê a página de 3 em 3 s enquanto o job corre (até 3 min).
 - **AiProgramActions** (client) — guardar, pedir outro, descartar. `mg-ai-actions`.
 - **InsightButton** (client) — pede a retrospectiva da última semana completa (com consentimento).
