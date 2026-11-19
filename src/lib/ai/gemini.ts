@@ -33,6 +33,8 @@ export interface AiCall {
   thinkingBudget?: number;
   /** Resposta usada com `AI_FAKE=1`. */
   fake: () => unknown;
+  /** Outro modelo só para esta chamada (teste no admin). */
+  model?: string;
 }
 
 export interface AiResponse {
@@ -49,10 +51,11 @@ export async function generateJson(call: AiCall): Promise<AiResponse> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new AiError('GEMINI_API_KEY em falta');
   // Gemini 3: "pensamento" por nível e temperatura por defeito (recomendação da Google); 2.5: orçamento em tokens.
-  const gen3 = GEMINI_MODEL.startsWith('gemini-3');
+  const model = call.model ?? GEMINI_MODEL;
+  const gen3 = model.startsWith('gemini-3');
   const thinking = gen3 ? { thinkingLevel: (call.thinkingBudget ?? 0) > 0 ? 'medium' : 'low' } : { thinkingBudget: call.thinkingBudget ?? 0 };
   const send = (withThinking: boolean) =>
-    fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
+    fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': key },
       signal: AbortSignal.timeout(50_000),
@@ -90,5 +93,5 @@ export async function generateJson(call: AiCall): Promise<AiResponse> {
     Object.assign(err, { inputTokens, outputTokens });
     throw err;
   }
-  return { json, inputTokens, outputTokens, model: GEMINI_MODEL };
+  return { json, inputTokens, outputTokens, model };
 }

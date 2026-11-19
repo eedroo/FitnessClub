@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { GEMINI_MODEL, hasAi } from '@/lib/ai/gemini';
 import { PROGRAM_LIMIT_DAY, PROGRAM_LIMIT_MONTH } from '@/lib/ai/server';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { AiModelTest } from '@/components/admin/AiModelTest';
 
 /** IA: estado, custo deste mês e dos últimos 30 dias, por tipo e por pessoa (só email e totais; nunca o conteúdo). */
 const usd = (micro: number) => `US$ ${(micro / 1_000_000).toFixed(micro < 10_000 ? 4 : 2)}`;
@@ -47,6 +48,13 @@ export default async function AdminAiPage() {
         <p className="mg-admin__note">
           Limites por pessoa: {PROGRAM_LIMIT_DAY} programas por dia, {PROGRAM_LIMIT_MONTH} por mês; uma retrospectiva por semana.
         </p>
+      </GlassCard>
+      <GlassCard title="Testar um modelo">
+        <p className="mg-admin__note">
+          Um pedido pequeno, sem dados de ninguém. Para mudar o modelo da app: na Vercel, variável GEMINI_MODEL com o nome do modelo, e
+          Redeploy.
+        </p>
+        <AiModelTest current={GEMINI_MODEL} />
       </GlassCard>
       <GlassCard title="Este mês">
         <p className="mg-admin__note">

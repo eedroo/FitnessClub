@@ -269,3 +269,14 @@
   align-items: flex-start;
   gap: var(--space-3);
 }
+
+.mg-admin__pre {
+  margin: var(--space-1) 0 0;
+  padding: var(--space-2);
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  background: var(--system-bg-2);
+  font-size: var(--text-footnote);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
