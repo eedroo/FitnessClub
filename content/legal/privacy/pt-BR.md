@@ -34,7 +34,7 @@ Para qualquer dúvida sobre privacidade, escreva para [privacidade@onda.work](ma
 
 ## 4. Inteligência artificial e compartilhamento
 
-A IA é opcional e só funciona com o seu consentimento. Quando você pede um programa ou recebe a retrospectiva da semana, enviamos ao **Gemini** (Google) apenas o seu perfil de treino e os números dos treinos (séries, repetições, cargas, recordes e nomes dos exercícios e treinos). **Nunca enviamos** seu nome, e-mail, peso corporal, meta de peso nem fotos. Usamos a versão paga da API do Google, na qual os dados não são usados para treinar os modelos do Google.
+A IA é opcional e só funciona com o seu consentimento. Quando você pede um programa ou recebe a retrospectiva da semana, enviamos ao **Gemini** (Google) apenas o seu perfil de treino e os números dos treinos (séries, repetições, cargas, recordes e nomes dos exercícios e treinos). **Nunca enviamos** seu nome, e-mail, peso corporal, meta de peso nem fotos. Por enquanto usamos a versão gratuita da API do Google: nessa versão, o Google pode usar o que recebe (sem seu nome nem e-mail) para melhorar os produtos dele, inclusive com revisão humana. Quando passarmos para a versão paga, em que isso não acontece, atualizamos esta política.
 
 O texto da IA é uma sugestão gerada automaticamente: os números são calculados pelo app e o texto é conferido com eles, mas pode conter erros. Não é orientação médica.
 

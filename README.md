@@ -28,7 +28,7 @@ As variáveis vivem só na Vercel (Project → Settings → Environment Variable
 3. **Variáveis** (Production; Preview se quiser):
    - `AUTH_SECRET` (novo: `npx auth secret`); `AUTH_URL` e `APP_URL` só quando houver domínio próprio (sem elas, na Vercel usa-se o domínio `*.vercel.app` de produção);
    - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (par novo: `npx web-push generate-vapid-keys`);
-   - `GEMINI_API_KEY` (Secret; Google AI Studio, com faturação activa para os dados não serem usados no treino dos modelos da Google);
+   - `GEMINI_API_KEY` (Secret; Google AI Studio). Por agora no nível gratuito, como diz a Política (secção 4); ao activar a faturação, mudar esse parágrafo e subir a versão dos documentos;
    - `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` (app novo no Inngest, endpoint `https://<domínio>/api/inngest`; ou a integração Inngest da Vercel);
    - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO` (domínio verificado no Resend);
    - `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (base nova; ou a integração Upstash da Vercel);

@@ -1043,7 +1043,7 @@
       "title": "Use AI",
       "text": "To build programmes and review your week, FitnessClub sends training data to Gemini, Google's AI model.",
       "sends": "What's sent: your training profile (goals, level, equipment, days, requests) and your workout numbers (sets, reps, loads, records).",
-      "never": "Never sent: your name, email, body weight or photos.",
+      "never": "Never sent: your name, email, body weight or photos. On Gemini's free tier, Google may use what it receives to improve its products.",
       "withdraw": "You can withdraw consent at any time in Settings › Privacy.",
       "policy": "Read the Privacy Policy",
       "cancel": "Not now",

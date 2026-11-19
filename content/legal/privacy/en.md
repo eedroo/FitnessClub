@@ -34,7 +34,7 @@ For any privacy question, write to [privacidade@onda.work](mailto:privacidade@on
 
 ## 4. Artificial intelligence and sharing
 
-AI is optional and only works with your consent. When you ask for a programme or get your weekly review, we send **Gemini** (Google) only your training profile and your workout numbers (sets, reps, loads, records and the names of exercises and workouts). **We never send** your name, email, body weight, weight goal or photos. We use Google's paid API, under which data is not used to train Google's models.
+AI is optional and only works with your consent. When you ask for a programme or get your weekly review, we send **Gemini** (Google) only your training profile and your workout numbers (sets, reps, loads, records and the names of exercises and workouts). **We never send** your name, email, body weight, weight goal or photos. For now we use Google's free API tier: under it, Google may use what it receives (without your name or email) to improve its products, including through human review. When we move to the paid tier, where this does not happen, we will update this policy.
 
 AI text is an automatically generated suggestion: the numbers are calculated by the app and the text is checked against them, but it may contain mistakes. It is not medical advice.
 

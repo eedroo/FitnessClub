@@ -1043,7 +1043,7 @@
       "title": "Usar a IA",
       "text": "Para criar programas e analisar a tua semana, o FitnessClub envia dados de treino ao Gemini, o modelo de IA da Google.",
       "sends": "Vai: o perfil de treino (objectivos, nível, equipamento, dias, pedidos) e os números dos treinos (séries, repetições, cargas, recordes).",
-      "never": "Nunca vai: o nome, o email, o peso do corpo nem fotos.",
+      "never": "Nunca vai: o nome, o email, o peso do corpo nem fotos. Na versão gratuita do Gemini, a Google pode usar o que recebe para melhorar os seus produtos.",
       "withdraw": "Podes retirar o consentimento quando quiseres em Definições › Privacidade.",
       "policy": "Ler a Política de Privacidade",
       "cancel": "Agora não",
