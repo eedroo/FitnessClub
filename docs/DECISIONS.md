@@ -149,3 +149,6 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Mapa:** OpenStreetMap com Leaflet (créditos no mapa), pinos próprios; "Perto de mim" usa a localização só no telemóvel para centrar o mapa (não é guardada nem enviada). A pesquisa de locais usa o Nominatim (só o texto escrito, com o pedido explícito "Procurar", sem pesquisa a cada letra).
 - **Avisos:** convite, pedido para ir e confirmação, no sino e por push.
 - Política na versão `2026-11-19.4` (OpenStreetMap como subcontratante; dados dos grupos e treinos marcados).
+- **Eu (ordem):** perfil (avatar, @, amigos, nível) e a barra de XP; editar perfil; o corpo (peso e mapa muscular); emblemas na grelha das conquistas; níveis de força e "Ver todas as conquistas"; publicações.
+- **Página do exercício:** o selo de força em tamanho médio; a nota só aparece se existir (sem nota, adiciona-se em "Detalhes e ações").
+- **Molduras por nível:** `public/game/levels/level-<n>.webp` para os primeiros níveis (`PER_LEVEL_ART` em `src/lib/gamification/art.ts`); acima disso, as molduras por faixa. 0 = desligado.

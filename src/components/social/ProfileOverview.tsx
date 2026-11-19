@@ -7,11 +7,13 @@ import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { getPostsBy } from '@/lib/social/server';
 import type { Relationship } from '@/lib/social/rules';
 import { getGamification, getStrengthLevels } from '@/lib/gamification/server';
-import { badgeArt, levelFrame } from '@/lib/gamification/art';
+import { levelFrame } from '@/lib/gamification/art';
+import { formatDayMonth } from '@/lib/dates';
 import { Avatar } from './Avatar';
 import { PostCard } from './PostCard';
 import { ProfileActions } from './ProfileActions';
 import { StrengthTier } from '@/components/gamification/StrengthTier';
+import { BadgeGrid } from '@/components/gamification/BadgeGrid';
 
 /**
  * Um perfil (o meu no "Eu" ou o de outra pessoa): avatar, @, bio, nível, amigos, emblemas, níveis de força (os meus
@@ -64,6 +66,18 @@ export async function ProfileOverview({
           <span className="mg-level__num">{game.summary.level}</span>
         </Link>
       </section>
+      {/* Barra de XP até ao próximo nível (como no cabeçalho de Treinos). */}
+      {rel !== 'blocked' && (
+        <Link href={self ? '/achievements' : `/u/${profile.handle}`} className="mg-profile-xp">
+          <span className="mg-level__bar" role="progressbar" aria-valuemin={0} aria-valuemax={game.summary.span} aria-valuenow={game.summary.into} aria-label={tg('toNext')}>
+            <span className="mg-level__fill" style={{ width: `${Math.round((game.summary.into / game.summary.span) * 100)}%` }} />
+          </span>
+          <span className="mg-level__meta">
+            {tg('level', { n: game.summary.level })} · {tg('xpToNext', { into: game.summary.into, span: game.summary.span, next: game.summary.level + 1 })}
+            {game.summary.weeks.current > 0 && ` · ${tg('streak', { n: game.summary.weeks.current })}`}
+          </span>
+        </Link>
+      )}
       {self ? (
         <Link href="/feed/profile" className="mg-btn mg-btn--subtle mg-btn--block">
           {t('editProfile')}
@@ -71,12 +85,13 @@ export async function ProfileOverview({
       ) : (
         <ProfileActions userId={profile.userId} rel={rel} friendshipId={friendshipId} />
       )}
-      {earned.length > 0 && rel !== 'blocked' && (
-        <Link href={self ? '/achievements' : `/u/${profile.handle}`} className="mg-profile-badges" aria-label={tg('badgesTitle')}>
-          {earned.map((b) => (
-            <Image key={b.id} src={badgeArt(b.id)} alt={tg(`badges.${b.id}.name`)} title={tg(`badges.${b.id}.name`)} width={48} height={48} />
-          ))}
-        </Link>
+      {/* No "Eu": o corpo (peso e mapa muscular) vem antes dos emblemas e das conquistas. */}
+      {children}
+      {rel !== 'blocked' && (self || earned.length > 0) && (
+        <>
+          <h2 className="mg-body-section-title">{tg('badgesTitle')}</h2>
+          <BadgeGrid badges={self ? game.badges : earned} formatDate={(d) => formatDayMonth(d, locale)} />
+        </>
       )}
       {tiers.length > 0 && (
         <>
@@ -93,7 +108,11 @@ export async function ProfileOverview({
           </ul>
         </>
       )}
-      {children}
+      {self && (
+        <Link href="/achievements" className="mg-btn mg-btn--subtle mg-btn--block">
+          {t('allAchievements')}
+        </Link>
+      )}
       <h2 className="mg-body-section-title">{t('posts')}</h2>
       {posts.length ? (
         posts.map((p) => <PostCard key={p.id} post={p} locale={locale} />)

@@ -9,7 +9,7 @@ export async function ExerciseStrength({ level }: { level: StrengthLevel | null 
   const t = await getTranslations('game');
   return (
     <Link href="/achievements" className="mg-strength-link" aria-label={`${t('strength.title')}: ${t(`tiers.${level.tier}`)}`}>
-      <StrengthTier tier={level.tier} />
+      <StrengthTier tier={level.tier} large />
     </Link>
   );
 }

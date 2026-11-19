@@ -53,12 +53,14 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
       <div className="mg-body-shell__main">
         <ExerciseStrength level={strengthLvl} />
         <ExerciseDetail exercise={view} level={detail.level}>
+          {/* Sem nota, adiciona-se aqui (em "Detalhes e ações"); com nota, ela aparece por baixo. */}
+          {!note && <NotesCard kind="exercise" targetId={view.id} initial={null} />}
           {!detail.archived && <AddToWorkout exerciseId={view.id} workouts={workouts.map((w) => ({ id: w.id, label: `${w.program.name} · ${w.name}` }))} />}
           {view.source === 'CUSTOM' && !detail.archived && (
             <CustomExerciseForm exercise={{ id: view.id, name: view.name, measure: view.measure, primaryMuscles: view.primaryMuscles, equipment: view.equipment }} />
           )}
         </ExerciseDetail>
-        <NotesCard kind="exercise" targetId={view.id} initial={note?.text ?? null} byAi={note?.byAi ?? false} />
+        {note && <NotesCard kind="exercise" targetId={view.id} initial={note.text} byAi={note.byAi} />}
         {/* Séries (histórico + comparação com a anterior) · Evolução · Recordes */}
         <ExerciseTabs
           sets={

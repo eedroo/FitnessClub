@@ -1503,7 +1503,8 @@
       "addAvatar": "Add profile photo",
       "changeAvatar": "Change photo",
       "removeAvatar": "Remove photo"
-    }
+    },
+    "allAchievements": "See all achievements"
   },
   "groups": {
     "title": "Groups",

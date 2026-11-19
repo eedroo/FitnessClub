@@ -1503,7 +1503,8 @@
       "addAvatar": "Pôr foto de perfil",
       "changeAvatar": "Mudar a foto",
       "removeAvatar": "Tirar a foto"
-    }
+    },
+    "allAchievements": "Ver todas as conquistas"
   },
   "groups": {
     "title": "Grupos",
