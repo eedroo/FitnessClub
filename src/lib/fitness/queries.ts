@@ -426,3 +426,8 @@ export async function getExerciseHistory(userId: string, exerciseId: string, tak
 export async function getExerciseNote(userId: string, exerciseId: string): Promise<{ text: string; byAi: boolean } | null> {
   return db.exerciseNote.findUnique({ where: { userId_exerciseId: { userId, exerciseId } }, select: { text: true, byAi: true } });
 }
+
+/** Perfil de treino (ou null, antes das boas-vindas novas). */
+export async function getTrainingProfile(userId: string) {
+  return db.trainingProfile.findUnique({ where: { userId } });
+}

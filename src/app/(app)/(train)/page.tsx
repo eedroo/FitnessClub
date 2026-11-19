@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { bodyPage } from '@/lib/fitness/page';
-import { countCustomExercises, listPrograms } from '@/lib/fitness/queries';
+import { countCustomExercises, getTrainingProfile, listPrograms } from '@/lib/fitness/queries';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { ProgramList } from '@/components/body/ProgramList';
@@ -17,10 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Treinos: programas, os meus exercícios e um treino livre (as boas-vindas são o onboarding, em `/welcome`). */
 export default async function BodyHome() {
   const { userId } = await bodyPage();
-  const [t, programs, custom] = await Promise.all([
+  const [t, programs, custom, profile] = await Promise.all([
     getTranslations('fitness'),
     listPrograms(userId),
     countCustomExercises(userId),
+    getTrainingProfile(userId),
   ]);
   const templates = FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }));
 
@@ -28,6 +29,15 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
+        {/* Quem entrou antes das boas-vindas novas: convite a preencher o perfil de treino. */}
+        {!profile && (
+          <Link href="/training-profile" className="mg-program-row">
+            <span className="mg-program-row__text">
+              <span className="mg-program-row__name">{t('profile.homeTitle')}</span>
+              <span className="mg-program-row__meta">{t('profile.homeText')}</span>
+            </span>
+          </Link>
+        )}
         <ProgramForm templates={templates} />
         <Link href="/exercises?tab=mine" className="mg-program-row">
           <span className="mg-program-row__text">

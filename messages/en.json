@@ -85,7 +85,8 @@
       "privacy": "Privacy",
       "sessions": "Sessions",
       "danger": "Danger zone",
-      "training": "Training"
+      "training": "Training",
+      "trainingProfile": "Training profile"
     },
     "training": {
       "rest": "Default rest",
@@ -869,6 +870,127 @@
       "add": "Add",
       "edit": "Edit",
       "ai": "AI"
+    },
+    "profile": {
+      "title": "Training profile",
+      "intro": "This drives your programme suggestions and, soon, the AI-built programmes and weekly insights.",
+      "empty": "You haven't filled in your training profile yet.",
+      "edit": "Edit profile",
+      "create": "Fill in profile",
+      "errors": {
+        "invalid": "Check your answers and try again."
+      },
+      "minutes": "{n} min",
+      "steps": {
+        "goals": {
+          "title": "What do you want to achieve?",
+          "text": "Pick one or more goals."
+        },
+        "level": {
+          "title": "What's your level?",
+          "text": "It helps pick the right volume and exercises."
+        },
+        "weight": {
+          "title": "What do you weigh today?",
+          "text": "Optional. It's only for you, in your daily weight.",
+          "noConsent": "To log your weight, first give health-data consent in settings. You can skip this step."
+        },
+        "equipment": {
+          "title": "Where and with what will you train?",
+          "text": "Pick everything you have access to."
+        },
+        "focus": {
+          "title": "Which muscles do you want to focus on?",
+          "text": "Tap muscles on the map (front and back). Leave it blank for a balanced plan.",
+          "on": "focused",
+          "off": "not focused",
+          "none": "Balanced plan (no muscles picked)"
+        },
+        "days": {
+          "title": "When will you train?",
+          "text": "Pick your training days and how long each session can be.",
+          "count": "{n, plural, =0 {No days picked} one {# day a week} other {# days a week}}",
+          "minutes": "Time per session"
+        },
+        "wishes": {
+          "title": "Anything else?",
+          "text": "Tell us what you'd like and what you don't want. The AI will take it into account.",
+          "wishesLabel": "Comments and requests",
+          "wishesPlaceholder": "e.g. I want a better bench press, I like short sessions, I prefer machines…",
+          "avoidLabel": "What you don't want",
+          "avoidPlaceholder": "e.g. burpees, barbell squats, sore left shoulder…"
+        }
+      },
+      "goals": {
+        "strength": "Strength",
+        "hypertrophy": "Muscle",
+        "fat_loss": "Fat loss",
+        "endurance": "Endurance",
+        "health": "Health and mobility",
+        "sport": "Sports performance"
+      },
+      "levels": {
+        "BEGINNER": {
+          "name": "Beginner",
+          "hint": "Under 6 months of training, or coming back"
+        },
+        "INTERMEDIATE": {
+          "name": "Intermediate",
+          "hint": "Training regularly for 6 months to 2 years"
+        },
+        "ADVANCED": {
+          "name": "Advanced",
+          "hint": "Over 2 years, solid technique"
+        }
+      },
+      "equipment": {
+        "full_gym": {
+          "name": "Full gym",
+          "hint": "Machines, cables, barbells and dumbbells"
+        },
+        "free_weights": {
+          "name": "Free weights",
+          "hint": "Barbells, dumbbells and a bench"
+        },
+        "home_basic": {
+          "name": "At home, with basics",
+          "hint": "Adjustable dumbbells, a kettlebell"
+        },
+        "bodyweight": {
+          "name": "Bodyweight only",
+          "hint": "No equipment"
+        },
+        "outdoor": {
+          "name": "Outdoor gym",
+          "hint": "Bars, dip bars and park machines"
+        },
+        "bands": {
+          "name": "Resistance bands",
+          "hint": "Resistance bands"
+        }
+      },
+      "days": {
+        "short": {
+          "0": "S",
+          "1": "M",
+          "2": "T",
+          "3": "W",
+          "4": "T",
+          "5": "F",
+          "6": "S"
+        },
+        "long": {
+          "0": "Sunday",
+          "1": "Monday",
+          "2": "Tuesday",
+          "3": "Wednesday",
+          "4": "Thursday",
+          "5": "Friday",
+          "6": "Saturday"
+        }
+      },
+      "homeTitle": "Fill in your training profile",
+      "homeText": "Goals, level, equipment and days: the basis for suggestions and AI"
     }
   },
   "shell": {

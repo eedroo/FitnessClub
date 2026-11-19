@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
-import { getFitnessPrefs } from '@/lib/fitness/queries';
+import { getFitnessPrefs, getTrainingProfile } from '@/lib/fitness/queries';
+import { toProfileData } from '@/lib/fitness/profile';
+import { db } from '@/lib/db';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { AmbientBackground } from '@/components/shell/AmbientBackground';
 import { ThemeSync } from '@/components/providers/ThemeSync';
@@ -18,7 +20,13 @@ export default async function WelcomePage() {
   const session = await auth();
   if (!session?.user) redirect('/login');
   if (session.user.onboarded) redirect('/');
-  const [t, tc, prefs] = await Promise.all([getTranslations('fitness'), getTranslations('common'), getFitnessPrefs(session.user.id)]);
+  const [t, tc, prefs, profile, user] = await Promise.all([
+    getTranslations('fitness'),
+    getTranslations('common'),
+    getFitnessPrefs(session.user.id),
+    getTrainingProfile(session.user.id),
+    db.user.findUnique({ where: { id: session.user.id }, select: { wellbeingConsentAt: true } }),
+  ]);
   return (
     <>
       <AmbientBackground />
@@ -31,6 +39,8 @@ export default async function WelcomePage() {
         <div className="mg-body-shell__main">
           <BodyWelcome
             initialRest={prefs.defaultRestSec}
+            initialProfile={toProfileData(profile)}
+            weightAllowed={!!user?.wellbeingConsentAt}
             templates={FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }))}
           />
         </div>

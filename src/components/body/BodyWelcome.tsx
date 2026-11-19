@@ -5,21 +5,44 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { completeFitnessOnboarding } from '@/actions/fitness';
+import { saveTrainingProfile } from '@/actions/profile';
+import { recommendTemplate, type TrainingProfileData } from '@/lib/fitness/profile';
+import { ProfileStep, type ProfileStepId } from '@/components/profile/ProfileStep';
 import { Button } from '@/components/ui/Button';
 import { CheckChip } from '@/components/ui/CheckChip';
 import { TextInput } from '@/components/ui/TextInput';
 import { NotificationsPromptCard } from '@/components/notifications/NotificationsPromptCard';
 
 const RESTS = [60, 90, 120, 180];
-const STEPS = 4;
+const PROFILE_STEPS: ProfileStepId[] = ['goals', 'level', 'weight', 'equipment', 'focus', 'days', 'wishes'];
+type FlowStep = 'hello' | ProfileStepId | 'rest' | 'alert' | 'start';
+const FLOW: FlowStep[] = ['hello', ...PROFILE_STEPS, 'rest', 'alert', 'start'];
+const STEPS = FLOW.length;
+const isProfileStep = (s: FlowStep): s is ProfileStepId => (PROFILE_STEPS as string[]).includes(s);
 
-/** Boas-vindas do FitnessClub: boas-vindas, descanso, aviso de fim de descanso e como começar. */
-export function BodyWelcome({ initialRest, templates }: { initialRest: number; templates: { id: string; name: string; description: string }[] }) {
+/**
+ * Boas-vindas (onboarding): olá, o perfil de treino (objectivos, nível, peso, equipamento, músculos em foco, dias e
+ * duração, pedidos e o que evitar), descanso, aviso de fim de descanso e por onde começar (com o modelo sugerido).
+ */
+export function BodyWelcome({
+  initialRest,
+  templates,
+  initialProfile,
+  weightAllowed,
+}: {
+  initialRest: number;
+  templates: { id: string; name: string; description: string }[];
+  initialProfile: TrainingProfileData;
+  weightAllowed: boolean;
+}) {
   const t = useTranslations('fitness.welcome');
   const te = useTranslations();
   const router = useRouter();
   const { update } = useSession();
   const [step, setStep] = useState(0);
+  const cur = FLOW[step]!;
+  const [profile, setProfile] = useState<TrainingProfileData>(initialProfile);
+  const [weightKg, setWeightKg] = useState('');
   const [rest, setRest] = useState(initialRest);
   const [custom, setCustom] = useState(RESTS.includes(initialRest) ? '' : String(initialRest));
   const [alert, setAlert] = useState(true);
@@ -29,6 +52,8 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
 
   const finish = () =>
     start(async () => {
+      const saved = await saveTrainingProfile({ ...profile, weightKg });
+      if (!saved.ok) return setError(te(saved.error));
       const res = await completeFitnessOnboarding({ defaultRestSec: rest, restAlert: alert, templateId: template });
       if (!res.ok) return setError(te(res.error));
       // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos.
@@ -45,14 +70,18 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
         ))}
       </div>
 
-      {step === 0 && (
+      {cur === 'hello' && (
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('hello')}</h2>
           <p className="mg-body-welcome__text">{t('helloText')}</p>
         </section>
       )}
 
-      {step === 1 && (
+      {isProfileStep(cur) && (
+        <ProfileStep id={cur} value={profile} onChange={setProfile} weightKg={weightKg} onWeightKg={setWeightKg} weightAllowed={weightAllowed} />
+      )}
+
+      {cur === 'rest' && (
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('restTitle')}</h2>
           <div className="mg-body-welcome__options" role="radiogroup" aria-label={t('restTitle')}>
@@ -90,7 +119,7 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
         </section>
       )}
 
-      {step === 2 && (
+      {cur === 'alert' && (
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('alertTitle')}</h2>
           <p className="mg-body-welcome__text">{t('alertText')}</p>
@@ -99,7 +128,7 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
         </section>
       )}
 
-      {step === 3 && (
+      {cur === 'start' && (
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('startTitle')}</h2>
           <div className="mg-body-welcome__options" role="radiogroup" aria-label={t('startTitle')}>
@@ -138,7 +167,14 @@ export function BodyWelcome({ initialRest, templates }: { initialRest: number; t
           <span />
         )}
         {step < STEPS - 1 ? (
-          <Button className="mg-btn--body" onClick={() => setStep(step + 1)}>
+          <Button
+            className="mg-btn--body"
+            onClick={() => {
+              // Ao chegar a "por onde começar", sugere o modelo que combina com o perfil.
+              if (FLOW[step + 1] === 'start') setTemplate(recommendTemplate(profile));
+              setStep(step + 1);
+            }}
+          >
             {t('next')}
           </Button>
         ) : (

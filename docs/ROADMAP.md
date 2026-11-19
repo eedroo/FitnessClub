@@ -8,7 +8,7 @@ As decisões em aberto estão no fim de cada fase; nada aqui é definitivo até 
 - Notas pessoais de programa, treino e exercício (prontas para a IA as preencher: `notesByAi`/`byAi`).
 - Vidro líquido e cor de destaque à escolha.
 
-## Fase A — Perfil de treino e onboarding novo (sem IA)
+## Fase A — Perfil de treino e onboarding novo (sem IA) — feita (19/11)
 Recolher o que a IA vai precisar, já útil sem ela.
 - Modelo `TrainingProfile` (1 por pessoa): objectivos (força, hipertrofia, perder gordura, saúde, desporto…), nível (iniciante / intermédio / avançado), peso (vai para o peso diário, com consentimento), equipamento (academia completa, pesos livres, só peso do corpo, academia ao ar livre, casa com halteres…), grupos musculares em foco (escolhidos no mapa muscular, que já existe), frequência e dias da semana, duração por treino, comentários/pedidos, exercícios a evitar (da biblioteca).
 - Onboarding em passos (o `BodyWelcome` cresce) e uma página "O meu perfil de treino" nas definições para mudar depois.

@@ -80,6 +80,7 @@ model User {
   bodyWeights       BodyWeightEntry[]
   bodyGoal          BodyGoal?
   exerciseNotes     ExerciseNote[]
+  trainingProfile   TrainingProfile?
 }
 
 enum AuthTokenType {
@@ -341,4 +342,25 @@ model ExerciseNote {
   exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
 
   @@id([userId, exerciseId])
+}
+
+enum TrainingLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+// Perfil de treino (onboarding e definições): o que a IA usa para montar programas e analisar a semana.
+model TrainingProfile {
+  userId         String        @id
+  goals          String[] // strength | hypertrophy | fat_loss | endurance | health | sport (src/lib/fitness/profile.ts)
+  level          TrainingLevel @default(BEGINNER)
+  equipment      String[] // full_gym | free_weights | home_basic | bodyweight | outdoor | bands
+  focusMuscles   String[] // partes do mapa muscular (src/lib/body/muscles.ts)
+  trainingDays   Int[] // 0 = domingo … 6 = sábado
+  sessionMinutes Int?
+  wishes         String? // comentários, sugestões, o que quer
+  avoid          String? // o que não quer (exercícios de que não gosta, limitações)
+  updatedAt      DateTime      @updatedAt
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

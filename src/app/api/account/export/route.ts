@@ -25,6 +25,7 @@ export async function GET() {
       bodyWeights: { orderBy: { date: 'asc' } },
       bodyGoal: true,
       exerciseNotes: { orderBy: { exerciseId: 'asc' } },
+      trainingProfile: true,
     },
   });
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
@@ -40,6 +41,7 @@ export async function GET() {
       weights: user.bodyWeights,
       goal: user.bodyGoal,
       exerciseNotes: user.exerciseNotes,
+      profile: user.trainingProfile,
     },
   });
 

@@ -23,10 +23,11 @@ import { InstallButton } from '@/components/notifications/InstallButton';
 import { PremiumBadge } from '@/components/premium/PremiumBadge';
 import { DELETE_CONFIRM_WORD } from '@/lib/validation/account';
 import { getEntitlements } from '@/lib/entitlements/server';
-import { getFitnessPrefs } from '@/lib/fitness/queries';
+import { getFitnessPrefs, getTrainingProfile } from '@/lib/fitness/queries';
+import { toProfileData } from '@/lib/fitness/profile';
 import { intlLocale, isAppLocale } from '@/i18n/locales';
 
-const SECTIONS = ['profile', 'account', 'preferences', 'training', 'notifications', 'privacy', 'sessions', 'danger'] as const;
+const SECTIONS = ['profile', 'account', 'preferences', 'trainingProfile', 'training', 'notifications', 'privacy', 'sessions', 'danger'] as const;
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('settings');
@@ -43,18 +44,26 @@ export default async function SettingsPage() {
   const session = await auth();
   if (!session?.user) redirect('/login');
 
-  const [t, tAuth, ta, tf, entitlements, locale, user] = await Promise.all([
+  const [t, tAuth, ta, tf, tp, entitlements, locale, user, profileRow] = await Promise.all([
     getTranslations('settings'),
     getTranslations('auth'),
     getTranslations('account'),
     getTranslations('fitness'),
+    getTranslations('fitness.profile'),
     getEntitlements(session.user.id),
     getLocale(),
     db.user.findUnique({
       where: { id: session.user.id },
       select: { name: true, email: true, locale: true, theme: true, timezone: true, emailVerifiedAt: true, wellbeingConsentAt: true },
     }),
+    getTrainingProfile(session.user.id),
   ]);
+  const profile = toProfileData(profileRow);
+  const profileSummary = [
+    profile.goals.map((g) => tp(`goals.${g}`)).join(', '),
+    tp(`levels.${profile.level}.name`),
+    profile.trainingDays.length ? tp('steps.days.count', { n: profile.trainingDays.length }) : '',
+  ].filter(Boolean).join(' · ');
   if (!user) redirect('/login');
 
   const pro = entitlements.features.pro;
@@ -109,6 +118,17 @@ export default async function SettingsPage() {
 
           <GlassCard id="preferences" className="mg-settings__section" title={t('sections.preferences')}>
             <SettingsForm part="preferences" initial={formInitial} timezones={timezones} />
+          </GlassCard>
+
+          <GlassCard id="trainingProfile" className="mg-settings__section" title={t('sections.trainingProfile')}>
+            <div className="mg-form">
+              <p className="mg-form__status">{profileRow ? profileSummary : tp('empty')}</p>
+              <div className="mg-form__row">
+                <Link href="/training-profile" className="mg-btn mg-btn--ghost">
+                  {profileRow ? tp('edit') : tp('create')}
+                </Link>
+              </div>
+            </div>
           </GlassCard>
 
           {prefs && (

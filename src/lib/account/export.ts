@@ -1,4 +1,4 @@
-import type { BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
+import type { TrainingProfile, BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
 import { fromDbDate } from '@/lib/dates';
 
 /**
@@ -26,6 +26,8 @@ export interface ExportSource {
     goal: BodyGoal | null;
     /** Notas pessoais dos exercícios. */
     exerciseNotes?: ExerciseNote[];
+    /** Perfil de treino (objectivos, nível, equipamento, músculos em foco, dias, pedidos). */
+    profile?: TrainingProfile | null;
   };
 }
 
@@ -102,6 +104,19 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
           })),
         })),
       })),
+      profile: data.fitness.profile
+        ? {
+            goals: data.fitness.profile.goals,
+            level: data.fitness.profile.level,
+            equipment: data.fitness.profile.equipment,
+            focusMuscles: data.fitness.profile.focusMuscles,
+            trainingDays: data.fitness.profile.trainingDays,
+            sessionMinutes: data.fitness.profile.sessionMinutes,
+            wishes: data.fitness.profile.wishes,
+            avoid: data.fitness.profile.avoid,
+            updatedAt: iso(data.fitness.profile.updatedAt),
+          }
+        : null,
       exerciseNotes: (data.fitness.exerciseNotes ?? []).map((n) => ({ exerciseId: n.exerciseId, text: n.text, byAi: n.byAi, updatedAt: iso(n.updatedAt) })),
       weights: data.fitness.weights.map((w) => ({
         date: day(w.date),

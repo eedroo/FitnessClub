@@ -87,3 +87,9 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Progressão dupla:** com um alvo de reps (ex.: 3 × 5–8), cada sessão soma uma rep à última vez na primeira série que a pode receber sem ficar mais de 1 rep acima da seguinte (6,5,5 → 6,6,5 → 7,6,5 → … → 8,8,8). Tudo no máximo → sobe a carga (+2,5 kg; halteres e kettlebells +2 kg) e as reps voltam ao mínimo. Da última vez com séries em falta → primeiro completá-las. Peso do corpo no topo → "torna-o mais difícil". Lógica pura em `src/lib/fitness/progression.ts`; a próxima série vem preenchida com a sugestão.
 - **Comparação nos resumos:** o resumo da sessão compara volume, carga máxima, reps e séries com a última vez do mesmo treino (treino livre: o treino livre anterior) e cada exercício com a última vez; na tab Dia, cada sessão do dia compara-se da mesma forma (nunca com o dia anterior, que pode ser de descanso ou de outro treino).
 - **Notas pessoais:** programa (`FitnessProgram.notes`), treino (`FitnessWorkout.notes`) e exercício (`ExerciseNote`, uma por pessoa e exercício, também da biblioteca), escritas pela pessoa ou pela IA (`notesByAi`/`byAi`; editar à mão tira a marca). Entram na exportação.
+
+## Perfil de treino (Fase A)
+- `TrainingProfile` (1 por pessoa): objectivos, nível, equipamento, músculos em foco (partes do mapa), dias da semana, tempo por treino, pedidos e o que evitar. Preenchido nas boas-vindas e editável em `/training-profile`; aberto a todos (sem `pro`). Entra na exportação.
+- O peso dado no perfil vai para o peso diário de hoje, só com o consentimento de dados de saúde.
+- Sem IA, o perfil escolhe o modelo sugerido (`recommendTemplate`): 4+ dias → superior/inferior; 3 → push · pull · legs (iniciante: corpo inteiro); 1–2 → corpo inteiro; só saúde sem ginásio → alongamentos.
+- "Voltar" na página do exercício regressa à página de onde se veio (histórico do app em `sessionStorage`; o `document.referrer` não muda nas navegações do Next).

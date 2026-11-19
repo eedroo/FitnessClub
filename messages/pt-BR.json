@@ -85,7 +85,8 @@
       "privacy": "Privacidade",
       "sessions": "Sessões",
       "danger": "Zona de perigo",
-      "training": "Treino"
+      "training": "Treino",
+      "trainingProfile": "Perfil de treino"
     },
     "training": {
       "rest": "Descanso padrão",
@@ -869,6 +870,127 @@
       "add": "Adicionar",
       "edit": "Editar",
       "ai": "IA"
+    },
+    "profile": {
+      "title": "Perfil de treino",
+      "intro": "É daqui que vêm as sugestões de programa e, em breve, os programas e as análises feitos pela IA.",
+      "empty": "Você ainda não preencheu seu perfil de treino.",
+      "edit": "Editar perfil",
+      "create": "Preencher perfil",
+      "errors": {
+        "invalid": "Revise as respostas e tente de novo."
+      },
+      "minutes": "{n} min",
+      "steps": {
+        "goals": {
+          "title": "O que você quer alcançar?",
+          "text": "Escolha um ou mais objetivos."
+        },
+        "level": {
+          "title": "Qual é o seu nível?",
+          "text": "Ajuda a escolher o volume e os exercícios certos."
+        },
+        "weight": {
+          "title": "Quanto você pesa hoje?",
+          "text": "Opcional. Fica só para você, no seu peso diário.",
+          "noConsent": "Para registrar o peso, dê primeiro o consentimento de dados de saúde nas configurações. Você pode pular este passo."
+        },
+        "equipment": {
+          "title": "Onde e com o que você vai treinar?",
+          "text": "Escolha tudo o que você tem à disposição."
+        },
+        "focus": {
+          "title": "Quais músculos você quer destacar?",
+          "text": "Toque nos músculos no mapa (frente e costas). Pode deixar em branco para um treino equilibrado.",
+          "on": "em foco",
+          "off": "sem foco",
+          "none": "Treino equilibrado (nenhum músculo escolhido)"
+        },
+        "days": {
+          "title": "Quando você vai treinar?",
+          "text": "Escolha os dias da semana e quanto tempo você tem por treino.",
+          "count": "{n, plural, =0 {Nenhum dia escolhido} one {# dia por semana} other {# dias por semana}}",
+          "minutes": "Tempo por treino"
+        },
+        "wishes": {
+          "title": "Mais alguma coisa?",
+          "text": "Conte o que você gostaria de ter e o que não quer. A IA vai levar isso em conta.",
+          "wishesLabel": "Comentários e pedidos",
+          "wishesPlaceholder": "Ex.: quero melhorar o supino, gosto de treinos curtos, prefiro máquinas…",
+          "avoidLabel": "O que você não quer",
+          "avoidPlaceholder": "Ex.: burpees, agachamento com barra, dor no ombro esquerdo…"
+        }
+      },
+      "goals": {
+        "strength": "Força",
+        "hypertrophy": "Massa muscular",
+        "fat_loss": "Perder gordura",
+        "endurance": "Resistência",
+        "health": "Saúde e mobilidade",
+        "sport": "Desempenho no esporte"
+      },
+      "levels": {
+        "BEGINNER": {
+          "name": "Iniciante",
+          "hint": "Treino há menos de 6 meses ou estou voltando"
+        },
+        "INTERMEDIATE": {
+          "name": "Intermediário",
+          "hint": "Treino com regularidade de 6 meses a 2 anos"
+        },
+        "ADVANCED": {
+          "name": "Avançado",
+          "hint": "Mais de 2 anos, conheço bem a técnica"
+        }
+      },
+      "equipment": {
+        "full_gym": {
+          "name": "Academia completa",
+          "hint": "Máquinas, cabos, barras e halteres"
+        },
+        "free_weights": {
+          "name": "Pesos livres",
+          "hint": "Barras, halteres e banco"
+        },
+        "home_basic": {
+          "name": "Em casa, com o básico",
+          "hint": "Halteres ajustáveis, kettlebell"
+        },
+        "bodyweight": {
+          "name": "Só peso do corpo",
+          "hint": "Sem equipamento"
+        },
+        "outdoor": {
+          "name": "Academia ao ar livre",
+          "hint": "Barras, paralelas e aparelhos de praça"
+        },
+        "bands": {
+          "name": "Elásticos",
+          "hint": "Faixas de resistência"
+        }
+      },
+      "days": {
+        "short": {
+          "0": "D",
+          "1": "S",
+          "2": "T",
+          "3": "Q",
+          "4": "Q",
+          "5": "S",
+          "6": "S"
+        },
+        "long": {
+          "0": "Domingo",
+          "1": "Segunda",
+          "2": "Terça",
+          "3": "Quarta",
+          "4": "Quinta",
+          "5": "Sexta",
+          "6": "Sábado"
+        }
+      },
+      "homeTitle": "Preencha seu perfil de treino",
+      "homeText": "Objetivos, nível, equipamento e dias: é a base das sugestões e da IA"
     }
   },
   "shell": {

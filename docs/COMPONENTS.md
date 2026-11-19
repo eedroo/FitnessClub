@@ -193,7 +193,7 @@ Recurso premium `pro` com navegação própria, inspirado no Setgraph: bibliotec
 | `BodyNav` | client | `body-nav.css` | `mg-body-nav`, `__item`, `--active` | Treinos · Sessões · Dia · Corpo |
 | `useNow` / `formatClock` | client (hook) | — | — | hora actual a cada segundo (e ao voltar à app); `formatClock` ("1:02:05") vive em `src/lib/fitness/session.ts` (usado também nos componentes servidor) |
 | `ActiveSessionPill` | client | `session-pill.css` | `mg-session-pill` | "Sessão em curso · 00:32:10" acima da `BodyNav`; toca para voltar (escondida no ecrã da sessão) |
-| `BodyWelcome` | client | `body-welcome.css` | `mg-body-welcome`, `__step`, `__options`, `__option--active` | boas-vindas do app (`/welcome`, onboarding; `completeFitnessOnboarding` grava as preferências e `User.onboardedAt`, `update({})` → `/`) em 4 passos: boas-vindas, descanso (60 · 90 · 120 · 180 · outro), aviso de fim de descanso (pede notificações), modelo ou do zero |
+| `BodyWelcome` | client | `body-welcome.css` | `mg-body-welcome`, `__step`, `__options`, `__option--active` | boas-vindas do app (`/welcome`, onboarding; `saveTrainingProfile` + `completeFitnessOnboarding` gravam o perfil, as preferências e `User.onboardedAt`, `update({})` → `/`): olá, as 7 perguntas do perfil de treino (`ProfileStep`), descanso, aviso e por onde começar (modelo sugerido por `recommendTemplate`); antes eram 4 passos: boas-vindas, descanso (60 · 90 · 120 · 180 · outro), aviso de fim de descanso (pede notificações), modelo ou do zero |
 | `ProgramList` / `ProgramRow` | server | `program.css` | `mg-program-list`, `mg-program-row` | programas: nome, descrição curta, nº de treinos |
 | `ProgramForm` | client | `program.css` | `mg-program-form` | criar ou editar programa (nome, descrição, tipo) e "Usar um modelo"; arquivar |
 | `WorkoutList` / `WorkoutRow` | client (reordenação) | `program.css` | `mg-workout-list`, `mg-workout-row` | treinos do programa: nome, notas curtas, nº de exercícios |
@@ -265,3 +265,21 @@ Quem abre o app sem sessão em `/` vai para `/start` (middleware); com sessão, 
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
 | `StartScreen` | server | `start.css` | `mg-start`, `__content`, `__icon`, `__title`, `__features`, `__feature`, `--programs`/`--sessions`/`--records`/`--weight`, `__feature-icon`, `__feature-text`, `__feature-title`, `__feature-body`, `__actions`, `__privacy` | ecrã de boas-vindas ao estilo das apps do iPhone: ícone do app, "Boas-vindas ao FitnessClub", quatro linhas com ícone de cor (programas, sessões, recordes, peso) e, em baixo, a nota de privacidade, "Criar conta" (preenchido) e "Já tenho conta" (simples) |
+
+### Perfil de treino (`src/components/profile/`, lógica em `src/lib/fitness/profile.ts`, rota `/training-profile`)
+
+| Componente | Tipo | CSS | Classes | Conteúdo |
+|---|---|---|---|---|
+| `ProfileStep` | client | `profile.css`, `body-welcome.css` | `mg-profile-step`, `__weight`, `__map`, `__chosen`, `__days`, `__day`, `--on`, `__field`; opções em `mg-body-welcome__option` (`--active` com contorno azul), `mg-body-welcome__options--list` | uma pergunta controlada: objectivos (vários), nível, peso (só com consentimento de saúde), equipamento (vários), músculos em foco (toque no mapa, frente e costas, via `BodyView` do `MuscleMap`), dias da semana e tempo por treino, pedidos e o que evitar |
+| `TrainingProfileForm` | client | `profile.css` | `mg-profile-form`, `__card`, `__bar` | as 7 perguntas em cartões numa página e "Guardar" fixo em baixo → `saveTrainingProfile` |
+| `BodyView` (de `MuscleMap.tsx`) | client | `muscle-map.css` | — | exportado: uma vista do corpo; com `describe`, serve para escolher músculos |
+
+Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/training-profile`; na página Treinos, quem ainda não tem perfil vê um convite a preenchê-lo.
+
+### Navegação e administração (novos)
+
+| Componente | Tipo | CSS | Classes | Conteúdo |
+|---|---|---|---|---|
+| `NavTracker` | client | — | — | (`components/providers/`) no layout `(app)`: regista as páginas abertas em `sessionStorage` (`src/lib/nav-history.ts`) para o `BackButton` regressar à anterior |
+| `VapidGenerator` | client | `admin.css` | `mg-admin-form`, `__field` | `/admin/push`: gera o par de chaves VAPID no próprio dispositivo (Web Crypto, P-256), sem passar pelo servidor |
+| `PushTestButton` | client | `admin.css` | `mg-admin-form` | `/admin/push`: envia a notificação de teste aos dispositivos da conta e diz quantos a receberam |

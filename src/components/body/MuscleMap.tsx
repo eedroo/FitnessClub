@@ -9,19 +9,24 @@ import { MuscleExercisesSheet } from './MuscleExercisesSheet';
 type Recent = Partial<Record<MapMuscle, { id: string; name: string; date: string }[]>>;
 const STATE: Record<Recovery, 'just' | 'mid' | 'rested'> = { 'just-trained': 'just', recovering: 'mid', rested: 'rested' };
 
-/** Uma vista (frente ou costas): brilho por baixo dos músculos acabados de treinar, músculos com gradiente, corpo neutro. */
-function BodyView({
+/**
+ * Uma vista (frente ou costas): brilho por baixo dos músculos acabados de treinar, músculos com gradiente, corpo neutro.
+ * Também serve para escolher músculos (perfil de treino): `describe` dá o texto de cada músculo para leitores de ecrã.
+ */
+export function BodyView({
   shapes,
   label,
   recovery,
   selected,
   onPick,
+  describe,
 }: {
   shapes: MapShape[];
   label: string;
   recovery: Record<MapMuscle, Recovery>;
   selected: MapMuscle | null;
   onPick: (m: MapMuscle) => void;
+  describe?: (m: MapMuscle) => string;
 }) {
   const t = useTranslations('body.map');
   const id = useId().replace(/:/g, '');
@@ -65,7 +70,7 @@ function BodyView({
               role="button"
               tabIndex={0}
               className={`mg-muscle-map__muscle${selected === m ? ' mg-muscle-map__muscle--selected' : ''}`}
-              aria-label={`${t(`muscles.${m}`)}: ${t(STATE[recovery[m]])}`}
+              aria-label={describe ? describe(m) : `${t(`muscles.${m}`)}: ${t(STATE[recovery[m]])}`}
               onClick={() => onPick(m)}
               onKeyDown={key(m)}
             >
