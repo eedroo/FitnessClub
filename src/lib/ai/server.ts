@@ -2,6 +2,7 @@ import 'server-only';
 import type { Prisma } from '@prisma/client';
 import { DateTime } from 'luxon';
 import { db } from '@/lib/db';
+import { isAdminEmail } from '@/lib/admin';
 import { addDays, fromDbDate, toDbDate, todayInTz, type DateISO } from '@/lib/dates';
 import { lastFinishedWeekStart, shiftWeek, weekStartOf } from '@/lib/weeks';
 import { getEntitlements } from '@/lib/entitlements/server';
@@ -31,12 +32,21 @@ export async function getAiAccess(userId: string): Promise<AiAccess> {
   return { feature: ent.features.ai, consent: !!user?.aiConsentAt, configured: hasAi() };
 }
 
+/** Pedidos que falharam ou ficaram presos não contam (a pessoa não recebeu nada); os admins (ADMIN_EMAILS) não têm limite, para testar. */
 export async function programQuota(userId: string): Promise<{ day: number; month: number; allowed: boolean }> {
   const now = new Date();
-  const [day, month] = await Promise.all([
-    db.aiRequest.count({ where: { userId, kind: 'PROGRAM', createdAt: { gte: new Date(now.getTime() - 24 * 3600_000) } } }),
-    db.aiRequest.count({ where: { userId, kind: 'PROGRAM', createdAt: { gte: new Date(now.getTime() - 30 * 24 * 3600_000) } } }),
+  // Contam os que deram resultado e os que ainda estão a correr (até 4 min); presos e falhados não.
+  const counted = {
+    userId,
+    kind: 'PROGRAM' as const,
+    OR: [{ status: { in: ['DONE', 'APPLIED', 'DISCARDED'] as ('DONE' | 'APPLIED' | 'DISCARDED')[] } }, { status: 'PENDING' as const, createdAt: { gte: new Date(now.getTime() - 4 * 60_000) } }],
+  };
+  const [day, month, user] = await Promise.all([
+    db.aiRequest.count({ where: { ...counted, createdAt: { gte: new Date(now.getTime() - 24 * 3600_000) } } }),
+    db.aiRequest.count({ where: { ...counted, createdAt: { gte: new Date(now.getTime() - 30 * 24 * 3600_000) } } }),
+    db.user.findUnique({ where: { id: userId }, select: { email: true } }),
   ]);
+  if (isAdminEmail(user?.email)) return { day, month, allowed: true };
   return { day, month, allowed: day < PROGRAM_LIMIT_DAY && month < PROGRAM_LIMIT_MONTH };
 }
 

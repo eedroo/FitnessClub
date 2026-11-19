@@ -27,6 +27,12 @@ export default async function AdminAiPage() {
     }),
     db.aiRequest.count({ where: { createdAt: { gte: since30 }, status: 'FAILED' } }),
   ]);
+  const lastFailed = await db.aiRequest.findMany({
+    where: { status: 'FAILED' },
+    orderBy: { createdAt: 'desc' },
+    take: 10,
+    select: { id: true, kind: true, error: true, createdAt: true },
+  });
   const users = await db.user.findMany({ where: { id: { in: byUser.map((u) => u.userId) } }, select: { id: true, email: true } });
   const email = new Map(users.map((u) => [u.id, u.email]));
   const kindLabel = { PROGRAM: 'Programas', INSIGHT: 'Retrospectivas' } as const;
@@ -69,6 +75,22 @@ export default async function AdminAiPage() {
         </table>
         <p className="mg-admin__note">Falhados: {failed}</p>
       </GlassCard>
+      {lastFailed.length > 0 && (
+        <GlassCard title="Últimas falhas (motivo técnico)">
+          <table className="mg-admin-table">
+            <tbody>
+              {lastFailed.map((f) => (
+                <tr key={f.id}>
+                  <td>{f.createdAt.toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' })}</td>
+                  <td>{kindLabel[f.kind]}</td>
+                  <td>{f.error ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mg-admin__note">«Inngest não configurado» = falta a INNGEST_EVENT_KEY; «sem resposta do job» = o Inngest não chega à app (protecção de deploy).</p>
+        </GlassCard>
+      )}
       <GlassCard title="Por pessoa (30 dias)">
         <table className="mg-admin-table">
           <thead>
