@@ -53,13 +53,25 @@
   background: var(--glass-bg);
 }
 
+/* Lista agrupada (como Programas): um bloco de vidro, linhas transparentes com separador recolhido */
 .mg-session-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
   list-style: none;
+}
+
+.mg-session-list > li + li {
+  box-shadow: inset var(--space-4) var(--hairline) 0 var(--system-bg-2), inset 0 var(--hairline) 0 var(--separator);
+}
+
+/* Título do mês por cima da lista (fora de um contentor flex) */
+section > .mg-body-section-title + .mg-session-list {
+  margin-top: var(--space-2);
 }
 
 .mg-session-row {
@@ -67,12 +79,23 @@
   align-items: center;
   gap: var(--space-3);
   min-height: 60px;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2) var(--space-4);
   border: 0;
   border-radius: var(--radius-md);
-  background: var(--glass-bg);
+  background: var(--system-bg-2);
   color: var(--text-primary);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) linear;
+}
+
+.mg-session-list .mg-session-row {
+  border-radius: 0;
+  background: transparent;
+}
+
+a.mg-session-row:active {
+  background: var(--fill-3);
 }
 
 .mg-session-row__text {
@@ -82,7 +105,7 @@
 }
 
 .mg-session-row__name {
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   color: var(--text-primary);
   text-decoration: none;
 }
@@ -93,8 +116,9 @@
 }
 
 .mg-session-row__time {
+  font-size: var(--text-sm);
   font-variant-numeric: tabular-nums;
-  color: var(--metric-time);
+  color: var(--text-secondary);
 }
 
 @keyframes mg-summary-in {

@@ -221,8 +221,8 @@ Recurso premium `pro` com navegação própria, inspirado no Setgraph: bibliotec
 | `NumberStepper` | client | `session.css` | `mg-stepper`, `__btn`, `__value` | − / valor (teclado numérico ao tocar) / + |
 | `sessionQueue` | client (módulo) | — | — | fila de séries sem rede no dispositivo (id do cliente e hora real), reenviada ao voltar a rede |
 | `RestTimer` | client | `rest.css` | `mg-rest`, `__ring`, `__count`, `--done` | faixa fixa: contagem decrescente grande, anel, −15 s, +30 s, Saltar; a 0 "Bora!", som curto e vibração (pisca sem `prefers-reduced-motion`) |
-| `SessionSummary` | server | `session-summary.css` | `mg-session-summary`, `__stats`, `__ex` | duração, exercícios, séries, reps, volume, descanso médio; lista por exercício; entrada animada ao terminar |
-| `SessionList` / `SessionRow` | server | `session-summary.css` | `mg-session-list`, `mg-session-row` | sessões por mês: treino, duração, data |
+| `SessionSummary` | server | `session-summary.css` | `mg-session-summary`, `__stats`, `__ex` | duração, exercícios, séries, reps, volume, carga máxima, descanso médio, cada um com a variação contra a última vez do mesmo treino (`mg-day-metrics__delta`) e a nota com a data; por exercício, as séries e o `CompareCard` com a última vez; entrada animada ao terminar |
+| `SessionList` / `SessionRow` | server | `session-summary.css` | `mg-session-list`, `mg-session-row` | sessões por mês em lista agrupada de vidro (linhas transparentes com separador): treino, nº de séries, data e duração |
 
 ### Peso e evolução — F17 (`src/components/body/`, lógica em `src/lib/body/` e `src/lib/fitness/progress.ts`, rotas `/day`, `/corpo`, `/weight`)
 
@@ -233,7 +233,7 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | `BodyDayView` | server | `day-metrics.css` | — | tab Dia: título (Hoje ou a data), `DayStrip`, `DayMetrics`, `SetDetails` e as sessões; sem treino "Dia de descanso" e "Começar treino" (só hoje) |
 | `DayStrip` | client | `day-strip.css` | `mg-day-strip`, `__day`, `--trained`, `--selected`, `--today` | 7 dias (domingo a sábado) com marcador de treino; tocar abre o dia; setas para a semana anterior e seguinte; botão do calendário |
 | `TrainingCalendar` | client | `train-cal.css` | `mg-train-cal`, `__month`, `__day--trained`, `--today` | folha (`dialog`) com os meses (do mais recente para trás), dias treinados preenchidos com `--body-accent`; tocar abre o dia |
-| `DayMetrics` | server | `day-metrics.css` | `mg-day-metrics`, `__metric`, `--{kind}` | grelha 2 colunas: Séries, Repetições, Exercícios, Volume, Duração, Descanso médio, Tempo de sessão, Recordes (cor fixa por métrica) |
+| `DayMetrics` | server | `day-metrics.css` | `mg-day-metrics`, `__metric`, `--{kind}`, `__delta`, `--up`, `__note`, `__wrap` | grelha 2 colunas: Séries, Repetições, Exercícios, Volume, Carga máxima, Duração, Descanso médio, Tempo de sessão, Recordes (cor fixa por métrica); com `compare`, a variação contra a última vez de cada treino do dia fica dentro do próprio mosaico (▲ verde, ▼ e "igual" neutros) e uma nota diz as datas — sem cartão de comparação à parte |
 | `SetDetails` | server | `set-details.css` | `mg-set-details`, `__ex`, `__line` | por exercício: "60 kg: 11, 10, 10 rep" (troféu quando há recorde) |
 | `BodyWeightCard` | server | `weight-card.css` | `mg-weight-card`, `__value`, `__delta` | último peso e média da semana com a diferença (seta neutra) → `/weight` |
 | `MuscleMap` | client | `muscle-map.css` | `mg-muscle-map`, `__views`, `__view`, `__shape--{just,mid,rested,neutral}`, `__glow`, `__legend` | SVG próprio (formas de `mapShapes.ts`) frente e costas, com gradiente, cantos suaves, brilho a pulsar nos músculos acabados de treinar e teclado; cores `--recovery-just`, `--recovery-mid`, `--recovery-rested`; tocar num músculo abre a `MuscleExercisesSheet` |
@@ -246,7 +246,6 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | `ExerciseTabs` | client | `ex-list.css` (reutiliza `mg-ex-tabs`) | `mg-ex-tabs`, `__tab` | Séries · Evolução · Recordes no topo do exercício |
 | `CompareBlock` | server | — | — | na página do exercício: a última sessão contra a anterior, em `CompareCard` |
 | `CompareCard` | server/client | `compare.css` | `mg-compare`, `__head`, `__grid`, `__cell`, `__bar`, `__label`, `__value`, `__delta`, `--up` | cartão "Comparado com a anterior": grelha 2×2 (séries, reps, volume, kg por rep), cada uma com barra de cor, nome, valor e variação com ▲/▼ e % (▲ em verde quando sobe; o resto neutro); também em cada exercício da sessão, contra a última vez, assim que há uma série |
-| `TotalsCompare` | client | `compare.css` (reutiliza) | `mg-compare`, `--totals`, `__cell--volume`/`--top`/`--reps`/`--sets` | "Comparado com a última vez": volume, carga máxima, reps e séries contra a última vez do mesmo treino (no resumo da sessão; na tab Dia, um cartão por sessão com o nome do treino); "igual" quando não muda |
 | `NotesCard` | client | `notes.css` | `mg-notes`, `__head`, `__title`, `__ai`, `__text`, `__empty`, `__input`, `__actions` | notas do programa, do treino ou do exercício (pessoais; marca "IA" quando geradas pela IA); Editar → caixa de texto (até 4000) → `saveNotes`; vazio apaga. As do exercício aparecem também na sessão (`mg-session-ex__note`) |
 | `ExerciseProgressChart` | client | `ex-chart.css` | `mg-ex-chart` | SVG de linha por sessão; selector melhor peso · e1RM · volume |
 | `ExerciseRecords` | server | `ex-records.css` | `mg-ex-records`, `__row` | melhor peso, melhor e1RM, máx. reps por peso, com datas |

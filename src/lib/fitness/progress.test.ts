@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bestsOf, compareTotals, compareWithPrevious, dayStats, detectPrs, e1rm, EMPTY_BESTS, recomputePrs, sessionTotals, summarize } from './progress';
+import { bestsOf, compareTotals, compareWithPrevious, dayStats, detectPrs, e1rm, EMPTY_BESTS, recomputePrs, sessionTotals, sumTotals, summarize } from './progress';
 
 describe('e1rm', () => {
   it('Epley até 12 reps', () => {
@@ -79,5 +79,14 @@ describe('sessionTotals e compareTotals', () => {
 
   it('sem anterior: tudo null', () => {
     expect(compareTotals(sessionTotals(cur), null).volumeGrams).toBeNull();
+  });
+});
+
+describe('sumTotals', () => {
+  it('soma séries, reps e volume; a carga máxima é a maior', () => {
+    expect(sumTotals([
+      { sets: 3, reps: 24, volumeGrams: 1_200_000, topWeightGrams: 50000 },
+      { sets: 2, reps: 20, volumeGrams: 400_000, topWeightGrams: null },
+    ])).toEqual({ sets: 5, reps: 44, volumeGrams: 1_600_000, topWeightGrams: 50000 });
   });
 });

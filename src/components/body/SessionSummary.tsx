@@ -6,7 +6,7 @@ import { isAppLocale, intlLocale } from '@/i18n/locales';
 import type { SessionListItem, SessionSummary as Summary } from '@/lib/fitness/queries';
 import { formatClock } from '@/lib/fitness/session';
 import { compareTotals, compareWithPrevious, summarize } from '@/lib/fitness/progress';
-import { TotalsCompare } from './TotalsCompare';
+import { DayMetrics } from './DayMetrics';
 import { CompareCard } from './CompareCard';
 
 const vals = (s: { reps: number | null; weightGrams: number | null; durationSec: number | null }) => ({
@@ -28,29 +28,27 @@ async function localeTools() {
 export async function SessionSummary({ summary, fresh }: { summary: Summary; fresh: boolean }) {
   const [t, { locale, kg }] = await Promise.all([getTranslations('fitness.summary'), localeTools()]);
   const prs = summary.byExercise.reduce((n, g) => n + g.sets.filter((s) => s.prKinds.length > 0).length, 0);
-  const stats: { label: string; value: string; metric?: string }[] = [
-    { label: t('duration'), value: formatClock(summary.durationSec), metric: 'time' },
-    { label: t('exercises'), value: String(summary.exercises) },
-    { label: t('sets'), value: String(summary.sets) },
-    { label: t('reps'), value: String(summary.reps), metric: 'reps' },
-    ...(summary.volumeGrams > 0 ? [{ label: t('volume'), value: t('kgValue', { kg: kg(summary.volumeGrams) }), metric: 'volume' }] : []),
-    // recordes batidos nesta sessão.
-    ...(prs > 0 ? [{ label: t('prs'), value: String(prs), metric: 'pr' }] : []),
-    ...(summary.avgRestSec != null ? [{ label: t('avgRest'), value: formatClock(summary.avgRestSec).replace(/^0(\d):/, '$1:'), metric: 'time' }] : []),
-  ];
+  // Os mesmos mosaicos do Dia, com a variação contra a última vez do mesmo treino dentro de cada número.
+  const stats = {
+    sets: summary.sets,
+    reps: summary.reps,
+    exercises: summary.exercises,
+    volumeGrams: summary.volumeGrams,
+    durationSec: summary.durationSec,
+    sessionTimeSec: summary.durationSec,
+    avgRestSec: summary.avgRestSec,
+    prs,
+  };
   return (
     <section className={`mg-session-summary${fresh ? ' mg-session-summary--fresh' : ''}`} aria-label={t('title')}>
       {fresh && <p className="mg-body-section-title">{t('well')}</p>}
       <p className="mg-session-row__meta">{formatLongDate(summary.date, locale)}</p>
-      <ul className="mg-session-summary__stats">
-        {stats.map((s) => (
-          <li key={s.label} className="mg-session-summary__stat">
-            <span className={`mg-session-summary__value${s.metric ? ` mg-metric--${s.metric}` : ''}`}>{s.value}</span>
-            <span className="mg-session-summary__label">{s.label}</span>
-          </li>
-        ))}
-      </ul>
-      {summary.previous && <TotalsCompare comparison={compareTotals(summary.totals, summary.previous.totals)} previousDate={summary.previous.date} />}
+      <DayMetrics
+        stats={stats}
+        hide={['session']}
+        compare={summary.previous ? compareTotals(summary.totals, summary.previous.totals) : null}
+        compareDates={summary.previous ? [summary.previous.date] : undefined}
+      />
       <h2 className="mg-body-section-title">{t('byExercise')}</h2>
       {summary.byExercise.map(({ exercise, sets, previous }) => (
         <div key={exercise.id} className="mg-session-summary__ex">

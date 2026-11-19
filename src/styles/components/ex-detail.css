@@ -139,3 +139,4 @@
   flex: 1 1 200px;
   min-height: 48px;
 }
+.mg-metric--weight { color: var(--metric-weight); }

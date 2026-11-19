@@ -10,7 +10,6 @@ import { DayMetrics } from './DayMetrics';
 import { SetDetails } from './SetDetails';
 import { SessionRow } from './SessionSummary';
 import { StartSessionButton } from './StartSessionButton';
-import { TotalsCompare } from './TotalsCompare';
 import { compareTotals } from '@/lib/fitness/progress';
 
 /** Tab Dia: faixa da semana, métricas, detalhe das séries e sessões; sem treino, "Dia de descanso". */
@@ -24,10 +23,11 @@ export async function BodyDayView({ data, trained }: { data: DayPageData; traine
         <DayStrip date={data.date} today={data.today} week={data.week} trained={trained} />
         {data.stats ? (
           <>
-            <DayMetrics stats={data.stats} />
-            {data.comparisons.map((c) => (
-              <TotalsCompare key={c.sessionId} name={c.name ?? undefined} comparison={compareTotals(c.totals, c.previous.totals)} previousDate={c.previous.date} />
-            ))}
+            <DayMetrics
+              stats={data.stats}
+              compare={data.comparison ? compareTotals(data.comparison.current, data.comparison.previous) : null}
+              compareDates={data.comparison?.dates}
+            />
             <GlassCard title={t('details')}>
               <SetDetails details={data.details} />
             </GlassCard>

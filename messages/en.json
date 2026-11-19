@@ -804,7 +804,8 @@
         "rest": "Average rest",
         "session": "Session time",
         "prs": "Records",
-        "kg": "{kg} kg"
+        "kg": "{kg} kg",
+        "top": "Top weight"
       }
     },
     "records": {
@@ -832,9 +833,8 @@
         "kg": "kg per rep",
         "top": "Top weight"
       },
-      "titleTotals": "Compared with last time ({date})",
       "same": "same",
-      "titleWorkout": "{name} · compared with {date}"
+      "note": "▲▼ compared with the last time you did the same workout ({dates})"
     },
     "progress": {
       "metric": "Metric",
@@ -990,7 +990,9 @@
         }
       },
       "homeTitle": "Fill in your training profile",
-      "homeText": "Goals, level, equipment and days: the basis for suggestions and AI"
+      "homeText": "Goals, level, equipment and days: the basis for suggestions and AI",
+      "savedTitle": "Profile saved",
+      "savedText": "Going back to settings…"
     }
   },
   "shell": {

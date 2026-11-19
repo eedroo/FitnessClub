@@ -178,3 +178,14 @@ export function compareTotals(current: SessionTotals, previous: SessionTotals | 
   }
   return out;
 }
+
+/** Soma de totais (várias sessões no mesmo dia): séries, reps e volume somam; a carga máxima é a maior. */
+export function sumTotals(list: SessionTotals[]): SessionTotals {
+  const tops = list.map((t) => t.topWeightGrams).filter((w): w is number => w != null);
+  return {
+    sets: list.reduce((n, t) => n + t.sets, 0),
+    reps: list.reduce((n, t) => n + t.reps, 0),
+    volumeGrams: list.reduce((n, t) => n + t.volumeGrams, 0),
+    topWeightGrams: tops.length ? Math.max(...tops) : null,
+  };
+}

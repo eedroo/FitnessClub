@@ -87,3 +87,53 @@
   background-color: var(--highlight-soft);
   box-shadow: inset 0 0 0 2px var(--highlight);
 }
+
+/* Confirmação ao gravar o perfil: cartão de vidro ao centro (como o HUD do iOS), depois volta às definições */
+.mg-profile-form__saved {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 200px;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-xl);
+  background-color: var(--system-elevated);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), var(--shadow-menu);
+  color: var(--text-primary);
+  text-align: center;
+  transform: translate(-50%, -50%);
+  animation: mg-saved-in 320ms var(--ease-spring);
+}
+
+.mg-profile-form__saved svg {
+  color: var(--success);
+}
+
+.mg-profile-form__saved strong {
+  font-size: var(--text-lg);
+}
+
+.mg-profile-form__saved span {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+@keyframes mg-saved-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+}
+
+/* Respostas do perfil em 2 colunas no telemóvel (textos como "Desempenho no desporto" não cabem em 3) */
+.mg-profile-step .mg-body-welcome__options:not(.mg-body-welcome__options--list) {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.mg-body-welcome__option {
+  overflow-wrap: anywhere;
+}

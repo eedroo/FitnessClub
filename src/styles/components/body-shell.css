@@ -103,7 +103,7 @@
 
 /* Cabeçalho de secção agrupada (footnote, maiúsculas, cinzento) */
 .mg-body-section-title {
-  margin: var(--space-3) 0 calc(-1 * var(--space-2));
+  margin: var(--space-3) 0 0;
   padding: 0 var(--space-4);
   font-size: var(--text-footnote);
   font-weight: var(--weight-regular);

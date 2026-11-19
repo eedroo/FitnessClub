@@ -42,3 +42,28 @@
 .mg-day-metrics__metric--session { --metric-color: var(--metric-time); }
 .mg-day-metrics__metric--rest { --metric-color: var(--metric-rest); }
 .mg-day-metrics__metric--prs { --metric-color: var(--pr-gold); }
+.mg-day-metrics__metric--top { --metric-color: var(--metric-weight); }
+
+/* Variação contra a última vez do mesmo treino (dentro do próprio mosaico) */
+.mg-day-metrics__delta {
+  font-size: var(--text-footnote);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.mg-day-metrics__delta--up {
+  color: var(--success);
+}
+
+.mg-day-metrics__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mg-day-metrics__note {
+  margin: 0;
+  padding: 0 var(--space-4);
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}

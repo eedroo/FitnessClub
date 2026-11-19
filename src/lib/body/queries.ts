@@ -4,7 +4,7 @@ import { addDays, fromDbDate, toDbDate, todayInTz, type DateISO } from '@/lib/da
 import { weekDays, weekStartOf } from '@/lib/weeks';
 import type { AppLocale } from '@/i18n/locales';
 import { EXERCISE_VIEW, previousSessionOf, toExerciseView } from '@/lib/fitness/queries';
-import { bestsOf, compareWithPrevious, dayStats, e1rm, sessionTotals, summarize, type Comparison, type DayStats, type SessionExerciseSummary, type SessionTotals } from '@/lib/fitness/progress';
+import { bestsOf, compareWithPrevious, dayStats, e1rm, sessionTotals, sumTotals, summarize, type Comparison, type DayStats, type SessionExerciseSummary, type SessionTotals } from '@/lib/fitness/progress';
 import type { ExerciseView } from '@/lib/fitness/types';
 import { goalStatus, weekAverage, type GoalStatus, type WeightPoint } from './weight';
 import { lastTrainedByMuscle, MAP_MUSCLES, muscleRecovery, toMapMuscles, type MapMuscle, type Recovery } from './muscles';
@@ -64,8 +64,11 @@ export interface DayPageData {
   today: DateISO;
   week: { date: DateISO; trained: boolean }[];
   stats: DayStats | null;
-  /** Cada sessão do dia contra a última vez desse mesmo treino (volume, carga máxima, reps, séries). */
-  comparisons: { sessionId: string; name: string | null; totals: SessionTotals; previous: { date: DateISO; totals: SessionTotals } }[];
+  /**
+   * O dia contra a última vez de cada treino feito nele (Push contra o último Push…), somado: só quando todas as sessões
+   * do dia têm uma anterior. `dates` = as datas dessas últimas vezes.
+   */
+  comparison: { current: SessionTotals; previous: SessionTotals; dates: DateISO[] } | null;
   details: DaySetDetail[];
   sessions: { id: string; name: string | null; startedAt: string; durationSec: number | null; sets: number }[];
 }
@@ -106,10 +109,14 @@ export async function getDayData(userId: string, date: DateISO, locale: AppLocal
     stats: sessions.length
       ? dayStats(sessions.map((s) => ({ startedAt: s.startedAt, endedAt: s.endedAt, sets: s.sets.map((x) => ({ exerciseId: x.exerciseId, reps: x.reps ?? undefined, weightGrams: x.weightGrams ?? undefined, durationSec: x.durationSec ?? undefined, completedAt: x.completedAt, prKinds: x.prKinds })) })))
       : null,
-    comparisons: sessions.flatMap((s, i) => {
-      const prev = previous[i];
-      return prev ? [{ sessionId: s.id, name: s.workout?.name ?? null, totals: sessionTotals(s.sets.map(vals)), previous: { date: prev.date, totals: prev.totals } }] : [];
-    }),
+    comparison:
+      sessions.length && previous.every((p) => p)
+        ? {
+            current: sumTotals(sessions.map((s) => sessionTotals(s.sets.map(vals)))),
+            previous: sumTotals(previous.map((p) => p!.totals)),
+            dates: [...new Set(previous.map((p) => p!.date))].sort(),
+          }
+        : null,
     details: [...details.values()],
     sessions: sessions.map((s) => ({
       id: s.id,

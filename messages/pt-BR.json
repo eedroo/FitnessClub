@@ -804,7 +804,8 @@
         "rest": "Descanso médio",
         "session": "Tempo de sessão",
         "prs": "Recordes",
-        "kg": "{kg} kg"
+        "kg": "{kg} kg",
+        "top": "Carga máxima"
       }
     },
     "records": {
@@ -832,9 +833,8 @@
         "kg": "kg por rep",
         "top": "Carga máxima"
       },
-      "titleTotals": "Comparado com a última vez ({date})",
       "same": "igual",
-      "titleWorkout": "{name} · comparado com {date}"
+      "note": "▲▼ comparado com a última vez do mesmo treino ({dates})"
     },
     "progress": {
       "metric": "Métrica",
@@ -990,7 +990,9 @@
         }
       },
       "homeTitle": "Preencha seu perfil de treino",
-      "homeText": "Objetivos, nível, equipamento e dias: é a base das sugestões e da IA"
+      "homeText": "Objetivos, nível, equipamento e dias: é a base das sugestões e da IA",
+      "savedTitle": "Perfil salvo",
+      "savedText": "Voltando às configurações…"
     }
   },
   "shell": {
