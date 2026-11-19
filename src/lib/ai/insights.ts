@@ -29,6 +29,8 @@ export interface WeekInput {
   plannedDays: number | null;
   goals: string[];
   level: string;
+  /** Outras atividades (corrida, yoga…) da semana analisada e da anterior, com o nome na língua da pessoa. */
+  activities?: { weekStart: DateISO; name: string; minutes: number }[];
 }
 
 export interface WeekFacts {
@@ -50,6 +52,10 @@ export interface WeekFacts {
   prs: { exercise: string; kinds: string[]; weightKg: number | null; reps: number | null }[];
   topExercises: { exercise: string; sets: number; volumeKg: number; bestKg: number | null; prevBestKg: number | null }[];
   stalled: { exercise: string; weeks: number }[];
+  activities: number;
+  prevActivities: number;
+  activityMinutes: number;
+  activityTypes: string[];
 }
 
 const kg = (g: number) => Math.round(g / 100) / 10;
@@ -114,6 +120,10 @@ export function weekFacts(input: WeekInput, prevWeekStart: DateISO, historyWeeks
     prs,
     topExercises,
     stalled: stalled.slice(0, 4),
+    activities: (input.activities ?? []).filter((a) => a.weekStart === input.weekStart).length,
+    prevActivities: (input.activities ?? []).filter((a) => a.weekStart === prevWeekStart).length,
+    activityMinutes: (input.activities ?? []).filter((a) => a.weekStart === input.weekStart).reduce((n, a) => n + a.minutes, 0),
+    activityTypes: [...new Set((input.activities ?? []).filter((a) => a.weekStart === input.weekStart).map((a) => a.name))],
   };
 }
 
@@ -220,6 +230,7 @@ export const INSIGHT_SYSTEM = [
   'The app computed every number in FACTS; you only interpret them in light of the person\'s goals and level.',
   'Only write numbers that appear in FACTS (or simple counts up to 10). Never compute new numbers, percentages or estimates, never invent exercises or sessions.',
   'Compare with the previous week. "plannedDays" is how many days they planned per week (null = unknown).',
+  '"sessions" are strength sessions; "activities" are other workouts they logged (running, yoga, sports…, with "activityMinutes" and "activityTypes"): value them too.',
   '"stalled" lists exercises whose estimated max did not improve for several weeks: suggest one practical change (rep range, technique, rest, a variation).',
   'If the week had few or no sessions, be kind and suggest a realistic restart. Never give medical, diet or supplement advice, never comment on body weight or appearance.',
   'headline: one short sentence. summary: 2–3 sentences. wins: up to 3 bullets (empty if nothing to celebrate). improve: 1–3 concrete bullets. nextWeek: one actionable focus.',

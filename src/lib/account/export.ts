@@ -1,4 +1,4 @@
-import type { AiRequest, TrainingProfile, BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
+import type { Activity, AiRequest, TrainingProfile, BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
 import { fromDbDate } from '@/lib/dates';
 
 /**
@@ -14,6 +14,8 @@ export interface ExportSource {
     | 'name' | 'email' | 'locale' | 'theme' | 'timezone' | 'emailVerifiedAt' | 'termsAcceptedAt' | 'termsVersion' | 'privacyVersion'
     | 'wellbeingConsentAt' | 'createdAt' | 'onboardedAt' | 'plan' | 'planSince' | 'planExpiresAt'
   > & Partial<Pick<User, 'aiConsentAt'>>;
+  /** Outras atividades registadas (corrida, yoga…). */
+  activities?: Activity[];
   /** Pedidos à IA (programas propostos e retrospectivas), sem custos internos. */
   ai?: AiRequest[];
   /** Dias em que a pessoa abriu o app. */
@@ -60,6 +62,15 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
       planExpiresAt: iso(u.planExpiresAt),
     },
     activeDays: data.activeDays.map((a) => day(a.day)),
+    activities: (data.activities ?? []).map((a) => ({
+      type: a.type,
+      date: day(a.date),
+      startedAt: iso(a.startedAt),
+      durationSec: a.durationSec,
+      effort: a.effort,
+      distanceMeters: a.distanceMeters,
+      notes: a.notes,
+    })),
     ai: (data.ai ?? []).map((r) => ({
       kind: r.kind,
       status: r.status,

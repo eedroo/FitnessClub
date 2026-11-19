@@ -1,5 +1,5 @@
 import type { DateISO } from '@/lib/dates';
-import type { XpSession } from './xp';
+import { counts, type XpSession } from './xp';
 
 /**
  * Emblemas por feitos (Fase D). Puro: cada emblema tem a data em que foi ganho (a sessão ou a semana que cruzou
@@ -34,7 +34,7 @@ export interface BadgeState {
  * semanas é ganha no sábado da semana que a completa.
  */
 export function badgeStates(sessions: XpSession[], doneWeeks: DateISO[], weekEnd: (start: DateISO) => DateISO, consecutive: (a: DateISO, b: DateISO) => boolean): BadgeState[] {
-  const valid = sessions.filter((s) => s.sets > 0);
+  const valid = sessions.filter(counts);
   const totals = { sessions: valid.length, prs: 0, sets: 0 };
   const firstAt = { sessions: new Map<number, DateISO>(), prs: new Map<number, DateISO>(), sets: new Map<number, DateISO>() };
   let n = 0;

@@ -37,6 +37,17 @@ export function localNoonUtc(date: DateISO, tz: string): Date {
   return parse(date, tz).set({ hour: 12 }).toUTC().toJSDate();
 }
 
+/** Data e hora locais ("HH:mm") no fuso → instante UTC. */
+export function localDateTimeUtc(date: DateISO, time: string, tz: string): Date {
+  const [h, m] = time.split(':').map(Number);
+  return parse(date, tz).set({ hour: h, minute: m, second: 0, millisecond: 0 }).toUTC().toJSDate();
+}
+
+/** Instante UTC → hora local "HH:mm" no fuso. */
+export function localTimeOf(at: Date, tz: string): string {
+  return DateTime.fromJSDate(at, { zone: tz }).toFormat('HH:mm');
+}
+
 /** Limites [00:00, 24:00) locais em UTC. Pode durar 23 ou 25 h em dias de mudança de hora. */
 export function dayBoundsUtc(date: DateISO, tz: string): { start: Date; end: Date } {
   const start = parse(date, tz).startOf('day');

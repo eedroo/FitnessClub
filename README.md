@@ -74,3 +74,4 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Conta grátis: o cartão da IA mostra "Premium" e não pede nada; Definições › Privacidade › IA: retirar o consentimento.
 - [ ] Admin › IA: custo do mês, por tipo e por pessoa.
 - [ ] Gamificação: nível e XP em Treinos → Conquistas (de onde veio o XP, emblemas, níveis de força); +XP e emblemas novos no resumo da sessão; selo do nível de força ao lado do exercício durante o treino (com o peso registado).
+- [ ] Atividades: Treinos ou Sessões → "+ Registar atividade" → escolher (ex.: Corrida) → distância, esforço → aparece nas Sessões e no Dia; XP em Conquistas; editar e apagar.

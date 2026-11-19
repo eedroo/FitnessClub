@@ -83,6 +83,7 @@ model User {
   exerciseNotes     ExerciseNote[]
   trainingProfile   TrainingProfile?
   aiRequests        AiRequest[]
+  activities        Activity[]
 }
 
 enum AuthTokenType {
@@ -405,4 +406,24 @@ model AiRequest {
   @@unique([userId, kind, weekStart])
   @@index([userId, kind, createdAt])
   @@index([createdAt])
+}
+
+// ─── Atividades (tipos do app Saúde do iPhone): registo manual de outros treinos ────────────────────
+
+model Activity {
+  id             String   @id @default(cuid())
+  userId         String
+  type           String // chave de src/lib/activities/types.ts (ex.: running, yoga, swimming)
+  date           DateTime @db.Date // dia local do início
+  startedAt      DateTime
+  durationSec    Int
+  effort         Int? // 1–10 (como o "Esforço" do app Fitness)
+  distanceMeters Int? // só tipos com distância
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+  @@index([userId, startedAt])
 }

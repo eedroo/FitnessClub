@@ -7,6 +7,7 @@ import { addDays, fromDbDate, toDbDate, todayInTz, type DateISO } from '@/lib/da
 import { lastFinishedWeekStart, shiftWeek, weekStartOf } from '@/lib/weeks';
 import { getEntitlements } from '@/lib/entitlements/server';
 import { dbToAppLocale } from '@/i18n/locales';
+import { translatorFor } from '@/i18n/translator';
 import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { toProfileData, trainingProfileSchema } from '@/lib/fitness/profile';
@@ -191,6 +192,11 @@ export async function buildWeekFacts(userId: string, weekStart: DateISO): Promis
       sets: { orderBy: { order: 'asc' }, select: { exerciseId: true, reps: true, weightGrams: true, durationSec: true, prKinds: true } },
     },
   });
+  const acts = await db.activity.findMany({
+    where: { userId, date: { gte: toDbDate(prev), lte: toDbDate(to) } },
+    select: { type: true, date: true, durationSec: true },
+  });
+  const tAct = translatorFor(user?.locale ?? 'PT_PT');
   const exIds = [...new Set(sessions.flatMap((s) => s.sets.map((x) => x.exerciseId)))];
   const exercises = await db.exercise.findMany({ where: { id: { in: exIds } }, select: { id: true, names: true } });
   const names = Object.fromEntries(exercises.map((e) => [e.id, exerciseName(e.names as ExerciseNames, locale)]));
@@ -204,6 +210,7 @@ export async function buildWeekFacts(userId: string, weekStart: DateISO): Promis
       plannedDays: profile?.trainingDays.length || null,
       goals: profile?.goals ?? [],
       level: profile?.level ?? 'BEGINNER',
+      activities: acts.map((a) => ({ weekStart: weekStartOf(fromDbDate(a.date)), name: tAct(`activities.types.${a.type}`), minutes: Math.floor(a.durationSec / 60) })),
     },
     prev,
     history,
@@ -271,7 +278,8 @@ export async function dueInsights(now: Date = new Date()): Promise<{ userId: str
       db.aiRequest.findUnique({ where: { userId_kind_weekStart: { userId: u.id, kind: 'INSIGHT', weekStart: toDbDate(weekStart) } }, select: { id: true } }),
       db.fitnessSession.count({ where: { userId: u.id, endedAt: { not: null }, date: { gte: toDbDate(weekStart), lte: toDbDate(addDays(weekStart, 6)) } } }),
     ]);
-    if (!done && trained > 0) out.push({ userId: u.id, weekStart });
+    const acted = trained > 0 ? 0 : await db.activity.count({ where: { userId: u.id, date: { gte: toDbDate(weekStart), lte: toDbDate(addDays(weekStart, 6)) } } });
+    if (!done && trained + acted > 0) out.push({ userId: u.id, weekStart });
   }
   return out;
 }

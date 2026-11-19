@@ -3,31 +3,35 @@ import { db } from '@/lib/db';
 import { addDays, fromDbDate, todayInTz } from '@/lib/dates';
 import { shiftWeek, sundaysBetween, weekStartOf } from '@/lib/weeks';
 import { badgeStates, type BadgeId, type BadgeState } from './badges';
-import { sessionXp, xpSummary, type XpSession, type XpSummary } from './xp';
+import { counts, sessionXp, xpSummary, type XpSession, type XpSummary } from './xp';
 import { STRENGTH_STANDARDS, mergeBest, strengthLevel, type StrengthBest, type StrengthLevel } from './strength';
 
 /** Sessões terminadas da pessoa, em ordem, com nº de séries e de recordes (base de todo o XP e emblemas). */
 async function xpSessions(userId: string): Promise<XpSession[]> {
-  const [sessions, prs] = await Promise.all([
+  const [sessions, prs, activities] = await Promise.all([
     db.fitnessSession.findMany({
       where: { userId, endedAt: { not: null } },
       orderBy: { startedAt: 'asc' },
-      select: { id: true, date: true, _count: { select: { sets: true } } },
+      select: { id: true, date: true, startedAt: true, _count: { select: { sets: true } } },
     }),
     db.sessionSet.groupBy({ by: ['sessionId'], where: { userId, NOT: { prKinds: { isEmpty: true } } }, _count: { _all: true } }),
+    db.activity.findMany({ where: { userId }, select: { id: true, date: true, startedAt: true, durationSec: true } }),
   ]);
   const prBy = new Map(prs.map((p) => [p.sessionId, p._count._all]));
-  return sessions.map((s) => {
-    const date = fromDbDate(s.date);
-    return { id: s.id, date, weekStart: weekStartOf(date), sets: s._count.sets, prs: prBy.get(s.id) ?? 0 };
-  });
+  // Sessões e atividades por ordem cronológica (as atividades contam para a semana e dão XP pelos minutos).
+  return [
+    ...sessions.map((s) => ({ at: s.startedAt.getTime(), id: s.id, date: fromDbDate(s.date), sets: s._count.sets, prs: prBy.get(s.id) ?? 0 })),
+    ...activities.map((a) => ({ at: a.startedAt.getTime(), id: a.id, date: fromDbDate(a.date), sets: 0, prs: 0, activityMinutes: Math.floor(a.durationSec / 60) })),
+  ]
+    .sort((a, b) => a.at - b.at)
+    .map(({ at: _at, ...x }) => ({ ...x, weekStart: weekStartOf(x.date) }));
 }
 
 const consecutive = (a: string, b: string) => shiftWeek(b, 1) === a;
 const weekEnd = (start: string) => addDays(start, 6);
 
 function compute(sessions: XpSession[], today: string, plannedDays: number | null) {
-  const first = sessions.find((s) => s.sets > 0);
+  const first = sessions.find(counts);
   const weeks = first ? sundaysBetween(first.weekStart, weekStartOf(today)) : [];
   const summary = xpSummary(sessions, weeks, plannedDays);
   const badges = badgeStates(sessions, summary.weeks.weeks, weekEnd, consecutive);

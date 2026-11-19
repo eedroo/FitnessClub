@@ -299,3 +299,8 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **StrengthTier** — selo pequeno do nível de força (bolinha na cor do nível + nome); `compact` ao lado do nome do exercício na sessão. `mg-tier`.
 - **SessionRewards** — no resumo da sessão: +XP, subida de nível e emblemas novos. `mg-rewards`.
 - Página `/achievements`: de onde veio o XP (lista agrupada), emblemas e níveis de força (só a pessoa vê; `mg-game__strength`).
+
+### Atividades (`src/components/activities/`, lógica em `src/lib/activities/`, rotas `/activities/new`, `/activities/[id]`; classes em `activities.css`)
+- **ActivityIcon** — ícone de linha (lucide) do grupo da atividade num círculo azul. `mg-activity-icon`.
+- **ActivityForm** (client) — tipo (lista do app Saúde com pesquisa e grupos, `mg-activity-picker`), dia e hora, duração, esforço 1–10, distância quando faz sentido, notas; editar e apagar. `mg-activity-form`.
+- **ActivityRow** — uma atividade nas listas (Sessões, Dia), na linha agrupada das sessões. `mg-activity-row`.

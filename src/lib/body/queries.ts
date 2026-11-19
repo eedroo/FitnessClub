@@ -1,4 +1,5 @@
 import 'server-only';
+import { activitiesOn, type ActivityListItem } from '@/lib/activities/queries';
 import { db } from '@/lib/db';
 import { addDays, fromDbDate, toDbDate, todayInTz, type DateISO } from '@/lib/dates';
 import { weekDays, weekStartOf } from '@/lib/weeks';
@@ -71,12 +72,14 @@ export interface DayPageData {
   comparison: { current: SessionTotals; previous: SessionTotals; dates: DateISO[] } | null;
   details: DaySetDetail[];
   sessions: { id: string; name: string | null; startedAt: string; durationSec: number | null; sets: number }[];
+  /** Outras atividades do dia (corrida, yoga…), registadas à mão. */
+  activities: ActivityListItem[];
 }
 
 export async function getDayData(userId: string, date: DateISO, locale: AppLocale): Promise<DayPageData> {
   const tz = await userTz(userId);
   const days = weekDays(weekStartOf(date));
-  const [sessions, weekSessions] = await Promise.all([
+  const [sessions, weekSessions, activities, weekActivities] = await Promise.all([
     db.fitnessSession.findMany({
       where: { userId, date: toDbDate(date), sets: { some: {} } },
       orderBy: { startedAt: 'asc' },
@@ -86,10 +89,12 @@ export async function getDayData(userId: string, date: DateISO, locale: AppLocal
       where: { userId, date: { gte: toDbDate(days[0]!), lte: toDbDate(days[6]!) }, sets: { some: {} } },
       select: { date: true },
     }),
+    activitiesOn(userId, date),
+    db.activity.findMany({ where: { userId, date: { gte: toDbDate(days[0]!), lte: toDbDate(days[6]!) } }, select: { date: true } }),
   ]);
   const previous = await Promise.all(sessions.map((s) => previousSessionOf(userId, s)));
   const vals = (x: { reps: number | null; weightGrams: number | null; durationSec: number | null }) => ({ reps: x.reps ?? undefined, weightGrams: x.weightGrams ?? undefined, durationSec: x.durationSec ?? undefined });
-  const trained = new Set(weekSessions.map((s) => fromDbDate(s.date)));
+  const trained = new Set([...weekSessions, ...weekActivities].map((s) => fromDbDate(s.date)));
   const details = new Map<string, DaySetDetail>();
   for (const s of sessions) {
     for (const x of s.sets) {
@@ -125,6 +130,7 @@ export async function getDayData(userId: string, date: DateISO, locale: AppLocal
       durationSec: s.endedAt ? Math.round((s.endedAt.getTime() - s.startedAt.getTime()) / 1000) : null,
       sets: s.sets.length,
     })),
+    activities,
   };
 }
 
@@ -136,7 +142,12 @@ export async function trainedDates(userId: string): Promise<DateISO[]> {
     distinct: ['date'],
     orderBy: { date: 'desc' },
   });
-  return rows.map((r) => fromDbDate(r.date));
+  const acts = await db.activity.findMany({
+    where: { userId, startedAt: { gte: new Date(Date.now() - 730 * 86_400_000) } },
+    select: { date: true },
+    distinct: ['date'],
+  });
+  return [...new Set([...rows, ...acts].map((r) => fromDbDate(r.date)))].sort().reverse();
 }
 
 // ─── Corpo: mapa muscular ─────────────────────────────────────────────────────────────────────────

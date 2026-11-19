@@ -11,11 +11,30 @@ import { SetDetails } from './SetDetails';
 import { SessionRow } from './SessionSummary';
 import { StartSessionButton } from './StartSessionButton';
 import { compareTotals } from '@/lib/fitness/progress';
+import Link from 'next/link';
+import { ActivityRow } from '@/components/activities/ActivityRow';
 
 /** Tab Dia: faixa da semana, métricas, detalhe das séries e sessões; sem treino, "Dia de descanso". */
 export async function BodyDayView({ data, trained }: { data: DayPageData; trained: DateISO[] }) {
-  const [t, raw] = await Promise.all([getTranslations('fitness.day'), getLocale()]);
+  const [t, ta, raw] = await Promise.all([getTranslations('fitness.day'), getTranslations('activities'), getLocale()]);
   const locale = isAppLocale(raw) ? raw : 'pt-PT';
+  const activities = data.activities.length ? (
+    <>
+      <h2 className="mg-body-section-title">{ta('ofDay')}</h2>
+      <ul className="mg-session-list">
+        {data.activities.map((a) => (
+          <li key={a.id}>
+            <ActivityRow activity={a} locale={locale} showDate={false} />
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : null;
+  const addActivity = (
+    <Link href={data.date === data.today ? '/activities/new' : `/activities/new?date=${data.date}`} className="mg-btn mg-btn--subtle mg-btn--block">
+      {ta('add')}
+    </Link>
+  );
   return (
     <>
       <BodyHeader title={data.date === data.today ? t('today') : formatLongDate(data.date, locale)} />
@@ -41,11 +60,14 @@ export async function BodyDayView({ data, trained }: { data: DayPageData; traine
                 </li>
               ))}
             </ul>
+            {activities}
+            {addActivity}
           </>
         ) : (
           <>
-            <p className="mg-body-empty">{t('rest')}</p>
+            {activities ?? <p className="mg-body-empty">{t('rest')}</p>}
             {data.date === data.today && <StartSessionButton workoutId={null} label={t('start')} />}
+            {addActivity}
           </>
         )}
       </div>

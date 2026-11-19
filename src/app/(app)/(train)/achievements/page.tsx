@@ -36,6 +36,7 @@ export default async function AchievementsPage() {
     { key: 'sessions', n: summary.sessions, xp: summary.breakdown.sessions },
     { key: 'sets', n: summary.sets, xp: summary.breakdown.sets },
     { key: 'prs', n: summary.prs, xp: summary.breakdown.prs },
+    { key: 'activities', n: summary.activities, xp: summary.breakdown.activities },
     { key: 'weeks', n: summary.weeks.weeks.length, xp: summary.breakdown.weeks },
   ] as const;
 

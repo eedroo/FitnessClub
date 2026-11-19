@@ -21,9 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Treinos: programas, os meus exercícios e um treino livre (as boas-vindas são o onboarding, em `/welcome`). */
 export default async function BodyHome() {
   const { userId } = await bodyPage();
-  const [t, ti, programs, custom, profile, ai, insight, game] = await Promise.all([
+  const [t, ti, ta, programs, custom, profile, ai, insight, game] = await Promise.all([
     getTranslations('fitness'),
     getTranslations('ai.insights'),
+    getTranslations('activities'),
     listPrograms(userId),
     countCustomExercises(userId),
     getTrainingProfile(userId),
@@ -65,6 +66,9 @@ export default async function BodyHome() {
         <h2 className="mg-body-section-title">{t('home.programs')}</h2>
         <ProgramList programs={programs} />
         <StartSessionButton workoutId={null} label={t('home.freeWorkout')} variant="subtle" />
+        <Link href="/activities/new" className="mg-btn mg-btn--subtle mg-btn--block">
+          {ta('add')}
+        </Link>
       </div>
     </>
   );

@@ -1,0 +1,94 @@
+/* Atividades (tipos do app Saúde): ícone, lista para escolher o tipo, formulário e linha nas listas */
+
+.mg-activity-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--highlight-soft);
+  color: var(--highlight);
+}
+
+.mg-activity-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mg-activity-picker__row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--space-3);
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mg-activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mg-activity-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.mg-activity-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-activity-form__field .mg-input {
+  width: 100%;
+  min-width: 0;
+  color: var(--text-primary);
+}
+
+.mg-activity-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.mg-activity-form__effort {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-activity-form__effort legend {
+  float: left;
+  padding: 0;
+  font-size: var(--text-footnote);
+  color: var(--text-secondary);
+}
+
+.mg-activity-form__effort input[type='range'] {
+  width: 100%;
+  accent-color: var(--highlight);
+}
+
+.mg-activity-form__effort-value {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-activity-row {
+  gap: var(--space-3);
+}

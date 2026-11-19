@@ -40,7 +40,7 @@ describe('XP e níveis', () => {
   it('resumo soma sessões, séries, recordes e semanas', () => {
     const weeks = ['2026-11-01', '2026-11-08'];
     const r = xpSummary([s('a', weeks[0]!, 10, 1), s('b', weeks[0]!, 10, 0)], weeks, 3);
-    expect(r.breakdown).toEqual({ sessions: 100, sets: 40, prs: 15, weeks: 100 });
+    expect(r.breakdown).toEqual({ sessions: 100, sets: 40, prs: 15, activities: 0, weeks: 100 });
     expect(r.xp).toBe(255);
     expect(r.level).toBe(2);
   });
@@ -82,5 +82,17 @@ describe('níveis de força', () => {
   it('abaixo do bronze e no diamante', () => {
     expect(strengthLevel('Barbell_Bench_Press_-_Medium_Grip', { e1rmGrams: 20000, maxReps: 5 }, 80000)!.tier).toBeNull();
     expect(strengthLevel('Barbell_Bench_Press_-_Medium_Grip', { e1rmGrams: 120000, maxReps: 5 }, 80000)).toMatchObject({ tier: 'diamond', next: null, progress: 1 });
+  });
+});
+
+describe('atividades no XP', () => {
+  it('1 XP por minuto até 90; contam para a semana e para os treinos, sem séries nem recordes', () => {
+    expect(sessionXp({ sets: 0, prs: 0, activityMinutes: 45 })).toBe(45);
+    expect(sessionXp({ sets: 0, prs: 0, activityMinutes: 200 })).toBe(90);
+    const w = '2026-11-08';
+    const run = { id: 'r', weekStart: w, date: w, sets: 0, prs: 0, activityMinutes: 30 };
+    const r = xpSummary([s('a', w, 10, 0), run], [w], 2);
+    expect(r.breakdown).toEqual({ sessions: 50, sets: 20, prs: 0, activities: 30, weeks: 100 });
+    expect([r.sessions, r.activities]).toEqual([1, 1]);
   });
 });

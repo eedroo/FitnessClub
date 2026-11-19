@@ -111,3 +111,9 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Nível de força (interno, só a pessoa vê):** Bronze → Prata → Ouro → Platina → Diamante. Com carga: 1RM estimado ÷ peso do corpo mais recente (só com o consentimento de saúde); com o peso do corpo: melhor nº de repetições numa série. Só exercícios com padrão (`STRENGTH_STANDARDS`): básicos com barra, alguns com halteres (carga registada = soma dos dois halteres), barra fixa, flexões e paralelas. **Um padrão único para todas as pessoas, sem pedir género**, com a régua baixa o bastante para toda a gente subir (ex.: supino com barra 0,4 / 0,6 / 0,8 / 1,0 / 1,25 × o peso).
 - **Na sessão:** selo do nível de força ao lado do nome do exercício, recalculado no cliente logo a seguir a cada série. O resumo da sessão mostra o XP ganho, a subida de nível e os emblemas novos.
 - Mostrar os níveis de força no perfil público fica para a Fase C (desligado por defeito).
+
+## Atividades (pedido da dona do projecto)
+- **Outros treinos, como no app Saúde do iPhone:** ~80 tipos em 13 grupos (força, cardio, caminhada e corrida, ciclismo, água, corpo e mente, dança, lutas, desportos de equipa, raquetes, neve, ar livre, outros), registados à mão em `Activity`: dia e hora de início, duração, esforço 1–10 (leve, moderado, difícil, máximo) e distância nos tipos que a têm.
+- Aparecem nas Sessões (misturadas com as sessões, por data), no Dia (e contam como dia com treino) e na retrospectiva semanal da IA. Até um ano para trás, nunca no futuro.
+- **XP:** 1 por minuto (até 90); contam como treino para a semana cumprida e para os emblemas de treinos; não dão recordes nem nível de força.
+- Entram na exportação e apagam-se com a conta.

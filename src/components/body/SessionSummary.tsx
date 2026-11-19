@@ -4,6 +4,8 @@ import { formatDayMonth, formatLongDate, formatMonthYear } from '@/lib/dates';
 import { formatGramsAsKg } from '@/lib/weight';
 import { isAppLocale, intlLocale } from '@/i18n/locales';
 import type { SessionListItem, SessionSummary as Summary } from '@/lib/fitness/queries';
+import type { ActivityListItem } from '@/lib/activities/queries';
+import { ActivityRow } from '@/components/activities/ActivityRow';
 import { formatClock } from '@/lib/fitness/session';
 import { compareTotals, compareWithPrevious, summarize } from '@/lib/fitness/progress';
 import { DayMetrics } from './DayMetrics';
@@ -92,14 +94,19 @@ export async function SessionRow({ session }: { session: SessionListItem }) {
   );
 }
 
-/** Sessões agrupadas por mês, mais recentes primeiro. */
-export async function SessionList({ sessions }: { sessions: SessionListItem[] }) {
+/** Sessões e atividades agrupadas por mês, mais recentes primeiro. */
+export async function SessionList({ sessions, activities = [] }: { sessions: SessionListItem[]; activities?: ActivityListItem[] }) {
   const [t, { locale }] = await Promise.all([getTranslations('fitness.sessions'), localeTools()]);
-  if (!sessions.length) return <p className="mg-body-empty">{t('empty')}</p>;
-  const months = new Map<string, SessionListItem[]>();
-  for (const s of sessions) {
-    const k = s.date.slice(0, 7);
-    months.set(k, [...(months.get(k) ?? []), s]);
+  if (!sessions.length && !activities.length) return <p className="mg-body-empty">{t('empty')}</p>;
+  type Entry = { key: string; date: string; startedAt: string; node: React.ReactNode };
+  const entries: Entry[] = [
+    ...sessions.map((s) => ({ key: `s-${s.id}`, date: s.date, startedAt: s.startedAt, node: <SessionRow session={s} /> })),
+    ...activities.map((a) => ({ key: `a-${a.id}`, date: a.date, startedAt: a.startedAt, node: <ActivityRow activity={a} locale={locale} /> })),
+  ].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+  const months = new Map<string, Entry[]>();
+  for (const e of entries) {
+    const k = e.date.slice(0, 7);
+    months.set(k, [...(months.get(k) ?? []), e]);
   }
   return (
     <>
@@ -107,10 +114,8 @@ export async function SessionList({ sessions }: { sessions: SessionListItem[] })
         <section key={k} aria-label={formatMonthYear(Number(k.slice(0, 4)), Number(k.slice(5, 7)), locale)}>
           <h2 className="mg-body-section-title">{formatMonthYear(Number(k.slice(0, 4)), Number(k.slice(5, 7)), locale)}</h2>
           <ul className="mg-session-list">
-            {list.map((s) => (
-              <li key={s.id}>
-                <SessionRow session={s} />
-              </li>
+            {list.map((e) => (
+              <li key={e.key}>{e.node}</li>
             ))}
           </ul>
         </section>

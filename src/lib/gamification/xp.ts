@@ -20,9 +20,16 @@ export interface XpSession {
   date: DateISO;
   sets: number;
   prs: number; // séries com recorde
+  /** Atividade (corrida, yoga…): minutos; dá 1 XP por minuto (até 90) e conta para a semana, sem séries nem recordes. */
+  activityMinutes?: number;
 }
 
-export function sessionXp(s: Pick<XpSession, 'sets' | 'prs'>): number {
+/** Conta como treino: sessão com séries ou atividade com pelo menos 1 minuto. */
+export const counts = (s: Pick<XpSession, 'sets' | 'activityMinutes'>) => s.sets > 0 || (s.activityMinutes ?? 0) > 0;
+export const ACTIVITY_XP_CAP = 90;
+
+export function sessionXp(s: Pick<XpSession, 'sets' | 'prs' | 'activityMinutes'>): number {
+  if (s.activityMinutes != null) return Math.min(Math.max(0, Math.floor(s.activityMinutes)), ACTIVITY_XP_CAP);
   if (s.sets <= 0) return 0;
   return XP.session + Math.min(s.sets, XP.setCap) * XP.set + Math.min(s.prs, XP.prCap) * XP.pr;
 }
@@ -62,7 +69,7 @@ export interface WeekRun {
 /** Semanas cumpridas e sequências. `weekStarts` são todos os domingos desde a primeira sessão até à semana em curso. */
 export function weekRuns(sessions: XpSession[], weekStarts: DateISO[], goal: number): WeekRun {
   const count = new Map<DateISO, number>();
-  for (const s of sessions) if (s.sets > 0) count.set(s.weekStart, (count.get(s.weekStart) ?? 0) + 1);
+  for (const s of sessions) if (counts(s)) count.set(s.weekStart, (count.get(s.weekStart) ?? 0) + 1);
   const done = weekStarts.map((w) => (count.get(w) ?? 0) >= goal);
   let best = 0;
   let run = 0;
@@ -89,23 +96,28 @@ export interface XpSummary {
   sets: number;
   prs: number;
   weeks: WeekRun;
-  breakdown: { sessions: number; sets: number; prs: number; weeks: number };
+  activities: number;
+  breakdown: { sessions: number; sets: number; prs: number; activities: number; weeks: number };
 }
 
 export function xpSummary(sessions: XpSession[], weekStarts: DateISO[], plannedDays: number | null): XpSummary {
-  const valid = sessions.filter((s) => s.sets > 0);
+  const valid = sessions.filter(counts);
+  const strength = valid.filter((s) => s.activityMinutes == null);
+  const acts = valid.filter((s) => s.activityMinutes != null);
   const weeks = weekRuns(valid, weekStarts, weekGoal(plannedDays));
   const breakdown = {
-    sessions: valid.length * XP.session,
-    sets: valid.reduce((n, s) => n + Math.min(s.sets, XP.setCap) * XP.set, 0),
-    prs: valid.reduce((n, s) => n + Math.min(s.prs, XP.prCap) * XP.pr, 0),
+    sessions: strength.length * XP.session,
+    sets: strength.reduce((n, s) => n + Math.min(s.sets, XP.setCap) * XP.set, 0),
+    prs: strength.reduce((n, s) => n + Math.min(s.prs, XP.prCap) * XP.pr, 0),
+    activities: acts.reduce((n, s) => n + sessionXp(s), 0),
     weeks: weeks.weeks.length * XP.week,
   };
-  const xp = breakdown.sessions + breakdown.sets + breakdown.prs + breakdown.weeks;
+  const xp = breakdown.sessions + breakdown.sets + breakdown.prs + breakdown.activities + breakdown.weeks;
   return {
     xp,
     ...levelOf(xp),
-    sessions: valid.length,
+    activities: acts.length,
+    sessions: strength.length,
     sets: valid.reduce((n, s) => n + s.sets, 0),
     prs: valid.reduce((n, s) => n + s.prs, 0),
     weeks,
