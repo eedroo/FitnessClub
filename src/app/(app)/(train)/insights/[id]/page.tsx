@@ -5,6 +5,7 @@ import { db } from '@/lib/db';
 import { addDays, formatDateRange, fromDbDate } from '@/lib/dates';
 import { bodyPage } from '@/lib/fitness/page';
 import { insightSchema, type WeekFacts } from '@/lib/ai/insights';
+import { AI_JOB_TIMEOUT_MS } from '@/lib/ai/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { MagicIcon } from '@/components/ui/MagicIcon';
 import { AiPendingRefresh } from '@/components/ai/AiPendingRefresh';
@@ -23,7 +24,7 @@ export default async function InsightPage({ params }: { params: { id: string } }
     db.aiRequest.findFirst({ where: { id: params.id, userId, kind: 'INSIGHT' }, select: { id: true, status: true, weekStart: true, facts: true, result: true, createdAt: true } }),
   ]);
   if (!req || !req.weekStart) notFound();
-  if (req.status === 'PENDING' && Date.now() - req.createdAt.getTime() > 4 * 60_000) {
+  if (req.status === 'PENDING' && Date.now() - req.createdAt.getTime() > AI_JOB_TIMEOUT_MS) {
     await db.aiRequest.updateMany({ where: { id: req.id, status: 'PENDING' }, data: { status: 'FAILED', error: 'sem resposta do job', finishedAt: new Date() } });
     req.status = 'FAILED';
   }

@@ -5,6 +5,7 @@ import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
 import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { aiProgramSchema } from '@/lib/ai/program';
+import { AI_JOB_TIMEOUT_MS } from '@/lib/ai/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { MagicIcon } from '@/components/ui/MagicIcon';
 import { AiPendingRefresh } from '@/components/ai/AiPendingRefresh';
@@ -24,8 +25,8 @@ export default async function AiProgramPage({ params }: { params: { id: string }
     db.aiRequest.findFirst({ where: { id: params.id, userId, kind: 'PROGRAM' }, select: { id: true, status: true, result: true, createdAt: true } }),
   ]);
   if (!req || req.status === 'DISCARDED') notFound();
-  // Job que nunca respondeu (Inngest sem chegar à app, por exemplo): ao fim de 4 min passa a falhado.
-  if (req.status === 'PENDING' && Date.now() - req.createdAt.getTime() > 4 * 60_000) {
+  // Job que nunca respondeu (Inngest sem chegar à app, por exemplo): ao fim de 75 s passa a falhado.
+  if (req.status === 'PENDING' && Date.now() - req.createdAt.getTime() > AI_JOB_TIMEOUT_MS) {
     await db.aiRequest.updateMany({ where: { id: req.id, status: 'PENDING' }, data: { status: 'FAILED', error: 'sem resposta do job', finishedAt: new Date() } });
     req.status = 'FAILED';
   }

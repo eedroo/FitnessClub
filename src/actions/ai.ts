@@ -10,7 +10,7 @@ import { lastFinishedWeekStart } from '@/lib/weeks';
 import { getEntitlements } from '@/lib/entitlements/server';
 import { aiProgramSchema } from '@/lib/ai/program';
 import { trainingProfileSchema, type TrainingProfileData, type TrainingProfileInput } from '@/lib/fitness/profile';
-import { buildWeekFacts, dispatchAi, getAiAccess, programQuota, runInsight, runProgramRequest } from '@/lib/ai/server';
+import { AI_JOB_TIMEOUT_MS, buildWeekFacts, dispatchAi, getAiAccess, programQuota, runInsight, runProgramRequest } from '@/lib/ai/server';
 
 /**
  * Acções da IA (Fase B). A IA só corre em jobs do Inngest; aqui só se criam pedidos, se guarda o resultado e o
@@ -85,7 +85,7 @@ export async function retryAiProgram(input: string): Promise<Result<{ id: string
 async function startProgram(id: string, brief: TrainingProfileData): Promise<Result<{ id: string }>> {
   const blocked = await ready(id);
   if (blocked) return fail(blocked);
-  const pending = await db.aiRequest.findFirst({ where: { userId: id, kind: 'PROGRAM', status: 'PENDING', createdAt: { gte: new Date(Date.now() - 4 * 60_000) } }, select: { id: true } });
+  const pending = await db.aiRequest.findFirst({ where: { userId: id, kind: 'PROGRAM', status: 'PENDING', createdAt: { gte: new Date(Date.now() - AI_JOB_TIMEOUT_MS) } }, select: { id: true } });
   if (pending) return { ok: true, data: { id: pending.id } };
   if (!(await programQuota(id)).allowed) return fail('ai.errors.limit');
   await db.trainingProfile.upsert({ where: { userId: id }, create: { userId: id, ...brief }, update: brief });

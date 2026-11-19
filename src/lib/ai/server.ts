@@ -17,6 +17,12 @@ import { AiError, costMicroUsd, generateJson, hasAi, type AiCall } from './gemin
 import { AI_PROGRAM_RESPONSE_SCHEMA, PROGRAM_SYSTEM, checkAiProgram, fakeProgram, pickCandidates, programPrompt, type CandidateExercise } from './program';
 import { INSIGHT_RESPONSE_SCHEMA, INSIGHT_SYSTEM, checkInsight, fakeInsight, insightPrompt, weekFacts, type FactSession, type WeekFacts } from './insights';
 
+/**
+ * Um pedido à IA leva normalmente 10–30 s. Sem resposta ao fim deste tempo (o Inngest não chegou à app, por
+ * exemplo), passa a falhado e a pessoa pode pedir outro.
+ */
+export const AI_JOB_TIMEOUT_MS = 75_000;
+
 /** Limites por pessoa (custo): programas por dia e por mês. As retrospectivas são uma por semana. */
 export const PROGRAM_LIMIT_DAY = 3;
 export const PROGRAM_LIMIT_MONTH = 15;
@@ -35,11 +41,11 @@ export async function getAiAccess(userId: string): Promise<AiAccess> {
 /** Pedidos que falharam ou ficaram presos não contam (a pessoa não recebeu nada); os admins (ADMIN_EMAILS) não têm limite, para testar. */
 export async function programQuota(userId: string): Promise<{ day: number; month: number; allowed: boolean }> {
   const now = new Date();
-  // Contam os que deram resultado e os que ainda estão a correr (até 4 min); presos e falhados não.
+  // Contam os que deram resultado e os que ainda estão a correr; presos e falhados não.
   const counted = {
     userId,
     kind: 'PROGRAM' as const,
-    OR: [{ status: { in: ['DONE', 'APPLIED', 'DISCARDED'] as ('DONE' | 'APPLIED' | 'DISCARDED')[] } }, { status: 'PENDING' as const, createdAt: { gte: new Date(now.getTime() - 4 * 60_000) } }],
+    OR: [{ status: { in: ['DONE', 'APPLIED', 'DISCARDED'] as ('DONE' | 'APPLIED' | 'DISCARDED')[] } }, { status: 'PENDING' as const, createdAt: { gte: new Date(now.getTime() - AI_JOB_TIMEOUT_MS) } }],
   };
   const [day, month, user] = await Promise.all([
     db.aiRequest.count({ where: { ...counted, createdAt: { gte: new Date(now.getTime() - 24 * 3600_000) } } }),
