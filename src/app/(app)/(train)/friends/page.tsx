@@ -18,10 +18,10 @@ export default async function FriendsPage({ searchParams }: { searchParams: { q?
   await ensureProfile(userId);
   const q = (searchParams.q ?? '').slice(0, 40);
   const [t, data, found] = await Promise.all([getTranslations('social'), getFriendsPage(userId), q ? searchProfiles(userId, q) : Promise.resolve([])]);
-  const row = (p: { handle: string; displayName: string }, extra?: React.ReactNode) => (
+  const row = (p: { handle: string; displayName: string; avatarUrl: string | null }, extra?: React.ReactNode) => (
     <li key={p.handle} className="mg-program-row mg-friend-row">
       <Link href={`/u/${p.handle}`} className="mg-friend-row__who">
-        <Avatar name={p.displayName} size={36} />
+        <Avatar name={p.displayName} url={p.avatarUrl} size={36} />
         <span className="mg-program-row__text">
           <span className="mg-program-row__name">{p.displayName}</span>
           <span className="mg-program-row__meta">@{p.handle}</span>

@@ -30,7 +30,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             {data.comments.map((c) => (
               <li key={c.id} className="mg-comment">
                 <Link href={`/u/${c.author.handle}`} aria-label={c.author.displayName}>
-                  <Avatar name={c.author.displayName} size={32} />
+                  <Avatar name={c.author.displayName} url={c.author.avatarUrl} size={32} />
                 </Link>
                 <div className="mg-comment__body">
                   <p className="mg-comment__meta">

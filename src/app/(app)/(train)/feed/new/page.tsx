@@ -38,7 +38,7 @@ export default async function NewPostPage({ searchParams }: { searchParams: { sh
     <>
       <BodyHeader title={t('title')} backHref="/feed" backLabel={ts('feed')} historyBack />
       <div className="mg-body-shell__main">
-        <PostComposer options={options} initialAttach={share} />
+        <PostComposer userId={userId} options={options} initialAttach={share} />
       </div>
     </>
   );

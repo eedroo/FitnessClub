@@ -28,7 +28,7 @@ export default async function NoticesPage() {
               <li key={n.id}>
                 <Link href={n.postId ? `/p/${n.postId}` : n.kind === 'FRIEND_REQUEST' ? '/friends' : `/u/${n.actor.handle}`} className="mg-program-row mg-notice">
                   {!n.read && <span className="mg-ai-dot" aria-label={t('new')} />}
-                  <Avatar name={n.actor.displayName} size={36} />
+                  <Avatar name={n.actor.displayName} url={n.actor.avatarUrl} size={36} />
                   <span className="mg-program-row__text">
                     <span className="mg-program-row__name">{t(`kinds.${n.kind}`, { name: n.actor.displayName })}</span>
                     <span className="mg-program-row__meta">{relTime(n.createdAt, locale)}</span>

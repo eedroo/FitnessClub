@@ -6,29 +6,33 @@ import { useTranslations } from 'next-intl';
 import { createPost } from '@/actions/social';
 import { Button } from '@/components/ui/Button';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { PhotoPicker } from './PhotoPicker';
 
 export interface ShareOption {
   value: string; // "session:<id>" | "activity:<id>"
   label: string;
 }
 
-/** Escrever um post: texto, treino a partilhar (as últimas sessões e atividades) e para quem (público ou só amigos). */
-export function PostComposer({ options, initialAttach = '' }: { options: ShareOption[]; initialAttach?: string }) {
+/** Escrever um post: texto, fotos (até 4), treino a partilhar (as últimas sessões e atividades) e para quem (público ou só amigos). */
+export function PostComposer({ userId, options, initialAttach = '' }: { userId: string; options: ShareOption[]; initialAttach?: string }) {
   const t = useTranslations('social.composer');
   const te = useTranslations();
   const router = useRouter();
   const [text, setText] = useState('');
   const [attach, setAttach] = useState(initialAttach);
   const [visibility, setVisibility] = useState<'PUBLIC' | 'FRIENDS'>('FRIENDS');
+  const [images, setImages] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const publish = () =>
     start(async () => {
       const [kind, id] = attach.split(':');
-      const res = await createPost({ text, visibility, sessionId: kind === 'session' ? id : null, activityId: kind === 'activity' ? id : null });
+      const res = await createPost({ text, visibility, images, sessionId: kind === 'session' ? id : null, activityId: kind === 'activity' ? id : null });
       if (!res.ok) return setError(te(res.error));
       setText('');
       setAttach('');
+      setImages([]);
       setError(null);
       router.replace('/feed');
       router.refresh();
@@ -36,6 +40,7 @@ export function PostComposer({ options, initialAttach = '' }: { options: ShareOp
   return (
     <section className="mg-composer" aria-label={t('title')}>
       <textarea className="mg-input mg-composer__text" rows={3} maxLength={2000} placeholder={t('placeholder')} value={text} onChange={(e) => setText(e.target.value)} />
+      <PhotoPicker userId={userId} value={images} onChange={setImages} onBusy={setUploading} />
       {options.length > 0 && (
         <label className="mg-activity-form__field">
           {t('attach')}
@@ -64,7 +69,7 @@ export function PostComposer({ options, initialAttach = '' }: { options: ShareOp
           {error}
         </p>
       )}
-      <Button block loading={pending} disabled={!text.trim() && !attach} onClick={publish}>
+      <Button block loading={pending} disabled={uploading || (!text.trim() && !attach && !images.length)} onClick={publish}>
         {t('publish')}
       </Button>
     </section>

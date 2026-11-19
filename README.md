@@ -28,6 +28,7 @@ As variáveis vivem só na Vercel (Project → Settings → Environment Variable
 3. **Variáveis** (Production; Preview se quiser):
    - `AUTH_SECRET` (novo: `npx auth secret`); `AUTH_URL` e `APP_URL` só quando houver domínio próprio (sem elas, na Vercel usa-se o domínio `*.vercel.app` de produção);
    - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (par novo: `npx web-push generate-vapid-keys`);
+   - `BLOB_READ_WRITE_TOKEN` (Secret; Storage → Blob, acesso Public, ligado ao projecto) para as fotos;
    - `GEMINI_API_KEY` (Secret; Google AI Studio). Por agora no nível gratuito, como diz a Política (secção 4); ao activar a faturação, mudar esse parágrafo e subir a versão dos documentos;
    - `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` (app novo no Inngest, endpoint `https://<domínio>/api/inngest`; ou a integração Inngest da Vercel);
    - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO` (domínio verificado no Resend);
@@ -76,3 +77,4 @@ passam se o consentimento de dados de saúde estiver dado no FitnessClub.
 - [ ] Gamificação: nível e XP em Treinos → Conquistas (de onde veio o XP, emblemas, níveis de força); +XP e emblemas novos no resumo da sessão; selo do nível de força ao lado do exercício durante o treino (com o peso registado).
 - [ ] Atividades: Treinos ou Sessões → "+ Registar atividade" → escolher (ex.: Corrida) → distância, esforço → aparece nas Sessões e no Dia; XP em Conquistas; editar e apagar.
 - [ ] Comunidade: Feed → entrar (@, nome, regras) → publicar um treino (só amigos / público) → outra conta pede amizade, gosta e comenta → avisos no sino → aceitar → bloquear e denunciar → Admin › Denúncias esconde.
+- [ ] Fotos: + no Feed → até 4 fotos → publicar; foto de perfil em Eu → Editar perfil; apagar a publicação apaga as fotos.

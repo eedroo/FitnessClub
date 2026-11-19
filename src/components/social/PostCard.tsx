@@ -27,7 +27,7 @@ export function PostCard({ post, locale, link = true }: { post: PostView; locale
     <article className="mg-post" aria-label={t('by', { name: post.author.displayName })}>
       <header className="mg-post__head">
         <Link href={`/u/${post.author.handle}`} className="mg-post__author">
-          <Avatar name={post.author.displayName} />
+          <Avatar name={post.author.displayName} url={post.author.avatarUrl} />
           <span className="mg-post__who">
             <span className="mg-post__name">{post.author.displayName}</span>
             <span className="mg-post__meta">
@@ -40,6 +40,16 @@ export function PostCard({ post, locale, link = true }: { post: PostView; locale
       </header>
       {post.hidden && <p className="mg-post__hidden">{t('hidden')}</p>}
       {post.text && <p className="mg-post__text">{post.text}</p>}
+      {post.images.length > 0 && (
+        <div className={`mg-post__photos mg-post__photos--${post.images.length}`}>
+          {post.images.map((src) => (
+            <a key={src} href={src} target="_blank" rel="noreferrer" className="mg-post__photo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt="" loading="lazy" />
+            </a>
+          ))}
+        </div>
+      )}
       {post.workout && <WorkoutAttachment workout={post.workout} locale={locale} />}
       <footer className="mg-post__actions">
         <LikeButton postId={post.id} liked={post.liked} count={post.likes} />

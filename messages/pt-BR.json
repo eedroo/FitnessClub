@@ -1479,6 +1479,15 @@
     },
     "me": "Eu",
     "noPostsMine": "Você ainda não publicou nada. Toque no + do Feed para compartilhar um treino.",
-    "editProfile": "Editar perfil"
+    "editProfile": "Editar perfil",
+    "photos": {
+      "add": "Adicionar fotos",
+      "remove": "Remover a foto",
+      "uploading": "Enviando a foto…",
+      "error": "Não foi possível enviar a foto. Tente de novo.",
+      "addAvatar": "Colocar foto de perfil",
+      "changeAvatar": "Trocar a foto",
+      "removeAvatar": "Remover a foto"
+    }
   }
 }

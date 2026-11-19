@@ -1,5 +1,6 @@
 'use server';
 
+import { del, list } from '@vercel/blob';
 import bcrypt from 'bcryptjs';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
@@ -176,6 +177,8 @@ export async function deleteAccount(input: { password: string; confirmText: stri
   const { email, name, locale } = user;
   // Remoção imediata, em cascata. Séries e itens de treino apontam para exercícios (sem cascata, para não perder
   // histórico ao arquivar): apagá-los primeiro, senão os exercícios próprios da pessoa bloqueiam a remoção.
+  // Fotos da pessoa no Blob (publicações e perfil): best-effort antes de apagar a conta.
+  await deleteUserBlobs(user.id);
   await db.$transaction([
     db.sessionSet.deleteMany({ where: { userId: user.id } }),
     db.fitnessProgram.deleteMany({ where: { userId: user.id } }),
@@ -231,4 +234,20 @@ export async function withdrawWellbeingConsent(input: { deleteData: boolean }): 
   ]);
   revalidatePath('/', 'layout');
   return { ok: true };
+}
+
+async function deleteUserBlobs(userId: string): Promise<void> {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return;
+  for (const prefix of [`posts/${userId}/`, `avatars/${userId}/`]) {
+    try {
+      let cursor: string | undefined;
+      do {
+        const page = await list({ prefix, cursor, limit: 1000 });
+        if (page.blobs.length) await del(page.blobs.map((b) => b.url));
+        cursor = page.hasMore ? page.cursor : undefined;
+      } while (cursor);
+    } catch (err) {
+      console.error('[account] Falha a apagar fotos do Blob:', err instanceof Error ? err.message : err);
+    }
+  }
 }

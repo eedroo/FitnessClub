@@ -50,8 +50,9 @@ export async function blockedIds(userId: string): Promise<Set<string>> {
 
 export interface PostView {
   id: string;
-  author: { id: string; handle: string; displayName: string };
+  author: { id: string; handle: string; displayName: string; avatarUrl: string | null };
   text: string | null;
+  images: string[];
   visibility: Visibility;
   workout: WorkoutSnapshot | null;
   createdAt: string;
@@ -63,7 +64,7 @@ export interface PostView {
 }
 
 const POST_INCLUDE = {
-  author: { select: { id: true, socialProfile: { select: { handle: true, displayName: true } } } },
+  author: { select: { id: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } },
   _count: { select: { likes: true, comments: { where: { hiddenAt: null } } } },
 } satisfies Prisma.PostInclude;
 
@@ -75,8 +76,9 @@ function toView(p: PostRow, viewerId: string, liked: Set<string>): PostView | nu
   const w = p.workout ? workoutSnapshotSchema.safeParse(p.workout) : null;
   return {
     id: p.id,
-    author: { id: p.author.id, handle: prof.handle, displayName: prof.displayName },
+    author: { id: p.author.id, handle: prof.handle, displayName: prof.displayName, avatarUrl: prof.avatarUrl },
     text: p.text,
+    images: p.images,
     visibility: p.visibility,
     workout: w?.success ? w.data : null,
     createdAt: p.createdAt.toISOString(),
@@ -134,7 +136,7 @@ export async function getPostsBy(viewerId: string, authorId: string, take = 30):
 
 export interface CommentView {
   id: string;
-  author: { id: string; handle: string; displayName: string };
+  author: { id: string; handle: string; displayName: string; avatarUrl: string | null };
   text: string;
   createdAt: string;
   mine: boolean;
@@ -154,7 +156,7 @@ export async function getPost(viewerId: string, id: string): Promise<{ post: Pos
     where: { postId: id, hiddenAt: null, authorId: { notIn: [...blocked] } },
     orderBy: { createdAt: 'asc' },
     take: 200,
-    include: { author: { select: { id: true, socialProfile: { select: { handle: true, displayName: true } } } } },
+    include: { author: { select: { id: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } } },
   });
   return {
     post,
@@ -162,7 +164,7 @@ export async function getPost(viewerId: string, id: string): Promise<{ post: Pos
       .filter((c) => c.author.socialProfile)
       .map((c) => ({
         id: c.id,
-        author: { id: c.author.id, handle: c.author.socialProfile!.handle, displayName: c.author.socialProfile!.displayName },
+        author: { id: c.author.id, handle: c.author.socialProfile!.handle, displayName: c.author.socialProfile!.displayName, avatarUrl: c.author.socialProfile!.avatarUrl },
         text: c.text,
         createdAt: c.createdAt.toISOString(),
         mine: c.authorId === viewerId,
@@ -198,7 +200,7 @@ export async function searchProfiles(viewerId: string, q: string) {
     },
     take: 20,
     orderBy: { handle: 'asc' },
-    select: { userId: true, handle: true, displayName: true },
+    select: { userId: true, handle: true, displayName: true, avatarUrl: true },
   });
 }
 
@@ -208,14 +210,14 @@ export async function getFriendsPage(userId: string) {
     where: { OR: [{ requesterId: userId }, { addresseeId: userId }] },
     orderBy: { createdAt: 'desc' },
     include: {
-      requester: { select: { id: true, socialProfile: { select: { handle: true, displayName: true } } } },
-      addressee: { select: { id: true, socialProfile: { select: { handle: true, displayName: true } } } },
+      requester: { select: { id: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } },
+      addressee: { select: { id: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } },
     },
   });
   const other = (r: (typeof rows)[number]) => (r.requesterId === userId ? r.addressee : r.requester);
   const view = (r: (typeof rows)[number]) => {
     const o = other(r);
-    return o.socialProfile && !blocked.has(o.id) ? { id: r.id, userId: o.id, handle: o.socialProfile.handle, displayName: o.socialProfile.displayName } : null;
+    return o.socialProfile && !blocked.has(o.id) ? { id: r.id, userId: o.id, handle: o.socialProfile.handle, displayName: o.socialProfile.displayName, avatarUrl: o.socialProfile.avatarUrl } : null;
   };
   const clean = <T,>(v: (T | null)[]) => v.filter((x): x is T => !!x);
   return {
@@ -235,7 +237,7 @@ export async function getNotices(userId: string) {
     where: { userId, actorId: { notIn: [...blocked] } },
     orderBy: { createdAt: 'desc' },
     take: 60,
-    include: { actor: { select: { socialProfile: { select: { handle: true, displayName: true } } } } },
+    include: { actor: { select: { socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } } },
   });
   return rows
     .filter((r) => r.actor.socialProfile)

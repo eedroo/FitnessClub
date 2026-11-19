@@ -6,6 +6,7 @@ import { ensureProfile } from '@/lib/social/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { JoinCommunity } from '@/components/social/JoinCommunity';
 import { ShareLevelsToggle } from '@/components/social/ShareLevelsToggle';
+import { AvatarPicker } from '@/components/social/AvatarPicker';
 import { ProfileActions } from '@/components/social/ProfileActions';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -26,6 +27,7 @@ export default async function EditSocialProfilePage() {
     <>
       <BodyHeader title={t('title')} backHref="/corpo" backLabel={ts('me')} />
       <div className="mg-body-shell__main">
+        <AvatarPicker userId={userId} name={profile.displayName} url={profile.avatarUrl} />
         <JoinCommunity edit initial={{ handle: profile.handle, displayName: profile.displayName, bio: profile.bio ?? '' }} />
         <ShareLevelsToggle initial={profile.shareLevels} />
         <h2 className="mg-body-section-title">{t('blocked')}</h2>

@@ -307,7 +307,9 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **ActivityRow** — uma atividade nas listas (Sessões, Dia), na linha agrupada das sessões. `mg-activity-row`.
 
 ### Rede social — Fase C1 (`src/components/social/`, lógica em `src/lib/social/`, rotas `/feed`, `/feed/notices`, `/feed/profile`, `/friends`, `/p/[id]`, `/u/[handle]`, `/admin/reports`; classes em `social.css`)
-- **Avatar** — iniciais num círculo grafite (fotos de perfil na C2). `mg-avatar`.
+- **Avatar** — a foto de perfil, ou as iniciais num círculo grafite. `mg-avatar`.
+- **PhotoPicker** (client) — até 4 fotos numa publicação, enviadas logo para o Blob, com miniaturas. `mg-photos`.
+- **AvatarPicker** (client) — pôr, mudar ou tirar a foto de perfil. `mg-avatar-picker`.
 - **JoinCommunity** (client) — editar o perfil (@, nome, bio). `mg-social-join`.
 - **ProfileOverview** — um perfil (o meu no Eu, com o corpo no meio; o dos outros em `/u/[handle]`): avatar, @, bio, nível, amigos, emblemas, níveis de força, acções e publicações.
 - **PostComposer** (client) — texto, treino a partilhar (últimas sessões e atividades), público ou só amigos. `mg-composer`.

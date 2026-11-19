@@ -1479,6 +1479,15 @@
     },
     "me": "Me",
     "noPostsMine": "You haven't posted yet. Tap + in Feed to share a workout.",
-    "editProfile": "Edit profile"
+    "editProfile": "Edit profile",
+    "photos": {
+      "add": "Add photos",
+      "remove": "Remove photo",
+      "uploading": "Uploading photo…",
+      "error": "Couldn't upload the photo. Please try again.",
+      "addAvatar": "Add profile photo",
+      "changeAvatar": "Change photo",
+      "removeAvatar": "Remove photo"
+    }
   }
 }

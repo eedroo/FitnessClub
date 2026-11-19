@@ -11,6 +11,8 @@ import { dbToAppLocale } from '@/i18n/locales';
 import { socialNotification } from '@/lib/notifications/content';
 import { pushToUser } from '@/lib/notifications/send';
 import { blockedIds, ensureProfile, friendIds } from '@/lib/social/server';
+import { del } from '@vercel/blob';
+import { MAX_POST_IMAGES, ownBlobUrl } from '@/lib/media/blob';
 import { commentSchema, postTextSchema, profileSchema, reportReasonSchema, type WorkoutSnapshot } from '@/lib/social/rules';
 
 /**
@@ -59,6 +61,23 @@ export async function saveSocialProfile(input: { handle: string; displayName: st
   const taken = await db.socialProfile.findUnique({ where: { handle: p.data.handle }, select: { userId: true } });
   if (taken && taken.userId !== uid) return fail('social.errors.handleTaken');
   await db.socialProfile.upsert({ where: { userId: uid }, create: { userId: uid, ...p.data }, update: p.data });
+  refresh();
+  return { ok: true };
+}
+
+/** Apaga fotos do Blob (best-effort: sem token, ou se já não existirem, segue). */
+async function dropBlobs(urls: string[]) {
+  if (!urls.length || !process.env.BLOB_READ_WRITE_TOKEN) return;
+  await del(urls).catch(() => undefined);
+}
+
+export async function setAvatar(url: string | null): Promise<Result> {
+  const m = await member();
+  if (!m) return fail('common.errors.unauthorized');
+  if (url !== null && (typeof url !== 'string' || !ownBlobUrl(url, m.id, 'avatars'))) return fail();
+  const before = await db.socialProfile.findUnique({ where: { userId: m.id }, select: { avatarUrl: true } });
+  await db.socialProfile.update({ where: { userId: m.id }, data: { avatarUrl: url } });
+  if (before?.avatarUrl && before.avatarUrl !== url) await dropBlobs([before.avatarUrl]);
   refresh();
   return { ok: true };
 }
@@ -180,15 +199,29 @@ async function activitySnapshot(uid: string, activityId: string): Promise<Workou
   return { kind: 'activity', type: a.type, date: fromDbDate(a.date), durationSec: a.durationSec, distanceMeters: a.distanceMeters, effort: a.effort };
 }
 
-export async function createPost(input: { text: string; visibility: 'PUBLIC' | 'FRIENDS'; sessionId?: string | null; activityId?: string | null }): Promise<Result<{ id: string }>> {
+export async function createPost(input: {
+  text: string;
+  visibility: 'PUBLIC' | 'FRIENDS';
+  sessionId?: string | null;
+  activityId?: string | null;
+  images?: string[];
+}): Promise<Result<{ id: string }>> {
   const m = await member();
   if (!m) return fail('social.errors.join');
   const p = z
-    .object({ text: postTextSchema, visibility: z.enum(['PUBLIC', 'FRIENDS']), sessionId: id.nullable().optional(), activityId: id.nullable().optional() })
+    .object({
+      text: postTextSchema,
+      visibility: z.enum(['PUBLIC', 'FRIENDS']),
+      sessionId: id.nullable().optional(),
+      activityId: id.nullable().optional(),
+      images: z.array(z.string().max(500)).max(MAX_POST_IMAGES).optional(),
+    })
     .safeParse(input);
   if (!p.success) return fail('social.errors.post');
   const workout = p.data.sessionId ? await sessionSnapshot(m.id, p.data.sessionId) : p.data.activityId ? await activitySnapshot(m.id, p.data.activityId) : null;
-  if (!p.data.text && !workout) return fail('social.errors.empty');
+  const images = p.data.images ?? [];
+  if (images.some((u) => !ownBlobUrl(u, m.id, 'posts'))) return fail('social.errors.post');
+  if (!p.data.text && !workout && !images.length) return fail('social.errors.empty');
   if ((await db.post.count({ where: { authorId: m.id, createdAt: { gte: since24h() } } })) >= 20) return fail('social.errors.limit');
   const post = await db.post.create({
     data: {
@@ -198,6 +231,7 @@ export async function createPost(input: { text: string; visibility: 'PUBLIC' | '
       sessionId: workout?.kind === 'session' ? p.data.sessionId : null,
       activityId: workout?.kind === 'activity' ? p.data.activityId : null,
       workout: workout ?? undefined,
+      images,
     },
     select: { id: true },
   });
@@ -210,7 +244,10 @@ export async function deletePost(postId: string): Promise<Result> {
   if (!uid) return fail('common.errors.unauthorized');
   const p = id.safeParse(postId);
   if (!p.success) return fail();
-  await db.post.deleteMany({ where: { id: p.data, authorId: uid } });
+  const post = await db.post.findFirst({ where: { id: p.data, authorId: uid }, select: { images: true } });
+  if (!post) return fail();
+  await db.post.delete({ where: { id: p.data } });
+  await dropBlobs(post.images);
   refresh();
   return { ok: true };
 }

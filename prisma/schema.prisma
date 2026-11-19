@@ -449,6 +449,7 @@ model SocialProfile {
   displayName  String
   bio          String?
   shareLevels  Boolean  @default(false) // mostrar os níveis de força no perfil (desligado por defeito)
+  avatarUrl    String? // foto de perfil no Vercel Blob (avatars/<userId>/…)
   createdAt    DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -499,6 +500,7 @@ model Post {
   sessionId  String?
   activityId String?
   workout    Json?
+  images     String[]       @default([]) // até 4 fotos no Vercel Blob (posts/<userId>/…)
   createdAt  DateTime       @default(now())
   hiddenAt   DateTime? // escondido pela moderação
   author     User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
