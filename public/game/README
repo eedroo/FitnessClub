@@ -1,0 +1,28 @@
+FITNESS BADGES — GLASSMORPHISM
+================================
+
+Conteúdo:
+- 5 molduras de nível
+- 5 emblemas de treino
+- 3 emblemas de recordes
+- 1 emblema de 1.000 séries
+- 3 emblemas de streak
+- 5 medalhas de força
+
+Formato: PNG, 512 x 512 px, RGBA.
+Os nomes dos ficheiros seguem os identificadores solicitados.
+
+NOTAS IMPORTANTES
+-----------------
+1. Estes ficheiros foram recortados da prancha conceptual gerada por IA.
+2. A remoção do fundo é uma máscara automática aproximada: por serem peças
+   de vidro translúcido, alguns detalhes muito suaves podem ter transparência
+   reduzida ou irregular. Recomenda-se validar visualmente no app.
+3. Os ícones são PNG raster, não SVG vetorial.
+4. O emblema badge-group_goal não foi incluído porque foi indicado como Fase C.
+5. A prancha original não continha um símbolo inequívoco para cada tipo de PR;
+   os três símbolos de recorde foram associados aos ícones de gráfico,
+   raio e coroa, respectivamente. O símbolo de kettlebell foi associado
+   a badge-sets_1000.
+
+Para integrar: extrair o ZIP e copiar os PNGs para a pasta de assets do app.
