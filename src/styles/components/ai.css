@@ -302,3 +302,8 @@
 .mg-program-form__ai-link[aria-disabled='true'] {
   background: var(--system-bg-2);
 }
+
+.mg-ai-workout__note {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}

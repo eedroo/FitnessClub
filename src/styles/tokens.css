@@ -143,6 +143,16 @@
   --tier-platinum: #4FA3A5;
   --tier-diamond: #5B7CFF;
   --tier-none: var(--text-tertiary);
+  /* Atividades: cor por grupo, como no app Saúde */
+  --act-green: #2FB24C;
+  --act-orange: #F2780C;
+  --act-teal: #0FA3A8;
+  --act-pink: #E5407A;
+  --act-red: #E0383E;
+  --act-yellow: #D49A00;
+  --act-blue: #2F7BFF;
+  --act-purple: #8A5CF0;
+  --act-gray: #8E8E93;
   /* Número do nível: branco com um toque de ciano e rosa (como o vidro das molduras) */
   --level-num-a: #FFFFFF;
   --level-num-b: #DDF8FF;
@@ -297,4 +307,13 @@
   --tier-platinum: #6FD3D5;
   --tier-diamond: #8CA4FF;
   --level-num-shadow: rgba(0, 0, 0, 0.6);
+  --act-green: #4CD964;
+  --act-orange: #FF9F0A;
+  --act-teal: #40C8E0;
+  --act-pink: #FF5C93;
+  --act-red: #FF5A5F;
+  --act-yellow: #FFD60A;
+  --act-blue: #4C9BFF;
+  --act-purple: #B08CFF;
+  --act-gray: #98989D;
 }

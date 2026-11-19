@@ -154,7 +154,7 @@ export async function runProgramRequest(requestId: string): Promise<'done' | 'fa
       prompt: programPrompt(profile, candidates, locale),
       schema: AI_PROGRAM_RESPONSE_SCHEMA as unknown as Record<string, unknown>,
       temperature: 0.5,
-      thinkingBudget: 1024,
+      thinkingBudget: 2048,
       fake: () => fakeProgram(candidates, locale),
     },
     (raw) => {

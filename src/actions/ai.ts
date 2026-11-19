@@ -113,7 +113,12 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
   const exIds = [...new Set(program.workouts.flatMap((w) => w.items.map((i) => i.exerciseId)))];
   const known = new Set((await db.exercise.findMany({ where: { id: { in: exIds }, source: 'LIBRARY' }, select: { id: true } })).map((e) => e.id));
   const notes = new Map<string, string>();
-  for (const w of program.workouts) for (const i of w.items) if (i.note && known.has(i.exerciseId) && !notes.has(i.exerciseId)) notes.set(i.exerciseId, i.note);
+  // A dica de técnica vai para as notas do exercício; a prescrição (séries × reps @ RIR) fica no item do treino.
+  for (const w of program.workouts)
+    for (const i of w.items) {
+      const cue = i.cue ?? null;
+      if (cue && known.has(i.exerciseId) && !notes.has(i.exerciseId)) notes.set(i.exerciseId, cue);
+    }
 
   const programId = await db.$transaction(async (tx) => {
     const agg = await tx.fitnessProgram.aggregate({ where: { userId: id }, _max: { order: true } });
@@ -144,6 +149,7 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
                   targetRepsMax: i.repsMax ?? null,
                   targetSec: i.sec ?? null,
                   restSec: i.restSec ?? null,
+                  notes: i.note || null,
                 })),
             },
           })),

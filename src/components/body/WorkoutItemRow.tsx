@@ -20,6 +20,8 @@ export interface WorkoutItemView {
   targetSec: number | null;
   restSec: number;
   customRest: number | null;
+  /** Prescrição do item (ex.: "3–4 séries × 5–8 reps @ 1–2 RIR…"), escrita pela IA ao criar o programa. */
+  notes?: string | null;
   lastDoneAt: string | null;
 }
 
@@ -90,6 +92,7 @@ export function WorkoutItemRow({ workoutId, item, ids, index }: { workoutId: str
             {item.exercise.name}
           </Link>
           <span className="mg-workout-item__target">{target(item, item.restSec)}</span>
+          {item.notes && <span className="mg-workout-item__note">{item.notes}</span>}
           {ago && <span className="mg-workout-item__last">{ago}</span>}
         </span>
         <ReorderButtons ids={ids} index={index} onReorder={(order) => reorderWorkoutItems(workoutId, order)} />

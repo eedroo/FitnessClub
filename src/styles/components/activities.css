@@ -1,16 +1,31 @@
 /* Atividades (tipos do app Saúde): ícone, lista para escolher o tipo, formulário e linha nas listas */
 
 .mg-activity-icon {
+  --act: var(--act-gray);
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-pill);
-  background: var(--highlight-soft);
-  color: var(--highlight);
+  background: color-mix(in srgb, var(--act) 14%, transparent);
+  color: var(--act);
 }
+
+.mg-activity-icon--strength { --act: var(--act-green); }
+.mg-activity-icon--cardio,
+.mg-activity-icon--walkrun,
+.mg-activity-icon--cycling { --act: var(--act-orange); }
+.mg-activity-icon--water,
+.mg-activity-icon--winter { --act: var(--act-blue); }
+.mg-activity-icon--mindbody { --act: var(--act-teal); }
+.mg-activity-icon--dance { --act: var(--act-pink); }
+.mg-activity-icon--combat { --act: var(--act-red); }
+.mg-activity-icon--team,
+.mg-activity-icon--racket { --act: var(--act-yellow); }
+.mg-activity-icon--outdoor { --act: var(--act-purple); }
+.mg-activity-icon--other { --act: var(--act-gray); }
 
 .mg-activity-picker {
   display: flex;

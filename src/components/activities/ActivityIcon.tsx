@@ -1,28 +1,14 @@
-import { Activity, Bike, Dumbbell, Flower2, Footprints, HeartPulse, Mountain, Music, Snowflake, Swords, Target, Volleyball, Waves } from 'lucide-react';
-import { activityGroup, type ActivityGroup, type ActivityType } from '@/lib/activities/types';
+import { ACTIVITY_GLYPHS, ACTIVITY_GLYPH_VIEWBOX } from '@/lib/activities/glyphs';
+import { activityGroup, type ActivityType } from '@/lib/activities/types';
 
-const ICONS: Record<ActivityGroup, typeof Activity> = {
-  strength: Dumbbell,
-  cardio: HeartPulse,
-  walkrun: Footprints,
-  cycling: Bike,
-  water: Waves,
-  mindbody: Flower2,
-  dance: Music,
-  combat: Swords,
-  team: Volleyball,
-  racket: Target,
-  winter: Snowflake,
-  outdoor: Mountain,
-  other: Activity,
-};
-
-/** Ícone de linha do grupo da atividade (lucide), num círculo azul. */
+/** Ícone próprio de cada atividade (como no app Saúde), na cor do grupo (ginásio verde, cardio laranja…). */
 export function ActivityIcon({ type, size = 18 }: { type: ActivityType; size?: number }) {
-  const Icon = ICONS[activityGroup(type)];
+  const d = ACTIVITY_GLYPHS[type] ?? ACTIVITY_GLYPHS.other;
   return (
-    <span className="mg-activity-icon" aria-hidden="true">
-      <Icon size={size} strokeWidth={1.75} />
+    <span className={`mg-activity-icon mg-activity-icon--${activityGroup(type)}`} aria-hidden="true">
+      <svg width={size + 4} height={size + 4} viewBox={ACTIVITY_GLYPH_VIEWBOX} fill="currentColor" focusable="false">
+        <path d={d} />
+      </svg>
     </span>
   );
 }

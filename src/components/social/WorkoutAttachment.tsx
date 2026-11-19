@@ -27,7 +27,7 @@ export function WorkoutAttachment({ workout, locale }: { workout: WorkoutSnapsho
   }
   return (
     <div className="mg-post-workout">
-      <span className="mg-activity-icon" aria-hidden="true">
+      <span className="mg-activity-icon mg-activity-icon--strength" aria-hidden="true">
         <MagicIcon name="dumbbell" size="sm" decorative />
       </span>
       <span className="mg-post-workout__text">

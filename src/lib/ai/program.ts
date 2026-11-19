@@ -56,19 +56,22 @@ const itemSchema = z.object({
   repsMax: z.number().int().min(1).max(100).nullable().optional(),
   sec: z.number().int().min(5).max(900).nullable().optional(),
   restSec: z.number().int().min(0).max(600).nullable().optional(),
-  note: z.string().trim().max(400).nullable().optional(),
+  /** Prescrição deste exercício neste treino (séries × reps @ RIR, como progredir, porquê) — vai para o item do treino. */
+  note: z.string().trim().max(700).nullable().optional(),
+  /** Dica de técnica curta — vai para as notas do exercício (se a pessoa não tiver as suas). */
+  cue: z.string().trim().max(300).nullable().optional(),
 });
 
 export const aiProgramSchema = z.object({
   name: z.string().trim().min(1).max(60),
   description: z.string().trim().max(240).nullable().optional(),
   kind: z.enum(['STRENGTH', 'STRETCH', 'MIXED']),
-  notes: z.string().trim().max(2000).nullable().optional(),
+  notes: z.string().trim().max(6000).nullable().optional(),
   workouts: z
     .array(
       z.object({
         name: z.string().trim().min(1).max(40),
-        notes: z.string().trim().max(800).nullable().optional(),
+        notes: z.string().trim().max(1500).nullable().optional(),
         items: z.array(itemSchema).min(1).max(14),
       }),
     )
@@ -106,18 +109,19 @@ export const AI_PROGRAM_RESPONSE_SCHEMA = {
                 sec: { type: 'INTEGER', nullable: true },
                 restSec: { type: 'INTEGER' },
                 note: { type: 'STRING' },
+                cue: { type: 'STRING' },
               },
-              required: ['exerciseId', 'sets', 'restSec'],
-              propertyOrdering: ['exerciseId', 'sets', 'repsMin', 'repsMax', 'sec', 'restSec', 'note'],
+              required: ['exerciseId', 'sets', 'restSec', 'note'],
+              propertyOrdering: ['exerciseId', 'sets', 'repsMin', 'repsMax', 'sec', 'restSec', 'note', 'cue'],
             },
           },
         },
-        required: ['name', 'items'],
+        required: ['name', 'notes', 'items'],
         propertyOrdering: ['name', 'notes', 'items'],
       },
     },
   },
-  required: ['name', 'kind', 'workouts'],
+  required: ['name', 'kind', 'notes', 'workouts'],
   propertyOrdering: ['name', 'description', 'kind', 'notes', 'workouts'],
 } as const;
 
@@ -171,18 +175,30 @@ const LANGUAGE: Record<string, string> = {
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export const PROGRAM_SYSTEM = [
-  'You are an experienced strength and conditioning coach writing a training programme for a fitness app.',
+  'You are an experienced, evidence-based strength and conditioning coach writing a complete training programme for a fitness app.',
   'Use ONLY exercises from the provided catalogue, referenced by their exact "id". Never invent ids.',
-  'One workout per training day the person chose (or a sensible split when no days are given), at most 7 workouts.',
-  'Respect the session length: roughly 1 exercise per 7–9 minutes including rest.',
-  'Use rep ranges suited to the goals (strength 3–6, hypertrophy 6–12, endurance 12–20) and to the level; compound lifts first.',
+  'One workout per training day the person chose (or a sensible split when no days are given), at most 7 workouts; name each workout with the day and its focus when days are known (e.g. "Monday — Lower A (squat/quads)").',
+  'Respect the session length: roughly 1 exercise per 7–9 minutes including rest. Compound lifts first, accessories after.',
+  'Rep ranges suited to the goals and level (strength 3–6, hypertrophy ~5–8 for main compounds and 8–15 for accessories, endurance 12–20).',
   'For exercises measured in time ("time"), give "sec" and leave reps null; otherwise give repsMin/repsMax and leave sec null.',
-  'Give the most attention (more volume) to the focus muscles, without neglecting balance.',
-  'Respect what the person wants to avoid; never include exercises that clash with limitations they mention.',
-  'Notes: programme notes explain the logic, how to progress (double progression: add reps until the top of the range in every set, then add load) and how to warm up;',
-  'workout notes give the focus of the day; exercise notes are short technique cues (1–2 sentences).',
-  'Never give medical, diet or supplement advice. Keep a neutral, encouraging tone. Write all text in the requested language.',
-].join(' ');
+  'Give more weekly volume to the focus muscles without neglecting balance. Respect what the person wants to avoid and any limitation they mention.',
+  'Units: kilograms. Write ALL text in the requested language, natural and specific to this person (refer to their level, days, minutes, equipment and goals).',
+  '',
+  'PROGRAMME "notes" — a detailed guide in plain text with short section titles on their own line and "- " bullets, like a coach would write:',
+  '1) One opening paragraph: who this is for (their level, equipment, days per week, minutes) and how the split serves their goals and focus muscles.',
+  '2) "Structure and rationale": why this split, why this order (compounds first), the rep ranges used and why.',
+  '3) "Progressive overload": RIR target (reps in reserve, e.g. most sets at 1–2 RIR) explained in plain words; double progression (keep the rep range, add reps until the top in all sets, then add load: about +1–2.5 kg upper body, +2.5–5 kg lower body); what to do if a lift stalls for 2 weeks (reduce load 5–10% and build back, or add 1 set for 2–3 weeks).',
+  '4) "Weekly sets per muscle": a starting target per muscle group, higher for the focus muscles, and how to adjust (+2 sets if recovering well but not progressing; −2 to −4 if fatigue lingers).',
+  '5) "Rest": guidance for compounds vs accessories.',
+  '6) "Warm-up" and 7) "Substituting exercises" (swap for a similar movement pattern if a machine is busy or something hurts).',
+  '',
+  'WORKOUT "notes" — 2–4 sentences: the goal of the day, why the exercises are in this order, and what to focus on.',
+  '',
+  'EXERCISE "note" (for that exercise in that workout) — 1–3 sentences starting with the prescription, e.g. "3–4 sets × 5–8 reps @ 1–2 RIR. Add load when you hit 8 reps on all sets with the same depth and bar speed." plus why it is in the plan.',
+  'EXERCISE "cue" — one short technique cue (max 1 sentence).',
+  '',
+  'Never give medical, diet or supplement advice. Keep a neutral, encouraging tone.',
+].join('\n');
 
 export function programPrompt(
   profile: TrainingProfileData,
@@ -226,7 +242,10 @@ export function fakeProgram(candidates: CandidateExercise[], locale: string): Ai
       repsMax: c.measure === 'DURATION' ? null : 10,
       sec: c.measure === 'DURATION' ? 30 : null,
       restSec: 90,
-      note: pt ? 'Mantém o tronco firme e a amplitude completa.' : 'Keep your core tight and use the full range.',
+      note: pt
+        ? '3 séries × 6–10 reps @ 1–2 RIR. Sobe a carga quando fizeres 10 reps em todas as séries com a mesma técnica.'
+        : '3 sets × 6–10 reps @ 1–2 RIR. Add load when you hit 10 reps on all sets with the same form.',
+      cue: pt ? 'Mantém o tronco firme e a amplitude completa.' : 'Keep your core tight and use the full range.',
     })),
   });
   return {
@@ -234,8 +253,8 @@ export function fakeProgram(candidates: CandidateExercise[], locale: string): Ai
     description: pt ? 'Três treinos por semana, à medida do teu perfil.' : 'Three workouts a week, tailored to your profile.',
     kind: 'STRENGTH',
     notes: pt
-      ? 'Aquece 5–10 minutos. Em cada exercício, soma uma repetição de cada vez até chegares ao topo do intervalo em todas as séries; aí sobe a carga.'
-      : 'Warm up for 5–10 minutes. In each exercise add one rep at a time until you reach the top of the range in every set, then add load.',
+      ? 'Programa de três dias para o teu nível.\n\nEstrutura e lógica\n- Exercícios compostos primeiro, acessórios depois.\n\nSobrecarga progressiva\n- A maioria das séries a 1–2 RIR (repetições em reserva).\n- Soma uma repetição de cada vez até ao topo do intervalo em todas as séries; aí sobe a carga.\n\nAquecimento\n- 5–10 minutos e duas séries leves no primeiro exercício.'
+      : 'A three-day programme for your level.\n\nStructure and rationale\n- Compounds first, accessories after.\n\nProgressive overload\n- Most sets at 1–2 RIR (reps in reserve).\n- Add one rep at a time until the top of the range on every set, then add load.\n\nWarm-up\n- 5–10 minutes and two light sets on the first exercise.',
     workouts: [workout('A', 0), workout('B', 4), workout('C', 8)],
   };
 }
