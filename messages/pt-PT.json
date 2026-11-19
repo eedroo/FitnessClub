@@ -92,7 +92,16 @@
       "restCustom": "Agora: {n} s. Escolhe um dos valores para mudar.",
       "keepAwake": "Ecrã aceso durante a sessão"
     },
-    "notificationsHint": "O único aviso é o de fim de descanso, e só chega quando saíste da app durante a sessão."
+    "notificationsHint": "O único aviso é o de fim de descanso, e só chega quando saíste da app durante a sessão.",
+    "accent": "Cor de destaque",
+    "accentOptions": {
+      "orange": "Laranja",
+      "blue": "Azul",
+      "pink": "Rosa",
+      "violet": "Violeta",
+      "green": "Verde",
+      "graphite": "Grafite"
+    }
   },
   "validation": {
     "required": "Campo obrigatório.",
@@ -728,7 +737,13 @@
       "cancel": "Cancelar",
       "deleteSet": "Apagar série",
       "editSet": "Editar série {n}",
-      "invalid": "Valor inválido."
+      "invalid": "Valor inválido.",
+      "suggest": {
+        "add-rep": "Hoje: mais uma rep",
+        "add-weight": "Hora de subir a carga",
+        "complete-sets": "Hoje: completa as séries",
+        "top-of-range": "No topo do alvo: torna-o mais difícil"
+      }
     },
     "rest": {
       "label": "Descanso",
@@ -756,7 +771,9 @@
       "avgRest": "Descanso médio",
       "kgValue": "{kg} kg",
       "secondsShort": "{n} s",
-      "prs": "Recordes"
+      "prs": "Recordes",
+      "byExercise": "Por exercício",
+      "firstTime": "Primeira vez"
     },
     "errors": {
       "name": "Escreve um nome.",
@@ -766,7 +783,8 @@
       "missing-reps": "Indica as repetições.",
       "missing-weight": "Indica o peso.",
       "missing-duration": "Indica o tempo.",
-      "out-of-range": "Esse valor está fora do intervalo."
+      "out-of-range": "Esse valor está fora do intervalo.",
+      "notes": "As notas podem ter até 4000 caracteres."
     },
     "day": {
       "title": "Dia",
@@ -819,8 +837,11 @@
         "sets": "Séries",
         "reps": "Reps",
         "volume": "Volume",
-        "kg": "kg por rep"
-      }
+        "kg": "kg por rep",
+        "top": "Carga máxima"
+      },
+      "titleTotals": "Comparado com {date}",
+      "same": "igual"
     },
     "progress": {
       "metric": "Métrica",
@@ -836,7 +857,27 @@
       "progress": "Evolução",
       "records": "Recordes"
     },
-    "settingsLink": "Definições"
+    "settingsLink": "Definições",
+    "notes": {
+      "title": {
+        "program": "Notas do programa",
+        "workout": "Notas do treino",
+        "exercise": "As minhas notas"
+      },
+      "empty": {
+        "program": "Objectivo, duração, como alternar os treinos…",
+        "workout": "Aquecimento, ordem, o que ter em atenção…",
+        "exercise": "Regulação da máquina, pega, técnica, o que sentes…"
+      },
+      "placeholder": {
+        "program": "Escreve as notas do programa",
+        "workout": "Escreve as notas do treino",
+        "exercise": "Escreve as tuas notas sobre este exercício"
+      },
+      "add": "Adicionar",
+      "edit": "Editar",
+      "ai": "IA"
+    }
   },
   "shell": {
     "home": "FitnessClub — ir para os treinos",

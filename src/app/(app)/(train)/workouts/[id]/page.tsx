@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { bodyPage } from '@/lib/fitness/page';
 import { getWorkout, listExercises } from '@/lib/fitness/queries';
 import { BodyHeader } from '@/components/body/BodyHeader';
+import { NotesCard } from '@/components/body/NotesCard';
 import { WorkoutForm } from '@/components/body/WorkoutForm';
 import { WorkoutItems } from '@/components/body/WorkoutItems';
 import { StartSessionButton } from '@/components/body/StartSessionButton';
@@ -22,8 +23,8 @@ export default async function WorkoutRoute({ params }: { params: { id: string } 
     <>
       <BodyHeader title={workout.name} backHref={`/programs/${workout.programId}`} backLabel={workout.programName} />
       <div className="mg-body-shell__main">
-        {workout.notes && <p className="mg-workout-row__meta">{workout.notes}</p>}
         <WorkoutItems workoutId={workout.id} items={workout.items} exercises={exercises} />
+        <NotesCard kind="workout" targetId={workout.id} initial={workout.notes} byAi={workout.notesByAi} />
         <WorkoutForm programId={workout.programId} workout={{ id: workout.id, name: workout.name, notes: workout.notes }} />
         {workout.items.length > 0 && (
           <div className="mg-body-cta">

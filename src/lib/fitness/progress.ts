@@ -148,3 +148,33 @@ export function dayStats(
     prs: all.filter((s) => s.prKinds.length > 0).length,
   };
 }
+
+/** Totais de uma sessão (ou de um dia) para comparar com a anterior: séries, reps, volume e carga máxima. */
+export interface SessionTotals {
+  sets: number;
+  reps: number;
+  volumeGrams: number;
+  topWeightGrams: number | null;
+}
+
+export function sessionTotals(sets: SetValues[]): SessionTotals {
+  const weights = sets.map((s) => s.weightGrams).filter((w): w is number => w != null);
+  return {
+    sets: sets.length,
+    reps: sets.reduce((n, s) => n + (s.reps ?? 0), 0),
+    volumeGrams: sets.reduce((n, s) => n + (s.reps ?? 0) * (s.weightGrams ?? 0), 0),
+    topWeightGrams: weights.length ? Math.max(...weights) : null,
+  };
+}
+
+/** Cada total contra o anterior (null sem anterior ou sem valor). */
+export function compareTotals(current: SessionTotals, previous: SessionTotals | null): Record<keyof SessionTotals, Comparison | null> {
+  const keys: (keyof SessionTotals)[] = ['sets', 'reps', 'volumeGrams', 'topWeightGrams'];
+  const out = {} as Record<keyof SessionTotals, Comparison | null>;
+  for (const k of keys) {
+    const v = current[k];
+    const p = previous?.[k];
+    out[k] = v == null || p == null ? null : { value: v, delta: v - p, pct: p === 0 ? null : Math.round(((v - p) / p) * 1000) / 10 };
+  }
+  return out;
+}

@@ -71,3 +71,4 @@
 .mg-compare__cell--reps { --metric-color: var(--metric-reps); }
 .mg-compare__cell--volume { --metric-color: var(--metric-volume); }
 .mg-compare__cell--kg { --metric-color: var(--metric-kg); }
+.mg-compare__cell--top { --metric-color: var(--metric-weight); }

@@ -5,7 +5,7 @@ import { fromDbDate, type DateISO } from '@/lib/dates';
 import type { AppLocale } from '@/i18n/locales';
 import { exerciseInstructions, exerciseName, type ExerciseNames } from './library';
 import { autoEndAt, restFor } from './session';
-import { recomputePrs } from './progress';
+import { recomputePrs, sessionTotals, type SessionTotals } from './progress';
 import type { ActiveSessionView, ExerciseHistoryGroup, ExerciseView, LastPerformance, SessionSetView } from './types';
 
 /** Leituras dos treinos. Só lêem (excepto fechar uma sessão esquecida há mais de 6 h). */
@@ -74,7 +74,7 @@ export async function getProgram(userId: string, id: string) {
   const p = await db.fitnessProgram.findFirst({
     where: { id, userId, archivedAt: null },
     select: {
-      id: true, name: true, description: true, kind: true,
+      id: true, name: true, description: true, kind: true, notes: true, notesByAi: true,
       workouts: {
         where: { archivedAt: null },
         orderBy: { order: 'asc' },
@@ -102,7 +102,7 @@ export async function getWorkout(userId: string, id: string, locale: AppLocale) 
     db.fitnessWorkout.findFirst({
       where: { id, userId, archivedAt: null, program: { archivedAt: null } },
       select: {
-        id: true, name: true, notes: true, programId: true, program: { select: { name: true, kind: true } },
+        id: true, name: true, notes: true, notesByAi: true, programId: true, program: { select: { name: true, kind: true } },
         items: { orderBy: { order: 'asc' }, include: { exercise: { select: { ...EXERCISE_VIEW, defaultRestSec: true } } } },
       },
     }),
@@ -114,6 +114,7 @@ export async function getWorkout(userId: string, id: string, locale: AppLocale) 
     id: w.id,
     name: w.name,
     notes: w.notes,
+    notesByAi: w.notesByAi,
     programId: w.programId,
     programName: w.program.name,
     items: w.items.map((i) => ({
@@ -214,10 +215,11 @@ export async function getActiveSession(userId: string, locale: AppLocale): Promi
   const items = s.workout?.items ?? [];
   const order = [...items.map((i) => i.exerciseId), ...s.extraExercises, ...s.sets.map((x) => x.exerciseId)];
   const ids = [...new Set(order)];
-  const [exercises, prefs, last] = await Promise.all([
+  const [exercises, prefs, last, notes] = await Promise.all([
     db.exercise.findMany({ where: { id: { in: ids } }, select: { ...EXERCISE_VIEW, defaultRestSec: true } }),
     getFitnessPrefs(userId),
     lastPerformances(userId, ids, s.id),
+    db.exerciseNote.findMany({ where: { userId, exerciseId: { in: ids } }, select: { exerciseId: true, text: true } }),
   ]);
   const byId = new Map(exercises.map((e) => [e.id, e]));
   const itemById = new Map(items.map((i) => [i.exerciseId, i]));
@@ -246,6 +248,7 @@ export async function getActiveSession(userId: string, locale: AppLocale): Promi
           },
           doneSets: s.sets.filter((x) => x.exerciseId === id).map(setView),
           last: last.get(id) ?? null,
+          note: notes.find((n) => n.exerciseId === id)?.text ?? null,
         },
       ];
     }),
@@ -290,7 +293,33 @@ export interface SessionSummary {
   reps: number;
   volumeGrams: number; // kg × reps, em gramas
   avgRestSec: number | null;
-  byExercise: { exercise: ExerciseView; sets: SessionSetView[] }[];
+  /** Totais desta sessão e da anterior do mesmo treino (treino livre: a sessão anterior qualquer). */
+  totals: SessionTotals;
+  previous: { id: string; date: DateISO; totals: SessionTotals } | null;
+  /** Por exercício: as séries desta sessão e as da última vez que foi feito antes dela. */
+  byExercise: { exercise: ExerciseView; sets: SessionSetView[]; previous: { date: DateISO; sets: SetValuesView[] } | null }[];
+}
+
+type SetValuesView = { reps: number | null; weightGrams: number | null; durationSec: number | null };
+
+const nn = (s: SetValuesView) => ({ reps: s.reps ?? undefined, weightGrams: s.weightGrams ?? undefined, durationSec: s.durationSec ?? undefined });
+
+/** Última vez de cada exercício antes de `before` (as séries dessa sessão). */
+async function previousByExercise(userId: string, exerciseIds: string[], before: Date) {
+  const out = new Map<string, { date: DateISO; sessionId: string; sets: SetValuesView[] }>();
+  if (!exerciseIds.length) return out;
+  const rows = await db.sessionSet.findMany({
+    where: { userId, exerciseId: { in: exerciseIds }, completedAt: { lt: before } },
+    orderBy: { completedAt: 'desc' },
+    take: 400,
+    select: { exerciseId: true, sessionId: true, reps: true, weightGrams: true, durationSec: true, session: { select: { date: true } } },
+  });
+  for (const r of rows) {
+    const g = out.get(r.exerciseId);
+    if (!g) out.set(r.exerciseId, { date: fromDbDate(r.session.date), sessionId: r.sessionId, sets: [{ reps: r.reps, weightGrams: r.weightGrams, durationSec: r.durationSec }] });
+    else if (g.sessionId === r.sessionId) g.sets.unshift({ reps: r.reps, weightGrams: r.weightGrams, durationSec: r.durationSec });
+  }
+  return out;
 }
 
 export async function getSessionSummary(userId: string, id: string, locale: AppLocale): Promise<SessionSummary | null> {
@@ -310,6 +339,14 @@ export async function getSessionSummary(userId: string, id: string, locale: AppL
     g.sets.push(setView(x));
     groups.set(x.exerciseId, g);
   }
+  const [prevSession, prevByEx] = await Promise.all([
+    db.fitnessSession.findFirst({
+      where: { userId, id: { not: s.id }, endedAt: { not: null }, startedAt: { lt: s.startedAt }, ...(s.workoutId && { workoutId: s.workoutId }), sets: { some: {} } },
+      orderBy: { startedAt: 'desc' },
+      select: { id: true, date: true, sets: { select: { reps: true, weightGrams: true, durationSec: true } } },
+    }),
+    previousByExercise(userId, [...groups.keys()], s.startedAt),
+  ]);
   return {
     id: s.id,
     name: s.workout?.name ?? null,
@@ -321,7 +358,12 @@ export async function getSessionSummary(userId: string, id: string, locale: AppL
     reps: s.sets.reduce((n, x) => n + (x.reps ?? 0), 0),
     volumeGrams: s.sets.reduce((n, x) => n + (x.reps ?? 0) * (x.weightGrams ?? 0), 0),
     avgRestSec: rests.length ? Math.round(rests.reduce((a, b) => a + b, 0) / rests.length) : null,
-    byExercise: [...groups.values()],
+    totals: sessionTotals(s.sets.map(nn)),
+    previous: prevSession ? { id: prevSession.id, date: fromDbDate(prevSession.date), totals: sessionTotals(prevSession.sets.map(nn)) } : null,
+    byExercise: [...groups.entries()].map(([exId, g]) => {
+      const prev = prevByEx.get(exId);
+      return { ...g, previous: prev ? { date: prev.date, sets: prev.sets } : null };
+    }),
   };
 }
 
@@ -369,4 +411,9 @@ export async function getExerciseHistory(userId: string, exerciseId: string, tak
         : [],
     ),
   }));
+}
+
+/** Notas pessoais de um exercício (ou null). */
+export async function getExerciseNote(userId: string, exerciseId: string): Promise<{ text: string; byAi: boolean } | null> {
+  return db.exerciseNote.findUnique({ where: { userId_exerciseId: { userId, exerciseId } }, select: { text: true, byAi: true } });
 }

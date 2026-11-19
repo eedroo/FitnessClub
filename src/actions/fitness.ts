@@ -519,3 +519,41 @@ export async function discardSession(sessionId: string): Promise<FitnessResult> 
   refresh();
   return ok();
 }
+
+// ─── Notas (programa, treino e exercício) ─────────────────────────────────────────────────────────
+
+const notesSchema = z.object({
+  kind: z.enum(['program', 'workout', 'exercise']),
+  targetId: id,
+  text: z.string().max(4000).transform((v) => v.trim()),
+});
+
+/**
+ * Grava as notas de um programa, de um treino ou de um exercício (pessoais: cada pessoa tem as suas). Texto vazio
+ * apaga. Escrever à mão tira a marca "gerado pela IA".
+ */
+export async function saveNotes(input: z.input<typeof notesSchema>): Promise<FitnessResult> {
+  const uid = await userId();
+  if (!uid) return fail('common.errors.unauthorized');
+  const p = notesSchema.safeParse(input);
+  if (!p.success) return fail('fitness.errors.notes');
+  const { kind, targetId, text } = p.data;
+  if (kind === 'program') {
+    const { count } = await db.fitnessProgram.updateMany({ where: { id: targetId, userId: uid }, data: { notes: text || null, notesByAi: false } });
+    if (!count) return fail();
+  } else if (kind === 'workout') {
+    const { count } = await db.fitnessWorkout.updateMany({ where: { id: targetId, userId: uid }, data: { notes: text || null, notesByAi: false } });
+    if (!count) return fail();
+  } else {
+    if (!(await usableExercise(uid, targetId))) return fail();
+    if (!text) await db.exerciseNote.deleteMany({ where: { userId: uid, exerciseId: targetId } });
+    else
+      await db.exerciseNote.upsert({
+        where: { userId_exerciseId: { userId: uid, exerciseId: targetId } },
+        create: { userId: uid, exerciseId: targetId, text, byAi: false },
+        update: { text, byAi: false },
+      });
+  }
+  refresh();
+  return ok();
+}

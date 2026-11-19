@@ -92,7 +92,16 @@
       "restCustom": "Currently {n} s. Pick one of the values to change it.",
       "keepAwake": "Keep the screen on during a session"
     },
-    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session."
+    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session.",
+    "accent": "Accent colour",
+    "accentOptions": {
+      "orange": "Orange",
+      "blue": "Blue",
+      "pink": "Pink",
+      "violet": "Violet",
+      "green": "Green",
+      "graphite": "Graphite"
+    }
   },
   "validation": {
     "required": "This field is required.",
@@ -728,7 +737,13 @@
       "cancel": "Cancel",
       "deleteSet": "Delete set",
       "editSet": "Edit set {n}",
-      "invalid": "Invalid value."
+      "invalid": "Invalid value.",
+      "suggest": {
+        "add-rep": "Today: one more rep",
+        "add-weight": "Time to add weight",
+        "complete-sets": "Today: finish all sets",
+        "top-of-range": "Top of the range: make it harder"
+      }
     },
     "rest": {
       "label": "Rest",
@@ -756,7 +771,9 @@
       "avgRest": "Average rest",
       "kgValue": "{kg} kg",
       "secondsShort": "{n}s",
-      "prs": "Records"
+      "prs": "Records",
+      "byExercise": "By exercise",
+      "firstTime": "First time"
     },
     "errors": {
       "name": "Enter a name.",
@@ -766,7 +783,8 @@
       "missing-reps": "Enter the reps.",
       "missing-weight": "Enter the weight.",
       "missing-duration": "Enter the time.",
-      "out-of-range": "That value is out of range."
+      "out-of-range": "That value is out of range.",
+      "notes": "Notes can be up to 4,000 characters."
     },
     "day": {
       "title": "Day",
@@ -819,8 +837,11 @@
         "sets": "Sets",
         "reps": "Reps",
         "volume": "Volume",
-        "kg": "kg per rep"
-      }
+        "kg": "kg per rep",
+        "top": "Top weight"
+      },
+      "titleTotals": "Compared with {date}",
+      "same": "same"
     },
     "progress": {
       "metric": "Metric",
@@ -836,7 +857,27 @@
       "progress": "Progress",
       "records": "Records"
     },
-    "settingsLink": "Settings"
+    "settingsLink": "Settings",
+    "notes": {
+      "title": {
+        "program": "Programme notes",
+        "workout": "Workout notes",
+        "exercise": "My notes"
+      },
+      "empty": {
+        "program": "Goal, length, how to rotate the workouts…",
+        "workout": "Warm-up, order, what to watch out for…",
+        "exercise": "Machine settings, grip, technique, how it feels…"
+      },
+      "placeholder": {
+        "program": "Write your programme notes",
+        "workout": "Write your workout notes",
+        "exercise": "Write your notes about this exercise"
+      },
+      "add": "Add",
+      "edit": "Edit",
+      "ai": "AI"
+    }
   },
   "shell": {
     "home": "FitnessClub — go to workouts",

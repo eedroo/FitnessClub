@@ -25,6 +25,7 @@ import { DELETE_CONFIRM_WORD } from '@/lib/validation/account';
 import { getEntitlements } from '@/lib/entitlements/server';
 import { getFitnessPrefs } from '@/lib/fitness/queries';
 import { intlLocale, isAppLocale } from '@/i18n/locales';
+import { accentOrDefault } from '@/lib/accent';
 
 const SECTIONS = ['profile', 'account', 'preferences', 'training', 'notifications', 'privacy', 'sessions', 'danger'] as const;
 
@@ -52,7 +53,7 @@ export default async function SettingsPage() {
     getLocale(),
     db.user.findUnique({
       where: { id: session.user.id },
-      select: { name: true, email: true, locale: true, theme: true, timezone: true, emailVerifiedAt: true, wellbeingConsentAt: true },
+      select: { name: true, email: true, locale: true, theme: true, timezone: true, accent: true, emailVerifiedAt: true, wellbeingConsentAt: true },
     }),
   ]);
   if (!user) redirect('/login');
@@ -64,7 +65,7 @@ export default async function SettingsPage() {
   const consentedOn = user.wellbeingConsentAt
     ? new Intl.DateTimeFormat(intl, { dateStyle: 'long', timeZone: user.timezone }).format(user.wellbeingConsentAt)
     : null;
-  const formInitial = { name: user.name, locale: user.locale, theme: user.theme, timezone: user.timezone };
+  const formInitial = { name: user.name, locale: user.locale, theme: user.theme, timezone: user.timezone, accent: accentOrDefault(user.accent) };
   const timezones = supportedTimezones(user.timezone);
 
   return (

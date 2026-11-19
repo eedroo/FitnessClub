@@ -1,0 +1,188 @@
+/*
+ * Vidro líquido: o material partilhado pelas superfícies (cartões, listas, células soltas, folhas e barras).
+ * Desfoque + saturação do que está por trás, brilho no topo (sheen), aresta de luz e contorno fino, sombra suave.
+ * As cores vêm dos tokens (`--system-bg-2`, `--glass-*`); este ficheiro só aplica o material.
+ */
+
+.mg-card,
+.mg-program-list,
+.mg-workout-list,
+.mg-ex-list,
+.mg-session-list,
+.mg-body-card,
+.mg-body-empty,
+.mg-notes,
+.mg-session-ex,
+.mg-day-metrics__metric,
+.mg-compare,
+.mg-banner,
+.mg-check-chip,
+.mg-weight-card,
+.mg-goal-card,
+.mg-program-form,
+.mg-workout-form,
+.mg-ex-form,
+.mg-workout-item,
+.mg-ex-history__group,
+.mg-session-summary__stat,
+.mg-session-summary__ex,
+.mg-muscle-map__view,
+.mg-premium-lock,
+.mg-route-error,
+.mg-body-welcome__option,
+.mg-ex-picker__list {
+  background-color: var(--system-bg-2);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 var(--hairline) var(--glass-edge), var(--glass-shadow);
+}
+
+/* Linhas soltas (fora de uma lista) também são vidro; dentro de uma lista ficam transparentes */
+a.mg-program-row:not(.mg-program-list a) {
+  background-color: var(--system-bg-2);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 var(--hairline) var(--glass-edge), var(--glass-shadow);
+}
+
+.mg-program-list .mg-program-row,
+.mg-workout-list .mg-workout-row,
+.mg-ex-list .mg-ex-row {
+  background: transparent;
+}
+
+/* Vidro dentro de vidro: sem segundo desfoque nem sombra */
+.mg-card .mg-check-chip,
+.mg-card .mg-notes,
+.mg-card .mg-compare,
+.mg-session-ex .mg-compare,
+.mg-session-summary__ex .mg-compare,
+.mg-card .mg-body-empty {
+  background-color: var(--system-bg-3);
+  background-image: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 0 0 var(--hairline) var(--glass-edge);
+}
+
+/* O exercício em foco: aresta acesa no acento */
+.mg-session-ex--current {
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 2px var(--accent), 0 10px 30px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* Folhas e diálogos: vidro espesso */
+.mg-body-sheet,
+.mg-ex-picker,
+.mg-policy-dialog,
+.mg-danger__dialog {
+  background-color: var(--system-elevated);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+}
+
+/* Barras (navegação, rodapé da folha de exercícios): vidro fino com aresta de luz */
+.mg-body-header,
+.mg-ex-picker__footer {
+  background-image: var(--glass-sheen);
+}
+
+/* Descanso: vidro espesso, para se ler por cima das séries */
+.mg-rest {
+  background-color: var(--system-elevated);
+  background-image: var(--glass-sheen);
+}
+
+/* Botões como gotas: o preenchido ganha brilho; o tingido e os de ícone são vidro */
+.mg-btn--primary,
+.mg-btn--body,
+.mg-btn--danger {
+  border-radius: var(--radius-pill);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 55%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(0, 0, 0, 0.08), 0 8px 22px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.mg-btn--danger {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 22px color-mix(in srgb, var(--danger) 28%, transparent);
+}
+
+.mg-btn--ghost {
+  background-color: var(--system-bg-2);
+  background-image: var(--glass-sheen);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 var(--hairline) var(--glass-edge);
+}
+
+.mg-stepper__btn,
+.mg-rest__actions .mg-btn:not(.mg-btn--primary):not(.mg-btn--ghost) {
+  background-color: var(--system-bg-2);
+  background-image: var(--glass-sheen);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 var(--hairline) var(--glass-edge);
+}
+
+/* Tab bar flutuante em cápsula de vidro (como no iOS 26) */
+.mg-body-nav {
+  right: var(--space-4);
+  bottom: calc(env(safe-area-inset-bottom) + var(--space-2));
+  left: var(--space-4);
+  height: 62px;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background-color: var(--bar-bg);
+  background-image: var(--glass-sheen);
+  box-shadow: inset 0 1px 0 var(--glass-stroke), 0 0 0 var(--hairline) var(--glass-edge), 0 12px 36px rgba(0, 0, 0, 0.16);
+}
+
+.mg-body-nav__item {
+  justify-content: center;
+  margin: 5px 0;
+  padding-top: 0;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--duration-fast) linear, color var(--duration-fast) linear;
+}
+
+.mg-body-nav__item--active {
+  background: var(--accent-soft);
+}
+
+.mg-body-shell {
+  padding-bottom: calc(62px + env(safe-area-inset-bottom) + var(--space-7));
+}
+
+.mg-session-pill {
+  bottom: calc(62px + env(safe-area-inset-bottom) + var(--space-4));
+}
+
+.mg-rest {
+  bottom: calc(62px + env(safe-area-inset-bottom) + var(--space-4));
+}
+
+/* Segmented control e separadores em vidro */
+.mg-segmented__track,
+.mg-ex-tabs {
+  background-color: var(--fill-3);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset 0 0 0 var(--hairline) var(--glass-edge);
+}
+
+/* Campos: vidro escavado */
+.mg-input,
+.mg-select,
+.mg-stepper__value {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), inset 0 0 0 var(--hairline) var(--glass-edge);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .mg-card,
+  .mg-program-list,
+  .mg-ex-list,
+  .mg-body-nav,
+  .mg-body-header {
+    background-color: var(--system-elevated);
+  }
+}

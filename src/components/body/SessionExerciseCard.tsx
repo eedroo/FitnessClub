@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { prefillSet } from '@/lib/fitness/session';
+import { suggestProgression } from '@/lib/fitness/progression';
 import { compareWithPrevious, summarize } from '@/lib/fitness/progress';
 import { CompareCard } from './CompareCard';
 import type { ActiveSessionView } from '@/lib/fitness/types';
@@ -60,7 +61,15 @@ export function SessionExerciseCard({
     if (current && !was.current) ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     was.current = current;
   }, [current]);
-  const prefill = prefillSet({ doneInSession: sets.map((s) => ({ exerciseId: exercise.id, ...s })), last: item.last, target: item.target });
+  // Progressão dupla: o que fazer hoje (uma rep a mais que a última vez, ou mais carga com tudo no topo do alvo).
+  const suggestion = suggestProgression({ measure: exercise.measure, equipment: exercise.equipment, last: item.last, target: item.target });
+  const suggested = suggestion?.sets[sets.length];
+  const prefill = suggested
+    ? { reps: suggested.reps, ...(suggested.weightGrams != null && { weightGrams: suggested.weightGrams }) }
+    : prefillSet({ doneInSession: sets.map((s) => ({ exerciseId: exercise.id, ...s })), last: item.last, target: item.target });
+  const plan = suggestion
+    ? suggestion.sets.map((s) => s.reps).join(' · ') + (suggestion.sets[0]?.weightGrams != null ? ` × ${t('kgShort', { kg: kg(suggestion.sets[0].weightGrams) })}` : '')
+    : null;
 
   return (
     <article ref={ref} className={`mg-session-ex${current ? ' mg-session-ex--current' : ''}`} aria-current={current ? 'step' : undefined}>
@@ -73,6 +82,12 @@ export function SessionExerciseCard({
         </p>
       )}
       {last && <p className="mg-session-ex__last">{t('lastTime', { sets: last })}</p>}
+      {item.note && <p className="mg-session-ex__note">{item.note}</p>}
+      {suggestion && plan && (
+        <p className={`mg-session-ex__suggest mg-session-ex__suggest--${suggestion.kind}`}>
+          <strong>{t(`suggest.${suggestion.kind}`)}</strong> {plan}
+        </p>
+      )}
       {/* Assim que há uma série: comparado com a última vez. */}
       {sets.length > 0 && item.last && <CompareCard comparison={compareWithPrevious(summarize(sets), summarize(item.last.sets.map((x) => ({ reps: x.reps ?? undefined, weightGrams: x.weightGrams ?? undefined, durationSec: x.durationSec ?? undefined }))))} />}
       {sets.length > 0 && (

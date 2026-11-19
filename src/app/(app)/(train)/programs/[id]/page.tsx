@@ -7,6 +7,7 @@ import { BodyHeader } from '@/components/body/BodyHeader';
 import { ProgramForm } from '@/components/body/ProgramForm';
 import { WorkoutForm } from '@/components/body/WorkoutForm';
 import { WorkoutList } from '@/components/body/WorkoutList';
+import { NotesCard } from '@/components/body/NotesCard';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness');
@@ -24,6 +25,7 @@ export default async function ProgramRoute({ params }: { params: { id: string } 
       <div className="mg-body-shell__main">
         {program.description && <p className="mg-workout-row__meta">{program.description}</p>}
         <WorkoutList programId={program.id} workouts={program.workouts} />
+        <NotesCard kind="program" targetId={program.id} initial={program.notes} byAi={program.notesByAi} />
         <WorkoutForm programId={program.id} />
         <ProgramForm program={{ id: program.id, name: program.name, description: program.description, kind: program.kind }} />
       </div>

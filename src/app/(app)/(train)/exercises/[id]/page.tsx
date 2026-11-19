@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
-import { getExerciseDetail, getExerciseHistory } from '@/lib/fitness/queries';
+import { getExerciseDetail, getExerciseHistory, getExerciseNote } from '@/lib/fitness/queries';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { BodyHeader } from '@/components/body/BodyHeader';
+import { NotesCard } from '@/components/body/NotesCard';
 import { AddToWorkout } from '@/components/body/AddToWorkout';
 import { CustomExerciseForm } from '@/components/body/CustomExerciseForm';
 import { ExerciseDetail, ExerciseHistory, ExerciseHowTo } from '@/components/body/ExerciseDetail';
@@ -24,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ExerciseRoute({ params }: { params: { id: string } }) {
   const { userId, locale } = await bodyPage();
   const id = decodeURIComponent(params.id).slice(0, 191);
-  const [t, detail, history, user, workouts, progress] = await Promise.all([
+  const [t, detail, history, user, workouts, progress, note] = await Promise.all([
     getTranslations('fitness'),
     getExerciseDetail(userId, id, locale),
     getExerciseHistory(userId, id),
@@ -35,6 +36,7 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
       select: { id: true, name: true, program: { select: { name: true } } },
     }),
     getExerciseProgress(userId, id),
+    getExerciseNote(userId, id),
   ]);
   if (!detail) notFound();
   const { view } = detail;
@@ -49,6 +51,7 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
             <CustomExerciseForm exercise={{ id: view.id, name: view.name, measure: view.measure, primaryMuscles: view.primaryMuscles, equipment: view.equipment }} />
           )}
         </ExerciseDetail>
+        <NotesCard kind="exercise" targetId={view.id} initial={note?.text ?? null} byAi={note?.byAi ?? false} />
         {/* Séries (histórico + comparação com a anterior) · Evolução · Recordes */}
         <ExerciseTabs
           sets={

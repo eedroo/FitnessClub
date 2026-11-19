@@ -50,6 +50,7 @@ model User {
   name               String
   locale             Locale      @default(PT_PT)
   theme              ThemePref   @default(SYSTEM) // segue o tema do iPhone por defeito
+  accent             String      @default("orange") // cor de destaque: orange | blue | pink | violet | green | graphite
   timezone           String      @default("Europe/Lisbon")
   onboardedAt        DateTime? // boas-vindas do treino concluídas
   emailVerifiedAt    DateTime?
@@ -79,6 +80,7 @@ model User {
   fitnessSessions   FitnessSession[]
   bodyWeights       BodyWeightEntry[]
   bodyGoal          BodyGoal?
+  exerciseNotes     ExerciseNote[]
 }
 
 enum AuthTokenType {
@@ -194,6 +196,7 @@ model Exercise {
   owner            User?           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   workoutItems     WorkoutItem[]
   sets             SessionSet[]
+  notes            ExerciseNote[]
 
   @@index([ownerId])
 }
@@ -215,6 +218,8 @@ model FitnessProgram {
   name        String
   description String?
   kind        ProgramKind      @default(STRENGTH)
+  notes       String? // notas do programa (da pessoa ou geradas pela IA)
+  notesByAi   Boolean          @default(false)
   order       Int
   archivedAt  DateTime?
   createdAt   DateTime         @default(now())
@@ -229,7 +234,8 @@ model FitnessWorkout {
   programId  String
   userId     String
   name       String
-  notes      String?
+  notes      String? // notas do treino (da pessoa ou geradas pela IA)
+  notesByAi  Boolean          @default(false)
   order      Int
   archivedAt DateTime?
   items      WorkoutItem[]
@@ -324,3 +330,16 @@ model BodyGoal {
 }
 
 // ─── F18: Modo guiado ────────────────────────────────────────────────────────────────────────────
+
+// Notas pessoais de um exercício: uma por pessoa e exercício (biblioteca ou próprio), escritas por ela ou pela IA.
+model ExerciseNote {
+  userId     String
+  exerciseId String
+  text       String
+  byAi       Boolean  @default(false)
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@id([userId, exerciseId])
+}

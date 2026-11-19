@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
 import { StartScreen } from '@/components/start/StartScreen';
 import { PublicAnalytics } from '@/components/providers/PublicAnalytics';
+import { AmbientBackground } from '@/components/shell/AmbientBackground';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('common');
@@ -16,6 +17,7 @@ export default async function StartPage() {
   if (session?.user) redirect('/');
   return (
     <>
+      <AmbientBackground />
       <StartScreen />
       <PublicAnalytics />
     </>

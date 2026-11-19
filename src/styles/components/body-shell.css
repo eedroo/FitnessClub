@@ -5,7 +5,6 @@
   z-index: var(--z-content);
   min-height: 100dvh;
   padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-7));
-  background: var(--system-bg);
 }
 
 .mg-body-shell__main {

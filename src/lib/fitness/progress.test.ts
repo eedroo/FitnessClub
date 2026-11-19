@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bestsOf, compareWithPrevious, dayStats, detectPrs, e1rm, EMPTY_BESTS, recomputePrs, summarize } from './progress';
+import { bestsOf, compareTotals, compareWithPrevious, dayStats, detectPrs, e1rm, EMPTY_BESTS, recomputePrs, sessionTotals, summarize } from './progress';
 
 describe('e1rm', () => {
   it('Epley até 12 reps', () => {
@@ -58,5 +58,26 @@ describe('comparação e dia', () => {
       },
     ]);
     expect(out).toMatchObject({ sets: 5, reps: 50, exercises: 2, volumeGrams: 3_760_000, durationSec: 1800, sessionTimeSec: 720, avgRestSec: 180, prs: 1 });
+  });
+});
+
+describe('sessionTotals e compareTotals', () => {
+  const cur = [{ reps: 8, weightGrams: 50000 }, { reps: 7, weightGrams: 50000 }, { reps: 7, weightGrams: 50000 }];
+  const prev = [{ reps: 8, weightGrams: 50000 }, { reps: 7, weightGrams: 50000 }, { reps: 6, weightGrams: 50000 }];
+
+  it('soma séries, reps, volume e a carga máxima', () => {
+    expect(sessionTotals(cur)).toEqual({ sets: 3, reps: 22, volumeGrams: 1_100_000, topWeightGrams: 50000 });
+    expect(sessionTotals([{ reps: 12 }]).topWeightGrams).toBeNull();
+  });
+
+  it('compara com a anterior (delta e %)', () => {
+    const c = compareTotals(sessionTotals(cur), sessionTotals(prev));
+    expect(c.reps).toEqual({ value: 22, delta: 1, pct: 4.8 });
+    expect(c.volumeGrams).toEqual({ value: 1_100_000, delta: 50_000, pct: 4.8 });
+    expect(c.topWeightGrams).toEqual({ value: 50000, delta: 0, pct: 0 });
+  });
+
+  it('sem anterior: tudo null', () => {
+    expect(compareTotals(sessionTotals(cur), null).volumeGrams).toBeNull();
   });
 });

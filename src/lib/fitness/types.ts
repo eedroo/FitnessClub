@@ -55,6 +55,8 @@ export interface ActiveSessionView {
     target: { sets: number | null; repsMin: number | null; repsMax: number | null; sec: number | null; restSec: number };
     doneSets: SessionSetView[];
     last: LastPerformance | null;
+    /** Notas pessoais do exercício (mostradas na sessão). */
+    note: string | null;
   }[];
 }
 

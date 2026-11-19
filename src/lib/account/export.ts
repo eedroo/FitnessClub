@@ -1,4 +1,4 @@
-import type { BodyGoal, BodyWeightEntry, Exercise, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
+import type { BodyGoal, BodyWeightEntry, Exercise, ExerciseNote, FitnessPrefs, FitnessProgram, FitnessSession, FitnessWorkout, SessionSet, User, UserActiveDay, WorkoutItem } from '@prisma/client';
 import { fromDbDate } from '@/lib/dates';
 
 /**
@@ -24,6 +24,8 @@ export interface ExportSource {
     customExercises: Exercise[];
     weights: BodyWeightEntry[];
     goal: BodyGoal | null;
+    /** Notas pessoais dos exercícios. */
+    exerciseNotes?: ExerciseNote[];
   };
 }
 
@@ -78,6 +80,7 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
         name: p.name,
         description: p.description,
         kind: p.kind,
+        notes: p.notes,
         order: p.order,
         createdAt: iso(p.createdAt),
         archivedAt: iso(p.archivedAt),
@@ -99,6 +102,7 @@ export function buildExport(data: ExportSource, now: Date = new Date()) {
           })),
         })),
       })),
+      exerciseNotes: (data.fitness.exerciseNotes ?? []).map((n) => ({ exerciseId: n.exerciseId, text: n.text, byAi: n.byAi, updatedAt: iso(n.updatedAt) })),
       weights: data.fitness.weights.map((w) => ({
         date: day(w.date),
         grams: w.grams,

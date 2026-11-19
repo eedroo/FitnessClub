@@ -1,13 +1,14 @@
 /* StartScreen: ecrã de boas-vindas ao estilo das apps do iPhone (ícone, título grande, novidades e botões fixos em baixo) */
 
 .mg-start {
+  position: relative;
+  z-index: var(--z-content);
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   max-width: 560px;
   margin: 0 auto;
   padding: calc(env(safe-area-inset-top) + var(--space-7)) var(--space-6) 0;
-  background: var(--system-bg-2);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -100,7 +101,6 @@
   gap: var(--space-1);
   margin: var(--space-6) calc(-1 * var(--space-6)) 0;
   padding: var(--space-4) var(--space-6) calc(env(safe-area-inset-bottom) + var(--space-4));
-  background: var(--system-bg-2);
 }
 
 .mg-start__privacy {

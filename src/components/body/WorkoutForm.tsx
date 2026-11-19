@@ -14,7 +14,8 @@ export function WorkoutForm({ programId, workout }: { programId: string; workout
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(workout?.name ?? '');
-  const [notes, setNotes] = useState(workout?.notes ?? '');
+  // As notas editam-se no NotesCard; aqui só se preservam ao gravar o nome.
+  const notes = workout?.notes ?? '';
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -42,10 +43,6 @@ export function WorkoutForm({ programId, workout }: { programId: string; workout
       <label>
         {t('name')}
         <TextInput value={name} maxLength={80} onChange={(e) => setName(e.target.value)} autoFocus />
-      </label>
-      <label>
-        {t('notes')}
-        <TextInput value={notes} maxLength={500} onChange={(e) => setNotes(e.target.value)} />
       </label>
       {error && (
         <p className="mg-set-input__error" role="alert">

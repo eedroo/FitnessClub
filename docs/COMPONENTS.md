@@ -10,6 +10,8 @@ Fonte de verdade da UI. Todo o componente listado aqui tem:
 
 **Inline style** só é permitido para um ajuste pontual numa instância de um componente reutilizado. Nunca Tailwind.
 
+**Material: vidro líquido** (`glass.css`, pedido da dona do projecto): cartões, listas, células soltas, folhas e barras são vidro translúcido e desfocado sobre um fundo vivo (`AmbientBackground`, orbes tingidas pelo acento), com brilho no topo (`--glass-sheen`), aresta de luz (`--glass-stroke`), contorno fino (`--glass-edge`) e sombra suave; vidro dentro de vidro fica sem segundo desfoque. Botões em cápsula, o preenchido como gota brilhante. Tab bar em cápsula de vidro a flutuar. A cor de destaque escolhe-se nas definições (`data-accent`: laranja, azul, rosa, violeta, verde, grafite).
+
 **Linguagem visual: app nativo do iPhone** (Human Interface Guidelines). Fonte do sistema (SF Pro no Apple) e a escala de texto do iOS (corpo 17, título grande 34 bold); cores de sistema claras e escuras (`--system-bg` agrupado, `--system-bg-2` nas células, `--fill-*` em campos e trilhos, `--separator` em traços finos de 0,5 pt); um único acento (`--accent`, laranja da marca); sem dourado, vidro nem sombras nos cartões (sombra só em folhas, menus e no polegar dos controlos). Padrões: listas agrupadas (inset grouped) com separador recolhido e chevron cinzento, barra de navegação translúcida com título grande, tab bar translúcida, folhas que sobem de baixo com pega, interruptores verdes, segmented control com polegar branco, números arredondados (`--font-rounded`) nos temporizadores e métricas. Tema por defeito: o do sistema.
 
 Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam a fase do MYGLOW em que nasceram.
@@ -76,7 +78,7 @@ Os componentes vieram do MYGLOW (commit `73f7028`); as etiquetas `F…` indicam 
 ### AmbientBackground — F1
 - **TSX:** `AmbientBackground.tsx` (Server)
 - **Classes:** `mg-ambient`, `mg-ambient__orb`, `mg-ambient__orb--1 … --4`
-- Mantido por compatibilidade: as orbes ficam transparentes (fundo liso de sistema)
+- Fundo vivo do vidro líquido: 4 orbes desfocadas tingidas pela cor de destaque (`--orb-*` com `color-mix`), animação lenta; parado com `prefers-reduced-motion`. Em todos os layouts e na página de entrada
 - `aria-hidden`, `position: fixed`, atrás de tudo
 
 ### PageHeader — F1
@@ -141,6 +143,8 @@ Rotas novas: `(auth)/forgot-password`, `reset-password`, `verify-email`, `confir
 | `VerifyEmailResult` | server | `auth-result.css` | `mg-auth-result`, `--ok`, `--error`, `__icon`, `__title`, `__text`, `__actions` | `/verify-email?token=` → consome o token e mostra sucesso ou erro |
 | `ConfirmEmailChangeResult` | server | `auth-result.css` | `mg-auth-result`, … | `/confirm-email-change?token=` → aplica o email novo; pede para entrar de novo |
 | `SettingsNav` | client | `settings-nav.css` | `mg-settings-nav`, `__list`, `__item`, `--active` | índice das secções das definições (âncoras); no desktop fica fixo ao lado; secção visível marcada (IntersectionObserver) |
+| `AccentPicker` | client | `accent-picker.css` | `mg-accent-picker`, `__row`, `__option`, `__input`, `__dot`, `__label` | Preferências: bolinhas de cor (radiogroup) com os tokens da própria cor (`data-accent` no elemento); pré-visualiza no `<html>` ao escolher; grava com `saveSettings` (conta + cookie `fc_accent`) |
+| `AccentSync` | client | — | — | (`components/providers/`) no layout `(app)`: aplica a cor da conta no `<html>` e no cookie (ex.: escolhida noutro dispositivo); o layout raiz já lê o cookie para não piscar |
 | `TrainingPrefsForm` | client | `form.css` (reutiliza) | `mg-form`, `__row`, `__status` | Definições → Treino (só com `pro`): descanso por defeito (60 · 90 · 120 · 180 s, `SegmentedControl`), aviso de fim de descanso e ecrã aceso (`CheckChip`) → `updateFitnessPrefs` |
 | Página `/settings` | server | `settings-nav.css` | `mg-settings__back` | link de volta aos treinos (ou ao cadeado) por cima do título |
 | `ChangeEmailForm` | client | `form.css` | `mg-form`, `__row`, `__status`, `--error` | email novo + palavra-passe actual → `requestEmailChange` ("Enviámos um link para o email novo.") |
@@ -213,7 +217,7 @@ Recurso premium `pro` com navegação própria, inspirado no Setgraph: bibliotec
 | `AddToWorkout` | client | `ex-detail.css` | `mg-add-to-workout` | escolhe o treino e acrescenta o exercício |
 | `SessionScreen` | client | `session.css` | `mg-session`, `__top`, `__list` | sessão activa: nome, cronómetro total, Terminar e ⋯ (notas, descartar), cartões dos exercícios, "+ Exercício", descanso; fila de gravação sem rede; wake lock; `visibilitychange` → `setClientHidden` |
 | `SessionTimer` | client | `session.css` | `mg-session-timer` | cronómetro total grande a partir de `startedAt` |
-| `SessionExerciseCard` | client | `session.css` | `mg-session-ex`, `__target`, `__last` | nome, alvo, "Última vez: 60 kg × 10, 10, 9", séries feitas e a próxima |
+| `SessionExerciseCard` | client | `session.css` | `mg-session-ex`, `__target`, `__last`, `__suggest`, `--add-rep`/`--add-weight`/`--complete-sets`/`--top-of-range`, `__note` | nome, alvo, "Última vez: 60 kg × 10, 10, 9", a sugestão de hoje (progressão dupla: "Hoje: mais uma rep 8 · 7 · 7 × 50 kg" ou "Hora de subir a carga"), as notas pessoais, séries feitas e a próxima já preenchida com a sugestão |
 | `SetRow` | client | `session.css` | `mg-set-row` | série feita em `SetLine` (com a hora), toque para editar ou apagar |
 | `SetInputRow` | client | `session.css` | `mg-set-input` | próxima série pré-preenchida (`prefillSet`) com steppers e "Feita ✓" |
 | `NumberStepper` | client | `session.css` | `mg-stepper`, `__btn`, `__value` | − / valor (teclado numérico ao tocar) / + |
@@ -244,6 +248,8 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | `ExerciseTabs` | client | `ex-list.css` (reutiliza `mg-ex-tabs`) | `mg-ex-tabs`, `__tab` | Séries · Evolução · Recordes no topo do exercício |
 | `CompareBlock` | server | — | — | na página do exercício: a última sessão contra a anterior, em `CompareCard` |
 | `CompareCard` | server/client | `compare.css` | `mg-compare`, `__head`, `__grid`, `__cell`, `__bar`, `__label`, `__value`, `__delta`, `--up` | cartão "Comparado com a anterior": grelha 2×2 (séries, reps, volume, kg por rep), cada uma com barra de cor, nome, valor e variação com ▲/▼ e % (▲ em verde quando sobe; o resto neutro); também em cada exercício da sessão, contra a última vez, assim que há uma série |
+| `TotalsCompare` | client | `compare.css` (reutiliza) | `mg-compare`, `--totals`, `__cell--volume`/`--top`/`--reps`/`--sets` | "Comparado com {data}": volume, carga máxima, reps e séries contra a sessão anterior do mesmo treino (no resumo da sessão) ou o dia de treino anterior (tab Dia); "igual" quando não muda |
+| `NotesCard` | client | `notes.css` | `mg-notes`, `__head`, `__title`, `__ai`, `__text`, `__empty`, `__input`, `__actions` | notas do programa, do treino ou do exercício (pessoais; marca "IA" quando geradas pela IA); Editar → caixa de texto (até 4000) → `saveNotes`; vazio apaga. As do exercício aparecem também na sessão (`mg-session-ex__note`) |
 | `ExerciseProgressChart` | client | `ex-chart.css` | `mg-ex-chart` | SVG de linha por sessão; selector melhor peso · e1RM · volume |
 | `ExerciseRecords` | server | `ex-records.css` | `mg-ex-records`, `__row` | melhor peso, melhor e1RM, máx. reps por peso, com datas |
 | `PrTrophy` | client | `pr.css` | `mg-pr`, `--fresh` | troféu dourado (`--pr-gold`); animação curta só sem `prefers-reduced-motion` |

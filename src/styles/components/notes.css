@@ -1,0 +1,64 @@
+/* NotesCard: notas pessoais (programa, treino, exercício), como uma célula agrupada com texto livre */
+
+.mg-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--system-bg-2);
+}
+
+.mg-notes__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mg-notes__title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mg-notes__ai {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-notes__text {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  white-space: pre-wrap;
+}
+
+.mg-notes__empty {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.mg-notes__input {
+  min-height: 120px;
+  padding: var(--space-3);
+  resize: vertical;
+  line-height: var(--leading-normal);
+}
+
+.mg-notes__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}

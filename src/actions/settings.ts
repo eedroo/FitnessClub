@@ -5,9 +5,10 @@ import { IANAZone } from 'luxon';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { settingsPatchSchema, type SettingsPatch } from '@/lib/validation/settings';
+import { ACCENT_COOKIE, ACCENT_COOKIE_MAX_AGE } from '@/lib/accent';
 import { LOCALE_COOKIE, LOCALE_COOKIE_OPTIONS, dbToAppLocale } from '@/i18n/locales';
 
-type SettingsField = 'name' | 'locale' | 'theme' | 'timezone';
+type SettingsField = 'name' | 'locale' | 'theme' | 'timezone' | 'accent';
 
 export type SaveSettingsResult =
   | { ok: true }
@@ -18,6 +19,7 @@ const FIELD_ERRORS: Record<SettingsField, string> = {
   locale: 'validation.required',
   theme: 'validation.required',
   timezone: 'validation.timezone',
+  accent: 'validation.required',
 };
 
 /**
@@ -45,6 +47,7 @@ export async function saveSettings(input: SettingsPatch): Promise<SaveSettingsRe
   if (!before) return { ok: false, formError: 'common.errors.unauthorized' };
   await db.user.update({ where: { id: session.user.id }, data: parsed.data });
   cookies().set(LOCALE_COOKIE, dbToAppLocale(parsed.data.locale ?? before.locale), LOCALE_COOKIE_OPTIONS);
+  if (parsed.data.accent) cookies().set(ACCENT_COOKIE, parsed.data.accent, { maxAge: ACCENT_COOKIE_MAX_AGE, path: '/', sameSite: 'lax' });
 
 
   return { ok: true };

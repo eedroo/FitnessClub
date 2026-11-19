@@ -5,6 +5,15 @@ import { formatGramsAsKg } from '@/lib/weight';
 import { isAppLocale, intlLocale } from '@/i18n/locales';
 import type { SessionListItem, SessionSummary as Summary } from '@/lib/fitness/queries';
 import { formatClock } from '@/lib/fitness/session';
+import { compareTotals, compareWithPrevious, summarize } from '@/lib/fitness/progress';
+import { TotalsCompare } from './TotalsCompare';
+import { CompareCard } from './CompareCard';
+
+const vals = (s: { reps: number | null; weightGrams: number | null; durationSec: number | null }) => ({
+  reps: s.reps ?? undefined,
+  weightGrams: s.weightGrams ?? undefined,
+  durationSec: s.durationSec ?? undefined,
+});
 
 async function localeTools() {
   const raw = await getLocale();
@@ -12,7 +21,10 @@ async function localeTools() {
   return { locale, kg: (g: number) => formatGramsAsKg(g, intlLocale(locale)) };
 }
 
-/** Resumo de uma sessão: números grandes e a lista por exercício. `fresh` anima a entrada ao terminar. */
+/**
+ * Resumo de uma sessão: números grandes, a comparação com a sessão anterior do mesmo treino (volume, carga máxima,
+ * reps, séries) e, por exercício, as séries e a comparação com a última vez. `fresh` anima a entrada ao terminar.
+ */
 export async function SessionSummary({ summary, fresh }: { summary: Summary; fresh: boolean }) {
   const [t, { locale, kg }] = await Promise.all([getTranslations('fitness.summary'), localeTools()]);
   const prs = summary.byExercise.reduce((n, g) => n + g.sets.filter((s) => s.prKinds.length > 0).length, 0);
@@ -38,7 +50,9 @@ export async function SessionSummary({ summary, fresh }: { summary: Summary; fre
           </li>
         ))}
       </ul>
-      {summary.byExercise.map(({ exercise, sets }) => (
+      {summary.previous && <TotalsCompare comparison={compareTotals(summary.totals, summary.previous.totals)} previousDate={summary.previous.date} />}
+      <h2 className="mg-body-section-title">{t('byExercise')}</h2>
+      {summary.byExercise.map(({ exercise, sets, previous }) => (
         <div key={exercise.id} className="mg-session-summary__ex">
           <Link href={`/exercises/${encodeURIComponent(exercise.id)}`} className="mg-session-row__name">
             {exercise.name}
@@ -54,6 +68,11 @@ export async function SessionSummary({ summary, fresh }: { summary: Summary; fre
               )
               .join(', ')}
           </span>
+          {previous ? (
+            <CompareCard comparison={compareWithPrevious(summarize(sets.map(vals)), summarize(previous.sets.map(vals)))} />
+          ) : (
+            <span className="mg-session-row__meta">{t('firstTime')}</span>
+          )}
         </div>
       ))}
     </section>

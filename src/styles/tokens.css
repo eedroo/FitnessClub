@@ -1,7 +1,8 @@
 /*
  * FitnessClub — design tokens. Única fonte de cores, espaços, raios, sombras, blur e tipografia.
- * Linguagem visual de app nativo do iPhone (Human Interface Guidelines): cores de sistema claras e escuras,
- * fonte do sistema (SF Pro no iPhone e no Mac), listas agrupadas, barras translúcidas e um único acento.
+ * Linguagem visual de app nativo do iPhone (Human Interface Guidelines) com materiais de vidro líquido: superfícies
+ * translúcidas e desfocadas sobre um fundo vivo (orbes tingidas pelo acento), brilho fino nas arestas, cápsulas.
+ * Fonte do sistema (SF Pro no iPhone e no Mac). O acento escolhe-se nas definições (`data-accent` no <html>).
  * Os nomes antigos (gold-*, glass-*, body-*) mantêm-se como aliases para os componentes herdados do MYGLOW.
  */
 
@@ -13,21 +14,27 @@
   --accent: #F2541B;
   --accent-pressed: #D2430F;
   --accent-soft: rgba(242, 84, 27, 0.12);
+  --accent-2: #FF9F6B; /* segunda cor das orbes */
   --on-accent: #FFFFFF;
 
   /* Fundos de sistema (agrupados) */
-  --system-bg: #F2F2F7; /* systemGroupedBackground */
-  --system-bg-2: #FFFFFF; /* secondarySystemGroupedBackground: células e cartões */
-  --system-bg-3: #F2F2F7; /* tertiarySystemGroupedBackground: dentro de células */
-  --system-elevated: #FFFFFF; /* folhas e menus */
+  --system-bg: #ECEEF4; /* fundo por baixo das orbes */
+  --system-bg-2: rgba(255, 255, 255, 0.56); /* vidro: células e cartões */
+  --system-bg-3: rgba(255, 255, 255, 0.4); /* vidro dentro de vidro */
+  --system-elevated: rgba(250, 250, 252, 0.86); /* folhas e menus (vidro mais espesso) */
+  --glass-filter: blur(28px) saturate(190%);
+  --glass-stroke: rgba(255, 255, 255, 0.85); /* aresta de luz em cima */
+  --glass-edge: rgba(20, 24, 40, 0.07); /* contorno fino à volta */
+  --glass-shadow: 0 10px 30px rgba(20, 24, 40, 0.08), 0 1px 2px rgba(20, 24, 40, 0.04);
+  --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 45%);
   --fill: rgba(120, 120, 128, 0.2); /* systemFill: interruptores desligados, trilhos */
   --fill-2: rgba(120, 120, 128, 0.16);
   --fill-3: rgba(118, 118, 128, 0.12); /* campos de texto, segmented control */
   --separator: rgba(60, 60, 67, 0.29);
   --separator-opaque: #C6C6C8;
-  --bar-bg: rgba(249, 249, 249, 0.94); /* barra de navegação e tab bar */
-  --bar-blur: saturate(180%) blur(20px);
-  --segment-thumb: #FFFFFF;
+  --bar-bg: rgba(255, 255, 255, 0.72); /* barra de navegação e tab bar (vidro) */
+  --bar-blur: blur(28px) saturate(190%);
+  --segment-thumb: rgba(255, 255, 255, 0.95);
   --switch-thumb: #FFFFFF;
   --grabber: rgba(60, 60, 67, 0.3);
 
@@ -76,18 +83,19 @@
   --gold-icon: var(--accent);
   --line-rule: var(--separator);
 
-  /* Sem orbes de fundo */
-  --orb-1: transparent;
-  --orb-2: transparent;
-  --orb-3: transparent;
-  --orb-4: transparent;
-  --orb-blur: 0px;
+  /* Fundo vivo: orbes desfocadas tingidas pelo acento */
+  --orb-1: color-mix(in srgb, var(--accent) 38%, transparent);
+  --orb-2: color-mix(in srgb, var(--accent-2) 34%, transparent);
+  --orb-3: color-mix(in srgb, var(--accent) 22%, transparent);
+  --orb-4: color-mix(in srgb, var(--accent-2) 26%, transparent);
+  --orb-blur: 90px;
 
   /* Estado */
   --danger: var(--system-red);
   --danger-bg: rgba(255, 59, 48, 0.12);
   --text-on-danger: #FFFFFF;
   --success: var(--system-green);
+  --success-bg: rgba(52, 199, 89, 0.14);
   --ready-on: var(--system-green);
   --ready-off: var(--fill);
 
@@ -96,7 +104,7 @@
   --shadow-card-hover: none;
   --shadow-glow: none;
   --shadow-button: none;
-  --shadow-sheet: 0 -1px 0 var(--separator), 0 -10px 40px rgba(0, 0, 0, 0.12);
+  --shadow-sheet: 0 -10px 40px rgba(20, 24, 40, 0.14), inset 0 1px 0 var(--glass-stroke);
   --shadow-menu: 0 10px 40px rgba(0, 0, 0, 0.18);
   --shadow-thumb: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06);
   --shadow-segment: 0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
@@ -206,19 +214,28 @@
   --accent: #FF6A33;
   --accent-pressed: #FF8255;
   --accent-soft: rgba(255, 106, 51, 0.2);
+  --accent-2: #B8431B;
   --on-accent: #FFFFFF;
+  --orb-1: color-mix(in srgb, var(--accent) 30%, transparent);
+  --orb-2: color-mix(in srgb, var(--accent-2) 40%, transparent);
+  --orb-3: color-mix(in srgb, var(--accent) 16%, transparent);
+  --orb-4: color-mix(in srgb, var(--accent-2) 24%, transparent);
 
-  --system-bg: #000000;
-  --system-bg-2: #1C1C1E;
-  --system-bg-3: #2C2C2E;
-  --system-elevated: #1C1C1E;
+  --system-bg: #05060B;
+  --system-bg-2: rgba(255, 255, 255, 0.07);
+  --system-bg-3: rgba(255, 255, 255, 0.05);
+  --system-elevated: rgba(30, 32, 42, 0.82);
+  --glass-stroke: rgba(255, 255, 255, 0.16);
+  --glass-edge: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 40%);
   --fill: rgba(120, 120, 128, 0.36);
   --fill-2: rgba(120, 120, 128, 0.32);
   --fill-3: rgba(118, 118, 128, 0.24);
   --separator: rgba(84, 84, 88, 0.65);
   --separator-opaque: #38383A;
-  --bar-bg: rgba(22, 22, 24, 0.9);
-  --segment-thumb: #636366;
+  --bar-bg: rgba(22, 24, 32, 0.74);
+  --segment-thumb: rgba(255, 255, 255, 0.2);
   --switch-thumb: #FFFFFF;
   --grabber: rgba(235, 235, 245, 0.3);
 
@@ -238,8 +255,9 @@
   --system-gray: #8E8E93;
 
   --danger-bg: rgba(255, 69, 58, 0.2);
+  --success-bg: rgba(48, 209, 88, 0.2);
   --scrim: rgba(0, 0, 0, 0.6);
-  --shadow-sheet: 0 -1px 0 var(--separator);
+  --shadow-sheet: 0 -10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--glass-stroke);
   --shadow-menu: 0 10px 40px rgba(0, 0, 0, 0.6);
   --shadow-thumb: 0 3px 8px rgba(0, 0, 0, 0.35);
   --focus-ring: 0 0 0 3px rgba(10, 132, 255, 0.6);
@@ -256,3 +274,21 @@
   --recovery-rested: #3A3A3C;
   --pr-gold: #FFD60A;
 }
+
+/*
+ * Cores de destaque à escolha (Definições → Preferências). Cada uma define o acento, a cor quando se carrega,
+ * o fundo suave, a segunda cor das orbes e o texto sobre o acento; claro e escuro.
+ */
+[data-accent="orange"] { --accent: #F2541B; --accent-pressed: #D2430F; --accent-soft: rgba(242, 84, 27, 0.12); --accent-2: #FF9F6B; --on-accent: #FFFFFF; }
+[data-accent="blue"] { --accent: #0A7AFF; --accent-pressed: #0062CC; --accent-soft: rgba(10, 122, 255, 0.12); --accent-2: #7CC4FF; --on-accent: #FFFFFF; }
+[data-accent="pink"] { --accent: #E5487A; --accent-pressed: #C93163; --accent-soft: rgba(229, 72, 122, 0.12); --accent-2: #F7A6BF; --on-accent: #FFFFFF; }
+[data-accent="violet"] { --accent: #7B5CF0; --accent-pressed: #6243D6; --accent-soft: rgba(123, 92, 240, 0.12); --accent-2: #C3B2FF; --on-accent: #FFFFFF; }
+[data-accent="green"] { --accent: #1FA35C; --accent-pressed: #168447; --accent-soft: rgba(31, 163, 92, 0.12); --accent-2: #8EE0B0; --on-accent: #FFFFFF; }
+[data-accent="graphite"] { --accent: #2C2F36; --accent-pressed: #15171C; --accent-soft: rgba(44, 47, 54, 0.1); --accent-2: #A9B0BF; --on-accent: #FFFFFF; }
+
+[data-theme="dark"][data-accent="orange"] { --accent: #FF6A33; --accent-pressed: #FF8255; --accent-soft: rgba(255, 106, 51, 0.2); --accent-2: #B8431B; }
+[data-theme="dark"][data-accent="blue"] { --accent: #3D9BFF; --accent-pressed: #6BB3FF; --accent-soft: rgba(61, 155, 255, 0.2); --accent-2: #1648A8; }
+[data-theme="dark"][data-accent="pink"] { --accent: #FF6B9A; --accent-pressed: #FF8FB2; --accent-soft: rgba(255, 107, 154, 0.2); --accent-2: #8E2350; }
+[data-theme="dark"][data-accent="violet"] { --accent: #9B85FF; --accent-pressed: #B5A6FF; --accent-soft: rgba(155, 133, 255, 0.2); --accent-2: #3D2A99; }
+[data-theme="dark"][data-accent="green"] { --accent: #34D27A; --accent-pressed: #5CDD95; --accent-soft: rgba(52, 210, 122, 0.2); --accent-2: #0E5A31; }
+[data-theme="dark"][data-accent="graphite"] { --accent: #F2F3F5; --accent-pressed: #FFFFFF; --accent-soft: rgba(242, 243, 245, 0.14); --accent-2: #3A3F4B; --on-accent: #0B0C10; }
