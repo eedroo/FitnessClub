@@ -490,7 +490,7 @@
       "notes": true,
       "workouts": [
         {
-          "key": "pull",
+          "key": "pullBefore",
           "items": [
             {
               "exerciseId": "Cat_Stretch",
@@ -549,7 +549,12 @@
               "sets": 2,
               "sec": 20,
               "restSec": 30
-            },
+            }
+          ]
+        },
+        {
+          "key": "pullAfter",
+          "items": [
             {
               "exerciseId": "Childs_Pose",
               "sets": 1,
@@ -577,7 +582,7 @@
           ]
         },
         {
-          "key": "legsA",
+          "key": "legsABefore",
           "items": [
             {
               "exerciseId": "FC_Ankle_Rocks",
@@ -624,7 +629,12 @@
               "repsMin": 8,
               "repsMax": 8,
               "restSec": 20
-            },
+            }
+          ]
+        },
+        {
+          "key": "legsAAfter",
+          "items": [
             {
               "exerciseId": "FC_Couch_Stretch",
               "sets": 2,
@@ -658,7 +668,7 @@
           ]
         },
         {
-          "key": "push",
+          "key": "pushBefore",
           "items": [
             {
               "exerciseId": "Wrist_Circles",
@@ -726,7 +736,12 @@
               "sets": 2,
               "sec": 20,
               "restSec": 30
-            },
+            }
+          ]
+        },
+        {
+          "key": "pushAfter",
+          "items": [
             {
               "exerciseId": "FC_Doorway_Chest_Stretch",
               "sets": 1,
@@ -760,7 +775,7 @@
           ]
         },
         {
-          "key": "legsB",
+          "key": "legsBBefore",
           "items": [
             {
               "exerciseId": "Front_Leg_Raises",
@@ -808,7 +823,12 @@
               "repsMin": 6,
               "repsMax": 6,
               "restSec": 30
-            },
+            }
+          ]
+        },
+        {
+          "key": "legsBAfter",
+          "items": [
             {
               "exerciseId": "Seated_Floor_Hamstring_Stretch",
               "sets": 1,
