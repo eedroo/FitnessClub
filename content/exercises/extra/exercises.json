@@ -922,5 +922,296 @@
     "Respire fundo e segure sem forçar a lombar."
    ]
   }
+ },
+ {
+  "id": "FC_Ankle_Rocks",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "calves"
+  ],
+  "secondaryMuscles": [
+   "quadriceps"
+  ],
+  "names": {
+   "en": "Ankle Rocks",
+   "pt-PT": "Mobilização do tornozelo (ankle rocks)",
+   "pt-BR": "Mobilização do tornozelo (ankle rocks)"
+  },
+  "instructions": {
+   "en": [
+    "Half-kneel with your front foot close to a wall.",
+    "Keep the front heel planted.",
+    "Drive the knee forward over your toes without lifting the heel.",
+    "Rock back slowly.",
+    "Repeat and switch sides. Move the foot further from the wall as your range improves."
+   ],
+   "pt-PT": [
+    "Põe-te em meio-ajoelhado, com o pé da frente perto de uma parede.",
+    "Mantém o calcanhar da frente bem apoiado no chão.",
+    "Leva o joelho para a frente, por cima dos dedos do pé, sem levantar o calcanhar.",
+    "Volta atrás devagar.",
+    "Repete e troca de lado. Afasta o pé da parede à medida que ganhas amplitude."
+   ],
+   "pt-BR": [
+    "Fique em meio-ajoelhado, com o pé da frente perto de uma parede.",
+    "Mantenha o calcanhar da frente bem apoiado no chão.",
+    "Leve o joelho para a frente, por cima dos dedos do pé, sem tirar o calcanhar do chão.",
+    "Volte devagar.",
+    "Repita e troque de lado. Afaste o pé da parede conforme ganhar amplitude."
+   ]
+  }
+ },
+ {
+  "id": "FC_Shoulder_CARs",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "traps",
+   "chest"
+  ],
+  "names": {
+   "en": "Shoulder CARs",
+   "pt-PT": "Círculos controlados do ombro (CARs)",
+   "pt-BR": "Círculos controlados do ombro (CARs)"
+  },
+  "instructions": {
+   "en": [
+    "Stand tall and brace your abs and glutes so your torso stays still.",
+    "Raise one straight arm in front of you, slowly, up overhead.",
+    "Keep circling backwards, turning the palm out.",
+    "Bring the arm down behind you to your hip.",
+    "Use the biggest circle you can control without moving your torso. Switch arms."
+   ],
+   "pt-PT": [
+    "De pé, contrai o abdómen e os glúteos para o tronco não se mexer.",
+    "Estende um braço à frente e sobe-o devagar até acima da cabeça.",
+    "Continua o círculo para trás, rodando a palma para fora.",
+    "Desce o braço pelo lado de trás até à anca.",
+    "Faz o círculo no maior arco que consegues controlar, sem compensar com o tronco. Troca de braço."
+   ],
+   "pt-BR": [
+    "Em pé, contraia o abdômen e os glúteos para o tronco não se mexer.",
+    "Estique um braço à frente e suba-o devagar até acima da cabeça.",
+    "Continue o círculo para trás, girando a palma para fora.",
+    "Desça o braço por trás até o quadril.",
+    "Faça o maior círculo que conseguir controlar, sem compensar com o tronco. Troque de braço."
+   ]
+  }
+ },
+ {
+  "id": "FC_Thoracic_Extension",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "other",
+  "level": "beginner",
+  "primaryMuscles": [
+   "middle back"
+  ],
+  "secondaryMuscles": [
+   "chest",
+   "lats"
+  ],
+  "names": {
+   "en": "Thoracic Extension over Roller or Bench",
+   "pt-PT": "Extensão torácica no rolo ou banco",
+   "pt-BR": "Extensão torácica no rolo ou banco"
+  },
+  "instructions": {
+   "en": [
+    "Sit with a foam roller under your upper back (or kneel in front of a bench with your elbows on it).",
+    "Clasp your hands behind your head and bring your elbows together.",
+    "Let your upper back extend over the roller (or your chest sink towards the floor).",
+    "Keep your ribs down without arching your lower back.",
+    "Breathe deeply and hold. On the roller, you can shift up or down once or twice."
+   ],
+   "pt-PT": [
+    "Senta-te no chão com um rolo de espuma por baixo da parte superior das costas (ou ajoelha-te à frente de um banco com os cotovelos em cima).",
+    "Cruza as mãos atrás da cabeça e aproxima os cotovelos.",
+    "Deixa a parte superior das costas estender por cima do rolo (ou o peito descer em direção ao chão).",
+    "Mantém as costelas baixas, sem arquear a lombar.",
+    "Respira fundo e mantém. No rolo, podes mudar a altura uma ou duas vezes."
+   ],
+   "pt-BR": [
+    "Sente no chão com um rolo de espuma embaixo da parte de cima das costas (ou ajoelhe na frente de um banco com os cotovelos em cima).",
+    "Entrelace as mãos atrás da cabeça e aproxime os cotovelos.",
+    "Deixe a parte de cima das costas estender por cima do rolo (ou o peito descer em direção ao chão).",
+    "Mantenha as costelas para baixo, sem arquear a lombar.",
+    "Respire fundo e segure. No rolo, pode mudar a altura uma ou duas vezes."
+   ]
+  }
+ },
+ {
+  "id": "FC_Doorway_Chest_Stretch",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "other",
+  "level": "beginner",
+  "primaryMuscles": [
+   "chest"
+  ],
+  "secondaryMuscles": [
+   "shoulders"
+  ],
+  "names": {
+   "en": "Doorway Chest Stretch",
+   "pt-PT": "Alongamento do peito na porta",
+   "pt-BR": "Alongamento do peitoral na porta"
+  },
+  "instructions": {
+   "en": [
+    "Stand in a doorway.",
+    "Rest your forearms on the frame, elbows at shoulder height.",
+    "Take a small step forward with one foot.",
+    "Lean your chest forward until you feel the stretch across your chest and front of the shoulders.",
+    "Keep your abs engaged without arching your lower back."
+   ],
+   "pt-PT": [
+    "Fica à entrada de uma porta.",
+    "Apoia os antebraços no aro, com os cotovelos à altura dos ombros.",
+    "Dá um pequeno passo à frente com uma perna.",
+    "Leva o peito para a frente até sentires o alongamento no peito e na frente dos ombros.",
+    "Mantém o abdómen ativo, sem arquear a lombar."
+   ],
+   "pt-BR": [
+    "Fique no vão de uma porta.",
+    "Apoie os antebraços no batente, com os cotovelos na altura dos ombros.",
+    "Dê um pequeno passo à frente com uma perna.",
+    "Leve o peito para a frente até sentir o alongamento no peito e na frente dos ombros.",
+    "Mantenha o abdômen ativo, sem arquear a lombar."
+   ]
+  }
+ },
+ {
+  "id": "FC_Cossack_Squat",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "adductors",
+   "quadriceps"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "hamstrings"
+  ],
+  "names": {
+   "en": "Cossack Squat",
+   "pt-PT": "Agachamento cossaco",
+   "pt-BR": "Agachamento cossaco"
+  },
+  "instructions": {
+   "en": [
+    "Take a wide stance, toes slightly out.",
+    "Shift your weight onto one leg and squat down on that side.",
+    "Keep the other leg straight with the toes pointing up.",
+    "Only go as low as you can keep the bent leg's heel down and your chest up.",
+    "Stand back up with control and switch sides. Hold on to a support at first if needed."
+   ],
+   "pt-PT": [
+    "Afasta bem os pés, pontas ligeiramente para fora.",
+    "Leva o peso para uma perna e agacha desse lado.",
+    "A outra perna fica estendida, com os dedos do pé a apontar para cima.",
+    "Desce só até onde manténs o calcanhar da perna dobrada no chão e o tronco direito.",
+    "Sobe com controlo e passa para o outro lado. Podes segurar-te a um apoio no início."
+   ],
+   "pt-BR": [
+    "Afaste bem os pés, pontas levemente para fora.",
+    "Leve o peso para uma perna e agache desse lado.",
+    "A outra perna fica esticada, com os dedos do pé apontando para cima.",
+    "Desça só até onde mantém o calcanhar da perna dobrada no chão e o tronco reto.",
+    "Suba com controle e passe para o outro lado. No começo, pode se segurar em um apoio."
+   ]
+  }
+ },
+ {
+  "id": "FC_Standing_Active_Leg_Raise",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "quadriceps"
+  ],
+  "secondaryMuscles": [
+   "abdominals"
+  ],
+  "names": {
+   "en": "Standing Active Leg Raise",
+   "pt-PT": "Elevação ativa da perna em pé",
+   "pt-BR": "Elevação ativa da perna em pé"
+  },
+  "instructions": {
+   "en": [
+    "Stand tall with one hand on a wall or chair.",
+    "Keep both legs straight and your hips level.",
+    "Lift one leg in front of you using only your thigh muscles, as high as you can without bending the knee.",
+    "Hold for a second at the top.",
+    "Lower slowly rather than letting it drop. Do all reps, then switch legs."
+   ],
+   "pt-PT": [
+    "De pé e direito, apoia uma mão numa parede ou cadeira.",
+    "Mantém as duas pernas estendidas e a bacia alinhada.",
+    "Sobe uma perna à frente só com a força da coxa, o mais alto que conseguires sem dobrar o joelho.",
+    "Segura um segundo lá em cima.",
+    "Desce devagar, sem deixar cair. Faz todas as repetições e troca de perna."
+   ],
+   "pt-BR": [
+    "Em pé e reto, apoie uma mão numa parede ou cadeira.",
+    "Mantenha as duas pernas esticadas e o quadril alinhado.",
+    "Suba uma perna à frente só com a força da coxa, o mais alto que conseguir sem dobrar o joelho.",
+    "Segure um segundo lá em cima.",
+    "Desça devagar, sem deixar cair. Faça todas as repetições e troque de perna."
+   ]
+  }
+ },
+ {
+  "id": "FC_Hollow_Body_Hold",
+  "measure": "DURATION",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "abdominals"
+  ],
+  "secondaryMuscles": [
+   "quadriceps"
+  ],
+  "names": {
+   "en": "Hollow Body Hold",
+   "pt-PT": "Posição hollow (barco côncavo)",
+   "pt-BR": "Posição hollow (canoinha)"
+  },
+  "instructions": {
+   "en": [
+    "Lie on your back with your arms straight overhead.",
+    "Press your lower back into the floor by bracing your abs.",
+    "Lift your shoulders and legs slightly off the floor, legs together and straight.",
+    "Your body makes a gentle curve, like a banana.",
+    "Hold without your lower back lifting. To make it easier, bend your knees or bring your arms to your sides."
+   ],
+   "pt-PT": [
+    "Deita-te de costas, com os braços estendidos acima da cabeça.",
+    "Cola a lombar ao chão, contraindo o abdómen.",
+    "Levanta ligeiramente os ombros e as pernas do chão, com as pernas juntas e estendidas.",
+    "O corpo forma uma curva suave, como uma banana.",
+    "Mantém sem a lombar sair do chão. Para facilitar, dobra os joelhos ou traz os braços para junto do corpo."
+   ],
+   "pt-BR": [
+    "Deite de costas, com os braços esticados acima da cabeça.",
+    "Cole a lombar no chão, contraindo o abdômen.",
+    "Levante um pouco os ombros e as pernas do chão, com as pernas juntas e esticadas.",
+    "O corpo forma uma curva suave, como uma banana.",
+    "Segure sem a lombar sair do chão. Para facilitar, dobre os joelhos ou traga os braços para perto do corpo."
+   ]
+  }
  }
 ]

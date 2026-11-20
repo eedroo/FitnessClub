@@ -2,7 +2,7 @@ import { z } from 'zod';
 import raw from '../../../content/fitness/templates.json';
 
 /**
- * Modelos de programa: PPL, Full body A/B, Upper/Lower e Alongamento diário. Copiar um modelo cria
+ * Modelos de programa: PPL, Full body A/B, Upper/Lower, Alongamento diário e Mobilidade + ginástica. Copiar um modelo cria
  * registos normais da pessoa. Os nomes vivem em `messages` (`fitness.templates.<id>`).
  */
 const itemSchema = z.object({
@@ -21,6 +21,8 @@ export const templatesSchema = z.object({
       z.object({
         id: z.string().regex(/^[a-z]+$/),
         kind: z.enum(['STRENGTH', 'STRETCH', 'MIXED']),
+        /** Com notas de programa e de treino em `messages` (`notes`, `workoutNotes.<key>`). */
+        notes: z.boolean().optional(),
         workouts: z.array(z.object({ key: z.string().regex(/^[a-zA-Z]+$/), items: z.array(itemSchema).min(1) })).min(1),
       }),
     )

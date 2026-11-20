@@ -79,11 +79,13 @@ async function copyTemplateFor(uid: string, templateId: string): Promise<string 
       name: t(`fitness.templates.${tpl.id}.name`),
       description: t(`fitness.templates.${tpl.id}.description`),
       kind: tpl.kind,
+      notes: tpl.notes ? t(`fitness.templates.${tpl.id}.notes`) : null,
       order,
       workouts: {
         create: tpl.workouts.map((w, wi) => ({
           userId: uid,
           name: t(`fitness.templates.${tpl.id}.workouts.${w.key}`),
+          notes: tpl.notes ? t(`fitness.templates.${tpl.id}.workoutNotes.${w.key}`) : null,
           order: wi,
           items: {
             create: w.items

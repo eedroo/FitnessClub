@@ -587,6 +587,23 @@
         "workouts": {
           "daily": "Daily stretch"
         }
+      },
+      "mobility": {
+        "name": "Mobility, flexibility & gymnastics",
+        "description": "A companion to your lifting: activation before and stretching after, by day (Pull, Legs 1, Push, Legs 2).",
+        "workouts": {
+          "pull": "Pull · Handstand + Scorpion",
+          "legsA": "Legs 1 · Quads + front split",
+          "push": "Push · Handstand",
+          "legsB": "Legs 2 · Posterior chain + splits"
+        },
+        "notes": "A companion to your lifting, organised around the muscle groups you train each day. Three goals at once:\n• Joint prep: range of motion and a body ready to lift.\n• Flexibility: front and middle splits, spinal extension and shoulders.\n• Gymnastics: handstand, body control, scorpion and backbends.\n\nHow to use each workout\n1. Activation (10–15 min) before lifting: dynamic moves, no long static stretches before heavy loads.\n2. Gymnastics (Pull and Push): straight after activation.\n3. Your lifting session.\n4. Stretching afterwards: this is where static holds go, at moderate tension and pain-free.\n\nSuggested week\nMon: Pull + handstand and scorpion · Tue: gymnastics/flexibility · Wed: Legs 1 + front split · Thu: gymnastics/flexibility · Fri: Push + handstand · Sat: Legs 2 + splits · Sun: rest (optional light mobility).\nOn gymnastics days, go easy on wrists and shoulders if they're already tired from lifting.\n\n\"Per side\" sets: 2 sets = 1 each side; 4 sets = 2 each side.\n\nMobility isn't flexibility\n• Mobility: actively controlling a joint through a range. That's the activation part.\n• Flexibility: reaching and holding bigger ranges. That's the end of the session.\nDon't spend 10 minutes in a deep front split right before heavy leg work.\n\nActive strength\nSplits and handstands improve with strength in those positions, not just passive stretching: active leg raises (front split), Cossack squats (middle split), hollow holds and pike compressions (handstand).\n\nGoals to track\nFront split right and left · Middle split · Pike with chest close to legs · 30 s handstand · Aligned, controlled handstand · Scorpion · Bridge with open shoulders.\nYou don't need to hit the floor yet. What counts is quality time accumulated, without forcing your joints.",
+        "workoutNotes": {
+          "pull": "Before lifting: Cat-Cow through Dead Hang (activation), then wall handstand (20–30 s), scorpion and bridge (gymnastics).\nAfter lifting: Child's Pose through the wall biceps stretch. If you've still got energy, add 2 × 20 s of gentle bridge.\nFocus: shoulder extension, thoracic mobility and body control.",
+          "legsA": "Before lifting: ankles through the active leg raise (hips, knees and ankles ready for squats, leg press and extensions).\nAfter lifting: couch stretch through hip flexors. Progressive front split: 30–45 s, add time once it feels comfortable.\nFocus: quads and hip flexors on the way to the front split.",
+          "push": "Before lifting: wrists through pike shoulder taps (activation), then chest-to-wall handstand (20–30 s), shrugs, pike compressions and hollow hold (gymnastics).\nAfter lifting: doorway chest stretch through thoracic extension.\nFocus: holding strength, alignment and shoulder stability; opening up the chest and shoulders that lifting tightens.",
+          "legsB": "Before lifting: leg swings through Cossack squats (prep for Romanian deadlifts and leg curls).\nAfter lifting: your main leg flexibility day, from seated pike to pancake (seated straddle). Front split 30–60 s and middle split 30–45 s, no rush.\nFocus: hamstrings, glutes, hip flexors and adductors; front and middle splits."
+        }
       }
     },
     "title": "Workouts",

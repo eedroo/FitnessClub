@@ -587,6 +587,23 @@
         "workouts": {
           "daily": "Alongamento diário"
         }
+      },
+      "mobility": {
+        "name": "Mobilidade, flexibilidade e ginástica",
+        "description": "Complemento da musculação: ativação antes e alongamento depois, por dia (Pull, Pernas 1, Push, Pernas 2).",
+        "workouts": {
+          "pull": "Pull · Handstand + Scorpion",
+          "legsA": "Pernas 1 · Quadríceps + front split",
+          "push": "Push · Handstand",
+          "legsB": "Pernas 2 · Posterior + splits"
+        },
+        "notes": "Complemento da tua musculação, organizado pelos grupos musculares de cada dia. Três objetivos ao mesmo tempo:\n• Preparação articular: amplitude e corpo pronto para a musculação.\n• Flexibilidade: front split, middle split, extensão da coluna e ombros.\n• Ginástica: handstand, controlo corporal, scorpion e extensões.\n\nComo usar cada treino\n1. Ativação (10–15 min) antes da musculação: movimentos dinâmicos, sem alongamentos estáticos longos antes de pegar em carga.\n2. Ginástica (Pull e Push): logo a seguir à ativação.\n3. Musculação.\n4. Alongamento depois: aqui sim, estático, com tensão moderada e sem dor.\n\nSemana sugerida\nSeg: Pull + handstand e scorpion · Ter: ginástica/flexibilidade · Qua: Pernas 1 + front split · Qui: ginástica/flexibilidade · Sex: Push + handstand · Sáb: Pernas 2 + splits · Dom: descanso (mobilidade leve opcional).\nNos dias de ginástica, poupa punhos e ombros se já estiverem cansados da musculação.\n\nSéries «por lado»: 2 séries = 1 de cada lado; 4 séries = 2 de cada lado.\n\nMobilidade não é flexibilidade\n• Mobilidade: controlar ativamente uma articulação numa amplitude. É o que treinas na ativação.\n• Flexibilidade: chegar a amplitudes maiores e mantê-las. É o que treinas no fim.\nAntes de pernas pesadas, nada de 10 minutos em front split profundo.\n\nForça ativa\nOs splits e o handstand evoluem com força nas posições, não só com alongamento passivo: elevação ativa da perna (front split), agachamento cossaco (middle split), hollow e compressão em pike (handstand).\n\nObjetivos para acompanhar\nFront split direito e esquerdo · Middle split · Pike com o peito perto das pernas · Handstand de 30 s · Handstand alinhado e controlado · Scorpion · Ponte com ombros abertos.\nNão precisas de chegar ao chão já. Conta o tempo de qualidade acumulado, sem forçar as articulações.",
+        "workoutNotes": {
+          "pull": "Antes da musculação: do Cat-Cow ao Dead hang (ativação), depois handstand na parede (20–30 s), scorpion e ponte (ginástica).\nDepois da musculação: do Child's pose ao bíceps na parede. Se ainda tiveres energia, mais 2 × 20 s de ponte suave.\nFoco: extensão dos ombros, mobilidade torácica e controlo corporal.",
+          "legsA": "Antes da musculação: dos tornozelos até à elevação ativa da perna (anca, joelhos e tornozelos prontos para agachamento, leg press e extensões).\nDepois da musculação: do couch stretch aos flexores da anca. Front split progressivo: 30–45 s, sobe o tempo quando estiver confortável.\nFoco: quadríceps e flexores da anca a caminho do front split.",
+          "push": "Antes da musculação: dos punhos aos pike shoulder taps (ativação), depois handstand de frente para a parede (20–30 s), shrugs, compressão em pike e hollow (ginástica).\nDepois da musculação: do peito na porta à extensão torácica.\nFoco: força de sustentação, alinhamento e estabilidade dos ombros; abrir peito e ombros fechados pela musculação.",
+          "legsB": "Antes da musculação: dos leg swings ao agachamento cossaco (preparação para peso morto romeno e flexoras).\nDepois da musculação: o teu dia principal de flexibilidade de pernas, do pike sentado ao pancake (afastamento sentado). Front split 30–60 s e middle split 30–45 s, sem pressa.\nFoco: isquiotibiais, glúteos, flexores da anca e adutores; front e middle split."
+        }
       }
     },
     "title": "Treinos",

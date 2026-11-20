@@ -483,6 +483,371 @@
           ]
         }
       ]
+    },
+    {
+      "id": "mobility",
+      "kind": "MIXED",
+      "notes": true,
+      "workouts": [
+        {
+          "key": "pull",
+          "items": [
+            {
+              "exerciseId": "Cat_Stretch",
+              "sets": 1,
+              "sec": 40,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Quadruped_Thoracic_Rotation",
+              "sets": 2,
+              "repsMin": 10,
+              "repsMax": 10,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Shoulder_CARs",
+              "sets": 2,
+              "repsMin": 8,
+              "repsMax": 8,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Wall_Slides",
+              "sets": 1,
+              "repsMin": 12,
+              "repsMax": 12,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "Scapular_Pull-Up",
+              "sets": 2,
+              "repsMin": 8,
+              "repsMax": 8,
+              "restSec": 45
+            },
+            {
+              "exerciseId": "FC_Dead_Hang",
+              "sets": 2,
+              "sec": 20,
+              "restSec": 45
+            },
+            {
+              "exerciseId": "FC_Wall_Handstand",
+              "sets": 3,
+              "sec": 20,
+              "restSec": 60
+            },
+            {
+              "exerciseId": "FC_Scorpion_Stretch",
+              "sets": 4,
+              "sec": 20,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Gymnastics_Bridge",
+              "sets": 2,
+              "sec": 20,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "Childs_Pose",
+              "sets": 1,
+              "sec": 45,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "One_Arm_Against_Wall",
+              "sets": 2,
+              "sec": 40,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Shoulder_Stretch",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Standing_Biceps_Stretch",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            }
+          ]
+        },
+        {
+          "key": "legsA",
+          "items": [
+            {
+              "exerciseId": "FC_Ankle_Rocks",
+              "sets": 2,
+              "repsMin": 15,
+              "repsMax": 15,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "Front_Leg_Raises",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Side_Leg_Raises",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_90_90_Hip_Switches",
+              "sets": 1,
+              "repsMin": 10,
+              "repsMax": 10,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Deep_Squat_Hold",
+              "sets": 1,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Bodyweight_Walking_Lunge",
+              "sets": 1,
+              "repsMin": 20,
+              "repsMax": 20,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "FC_Standing_Active_Leg_Raise",
+              "sets": 2,
+              "repsMin": 8,
+              "repsMax": 8,
+              "restSec": 20
+            },
+            {
+              "exerciseId": "FC_Couch_Stretch",
+              "sets": 2,
+              "sec": 60,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Quad_Stretch",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Pigeon_Pose",
+              "sets": 2,
+              "sec": 45,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Front_Split",
+              "sets": 4,
+              "sec": 30,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "Kneeling_Hip_Flexor",
+              "sets": 2,
+              "sec": 45,
+              "restSec": 10
+            }
+          ]
+        },
+        {
+          "key": "push",
+          "items": [
+            {
+              "exerciseId": "Wrist_Circles",
+              "sets": 1,
+              "sec": 60,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Shoulder_CARs",
+              "sets": 2,
+              "repsMin": 8,
+              "repsMax": 8,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Wall_Slides",
+              "sets": 1,
+              "repsMin": 12,
+              "repsMax": 12,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Scapular_Push-Up",
+              "sets": 2,
+              "repsMin": 12,
+              "repsMax": 12,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "External_Rotation_with_Band",
+              "sets": 1,
+              "repsMin": 15,
+              "repsMax": 15,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "FC_Pike_Shoulder_Taps",
+              "sets": 2,
+              "repsMin": 8,
+              "repsMax": 8,
+              "restSec": 45
+            },
+            {
+              "exerciseId": "FC_Wall_Handstand",
+              "sets": 3,
+              "sec": 20,
+              "restSec": 60
+            },
+            {
+              "exerciseId": "FC_Handstand_Shoulder_Shrugs",
+              "sets": 2,
+              "repsMin": 10,
+              "repsMax": 10,
+              "restSec": 60
+            },
+            {
+              "exerciseId": "FC_Pike_Compression",
+              "sets": 2,
+              "repsMin": 10,
+              "repsMax": 10,
+              "restSec": 45
+            },
+            {
+              "exerciseId": "FC_Hollow_Body_Hold",
+              "sets": 2,
+              "sec": 20,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "FC_Doorway_Chest_Stretch",
+              "sets": 1,
+              "sec": 45,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Triceps_Stretch",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Puppy_Pose",
+              "sets": 1,
+              "sec": 60,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Round_The_World_Shoulder_Stretch",
+              "sets": 1,
+              "sec": 40,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Thoracic_Extension",
+              "sets": 1,
+              "sec": 45,
+              "restSec": 10
+            }
+          ]
+        },
+        {
+          "key": "legsB",
+          "items": [
+            {
+              "exerciseId": "Front_Leg_Raises",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Bodyweight_Hip_Hinge",
+              "sets": 1,
+              "repsMin": 15,
+              "repsMax": 15,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Hamstring_Sweeps",
+              "sets": 2,
+              "repsMin": 12,
+              "repsMax": 12,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Adductor_Rock_Backs",
+              "sets": 2,
+              "repsMin": 12,
+              "repsMax": 12,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "Worlds_Greatest_Stretch",
+              "sets": 2,
+              "sec": 40,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "Butt_Lift_Bridge",
+              "sets": 1,
+              "repsMin": 15,
+              "repsMax": 15,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "FC_Cossack_Squat",
+              "sets": 2,
+              "repsMin": 6,
+              "repsMax": 6,
+              "restSec": 30
+            },
+            {
+              "exerciseId": "Seated_Floor_Hamstring_Stretch",
+              "sets": 1,
+              "sec": 60,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Half_Split",
+              "sets": 2,
+              "sec": 45,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Front_Split",
+              "sets": 4,
+              "sec": 30,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "FC_Frog_Stretch",
+              "sets": 1,
+              "sec": 60,
+              "restSec": 10
+            },
+            {
+              "exerciseId": "FC_Middle_Split",
+              "sets": 2,
+              "sec": 30,
+              "restSec": 15
+            },
+            {
+              "exerciseId": "The_Straddle",
+              "sets": 1,
+              "sec": 45,
+              "restSec": 10
+            }
+          ]
+        }
+      ]
     }
   ]
 }
