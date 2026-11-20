@@ -58,6 +58,7 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 ## Treino (do Foco no corpo do MYGLOW, F16)
 - **Acesso:** todo o treino é do recurso `pro`. Sem ele, as páginas levam a `/locked` (cadeado premium) e as acções respondem 404.
 - **Biblioteca:** free-exercise-db (Unlicense) importada para a DB pelo seed em cada deploy, com imagens no Vercel Blob (na v1 os URLs do Blob do MYGLOW; `scripts/fitness/import-images.ts --reupload` cria a cópia própria). Exercícios próprios por pessoa.
+- **Exercícios da casa:** `content/exercises/extra/exercises.json` (ids `FC_*`, textos escritos nas 3 línguas, medida explícita) entram no mesmo seed como LIBRARY; mobilidade, ginástica e alongamentos ficam fora da gamificação (sem padrão de força). Fotos próprias, nunca de terceiros: em `images.json` pelo id quando existirem.
 - **Estrutura:** Programa → Treino → Item. As séries ficam em `SessionSet`, ligadas ao exercício (histórico por data).
 - **Sessão:** uma activa de cada vez; tempos sempre a partir de timestamps; descanso por item, depois por exercício, depois pela preferência; sessão esquecida há mais de 6 h termina na última série.
 - **Aviso de fim de descanso:** push só com o app em segundo plano (job Inngest `fitness-rest-alert`, TTL 60 s).

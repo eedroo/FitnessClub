@@ -1,0 +1,926 @@
+[
+ {
+  "id": "FC_Quadruped_Thoracic_Rotation",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "middle back"
+  ],
+  "secondaryMuscles": [
+   "abdominals",
+   "traps"
+  ],
+  "names": {
+   "en": "Quadruped Thoracic Rotation",
+   "pt-PT": "Rotação torácica em quatro apoios",
+   "pt-BR": "Rotação torácica em quatro apoios"
+  },
+  "instructions": {
+   "en": [
+    "Get on all fours, hands under your shoulders and knees under your hips.",
+    "Place one hand behind your head.",
+    "Bring that elbow down towards the floor, rotating your torso.",
+    "Rotate the other way, taking the elbow up towards the ceiling.",
+    "Keep your hips still and let the upper back drive the movement.",
+    "Repeat and switch sides."
+   ],
+   "pt-PT": [
+    "Coloca-te de quatro apoios, com as mãos alinhadas com os ombros e os joelhos com as ancas.",
+    "Coloca uma mão atrás da cabeça.",
+    "Leva o cotovelo dessa mão em direção ao chão, rodando o tronco.",
+    "Roda o tronco na direção oposta, levando o cotovelo em direção ao teto.",
+    "Mantém a bacia estável e acompanha o movimento com a parte superior das costas.",
+    "Repete e troca de lado."
+   ],
+   "pt-BR": [
+    "Fique em quatro apoios, com as mãos alinhadas aos ombros e os joelhos ao quadril.",
+    "Coloque uma mão atrás da cabeça.",
+    "Leve o cotovelo dessa mão em direção ao chão, girando o tronco.",
+    "Gire o tronco para o lado oposto, levando o cotovelo em direção ao teto.",
+    "Mantenha o quadril estável e acompanhe o movimento com a parte de cima das costas.",
+    "Repita e troque de lado."
+   ]
+  }
+ },
+ {
+  "id": "FC_Wall_Slides",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "traps",
+   "middle back"
+  ],
+  "names": {
+   "en": "Wall Slides",
+   "pt-PT": "Deslizamento dos braços na parede",
+   "pt-BR": "Deslizamento dos braços na parede"
+  },
+  "instructions": {
+   "en": [
+    "Face a wall with your feet slightly apart.",
+    "Place your forearms on the wall with your elbows bent.",
+    "Lightly brace your abs so your lower back doesn't arch.",
+    "Slowly slide your arms up.",
+    "Try to keep your arms in contact with the wall.",
+    "Return to the start with control."
+   ],
+   "pt-PT": [
+    "Fica de frente para uma parede, com os pés ligeiramente afastados.",
+    "Encosta os antebraços na parede, com os cotovelos dobrados.",
+    "Contrai ligeiramente o abdómen para não arquear a lombar.",
+    "Desliza lentamente os braços para cima.",
+    "Tenta manter os braços encostados à parede.",
+    "Regressa à posição inicial de forma controlada."
+   ],
+   "pt-BR": [
+    "Fique de frente para uma parede, com os pés levemente afastados.",
+    "Encoste os antebraços na parede, com os cotovelos dobrados.",
+    "Contraia levemente o abdômen para não arquear a lombar.",
+    "Deslize os braços para cima, devagar.",
+    "Tente manter os braços encostados na parede.",
+    "Volte à posição inicial com controle."
+   ]
+  }
+ },
+ {
+  "id": "FC_Dead_Hang",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "other",
+  "level": "beginner",
+  "primaryMuscles": [
+   "forearms",
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "shoulders",
+   "abdominals"
+  ],
+  "names": {
+   "en": "Dead Hang",
+   "pt-PT": "Suspensão na barra",
+   "pt-BR": "Suspensão na barra"
+  },
+  "instructions": {
+   "en": [
+    "Grab a pull-up bar shoulder-width apart, palms facing forward.",
+    "Let your body hang with your arms straight.",
+    "Keep your legs together or slightly bent.",
+    "Breathe normally and let your shoulders open comfortably.",
+    "Step down with control rather than dropping off the bar."
+   ],
+   "pt-PT": [
+    "Agarra uma barra fixa com as mãos à largura dos ombros, palmas viradas para a frente.",
+    "Deixa o corpo suspenso, com os braços estendidos.",
+    "Mantém as pernas juntas ou ligeiramente dobradas.",
+    "Respira normalmente e deixa os ombros alongar de forma confortável.",
+    "Desce de forma controlada, sem saltar da barra."
+   ],
+   "pt-BR": [
+    "Segure uma barra fixa com as mãos na largura dos ombros, palmas para a frente.",
+    "Deixe o corpo pendurado, com os braços estendidos.",
+    "Mantenha as pernas juntas ou levemente dobradas.",
+    "Respire normalmente e deixe os ombros alongarem de forma confortável.",
+    "Desça com controle, sem pular da barra."
+   ]
+  }
+ },
+ {
+  "id": "FC_90_90_Hip_Switches",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "abductors",
+   "adductors"
+  ],
+  "names": {
+   "en": "90/90 Hip Switches",
+   "pt-PT": "Rotação de ancas 90/90",
+   "pt-BR": "Rotação de quadril 90/90"
+  },
+  "instructions": {
+   "en": [
+    "Sit on the floor with both knees bent to about 90 degrees.",
+    "One leg in front of you and the other to the side, both on the floor.",
+    "Sit as tall as you can.",
+    "Rotate both legs together to the other side.",
+    "Keep your glutes on the floor whenever possible.",
+    "Alternate sides with control."
+   ],
+   "pt-PT": [
+    "Senta-te no chão com as pernas dobradas, os joelhos a cerca de 90 graus.",
+    "Uma perna fica à frente e a outra de lado, ambas no chão.",
+    "Mantém o tronco o mais direito possível.",
+    "Roda as duas pernas em conjunto para o lado oposto.",
+    "Mantém os glúteos no chão sempre que possível.",
+    "Alterna os lados de forma controlada."
+   ],
+   "pt-BR": [
+    "Sente no chão com as pernas dobradas, os joelhos a cerca de 90 graus.",
+    "Uma perna fica à frente e a outra de lado, as duas no chão.",
+    "Mantenha o tronco o mais reto possível.",
+    "Gire as duas pernas juntas para o outro lado.",
+    "Mantenha os glúteos no chão sempre que possível.",
+    "Alterne os lados com controle."
+   ]
+  }
+ },
+ {
+  "id": "FC_Deep_Squat_Hold",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "glutes",
+   "quadriceps"
+  ],
+  "secondaryMuscles": [
+   "adductors",
+   "calves"
+  ],
+  "names": {
+   "en": "Deep Squat Hold with Movement",
+   "pt-PT": "Agachamento profundo com movimento",
+   "pt-BR": "Agachamento profundo com movimento"
+  },
+  "instructions": {
+   "en": [
+    "Stand with your feet a little wider than hip-width, toes slightly out.",
+    "Slowly lower into a deep squat.",
+    "Keep your heels on the floor.",
+    "Use your elbows to gently push your knees out.",
+    "Make small, controlled movements to open up your hips and ankles."
+   ],
+   "pt-PT": [
+    "Coloca os pés um pouco mais afastados do que a largura das ancas, pontas ligeiramente para fora.",
+    "Desce lentamente até ao agachamento profundo.",
+    "Mantém os calcanhares no chão.",
+    "Usa os cotovelos para afastar suavemente os joelhos.",
+    "Faz pequenos movimentos controlados para soltar ancas e tornozelos."
+   ],
+   "pt-BR": [
+    "Coloque os pés um pouco mais afastados que a largura do quadril, pontas levemente para fora.",
+    "Desça devagar até o agachamento profundo.",
+    "Mantenha os calcanhares no chão.",
+    "Use os cotovelos para afastar os joelhos com suavidade.",
+    "Faça pequenos movimentos controlados para soltar quadril e tornozelos."
+   ]
+  }
+ },
+ {
+  "id": "FC_Scapular_Push-Up",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "chest",
+   "traps"
+  ],
+  "names": {
+   "en": "Scapular Push-up",
+   "pt-PT": "Flexão escapular",
+   "pt-BR": "Flexão escapular"
+  },
+  "instructions": {
+   "en": [
+    "Get into a high plank with your arms straight (don't hyperextend the elbows).",
+    "Let your chest sink slightly, squeezing your shoulder blades together.",
+    "Push the floor away, spreading your shoulder blades apart.",
+    "Keep your abs braced throughout.",
+    "Repeat without bending your elbows."
+   ],
+   "pt-PT": [
+    "Põe-te em prancha alta, com os braços estendidos (sem hiperextensão dos cotovelos).",
+    "Deixa o peito descer um pouco, aproximando as omoplatas.",
+    "Empurra o chão, afastando as omoplatas.",
+    "Mantém o abdómen contraído durante todo o movimento.",
+    "Repete sem dobrar os cotovelos."
+   ],
+   "pt-BR": [
+    "Fique em prancha alta, com os braços estendidos (sem travar os cotovelos para trás).",
+    "Deixe o peito descer um pouco, aproximando as escápulas.",
+    "Empurre o chão, afastando as escápulas.",
+    "Mantenha o abdômen contraído o tempo todo.",
+    "Repita sem dobrar os cotovelos."
+   ]
+  }
+ },
+ {
+  "id": "FC_Pike_Shoulder_Taps",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "abdominals"
+  ],
+  "names": {
+   "en": "Pike Shoulder Taps",
+   "pt-PT": "Toques nos ombros em pike",
+   "pt-BR": "Toques nos ombros em pike"
+  },
+  "instructions": {
+   "en": [
+    "Hands on the floor and hips high, making an upside-down V.",
+    "Arms straight and feet down, weight shared between both hands.",
+    "Lift one hand and tap the opposite shoulder.",
+    "Slowly return to the start.",
+    "Alternate arms without rotating your hips."
+   ],
+   "pt-PT": [
+    "Mãos no chão e bacia elevada, formando um V invertido.",
+    "Braços estendidos e pés apoiados, peso dividido pelas duas mãos.",
+    "Tira uma mão do chão e toca no ombro oposto.",
+    "Regressa lentamente à posição inicial.",
+    "Alterna os braços sem rodar a bacia."
+   ],
+   "pt-BR": [
+    "Mãos no chão e quadril elevado, formando um V invertido.",
+    "Braços estendidos e pés apoiados, peso dividido entre as mãos.",
+    "Tire uma mão do chão e toque no ombro oposto.",
+    "Volte devagar à posição inicial.",
+    "Alterne os braços sem girar o quadril."
+   ]
+  }
+ },
+ {
+  "id": "FC_Bodyweight_Hip_Hinge",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "lower back"
+  ],
+  "names": {
+   "en": "Bodyweight Hip Hinge",
+   "pt-PT": "Dobradiça da anca sem carga",
+   "pt-BR": "Dobradiça de quadril sem carga"
+  },
+  "instructions": {
+   "en": [
+    "Stand with feet hip-width apart and knees slightly bent.",
+    "Push your hips back as if closing a door with your glutes.",
+    "Lean your torso forward, keeping a neutral spine.",
+    "Go down until you feel a comfortable stretch in your hamstrings.",
+    "Drive your hips forward to stand back up."
+   ],
+   "pt-PT": [
+    "De pé, pés à largura das ancas e joelhos ligeiramente dobrados.",
+    "Leva a bacia para trás, como se fechasses uma porta com os glúteos.",
+    "Inclina o tronco para a frente com a coluna neutra.",
+    "Desce até sentires uma tensão confortável nos isquiotibiais.",
+    "Empurra a bacia para a frente e volta à posição inicial."
+   ],
+   "pt-BR": [
+    "Em pé, pés na largura do quadril e joelhos levemente dobrados.",
+    "Leve o quadril para trás, como se fechasse uma porta com os glúteos.",
+    "Incline o tronco para a frente com a coluna neutra.",
+    "Desça até sentir uma tensão confortável nos posteriores da coxa.",
+    "Empurre o quadril para a frente e volte à posição inicial."
+   ]
+  }
+ },
+ {
+  "id": "FC_Hamstring_Sweeps",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves",
+   "glutes"
+  ],
+  "names": {
+   "en": "Hamstring Sweeps",
+   "pt-PT": "Varredura dinâmica dos isquiotibiais",
+   "pt-BR": "Varredura dinâmica dos posteriores"
+  },
+  "instructions": {
+   "en": [
+    "Stand with one foot slightly in front, heel on the floor.",
+    "Straighten the front knee (keep a slight bend if needed).",
+    "Hinge forward and sweep your hands towards your foot.",
+    "Come back up to standing.",
+    "Repeat smoothly, then switch legs."
+   ],
+   "pt-PT": [
+    "De pé, com uma perna ligeiramente à frente e o calcanhar no chão.",
+    "Estende o joelho da frente (com ligeira flexão, se precisares).",
+    "Inclina o tronco e leva as mãos em direção ao pé.",
+    "Volta à posição vertical.",
+    "Repete de forma fluida e troca de perna."
+   ],
+   "pt-BR": [
+    "Em pé, com uma perna levemente à frente e o calcanhar no chão.",
+    "Estique o joelho da frente (com leve flexão, se precisar).",
+    "Incline o tronco e leve as mãos em direção ao pé.",
+    "Volte à posição em pé.",
+    "Repita de forma fluida e troque de perna."
+   ]
+  }
+ },
+ {
+  "id": "FC_Adductor_Rock_Backs",
+  "measure": "REPS",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [
+   "glutes"
+  ],
+  "names": {
+   "en": "Adductor Rock Backs",
+   "pt-PT": "Mobilização dos adutores em quatro apoios",
+   "pt-BR": "Mobilização dos adutores em quatro apoios"
+  },
+  "instructions": {
+   "en": [
+    "Get on all fours.",
+    "Extend one leg out to the side with the foot flat.",
+    "Keep a neutral spine and straight arms.",
+    "Slowly rock your hips back towards the heel of the bent leg.",
+    "Feel the stretch along the inner thigh of the straight leg, then return."
+   ],
+   "pt-PT": [
+    "Coloca-te de quatro apoios.",
+    "Estende uma perna para o lado, com o pé apoiado.",
+    "Mantém a coluna neutra e os braços estendidos.",
+    "Leva lentamente a bacia para trás, em direção ao calcanhar da perna dobrada.",
+    "Sente o alongamento na parte interna da coxa estendida e volta à posição inicial."
+   ],
+   "pt-BR": [
+    "Fique em quatro apoios.",
+    "Estique uma perna para o lado, com o pé apoiado.",
+    "Mantenha a coluna neutra e os braços estendidos.",
+    "Leve o quadril devagar para trás, em direção ao calcanhar da perna dobrada.",
+    "Sinta o alongamento na parte interna da coxa esticada e volte à posição inicial."
+   ]
+  }
+ },
+ {
+  "id": "FC_Wall_Handstand",
+  "measure": "DURATION",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "triceps",
+   "abdominals",
+   "traps"
+  ],
+  "names": {
+   "en": "Wall Handstand (back or chest to wall)",
+   "pt-PT": "Pino na parede (de costas ou de frente)",
+   "pt-BR": "Parada de mão na parede (de costas ou de frente)"
+  },
+  "instructions": {
+   "en": [
+    "Back to wall: hands shoulder-width on the floor, kick up and rest your feet on the wall.",
+    "Chest to wall: start with hands on the floor, put your feet on the wall and walk your hands in until your chest is close to it.",
+    "Lock your arms and push the floor away.",
+    "Squeeze your abs and glutes so your lower back doesn't arch; legs together.",
+    "Hold the line and come down slowly."
+   ],
+   "pt-PT": [
+    "De costas para a parede: mãos no chão à largura dos ombros, lança as pernas e apoia os pés na parede.",
+    "De frente para a parede: começa com as mãos no chão, põe os pés na parede e caminha com as mãos até aproximar o peito da parede.",
+    "Estende completamente os braços e empurra o chão.",
+    "Contrai abdómen e glúteos para não arquear a lombar; pernas juntas.",
+    "Mantém o alinhamento e sai devagar."
+   ],
+   "pt-BR": [
+    "De costas para a parede: mãos no chão na largura dos ombros, impulsione as pernas e apoie os pés na parede.",
+    "De frente para a parede: comece com as mãos no chão, coloque os pés na parede e caminhe com as mãos até aproximar o peito da parede.",
+    "Estique completamente os braços e empurre o chão.",
+    "Contraia abdômen e glúteos para não arquear a lombar; pernas juntas.",
+    "Mantenha o alinhamento e saia devagar."
+   ]
+  }
+ },
+ {
+  "id": "FC_Handstand_Shoulder_Shrugs",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "traps",
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "triceps"
+  ],
+  "names": {
+   "en": "Handstand Shoulder Shrugs",
+   "pt-PT": "Elevação escapular no pino",
+   "pt-BR": "Elevação escapular na parada de mão"
+  },
+  "instructions": {
+   "en": [
+    "Get into a wall handstand with your elbows fully locked.",
+    "Let your shoulders sink a little without losing control.",
+    "Push the floor away, shrugging your shoulders towards your ears.",
+    "Keep your head between your arms.",
+    "Repeat without bending your elbows."
+   ],
+   "pt-PT": [
+    "Põe-te em pino contra a parede, com os cotovelos completamente estendidos.",
+    "Deixa os ombros descer um pouco, sem perder o controlo.",
+    "Empurra o chão, levando os ombros em direção às orelhas.",
+    "Mantém a cabeça entre os braços.",
+    "Repete sem dobrar os cotovelos."
+   ],
+   "pt-BR": [
+    "Fique em parada de mão na parede, com os cotovelos totalmente esticados.",
+    "Deixe os ombros descerem um pouco, sem perder o controle.",
+    "Empurre o chão, levando os ombros em direção às orelhas.",
+    "Mantenha a cabeça entre os braços.",
+    "Repita sem dobrar os cotovelos."
+   ]
+  }
+ },
+ {
+  "id": "FC_Pike_Compression",
+  "measure": "REPS",
+  "category": "strength",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "abdominals",
+   "quadriceps"
+  ],
+  "secondaryMuscles": [],
+  "names": {
+   "en": "Pike Compression",
+   "pt-PT": "Compressão em pike",
+   "pt-BR": "Compressão em pike"
+  },
+  "instructions": {
+   "en": [
+    "Sit with your legs straight and together, toes pointing up.",
+    "Place your hands on the floor beside your thighs.",
+    "Lean your torso slightly forward.",
+    "Lift your heels off the floor, keeping your legs straight.",
+    "Lower slowly and repeat."
+   ],
+   "pt-PT": [
+    "Senta-te com as pernas estendidas e juntas, pés a apontar para cima.",
+    "Mãos no chão ao lado das coxas.",
+    "Inclina ligeiramente o tronco para a frente.",
+    "Eleva os calcanhares do chão com as pernas estendidas.",
+    "Desce devagar e repete."
+   ],
+   "pt-BR": [
+    "Sente com as pernas esticadas e juntas, pés apontando para cima.",
+    "Mãos no chão ao lado das coxas.",
+    "Incline levemente o tronco para a frente.",
+    "Levante os calcanhares do chão com as pernas esticadas.",
+    "Desça devagar e repita."
+   ]
+  }
+ },
+ {
+  "id": "FC_Scorpion_Stretch",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "quadriceps"
+  ],
+  "secondaryMuscles": [
+   "abdominals",
+   "lower back"
+  ],
+  "names": {
+   "en": "Scorpion Stretch",
+   "pt-PT": "Posição scorpion",
+   "pt-BR": "Posição escorpião"
+  },
+  "instructions": {
+   "en": [
+    "Lie face down with your arms out to the sides.",
+    "Keep your hips on the floor.",
+    "Bend one knee and lift the foot.",
+    "Carefully rotate your hip, reaching the foot towards your head or the opposite side.",
+    "Stay within a comfortable range and switch legs. Don't force your lower back."
+   ],
+   "pt-PT": [
+    "Deita-te de barriga para baixo, com os braços abertos para os lados.",
+    "Mantém a bacia apoiada no chão.",
+    "Dobra um joelho e eleva o pé.",
+    "Roda a anca com cuidado, levando o pé na direção da cabeça ou do lado oposto.",
+    "Fica numa amplitude confortável e troca de perna. Não forces a lombar."
+   ],
+   "pt-BR": [
+    "Deite de barriga para baixo, com os braços abertos para os lados.",
+    "Mantenha o quadril apoiado no chão.",
+    "Dobre um joelho e levante o pé.",
+    "Gire o quadril com cuidado, levando o pé em direção à cabeça ou ao lado oposto.",
+    "Fique numa amplitude confortável e troque de perna. Não force a lombar."
+   ]
+  }
+ },
+ {
+  "id": "FC_Gymnastics_Bridge",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "lower back",
+   "shoulders"
+  ],
+  "secondaryMuscles": [
+   "glutes",
+   "triceps"
+  ],
+  "names": {
+   "en": "Gymnastics Bridge",
+   "pt-PT": "Ponte de ginástica",
+   "pt-BR": "Ponte de ginástica"
+  },
+  "instructions": {
+   "en": [
+    "Lie on your back, knees bent and feet hip-width apart.",
+    "Place your hands by your ears, fingers pointing to your shoulders.",
+    "Push through hands and feet to lift your hips and torso.",
+    "Gradually straighten your arms into an arch.",
+    "Hold, then come down with control. If mobility is limited, start with an elevated bridge."
+   ],
+   "pt-PT": [
+    "Deita-te de costas, joelhos dobrados e pés à largura das ancas.",
+    "Mãos junto às orelhas, dedos a apontar para os ombros.",
+    "Empurra o chão com mãos e pés, elevando a bacia e o tronco.",
+    "Estende os braços aos poucos, formando um arco.",
+    "Mantém e regressa ao chão com controlo. Sem mobilidade suficiente, começa com uma ponte elevada."
+   ],
+   "pt-BR": [
+    "Deite de costas, joelhos dobrados e pés na largura do quadril.",
+    "Mãos ao lado das orelhas, dedos apontando para os ombros.",
+    "Empurre o chão com mãos e pés, levantando o quadril e o tronco.",
+    "Estique os braços aos poucos, formando um arco.",
+    "Segure e volte ao chão com controle. Sem mobilidade suficiente, comece com uma ponte elevada."
+   ]
+  }
+ },
+ {
+  "id": "FC_Couch_Stretch",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "quadriceps"
+  ],
+  "secondaryMuscles": [],
+  "names": {
+   "en": "Couch Stretch",
+   "pt-PT": "Alongamento do quadríceps no sofá",
+   "pt-BR": "Alongamento do quadríceps no sofá"
+  },
+  "instructions": {
+   "en": [
+    "Kneel with one knee on the floor next to a wall or couch.",
+    "Rest the top of that foot against the wall or raised surface.",
+    "Put the other foot forward with the knee bent.",
+    "Gradually lift your torso, keeping your hips square.",
+    "Squeeze your glutes without arching your lower back; hold and switch sides."
+   ],
+   "pt-PT": [
+    "Põe um joelho no chão junto a uma parede ou sofá.",
+    "Apoia o peito do pé dessa perna na parede ou superfície elevada.",
+    "A outra perna fica à frente, com o joelho dobrado.",
+    "Eleva o tronco aos poucos, com a bacia alinhada.",
+    "Contrai os glúteos sem arquear a lombar; mantém e troca de lado."
+   ],
+   "pt-BR": [
+    "Coloque um joelho no chão perto de uma parede ou sofá.",
+    "Apoie o peito do pé dessa perna na parede ou superfície elevada.",
+    "A outra perna fica à frente, com o joelho dobrado.",
+    "Levante o tronco aos poucos, com o quadril alinhado.",
+    "Contraia os glúteos sem arquear a lombar; segure e troque de lado."
+   ]
+  }
+ },
+ {
+  "id": "FC_Pigeon_Pose",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "glutes"
+  ],
+  "secondaryMuscles": [
+   "abductors"
+  ],
+  "names": {
+   "en": "Pigeon Pose",
+   "pt-PT": "Posição do pombo",
+   "pt-BR": "Postura do pombo"
+  },
+  "instructions": {
+   "en": [
+    "Start on all fours.",
+    "Bring one leg forward with the knee bent.",
+    "Extend the other leg straight back.",
+    "Adjust your hips without forcing the front knee.",
+    "Stay upright or fold forward; hold and switch sides."
+   ],
+   "pt-PT": [
+    "Começa em quatro apoios.",
+    "Leva uma perna à frente, com o joelho dobrado.",
+    "Estende a outra perna para trás.",
+    "Ajusta a bacia sem forçar o joelho da frente.",
+    "Tronco direito ou inclinado para a frente; mantém e troca de lado."
+   ],
+   "pt-BR": [
+    "Comece em quatro apoios.",
+    "Leve uma perna à frente, com o joelho dobrado.",
+    "Estique a outra perna para trás.",
+    "Ajuste o quadril sem forçar o joelho da frente.",
+    "Tronco reto ou inclinado para a frente; segure e troque de lado."
+   ]
+  }
+ },
+ {
+  "id": "FC_Front_Split",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "quadriceps"
+  ],
+  "names": {
+   "en": "Front Split",
+   "pt-PT": "Espargata frontal",
+   "pt-BR": "Espacate frontal"
+  },
+  "instructions": {
+   "en": [
+    "Start in a lunge with one leg forward and hands on the floor or blocks.",
+    "Slowly slide the front leg forward.",
+    "At the same time, extend the back leg behind you.",
+    "Keep your hips square and facing forward.",
+    "Only go as low as you can control without pain. Work both sides."
+   ],
+   "pt-PT": [
+    "Começa em afundo, com uma perna à frente e as mãos no chão ou em blocos.",
+    "Desliza devagar a perna da frente para a frente.",
+    "Ao mesmo tempo, estende a perna de trás.",
+    "Mantém a bacia alinhada e virada para a frente.",
+    "Desce só até onde controlas a posição, sem dor. Trabalha os dois lados."
+   ],
+   "pt-BR": [
+    "Comece em afundo, com uma perna à frente e as mãos no chão ou em blocos.",
+    "Deslize devagar a perna da frente para a frente.",
+    "Ao mesmo tempo, estique a perna de trás.",
+    "Mantenha o quadril alinhado e virado para a frente.",
+    "Desça só até onde controla a posição, sem dor. Trabalhe os dois lados."
+   ]
+  }
+ },
+ {
+  "id": "FC_Half_Split",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "hamstrings"
+  ],
+  "secondaryMuscles": [
+   "calves"
+  ],
+  "names": {
+   "en": "Half Split",
+   "pt-PT": "Meia espargata",
+   "pt-BR": "Meio espacate"
+  },
+  "instructions": {
+   "en": [
+    "Start in a low lunge with one knee on the floor.",
+    "Shift your hips slightly back.",
+    "Straighten the front leg with the heel on the floor.",
+    "Keep your spine long and your back flat.",
+    "Fold towards the straight leg; hold and switch sides."
+   ],
+   "pt-PT": [
+    "Começa em afundo, com um joelho no chão.",
+    "Leva a bacia ligeiramente para trás.",
+    "Estende a perna da frente, com o calcanhar apoiado.",
+    "Mantém a coluna alongada e as costas direitas.",
+    "Inclina o tronco para a perna estendida; mantém e troca de lado."
+   ],
+   "pt-BR": [
+    "Comece em afundo, com um joelho no chão.",
+    "Leve o quadril levemente para trás.",
+    "Estique a perna da frente, com o calcanhar apoiado.",
+    "Mantenha a coluna alongada e as costas retas.",
+    "Incline o tronco em direção à perna esticada; segure e troque de lado."
+   ]
+  }
+ },
+ {
+  "id": "FC_Middle_Split",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "intermediate",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [],
+  "names": {
+   "en": "Middle Split",
+   "pt-PT": "Espargata lateral",
+   "pt-BR": "Espacate lateral"
+  },
+  "instructions": {
+   "en": [
+    "Sit with your legs wide and your hands on the floor in front.",
+    "Gradually widen your legs.",
+    "Keep your knees straight and toes pointing up.",
+    "Lean slightly forward with a long spine.",
+    "Hold without forcing the range or using body weight to push wider."
+   ],
+   "pt-PT": [
+    "Senta-te com as pernas afastadas e as mãos no chão à frente.",
+    "Afasta as pernas aos poucos.",
+    "Joelhos estendidos e pés a apontar para cima.",
+    "Inclina o tronco ligeiramente para a frente, com a coluna alongada.",
+    "Mantém sem forçar a amplitude nem usar o peso do corpo para abrir."
+   ],
+   "pt-BR": [
+    "Sente com as pernas afastadas e as mãos no chão à frente.",
+    "Afaste as pernas aos poucos.",
+    "Joelhos esticados e pés apontando para cima.",
+    "Incline o tronco levemente para a frente, com a coluna alongada.",
+    "Segure sem forçar a amplitude nem usar o peso do corpo para abrir."
+   ]
+  }
+ },
+ {
+  "id": "FC_Frog_Stretch",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "adductors"
+  ],
+  "secondaryMuscles": [
+   "glutes"
+  ],
+  "names": {
+   "en": "Frog Stretch",
+   "pt-PT": "Posição da rã",
+   "pt-BR": "Postura do sapo"
+  },
+  "instructions": {
+   "en": [
+    "Start on all fours.",
+    "Slowly slide your knees out to the sides.",
+    "Knees bent to about 90 degrees, feet turned out in line with the knees.",
+    "Rock your hips back until you feel the stretch in your inner thighs.",
+    "Hold and breathe calmly."
+   ],
+   "pt-PT": [
+    "Começa em quatro apoios.",
+    "Afasta os joelhos para os lados devagar.",
+    "Joelhos dobrados a cerca de 90 graus e pés virados para fora, alinhados com os joelhos.",
+    "Leva a bacia para trás até sentires o alongamento na parte interna das coxas.",
+    "Mantém, respirando com calma."
+   ],
+   "pt-BR": [
+    "Comece em quatro apoios.",
+    "Afaste os joelhos para os lados devagar.",
+    "Joelhos dobrados a cerca de 90 graus e pés virados para fora, alinhados aos joelhos.",
+    "Leve o quadril para trás até sentir o alongamento na parte interna das coxas.",
+    "Segure, respirando com calma."
+   ]
+  }
+ },
+ {
+  "id": "FC_Puppy_Pose",
+  "measure": "DURATION",
+  "category": "stretching",
+  "equipment": "body only",
+  "level": "beginner",
+  "primaryMuscles": [
+   "lats"
+  ],
+  "secondaryMuscles": [
+   "shoulders",
+   "chest"
+  ],
+  "names": {
+   "en": "Puppy Pose",
+   "pt-PT": "Posição do cachorro estendido",
+   "pt-BR": "Postura do cachorrinho"
+  },
+  "instructions": {
+   "en": [
+    "Start on all fours with your hips over your knees.",
+    "Slowly walk your hands forward.",
+    "Lower your chest towards the floor.",
+    "Keep your arms straight and rest your forehead down if comfortable.",
+    "Breathe deeply and hold without straining your lower back."
+   ],
+   "pt-PT": [
+    "Começa em quatro apoios, com a bacia sobre os joelhos.",
+    "Caminha devagar com as mãos para a frente.",
+    "Desce o peito em direção ao chão.",
+    "Braços estendidos e testa no chão, se for confortável.",
+    "Respira fundo e mantém sem forçar a lombar."
+   ],
+   "pt-BR": [
+    "Comece em quatro apoios, com o quadril sobre os joelhos.",
+    "Caminhe devagar com as mãos para a frente.",
+    "Desça o peito em direção ao chão.",
+    "Braços esticados e testa no chão, se for confortável.",
+    "Respire fundo e segure sem forçar a lombar."
+   ]
+  }
+ }
+]

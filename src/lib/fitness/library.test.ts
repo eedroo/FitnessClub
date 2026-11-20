@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { exerciseName, inferMeasure, searchExercises, toExerciseRow, type FreeExerciseDbItem } from './library';
+import { exerciseName, extraToExerciseRow, inferMeasure, searchExercises, toExerciseRow, type ExtraExerciseItem, type FreeExerciseDbItem } from './library';
+import { STRENGTH_STANDARDS } from '@/lib/gamification/strength';
 import type { ExerciseView } from './types';
 
 const SOURCE = path.join(process.cwd(), 'content', 'exercises', 'source', 'exercises.json');
@@ -75,6 +76,35 @@ describe('importação', () => {
       for (const k of muscles) expect(m.muscles[k], `${locale} músculo ${k}`).toBeTruthy();
       for (const k of equipment) expect(m.equipment[k], `${locale} equipamento ${k}`).toBeTruthy();
       for (const k of categories) expect(m.categories[k], `${locale} categoria ${k}`).toBeTruthy();
+    }
+  });
+});
+
+describe('exercícios próprios (extra)', () => {
+  const EXTRA = path.join(process.cwd(), 'content', 'exercises', 'extra', 'exercises.json');
+  const extra = JSON.parse(fs.readFileSync(EXTRA, 'utf8')) as ExtraExerciseItem[];
+  const muscles = new Set(items.flatMap((i) => [...i.primaryMuscles, ...i.secondaryMuscles]));
+
+  it('ids únicos, sem colidir com a free-exercise-db nem com a gamificação', () => {
+    const ids = extra.map((e) => e.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    const lib = new Set(items.map((i) => i.id));
+    for (const id of ids) {
+      expect(id.startsWith('FC_')).toBe(true);
+      expect(lib.has(id)).toBe(false);
+      expect(STRENGTH_STANDARDS[id]).toBeUndefined();
+    }
+  });
+
+  it('textos nas 3 línguas, músculos e medida válidos', () => {
+    for (const e of extra) {
+      for (const l of ['en', 'pt-PT', 'pt-BR'] as const) {
+        expect(e.names[l]?.length).toBeGreaterThan(0);
+        expect(e.instructions[l]?.length).toBeGreaterThan(0);
+      }
+      for (const m of [...e.primaryMuscles, ...e.secondaryMuscles]) expect(muscles.has(m)).toBe(true);
+      expect(['REPS', 'DURATION', 'REPS_WEIGHT']).toContain(e.measure);
+      expect(extraToExerciseRow(e, []).measure).toBe(e.measure);
     }
   });
 });

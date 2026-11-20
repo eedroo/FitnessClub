@@ -62,6 +62,35 @@ export function toExerciseRow(
   };
 }
 
+/** Exercícios próprios da biblioteca (`content/exercises/extra/exercises.json`): textos nas 3 línguas e medida explícita. */
+export interface ExtraExerciseItem {
+  id: string;
+  measure: ExerciseMeasure;
+  category: string;
+  equipment: string | null;
+  level: string;
+  primaryMuscles: string[];
+  secondaryMuscles: string[];
+  names: Record<'en' | AppLocale, string>;
+  instructions: Record<'en' | AppLocale, string[]>;
+}
+
+export function extraToExerciseRow(src: ExtraExerciseItem, images: string[]): Prisma.ExerciseCreateInput {
+  return {
+    id: src.id,
+    source: 'LIBRARY',
+    names: src.names,
+    category: src.category,
+    measure: src.measure,
+    primaryMuscles: src.primaryMuscles,
+    secondaryMuscles: src.secondaryMuscles,
+    equipment: src.equipment,
+    level: src.level,
+    instructions: src.instructions,
+    images,
+  };
+}
+
 const FALLBACK: Record<AppLocale, ('en' | AppLocale)[]> = {
   'pt-PT': ['pt-PT', 'pt-BR', 'en'],
   'pt-BR': ['pt-BR', 'pt-PT', 'en'],
