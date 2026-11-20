@@ -18,6 +18,8 @@ import { ExerciseRecords } from '@/components/body/ExerciseRecords';
 import { getStrengthBests } from '@/lib/gamification/server';
 import { strengthLevel } from '@/lib/gamification/strength';
 import { ExerciseStrength } from '@/components/gamification/ExerciseStrength';
+import { MoveHistory } from '@/components/body/MoveHistory';
+import { listExercises } from '@/lib/fitness/queries';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness.exercises');
@@ -42,6 +44,8 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
     getExerciseNote(userId, id),
     getStrengthBests(userId, [id]),
   ]);
+  const hasHistory = history.length > 0;
+  const sameMeasure = hasHistory && detail ? (await listExercises(userId, locale)).filter((e) => e.measure === detail.view.measure) : [];
   const best = strength.best[id];
   const strengthLvl = best ? strengthLevel(id, best, strength.bodyGrams) : null;
   if (!detail) notFound();
@@ -56,6 +60,7 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
           {/* Sem nota, adiciona-se aqui (em "Detalhes e ações"); com nota, ela aparece por baixo. */}
           {!note && <NotesCard kind="exercise" targetId={view.id} initial={null} />}
           {!detail.archived && <AddToWorkout exerciseId={view.id} workouts={workouts.map((w) => ({ id: w.id, label: `${w.program.name} · ${w.name}` }))} />}
+          {hasHistory && <MoveHistory exerciseId={view.id} name={view.name} exercises={sameMeasure} />}
           {view.source === 'CUSTOM' && !detail.archived && (
             <CustomExerciseForm exercise={{ id: view.id, name: view.name, measure: view.measure, primaryMuscles: view.primaryMuscles, equipment: view.equipment }} />
           )}

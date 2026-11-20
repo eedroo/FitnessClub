@@ -77,7 +77,7 @@ export function SessionExerciseCard({
     : null;
 
   const tier = strength
-    ? (strengthLevel(exercise.id, sets.reduce<StrengthBest>((b, s) => mergeBest(b, { reps: s.reps ?? null, weightGrams: s.weightGrams ?? null }), strength.best ?? { e1rmGrams: null, maxReps: null }), strength.bodyGrams)?.tier ?? null)
+    ? (strengthLevel(exercise.id, sets.reduce<StrengthBest>((b, s) => mergeBest(b, { reps: s.reps ?? null, weightGrams: s.weightGrams ?? null, durationSec: s.durationSec ?? null }), strength.best ?? { e1rmGrams: null, maxReps: null }), strength.bodyGrams)?.tier ?? null)
     : null;
 
   return (

@@ -109,7 +109,11 @@ export async function getWorkout(userId: string, id: string, locale: AppLocale) 
     getFitnessPrefs(userId),
   ]);
   if (!w) return null;
-  const last = await lastDoneDates(userId, w.items.map((i) => i.exerciseId));
+  const [last, exNotes] = await Promise.all([
+    lastDoneDates(userId, w.items.map((i) => i.exerciseId)),
+    db.exerciseNote.findMany({ where: { userId, exerciseId: { in: w.items.map((i) => i.exerciseId) } }, select: { exerciseId: true, text: true } }),
+  ]);
+  const noteOf = new Map(exNotes.map((n) => [n.exerciseId, n.text]));
   return {
     id: w.id,
     name: w.name,
@@ -126,7 +130,8 @@ export async function getWorkout(userId: string, id: string, locale: AppLocale) 
       targetSec: i.targetSec,
       restSec: restFor(i, i.exercise, prefs),
       customRest: i.restSec,
-      notes: i.notes,
+      // A nota do exercício (uma só, da pessoa ou da IA): a mesma da página do exercício.
+      notes: noteOf.get(i.exerciseId) ?? null,
       lastDoneAt: last.get(i.exerciseId)?.toISOString() ?? null,
     })),
   };
@@ -248,8 +253,7 @@ export async function getActiveSession(userId: string, locale: AppLocale): Promi
           },
           doneSets: s.sets.filter((x) => x.exerciseId === id).map(setView),
           last: last.get(id) ?? null,
-          // A nota do exercício neste treino (ex.: a prescrição do programa da IA); sem ela, a nota pessoal do exercício.
-          note: item?.notes || (notes.find((n) => n.exerciseId === id)?.text ?? null),
+          note: notes.find((n) => n.exerciseId === id)?.text ?? null,
         },
       ];
     }),

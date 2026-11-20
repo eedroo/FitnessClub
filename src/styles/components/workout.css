@@ -122,3 +122,9 @@
   color: var(--text-secondary);
   white-space: pre-wrap;
 }
+
+/* Medalha de força ao lado do nome (não estica na coluna) */
+.mg-workout-item__text .mg-tier {
+  align-self: flex-start;
+  margin-left: 0;
+}

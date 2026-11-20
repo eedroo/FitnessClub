@@ -28,7 +28,8 @@ export default async function AchievementsPage() {
   const exercises = await db.exercise.findMany({ where: { id: { in: strength.levels.map((l) => l.exerciseId) } }, select: { id: true, names: true } });
   const names = new Map(exercises.map((e) => [e.id, exerciseName(e.names as ExerciseNames, locale)]));
   const num = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
-  const value = (by: 'ratio' | 'reps', v: number) => (by === 'ratio' ? t('strength.ratio', { v: num.format(v) }) : t('strength.reps', { n: v }));
+  const value = (by: 'ratio' | 'reps' | 'sec', v: number) =>
+    by === 'ratio' ? t('strength.ratio', { v: num.format(v) }) : by === 'sec' ? t('strength.sec', { n: v }) : t('strength.reps', { n: v });
   const order = ['diamond', 'platinum', 'gold', 'silver', 'bronze'];
   const levels = [...strength.levels].sort((a, b) => (a.tier ? order.indexOf(a.tier) : 9) - (b.tier ? order.indexOf(b.tier) : 9) || b.progress - a.progress);
   const { summary } = game;

@@ -691,7 +691,8 @@
       "repsMax": "Reps máx.",
       "restOwn": "Descanso (s, vazio = por defeito)",
       "lastDays": "{n, plural, =0 {feito hoje} one {há # dia} other {há # dias}}",
-      "lastWeeks": "{n, plural, one {há # semana} other {há # semanas}}"
+      "lastWeeks": "{n, plural, one {há # semana} other {há # semanas}}",
+      "replace": "Trocar"
     },
     "picker": {
       "title": "Escolher exercícios",
@@ -821,7 +822,8 @@
       "missing-weight": "Indica o peso.",
       "missing-duration": "Indica o tempo.",
       "out-of-range": "Esse valor está fora do intervalo.",
-      "notes": "As notas podem ter até 4000 caracteres."
+      "notes": "As notas podem ter até 4000 caracteres.",
+      "moveMeasure": "Só se pode mover para um exercício que se mede da mesma forma (carga e reps, só reps, ou tempo)."
     },
     "day": {
       "title": "Dia",
@@ -1038,6 +1040,12 @@
       "homeText": "Objectivos, nível, equipamento e dias: é a base das sugestões e da IA",
       "savedTitle": "Perfil guardado",
       "savedText": "A voltar às definições…"
+    },
+    "moveHistory": {
+      "button": "Mover o histórico para outro exercício",
+      "hint": "Para quando registaste as séries no exercício errado (ex.: passada com barra em vez de com halteres). Só muda a tua conta.",
+      "confirm": "Mover para este",
+      "sure": "Mover todas as séries de «{from}» para «{to}»? Os recordes são recalculados."
     }
   },
   "shell": {
@@ -1233,7 +1241,8 @@
       "reps": "{n, plural, one {# repetição} other {# repetições}}",
       "next": "próximo: {v}",
       "belowBronze": "Quase bronze",
-      "empty": "Faz supino, agachamento, terra, desenvolvimento, remada, barra fixa ou flexões para veres o teu nível."
+      "empty": "Faz supino, agachamento, terra, desenvolvimento, remada, barra fixa ou flexões para veres o teu nível.",
+      "sec": "{n} s"
     }
   },
   "activities": {

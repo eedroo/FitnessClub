@@ -557,3 +557,47 @@ export async function saveNotes(input: z.input<typeof notesSchema>): Promise<Fit
   refresh();
   return ok();
 }
+
+/**
+ * Trocar o exercício de um item do treino, mantendo o alvo (séries, reps, descanso). A nota do exercício antigo passa
+ * para o novo quando este ainda não tem nota.
+ */
+export async function replaceWorkoutItem(itemId: string, exerciseId: string): Promise<FitnessResult> {
+  const uid = await userId();
+  if (!uid) return fail('common.errors.unauthorized');
+  if (!id.safeParse(itemId).success || !id.safeParse(exerciseId).success) return fail();
+  const item = await db.workoutItem.findFirst({ where: { id: itemId, workout: { userId: uid } }, select: { id: true, exerciseId: true } });
+  const target = await usableExercise(uid, exerciseId);
+  if (!item || !target || target.archivedAt) return fail();
+  if (item.exerciseId === exerciseId) return ok();
+  await db.workoutItem.update({ where: { id: item.id }, data: { exerciseId } });
+  const [oldNote, newNote] = await Promise.all([
+    db.exerciseNote.findUnique({ where: { userId_exerciseId: { userId: uid, exerciseId: item.exerciseId } } }),
+    db.exerciseNote.findUnique({ where: { userId_exerciseId: { userId: uid, exerciseId } } }),
+  ]);
+  if (oldNote && !newNote) await db.exerciseNote.create({ data: { userId: uid, exerciseId, text: oldNote.text, byAi: oldNote.byAi } });
+  refresh();
+  return ok();
+}
+
+/**
+ * Mover todo o histórico (séries) de um exercício para outro, só na conta da pessoa (ex.: registou "Passada com
+ * barra" quando fazia com halteres). Os dois têm de medir da mesma forma; os recordes recalculam-se nos dois.
+ */
+export async function moveExerciseHistory(fromId: string, toId: string): Promise<FitnessResult<{ moved: number }>> {
+  const uid = await userId();
+  if (!uid) return fail('common.errors.unauthorized');
+  if (!id.safeParse(fromId).success || !id.safeParse(toId).success || fromId === toId) return fail();
+  const [from, to] = await Promise.all([usableExercise(uid, fromId), usableExercise(uid, toId)]);
+  if (!from || !to) return fail();
+  if (from.measure !== to.measure) return fail('fitness.errors.moveMeasure');
+  const { count } = await db.sessionSet.updateMany({ where: { userId: uid, exerciseId: fromId }, data: { exerciseId: toId } });
+  // Sessões em curso que tinham o antigo como "+ Exercício" passam a ter o novo.
+  const extra = await db.fitnessSession.findMany({ where: { userId: uid, extraExercises: { has: fromId } }, select: { id: true, extraExercises: true } });
+  for (const s of extra)
+    await db.fitnessSession.update({ where: { id: s.id }, data: { extraExercises: [...new Set(s.extraExercises.map((e) => (e === fromId ? toId : e)))] } });
+  await recomputeExercisePrs(uid, toId);
+  await recomputeExercisePrs(uid, fromId);
+  refresh();
+  return { ok: true, data: { moved: count } };
+}

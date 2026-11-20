@@ -691,7 +691,8 @@
       "repsMax": "Max reps",
       "restOwn": "Rest (s, empty = default)",
       "lastDays": "{n, plural, =0 {done today} one {# day ago} other {# days ago}}",
-      "lastWeeks": "{n, plural, one {# week ago} other {# weeks ago}}"
+      "lastWeeks": "{n, plural, one {# week ago} other {# weeks ago}}",
+      "replace": "Swap"
     },
     "picker": {
       "title": "Choose exercises",
@@ -821,7 +822,8 @@
       "missing-weight": "Enter the weight.",
       "missing-duration": "Enter the time.",
       "out-of-range": "That value is out of range.",
-      "notes": "Notes can be up to 4,000 characters."
+      "notes": "Notes can be up to 4,000 characters.",
+      "moveMeasure": "You can only move to an exercise measured the same way (weight and reps, reps only, or time)."
     },
     "day": {
       "title": "Day",
@@ -1038,6 +1040,12 @@
       "homeText": "Goals, level, equipment and days: the basis for suggestions and AI",
       "savedTitle": "Profile saved",
       "savedText": "Going back to settings…"
+    },
+    "moveHistory": {
+      "button": "Move history to another exercise",
+      "hint": "For when you logged sets on the wrong exercise (e.g. barbell lunge instead of dumbbell). Only changes your account.",
+      "confirm": "Move to this one",
+      "sure": "Move all sets from “{from}” to “{to}”? Records will be recalculated."
     }
   },
   "shell": {
@@ -1233,7 +1241,8 @@
       "reps": "{n, plural, one {# rep} other {# reps}}",
       "next": "next: {v}",
       "belowBronze": "Almost bronze",
-      "empty": "Do bench press, squats, deadlifts, overhead press, rows, pull-ups or push-ups to see your level."
+      "empty": "Do bench press, squats, deadlifts, overhead press, rows, pull-ups or push-ups to see your level.",
+      "sec": "{n} s"
     }
   },
   "activities": {

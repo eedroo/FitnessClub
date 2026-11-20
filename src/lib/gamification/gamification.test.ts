@@ -96,3 +96,18 @@ describe('atividades no XP', () => {
     expect([r.sessions, r.activities]).toEqual([1, 1]);
   });
 });
+
+describe('padrões de força: exercícios da biblioteca, nunca alongamentos', () => {
+  it('todos os ids existem na biblioteca e nenhum é alongamento', async () => {
+    const { STRENGTH_STANDARDS } = await import('./strength');
+    const lib = (await import('../../../content/exercises/source/exercises.json')).default as { id: string; category: string }[];
+    const byId = new Map(lib.map((e) => [e.id, e]));
+    for (const id of Object.keys(STRENGTH_STANDARDS)) {
+      expect(byId.has(id), id).toBe(true);
+      expect(byId.get(id)!.category, id).not.toBe('stretching');
+    }
+  });
+  it('prancha pelo tempo', () => {
+    expect(strengthLevel('Plank', { e1rmGrams: null, maxReps: null, maxSec: 75 }, null)).toMatchObject({ tier: 'silver', by: 'sec', next: 90 });
+  });
+});

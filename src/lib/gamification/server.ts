@@ -85,7 +85,7 @@ export async function getStrengthBests(userId: string, only?: string[]): Promise
   const [user, weight, sets] = await Promise.all([
     db.user.findUnique({ where: { id: userId }, select: { wellbeingConsentAt: true } }),
     db.bodyWeightEntry.findFirst({ where: { userId }, orderBy: { date: 'desc' }, select: { grams: true } }),
-    db.sessionSet.findMany({ where: { userId, exerciseId: { in: ids } }, select: { exerciseId: true, reps: true, weightGrams: true } }),
+    db.sessionSet.findMany({ where: { userId, exerciseId: { in: ids } }, select: { exerciseId: true, reps: true, weightGrams: true, durationSec: true } }),
   ]);
   const best: Record<string, StrengthBest> = {};
   for (const s of sets) best[s.exerciseId] = mergeBest(best[s.exerciseId], s);

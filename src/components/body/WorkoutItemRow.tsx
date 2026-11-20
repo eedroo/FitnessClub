@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { StrengthTier } from '@/components/gamification/StrengthTier';
+import type { StrengthTier as StrengthTierName } from '@/lib/gamification/strength';
 import { removeWorkoutItem, reorderWorkoutItems, updateWorkoutItem } from '@/actions/fitness';
 import type { ExerciseView } from '@/lib/fitness/types';
 import { Button } from '@/components/ui/Button';
@@ -20,8 +22,10 @@ export interface WorkoutItemView {
   targetSec: number | null;
   restSec: number;
   customRest: number | null;
-  /** Prescrição do item (ex.: "3–4 séries × 5–8 reps @ 1–2 RIR…"), escrita pela IA ao criar o programa. */
+  /** A nota do exercício (a da pessoa ou a da IA), a mesma da página do exercício. */
   notes?: string | null;
+  /** Nível de força neste exercício (só os exercícios com padrão). */
+  tier?: StrengthTierName | null;
   lastDoneAt: string | null;
 }
 
@@ -44,7 +48,20 @@ export function useTargetText() {
 }
 
 /** Um exercício do treino: alvo, última vez, editar alvo, remover e reordenar. */
-export function WorkoutItemRow({ workoutId, item, ids, index }: { workoutId: string; item: WorkoutItemView; ids: string[]; index: number }) {
+export function WorkoutItemRow({
+  workoutId,
+  item,
+  ids,
+  index,
+  onReplace,
+}: {
+  workoutId: string;
+  item: WorkoutItemView;
+  ids: string[];
+  index: number;
+  /** Abre a lista para trocar este exercício por outro (mantém o alvo). */
+  onReplace?: () => void;
+}) {
   const t = useTranslations('fitness.workouts');
   const target = useTargetText();
   const router = useRouter();
@@ -91,6 +108,7 @@ export function WorkoutItemRow({ workoutId, item, ids, index }: { workoutId: str
           <Link href={`/exercises/${encodeURIComponent(item.exercise.id)}`} className="mg-workout-item__name">
             {item.exercise.name}
           </Link>
+          {item.tier && <StrengthTier tier={item.tier} compact />}
           <span className="mg-workout-item__target">{target(item, item.restSec)}</span>
           {item.notes && <span className="mg-workout-item__note">{item.notes}</span>}
           {ago && <span className="mg-workout-item__last">{ago}</span>}
@@ -121,6 +139,11 @@ export function WorkoutItemRow({ workoutId, item, ids, index }: { workoutId: str
           <Button variant="ghost" onClick={() => setEditing(true)}>
             {t('editTarget')}
           </Button>
+          {onReplace && (
+            <Button variant="ghost" disabled={pending} onClick={onReplace}>
+              {t('replace')}
+            </Button>
+          )}
           <Button
             variant="ghost"
             disabled={pending}

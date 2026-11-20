@@ -96,7 +96,7 @@ async function startProgram(id: string, brief: TrainingProfileData): Promise<Res
 
 /**
  * Guarda o programa proposto: programa, treinos e itens como os da pessoa, com as notas marcadas como da IA.
- * Cada exercício leva uma só nota (prescrição + dica), no item do treino; as notas pessoais do exercício não mudam.
+ * Cada exercício leva uma só nota (a mesma que a pessoa edita); a da IA só entra onde a pessoa não escreveu a sua.
  */
 export async function saveAiProgram(input: string): Promise<Result<{ programId: string }>> {
   const id = await uid();
@@ -142,8 +142,7 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
                   targetRepsMax: i.repsMax ?? null,
                   targetSec: i.sec ?? null,
                   restSec: i.restSec ?? null,
-                  // Uma só nota por exercício (prescrição + dica), no item do treino.
-                  notes: [i.note, i.cue].filter(Boolean).join(' ') || null,
+
                 })),
             },
           })),
@@ -151,6 +150,24 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
       },
       select: { id: true },
     });
+    // Uma só nota por exercício (a mesma que a pessoa edita): a da IA só entra onde a pessoa não escreveu a sua.
+    const notes = new Map<string, string>();
+    for (const w of program.workouts)
+      for (const i of w.items) {
+        const text = [i.note, i.cue].filter(Boolean).join(' ');
+        if (text && known.has(i.exerciseId) && !notes.has(i.exerciseId)) notes.set(i.exerciseId, text);
+      }
+    const mine = new Set(
+      (await tx.exerciseNote.findMany({ where: { userId: id, exerciseId: { in: [...notes.keys()] }, byAi: false }, select: { exerciseId: true } })).map((n) => n.exerciseId),
+    );
+    for (const [exerciseId, text] of notes) {
+      if (mine.has(exerciseId)) continue;
+      await tx.exerciseNote.upsert({
+        where: { userId_exerciseId: { userId: id, exerciseId } },
+        create: { userId: id, exerciseId, text, byAi: true },
+        update: { text, byAi: true },
+      });
+    }
     await tx.aiRequest.update({ where: { id: rid.data }, data: { status: 'APPLIED', result: { ...program, programId: created.id } as unknown as Prisma.InputJsonValue } });
     return created.id;
   });
