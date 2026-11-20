@@ -85,9 +85,6 @@ export default async function AiProgramPage({ params }: { params: { id: string }
       {header}
       <div className="mg-body-shell__main">
         <div className="mg-ai-program">
-          <p className="mg-ai-program__badge">
-            <MagicIcon name="sparkles" size="sm" decorative /> {t('byAi')}
-          </p>
           <h2 className="mg-ai-program__name">{program.name}</h2>
           {program.description && <p className="mg-ai-program__desc">{program.description}</p>}
           {program.notes && <p className="mg-ai-program__notes">{program.notes}</p>}

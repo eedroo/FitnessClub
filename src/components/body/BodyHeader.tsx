@@ -5,9 +5,9 @@ import { ChevronLeft, Settings } from 'lucide-react';
 import { BackButton } from './BackButton';
 
 /**
- * Barra de navegação do iOS com título grande: voltar à esquerda (‹ e o nome da secção), acções à direita e o título
- * grande por baixo. Nas páginas de topo (sem `backHref`), à direita, o botão das definições (⚙). Com `historyBack`, "Voltar" regressa
- * à página anterior (e `backHref` só serve quando não há histórico).
+ * Barra de navegação numa só linha. Páginas de topo (sem `backHref`): título grande à esquerda e as definições (⚙) à
+ * direita, alinhados. Páginas de dentro: botão redondo ‹ à esquerda, o título ao lado e as acções à direita. Com
+ * `historyBack`, ‹ regressa à página anterior (e `backHref` só serve quando não há histórico).
  */
 export async function BodyHeader({
   title,
@@ -23,14 +23,14 @@ export async function BodyHeader({
   historyBack?: boolean;
 }) {
   const [t, tc] = await Promise.all([getTranslations('fitness'), getTranslations('common')]);
+  const sub = historyBack || !!backHref;
   return (
-    <header className="mg-body-header">
+    <header className={sub ? 'mg-body-header mg-body-header--sub' : 'mg-body-header'}>
       {historyBack ? (
-        <BackButton fallback={backHref ?? '/'} label={tc('back')} className="mg-body-header__back" />
+        <BackButton fallback={backHref ?? '/'} label={backLabel ?? tc('back')} className="mg-body-header__back" />
       ) : backHref ? (
-        <Link href={backHref} className="mg-body-header__back">
-          <ChevronLeft size={28} strokeWidth={2.25} aria-hidden="true" />
-          {backLabel ?? tc('back')}
+        <Link href={backHref} className="mg-body-header__back" aria-label={backLabel ?? tc('back')}>
+          <ChevronLeft size={26} strokeWidth={2.25} aria-hidden="true" />
         </Link>
       ) : null}
       <h1 className="mg-body-header__title">{title}</h1>

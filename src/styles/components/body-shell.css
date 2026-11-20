@@ -23,10 +23,9 @@
   top: 0;
   z-index: var(--z-nav);
   display: grid;
+  /* Uma linha: título grande e ⚙ alinhados (topo); ‹ · título · acções (páginas de dentro) */
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas:
-    "back actions"
-    "title title";
+  grid-template-areas: "title actions";
   align-items: center;
   column-gap: var(--space-2);
   min-height: calc(var(--topbar-height) + env(safe-area-inset-top));
@@ -73,9 +72,40 @@
 }
 
 /* Sem linha de cima (sem voltar nem acções): o título grande encosta à barra de estado */
-.mg-body-header:not(:has(.mg-body-header__back, .mg-body-header__actions)) {
-  grid-template-areas: "title title";
-  padding-top: calc(env(safe-area-inset-top) + var(--space-4));
+.mg-body-header:not(.mg-body-header--sub) {
+  padding-top: calc(env(safe-area-inset-top) + var(--space-3));
+}
+
+.mg-body-header--sub {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "back title actions";
+  padding-bottom: var(--space-2);
+}
+
+.mg-body-header--sub .mg-body-header__back {
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  background: var(--system-bg-2);
+  box-shadow: var(--glass-shadow);
+}
+
+.mg-body-header--sub .mg-body-header__title {
+  padding: 0 var(--space-1);
+  font-family: inherit;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.mg-body-header--sub:not(:has(.mg-body-header__actions)) {
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "back title";
 }
 
 .mg-body-header__actions {

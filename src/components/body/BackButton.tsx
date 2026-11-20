@@ -10,11 +10,13 @@ import { NAV_STACK_KEY, canGoBack, readStack } from '@/lib/nav-history';
  * aberto de fora), vai para `fallback`.
  */
 export function BackButton({ fallback, label, className }: { fallback: string; label: string; className?: string }) {
+  // O nome fica só para leitores de ecrã: o botão é a seta, como nas apps do iPhone.
   const router = useRouter();
   return (
     <Link
       href={fallback}
       className={className}
+      aria-label={label}
       onClick={(e) => {
         let fromApp = false;
         try {
@@ -27,8 +29,7 @@ export function BackButton({ fallback, label, className }: { fallback: string; l
         router.back();
       }}
     >
-      <ChevronLeft size={28} strokeWidth={2.25} aria-hidden="true" />
-      {label}
+      <ChevronLeft size={26} strokeWidth={2.25} aria-hidden="true" />
     </Link>
   );
 }
