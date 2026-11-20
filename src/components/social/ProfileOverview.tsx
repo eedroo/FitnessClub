@@ -7,7 +7,7 @@ import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { getPostsBy } from '@/lib/social/server';
 import type { Relationship } from '@/lib/social/rules';
 import { getGamification, getStrengthLevels } from '@/lib/gamification/server';
-import { levelFrame } from '@/lib/gamification/art';
+import { levelArtHasNumber, levelFrame } from '@/lib/gamification/art';
 import { formatDayMonth } from '@/lib/dates';
 import { Avatar } from './Avatar';
 import { PostCard } from './PostCard';
@@ -63,7 +63,7 @@ export async function ProfileOverview({
         </div>
         <Link href={self ? '/achievements' : `/u/${profile.handle}`} className="mg-level__seal" aria-label={tg('level', { n: game.summary.level })}>
           <Image className="mg-level__frame" src={levelFrame(game.summary.level)} alt="" width={60} height={60} />
-          <span className="mg-level__num">{game.summary.level}</span>
+          {!levelArtHasNumber(game.summary.level) && <span className="mg-level__num">{game.summary.level}</span>}
         </Link>
       </section>
       {/* Barra de XP até ao próximo nível (como no cabeçalho de Treinos). */}

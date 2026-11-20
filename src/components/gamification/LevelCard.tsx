@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import type { XpSummary } from '@/lib/gamification/xp';
-import { levelFrame } from '@/lib/gamification/art';
+import { levelArtHasNumber, levelFrame } from '@/lib/gamification/art';
 
 /** Nível (selo com o número), barra de XP até ao próximo e a sequência de semanas. Em Treinos leva às conquistas. */
 export function LevelCard({ summary, href }: { summary: XpSummary; href?: string }) {
@@ -12,7 +12,7 @@ export function LevelCard({ summary, href }: { summary: XpSummary; href?: string
     <>
       <span className="mg-level__seal" aria-hidden="true">
         <Image className="mg-level__frame" src={levelFrame(summary.level)} alt="" width={64} height={64} />
-        <span className="mg-level__num">{summary.level}</span>
+        {!levelArtHasNumber(summary.level) && <span className="mg-level__num">{summary.level}</span>}
       </span>
       <span className="mg-level__text">
         <span className="mg-level__title">{t('level', { n: summary.level })}</span>
