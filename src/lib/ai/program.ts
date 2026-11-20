@@ -26,7 +26,7 @@ const EQUIPMENT_MAP: Record<string, (string | null)[]> = {
   bands: ['bands', 'body only', null],
 };
 
-const MAX_CANDIDATES = 320;
+const MAX_CANDIDATES = 200;
 
 /** Exercícios da biblioteca que servem o perfil: equipamento disponível, sem "strongman" e sem nível "expert" para iniciantes. */
 export function pickCandidates(all: CandidateExercise[], profile: Pick<TrainingProfileData, 'equipment' | 'level' | 'goals'>, preferred: Set<string> = new Set()): CandidateExercise[] {
@@ -56,9 +56,9 @@ const itemSchema = z.object({
   repsMax: z.number().int().min(1).max(100).nullable().optional(),
   sec: z.number().int().min(5).max(900).nullable().optional(),
   restSec: z.number().int().min(0).max(600).nullable().optional(),
-  /** Prescrição deste exercício neste treino (séries × reps @ RIR, como progredir, porquê) — vai para o item do treino. */
+  /** A nota do exercício neste treino: esforço (RIR), como progredir e uma dica de técnica (séries e reps já se mostram ao lado). */
   note: z.string().trim().max(700).nullable().optional(),
-  /** Dica de técnica curta — vai para as notas do exercício (se a pessoa não tiver as suas). */
+  /** Respostas antigas traziam a dica à parte; junta-se à nota. */
   cue: z.string().trim().max(300).nullable().optional(),
 });
 
@@ -109,10 +109,9 @@ export const AI_PROGRAM_RESPONSE_SCHEMA = {
                 sec: { type: 'INTEGER', nullable: true },
                 restSec: { type: 'INTEGER' },
                 note: { type: 'STRING' },
-                cue: { type: 'STRING' },
               },
               required: ['exerciseId', 'sets', 'restSec', 'note'],
-              propertyOrdering: ['exerciseId', 'sets', 'repsMin', 'repsMax', 'sec', 'restSec', 'note', 'cue'],
+              propertyOrdering: ['exerciseId', 'sets', 'repsMin', 'repsMax', 'sec', 'restSec', 'note'],
             },
           },
         },
@@ -184,7 +183,7 @@ export const PROGRAM_SYSTEM = [
   'Give more weekly volume to the focus muscles without neglecting balance. Respect what the person wants to avoid and any limitation they mention.',
   'Units: kilograms. Write ALL text in the requested language, natural and specific to this person (refer to their level, days, minutes, equipment and goals).',
   '',
-  'PROGRAMME "notes" — a detailed guide in plain text with short section titles on their own line and "- " bullets, like a coach would write:',
+  'PROGRAMME "notes" — a coach-style guide (about 250–400 words, not more) in plain text with short section titles on their own line and "- " bullets:',
   '1) One opening paragraph: who this is for (their level, equipment, days per week, minutes) and how the split serves their goals and focus muscles.',
   '2) "Structure and rationale": why this split, why this order (compounds first), the rep ranges used and why.',
   '3) "Progressive overload": RIR target (reps in reserve, e.g. most sets at 1–2 RIR) explained in plain words; double progression (keep the rep range, add reps until the top in all sets, then add load: about +1–2.5 kg upper body, +2.5–5 kg lower body); what to do if a lift stalls for 2 weeks (reduce load 5–10% and build back, or add 1 set for 2–3 weeks).',
@@ -194,8 +193,7 @@ export const PROGRAM_SYSTEM = [
   '',
   'WORKOUT "notes" — 2–4 sentences: the goal of the day, why the exercises are in this order, and what to focus on.',
   '',
-  'EXERCISE "note" (for that exercise in that workout) — 1–3 sentences starting with the prescription, e.g. "3–4 sets × 5–8 reps @ 1–2 RIR. Add load when you hit 8 reps on all sets with the same depth and bar speed." plus why it is in the plan.',
-  'EXERCISE "cue" — one short technique cue (max 1 sentence).',
+  'EXERCISE "note" (one per exercise, for that workout) — 1–2 short sentences. The app already shows sets, reps and rest next to it: never restate them. Give the effort and how to progress (e.g. "@ 1–2 RIR. Add load when you hit the top of the range on all sets with the same depth and bar speed."), then one short technique cue. Do not repeat the programme notes.',
   '',
   'Never give medical, diet or supplement advice. Keep a neutral, encouraging tone.',
 ].join('\n');
@@ -243,9 +241,8 @@ export function fakeProgram(candidates: CandidateExercise[], locale: string): Ai
       sec: c.measure === 'DURATION' ? 30 : null,
       restSec: 90,
       note: pt
-        ? '3 séries × 6–10 reps @ 1–2 RIR. Sobe a carga quando fizeres 10 reps em todas as séries com a mesma técnica.'
-        : '3 sets × 6–10 reps @ 1–2 RIR. Add load when you hit 10 reps on all sets with the same form.',
-      cue: pt ? 'Mantém o tronco firme e a amplitude completa.' : 'Keep your core tight and use the full range.',
+        ? '@ 1–2 RIR. Sobe a carga quando chegares ao topo do intervalo em todas as séries. Tronco firme e amplitude completa.'
+        : '@ 1–2 RIR. Add load when you reach the top of the range on all sets. Core tight, full range.',
     })),
   });
   return {

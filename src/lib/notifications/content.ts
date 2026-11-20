@@ -39,3 +39,9 @@ export function socialNotification(
   const t = translatorFor(locale);
   return { title: t(`notifications.push.social.${kind}.title`), body: t(`notifications.push.social.${kind}.body`, { name }), url };
 }
+
+/** Programa da IA pronto para rever. */
+export function aiProgramNotification(locale: Locale, id: string): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t('notifications.push.aiProgram.title'), body: t('notifications.push.aiProgram.body'), url: `/ai/program/${id}` };
+}

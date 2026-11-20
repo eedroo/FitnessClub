@@ -1,18 +1,27 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
-/** Enquanto a IA trabalha (job no Inngest), relê a página de 3 em 3 s, até 2 minutos (aos 75 s sem resposta o pedido passa a falhado). */
+/**
+ * Enquanto a IA trabalha (job no Inngest), relê a página de 3 em 3 s, até 4 minutos; passados 40 s avisa que está a
+ * demorar e que se pode sair (chega uma notificação quando estiver pronto). Aos 3 min sem resposta, o servidor marca
+ * o pedido como falhado e a página mostra "Pedir outro".
+ */
 export function AiPendingRefresh() {
+  const t = useTranslations('ai.program');
   const router = useRouter();
+  const [slow, setSlow] = useState(false);
   useEffect(() => {
     const started = Date.now();
     const id = window.setInterval(() => {
-      if (Date.now() - started > 120_000) return window.clearInterval(id);
+      const elapsed = Date.now() - started;
+      if (elapsed > 40_000) setSlow(true);
+      if (elapsed > 240_000) return window.clearInterval(id);
       router.refresh();
     }, 3000);
     return () => window.clearInterval(id);
   }, [router]);
-  return null;
+  return slow ? <p className="mg-ai-wait__text">{t('slow')}</p> : null;
 }

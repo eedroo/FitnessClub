@@ -11,7 +11,7 @@ import { translatorFor } from '@/i18n/translator';
 import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { toProfileData, trainingProfileSchema } from '@/lib/fitness/profile';
-import { aiInsightNotification } from '@/lib/notifications/content';
+import { aiInsightNotification, aiProgramNotification } from '@/lib/notifications/content';
 import { pushToUser } from '@/lib/notifications/send';
 import { sendWithReason, type AppEvent } from '@/inngest/client';
 import { AiError, costMicroUsd, generateJson, hasAi, type AiCall } from './gemini';
@@ -19,10 +19,10 @@ import { AI_PROGRAM_RESPONSE_SCHEMA, PROGRAM_SYSTEM, checkAiProgram, fakeProgram
 import { INSIGHT_RESPONSE_SCHEMA, INSIGHT_SYSTEM, checkInsight, fakeInsight, insightPrompt, weekFacts, type FactSession, type WeekFacts } from './insights';
 
 /**
- * Um pedido à IA leva normalmente 10–30 s. Sem resposta ao fim deste tempo (o Inngest não chegou à app, por
+ * Um programa completo leva normalmente 20–60 s. Sem resposta ao fim deste tempo (o Inngest não chegou à app, por
  * exemplo), passa a falhado e a pessoa pode pedir outro.
  */
-export const AI_JOB_TIMEOUT_MS = 75_000;
+export const AI_JOB_TIMEOUT_MS = 180_000;
 
 /** Limites por pessoa (custo): programas por dia e por mês. As retrospectivas são uma por semana. */
 export const PROGRAM_LIMIT_DAY = 3;
@@ -88,7 +88,7 @@ async function callValidated<T>(call: AiCall, check: (raw: unknown) => { ok: tru
       if (c.ok) return { ok: true as const, value: c.value, inputTokens, outputTokens, model };
       reason = c.reason;
     } catch (err) {
-      const e = err as AiError & { inputTokens?: number; outputTokens?: number };
+      const e = (err instanceof Error && err.name === 'TimeoutError' ? new AiError('Gemini demorou demasiado') : err) as AiError & { inputTokens?: number; outputTokens?: number };
       inputTokens += e.inputTokens ?? 0;
       outputTokens += e.outputTokens ?? 0;
       reason = e instanceof Error ? e.message : String(e);
@@ -167,6 +167,8 @@ export async function runProgramRequest(requestId: string): Promise<'done' | 'fa
     where: { id: requestId },
     data: { status: 'DONE', result: res.value as unknown as Prisma.InputJsonValue, finishedAt: new Date(), error: null, ...usage(res) },
   });
+  // Aviso no telemóvel (a pessoa pode ter saído da página enquanto a IA trabalhava).
+  if (user) await pushToUser(req.userId, { ...aiProgramNotification(user.locale, requestId), tag: `ai-program-${requestId}` }).catch(() => 0);
   return 'done';
 }
 

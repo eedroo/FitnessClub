@@ -96,7 +96,7 @@ async function startProgram(id: string, brief: TrainingProfileData): Promise<Res
 
 /**
  * Guarda o programa proposto: programa, treinos e itens como os da pessoa, com as notas marcadas como da IA.
- * As notas de exercício só entram onde a pessoa não escreveu a sua.
+ * Cada exercício leva uma só nota (prescrição + dica), no item do treino; as notas pessoais do exercício não mudam.
  */
 export async function saveAiProgram(input: string): Promise<Result<{ programId: string }>> {
   const id = await uid();
@@ -112,13 +112,6 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
   const program = parsed.data;
   const exIds = [...new Set(program.workouts.flatMap((w) => w.items.map((i) => i.exerciseId)))];
   const known = new Set((await db.exercise.findMany({ where: { id: { in: exIds }, source: 'LIBRARY' }, select: { id: true } })).map((e) => e.id));
-  const notes = new Map<string, string>();
-  // A dica de técnica vai para as notas do exercício; a prescrição (séries × reps @ RIR) fica no item do treino.
-  for (const w of program.workouts)
-    for (const i of w.items) {
-      const cue = i.cue ?? null;
-      if (cue && known.has(i.exerciseId) && !notes.has(i.exerciseId)) notes.set(i.exerciseId, cue);
-    }
 
   const programId = await db.$transaction(async (tx) => {
     const agg = await tx.fitnessProgram.aggregate({ where: { userId: id }, _max: { order: true } });
@@ -149,7 +142,8 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
                   targetRepsMax: i.repsMax ?? null,
                   targetSec: i.sec ?? null,
                   restSec: i.restSec ?? null,
-                  notes: i.note || null,
+                  // Uma só nota por exercício (prescrição + dica), no item do treino.
+                  notes: [i.note, i.cue].filter(Boolean).join(' ') || null,
                 })),
             },
           })),
@@ -157,17 +151,6 @@ export async function saveAiProgram(input: string): Promise<Result<{ programId: 
       },
       select: { id: true },
     });
-    const mine = new Set(
-      (await tx.exerciseNote.findMany({ where: { userId: id, exerciseId: { in: [...notes.keys()] }, byAi: false }, select: { exerciseId: true } })).map((n) => n.exerciseId),
-    );
-    for (const [exerciseId, text] of notes) {
-      if (mine.has(exerciseId)) continue;
-      await tx.exerciseNote.upsert({
-        where: { userId_exerciseId: { userId: id, exerciseId } },
-        create: { userId: id, exerciseId, text, byAi: true },
-        update: { text, byAi: true },
-      });
-    }
     await tx.aiRequest.update({ where: { id: rid.data }, data: { status: 'APPLIED', result: { ...program, programId: created.id } as unknown as Prisma.InputJsonValue } });
     return created.id;
   });

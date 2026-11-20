@@ -142,6 +142,10 @@
           "title": "Workout confirmed",
           "body": "{name} confirmed the workout."
         }
+      },
+      "aiProgram": {
+        "title": "Your programme is ready",
+        "body": "Review and save your AI-built programme."
       }
     },
     "prompt": {
@@ -1100,7 +1104,8 @@
       "reviewHint": "Review it before saving. Once saved, it's your programme like any other, and you can change everything.",
       "save": "Save programme",
       "again": "Try another",
-      "discard": "Discard"
+      "discard": "Discard",
+      "slow": "This is taking a bit longer than usual. You can leave; you'll get a notification when it's ready."
     },
     "insights": {
       "title": "Weekly review",

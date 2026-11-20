@@ -248,7 +248,8 @@ export async function getActiveSession(userId: string, locale: AppLocale): Promi
           },
           doneSets: s.sets.filter((x) => x.exerciseId === id).map(setView),
           last: last.get(id) ?? null,
-          note: notes.find((n) => n.exerciseId === id)?.text ?? null,
+          // A nota do exercício neste treino (ex.: a prescrição do programa da IA); sem ela, a nota pessoal do exercício.
+          note: item?.notes || (notes.find((n) => n.exerciseId === id)?.text ?? null),
         },
       ];
     }),

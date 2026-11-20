@@ -53,12 +53,13 @@ export async function generateJson(call: AiCall): Promise<AiResponse> {
   // Gemini 3: "pensamento" por nível e temperatura por defeito (recomendação da Google); 2.5: orçamento em tokens.
   const model = call.model ?? GEMINI_MODEL;
   const gen3 = model.startsWith('gemini-3');
-  const thinking = gen3 ? { thinkingLevel: (call.thinkingBudget ?? 0) > 0 ? 'medium' : 'low' } : { thinkingBudget: call.thinkingBudget ?? 0 };
+  // Pensamento baixo: as respostas chegam em segundos e a validação (ids, números) apanha os erros.
+  const thinking = gen3 ? { thinkingLevel: 'low' } : { thinkingBudget: call.thinkingBudget ?? 0 };
   const send = (withThinking: boolean) =>
     fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': key },
-      signal: AbortSignal.timeout(50_000),
+      signal: AbortSignal.timeout(150_000),
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: call.system }] },
         contents: [{ role: 'user', parts: [{ text: call.prompt }] }],

@@ -103,8 +103,7 @@ export default async function AiProgramPage({ params }: { params: { id: string }
                     <span className="mg-ai-workout__ex">{names.get(i.exerciseId) ?? i.exerciseId}</span>
                     <span className="mg-ai-workout__target">{target(i)}</span>
                   </span>
-                  {i.note && <span className="mg-ai-workout__note">{i.note}</span>}
-                  {i.cue && <span className="mg-ai-workout__cue">{i.cue}</span>}
+                  {(i.note || i.cue) && <span className="mg-ai-workout__note">{[i.note, i.cue].filter(Boolean).join(' ')}</span>}
                 </li>
               ))}
             </ol>

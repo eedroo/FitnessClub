@@ -142,6 +142,10 @@
           "title": "Treino confirmado",
           "body": "{name} confirmou o treino."
         }
+      },
+      "aiProgram": {
+        "title": "Seu programa está pronto",
+        "body": "Revise e salve o programa criado pela IA."
       }
     },
     "prompt": {
@@ -1100,7 +1104,8 @@
       "reviewHint": "Revise antes de salvar. Depois de salvo, é um programa seu como os outros: dá para mudar tudo.",
       "save": "Salvar programa",
       "again": "Pedir outro",
-      "discard": "Descartar"
+      "discard": "Descartar",
+      "slow": "Está demorando um pouco mais que o normal. Pode sair: quando estiver pronto, você recebe uma notificação."
     },
     "insights": {
       "title": "Retrospectiva da semana",
