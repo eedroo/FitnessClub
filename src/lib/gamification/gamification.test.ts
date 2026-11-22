@@ -69,10 +69,10 @@ describe('emblemas', () => {
 
 describe('níveis de força', () => {
   it('rácio 1RM estimado ÷ peso do corpo (halteres: a soma dos dois)', () => {
-    // 54 kg ÷ 77 kg = 0,70 no supino com halteres → ouro (0,65); a seguir platina (0,85).
+    // 54 kg ÷ 77 kg = 0,70 no supino com halteres → prata (0,65); a seguir ouro (0,8).
     const l = strengthLevel('Dumbbell_Bench_Press', { e1rmGrams: 54000, maxReps: 8 }, 77000)!;
-    expect(l).toMatchObject({ tier: 'gold', value: 0.7, next: 0.85 });
-    expect(l.progress).toBeCloseTo(0.25, 2);
+    expect(l).toMatchObject({ tier: 'silver', value: 0.7, next: 0.8 });
+    expect(l.progress).toBeCloseTo(0.333, 2);
   });
   it('peso do corpo: só repetições; sem peso do corpo não há nível nos de carga', () => {
     expect(strengthLevel('Pullups', { e1rmGrams: null, maxReps: 9 }, null)).toMatchObject({ tier: 'gold', next: 12 });
@@ -81,7 +81,7 @@ describe('níveis de força', () => {
   });
   it('abaixo do bronze e no diamante', () => {
     expect(strengthLevel('Barbell_Bench_Press_-_Medium_Grip', { e1rmGrams: 20000, maxReps: 5 }, 80000)!.tier).toBeNull();
-    expect(strengthLevel('Barbell_Bench_Press_-_Medium_Grip', { e1rmGrams: 120000, maxReps: 5 }, 80000)).toMatchObject({ tier: 'diamond', next: null, progress: 1 });
+    expect(strengthLevel('Barbell_Bench_Press_-_Medium_Grip', { e1rmGrams: 130000, maxReps: 5 }, 80000)).toMatchObject({ tier: 'diamond', next: null, progress: 1 });
   });
 });
 

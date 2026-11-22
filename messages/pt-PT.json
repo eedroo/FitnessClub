@@ -1267,7 +1267,12 @@
       "next": "próximo: {v}",
       "belowBronze": "Quase bronze",
       "empty": "Faz supino, agachamento, terra, desenvolvimento, remada, barra fixa ou flexões para veres o teu nível.",
-      "sec": "{n} s"
+      "sec": "{n} s",
+      "e1rmNow": "O teu 1RM estimado: {kg} ({ratio}× o teu peso)",
+      "bestNow": "A tua melhor marca: {v}",
+      "goal": "{tier} com {target} · faltam {missing}",
+      "top": "Chegaste ao nível máximo.",
+      "dumbbells": "Halteres: regista a soma dos dois (2 × 22,5 kg = 45 kg)."
     }
   },
   "activities": {

@@ -17,6 +17,7 @@ import { ExerciseProgressChart } from '@/components/body/ExerciseProgressChart';
 import { ExerciseRecords } from '@/components/body/ExerciseRecords';
 import { getStrengthBests } from '@/lib/gamification/server';
 import { strengthLevel } from '@/lib/gamification/strength';
+import { StrengthProgress } from '@/components/gamification/StrengthProgress';
 import { ExerciseStrength } from '@/components/gamification/ExerciseStrength';
 import { MoveHistory } from '@/components/body/MoveHistory';
 import { listExercises } from '@/lib/fitness/queries';
@@ -57,6 +58,9 @@ export default async function ExerciseRoute({ params }: { params: { id: string }
       <div className="mg-body-shell__main">
         <ExerciseStrength level={strengthLvl} />
         <ExerciseDetail exercise={view} level={detail.level}>
+          {strengthLvl && (
+            <StrengthProgress level={strengthLvl} e1rmGrams={best?.e1rmGrams ?? null} bodyGrams={strength.bodyGrams} dumbbells={view.equipment === 'dumbbell'} />
+          )}
           {/* Sem nota, adiciona-se aqui (em "Detalhes e ações"); com nota, ela aparece por baixo. */}
           {!note && <NotesCard kind="exercise" targetId={view.id} initial={null} />}
           {!detail.archived && <AddToWorkout exerciseId={view.id} workouts={workouts.map((w) => ({ id: w.id, label: `${w.program.name} · ${w.name}` }))} />}

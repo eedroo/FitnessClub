@@ -249,3 +249,32 @@
   overflow: visible;
   text-overflow: clip;
 }
+
+/* Progressão até à medalha seguinte, em "Detalhes e ações" do exercício */
+.mg-strength-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-block: var(--space-3);
+}
+
+.mg-strength-progress__title {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mg-strength-progress__line {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.mg-strength-progress__hint {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}

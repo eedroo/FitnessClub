@@ -298,6 +298,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **BadgeGrid** — emblemas numa grelha de medalhas centradas (3 ou mais por linha, sem caixas): ganhos com a data; os outros em cinzento com a barra de progresso. `mg-badges`.
 - **StrengthTier** — selo pequeno do nível de força (bolinha na cor do nível + nome); `compact` ao lado do nome do exercício na sessão. `mg-tier`.
 - **ExerciseStrength** — na página do exercício: só o selo do nível de força, que leva às conquistas. `mg-strength-link`.
+- **StrengthProgress** — em "Detalhes e ações" do exercício: valor actual (1RM estimado em kg e × peso, ou repetições/segundos), barra e o que falta para a medalha seguinte; nos halteres lembra que se regista a soma dos dois. `mg-strength-progress`.
 - **SessionRewards** — no resumo da sessão: +XP, subida de nível e emblemas novos. `mg-rewards`.
 - Página `/achievements`: de onde veio o XP (lista agrupada), emblemas e níveis de força (só a pessoa vê; `mg-game__strength`).
 
