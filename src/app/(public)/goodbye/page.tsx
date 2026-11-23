@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { MagicIcon } from '@/components/ui/MagicIcon';
+import { ClearPrivateCache } from '@/components/providers/ClearPrivateCache';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('account.goodbye');
@@ -21,6 +22,7 @@ export default async function GoodbyePage() {
       <Link href="/" className="mg-btn mg-btn--ghost">
         {t('home')}
       </Link>
+      <ClearPrivateCache />
     </section>
   );
 }

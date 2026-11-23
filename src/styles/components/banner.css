@@ -57,3 +57,12 @@
 .mg-banner__close:active {
   background: var(--fill-3);
 }
+
+/* OfflineBanner: sem rede (fica por cima de tudo, discreto) */
+.mg-banner--offline {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--fill-3);
+  color: var(--text-secondary);
+}

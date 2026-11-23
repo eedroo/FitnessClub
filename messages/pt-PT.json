@@ -22,6 +22,12 @@
     "errors": {
       "generic": "Algo correu mal. Tenta novamente.",
       "unauthorized": "A tua sessão expirou. Inicia sessão novamente."
+    },
+    "offline": {
+      "title": "Sem ligação",
+      "text": "Esta página ainda não está guardada no dispositivo. As páginas que já abriste funcionam sem rede, e as séries de um treino em curso ficam guardadas e são enviadas quando a rede voltar.",
+      "retry": "Tentar de novo",
+      "banner": "Sem rede. Podes continuar o treino: as séries ficam guardadas e são enviadas quando a rede voltar."
     }
   },
   "auth": {

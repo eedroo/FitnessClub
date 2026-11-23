@@ -113,6 +113,8 @@ Compõem primitivos; não têm CSS próprio além de `field.css` (`mg-form-error
 | `ThemeProvider` | client | `next-themes` com `attribute="data-theme"`, `defaultTheme="light"`, `enableSystem` |
 | `ThemeSync` | client | ao montar, aplica o `theme` da sessão se for diferente do actual |
 | `ServiceWorkerRegister` | client | regista `/sw.js` apenas em produção |
+| `OfflineBanner` | client | aviso «sem rede» no topo da app (`mg-banner--offline`) e pede ao service worker para guardar as páginas abertas pela navegação interna |
+| `ClearPrivateCache` | client | no login, registo e despedida: apaga as páginas guardadas para uso sem rede (menos `/offline`) |
 | `AuthSessionProvider` | client | `SessionProvider` do Auth.js — dá `useSession().update()` aos formulários |
 
 ---

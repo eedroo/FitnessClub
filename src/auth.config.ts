@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 
 const AUTH_PAGES = ['/login', '/register'];
 /** Páginas abertas com ou sem sessão (links dos emails e documentos legais). */
-const PUBLIC_PAGES = ['/start', '/forgot-password', '/reset-password', '/verify-email', '/confirm-email-change', '/privacy', '/terms', '/goodbye'];
+const PUBLIC_PAGES = ['/start', '/forgot-password', '/reset-password', '/verify-email', '/confirm-email-change', '/privacy', '/terms', '/goodbye', '/offline'];
 
 export const authConfig = {
   trustHost: true,

@@ -22,6 +22,12 @@
     "errors": {
       "generic": "Something went wrong. Please try again.",
       "unauthorized": "Your session has expired. Please sign in again."
+    },
+    "offline": {
+      "title": "You're offline",
+      "text": "This page isn't saved on your device yet. Pages you've already opened work offline, and sets from a workout in progress are saved and sent once you're back online.",
+      "retry": "Try again",
+      "banner": "You're offline. Keep training: your sets are saved and will be sent when you're back online."
     }
   },
   "auth": {

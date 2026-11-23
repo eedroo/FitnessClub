@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { AmbientBackground } from '@/components/shell/AmbientBackground';
 import { PublicAnalytics } from '@/components/providers/PublicAnalytics';
+import { ClearPrivateCache } from '@/components/providers/ClearPrivateCache';
 
 export default async function AuthLayout({ children }: { children: ReactNode }) {
   const t = await getTranslations('common');
@@ -18,6 +19,7 @@ export default async function AuthLayout({ children }: { children: ReactNode }) 
         {children}
       </main>
       <PublicAnalytics />
+      <ClearPrivateCache />
     </>
   );
 }

@@ -164,3 +164,10 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Mover o histórico** de um exercício para outro (em "Detalhes e ações", só com histórico): só na conta da pessoa, entre exercícios medidos da mesma forma; os recordes recalculam-se nos dois.
 - **Medalhas de força na lista do treino**, ao lado de cada exercício com padrão.
 - **Mais exercícios com nível de força** (os dos treinos da dona do projecto, nunca alongamentos): agachamento completo, leg press, passadas e afundos, flexoras, abdutora, pull-through, gémeos, puxada, remadas, elevações laterais e posteriores, press de ombros com halteres, tríceps na polia, martelo, elevação de pernas suspenso (reps) e prancha (tempo).
+
+## Uso sem rede (2026-11-23)
+- **App instalável** (manifest `standalone`, ícones, `appleWebApp`) e **service worker** `public/sw.js`, só em produção.
+- **Cache:** ficheiros do build, ícones e arte em cache primeiro; páginas com rede primeiro (4 s) e, sem rede, a última versão guardada (até 60 páginas) ou `/offline`. As páginas abertas pela navegação interna guardam-se a pedido da app (no máximo uma vez a cada 10 min por página). Nunca `/api`, `/admin`, POST nem RSC.
+- **Escritas sem rede:** só as do treino em curso (séries, esconder, notas da sessão), na fila do dispositivo (`sessionQueue`), reenviadas quando a rede volta. Começar ou terminar um treino e as outras gravações (peso, notas, publicações) precisam de rede e dizem-no.
+- **Privacidade:** as páginas guardadas têm dados da pessoa; apagam-se no login, registo e despedida (`ClearPrivateCache`). Imagens do Blob (outra origem) não ficam guardadas.
+

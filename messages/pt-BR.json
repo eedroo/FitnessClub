@@ -22,6 +22,12 @@
     "errors": {
       "generic": "Algo deu errado. Tente de novo.",
       "unauthorized": "Sua sessão expirou. Entre novamente."
+    },
+    "offline": {
+      "title": "Sem conexão",
+      "text": "Esta página ainda não está salva no aparelho. As páginas que você já abriu funcionam sem internet, e as séries de um treino em andamento ficam salvas e são enviadas quando a conexão voltar.",
+      "retry": "Tentar de novo",
+      "banner": "Sem internet. Você pode continuar o treino: as séries ficam salvas e são enviadas quando a conexão voltar."
     }
   },
   "auth": {
