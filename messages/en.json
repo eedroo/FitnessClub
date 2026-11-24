@@ -1556,7 +1556,12 @@
       "error": "Couldn't upload the photo. Please try again.",
       "addAvatar": "Add profile photo",
       "changeAvatar": "Change photo",
-      "removeAvatar": "Remove photo"
+      "removeAvatar": "Remove photo",
+      "cropTitle": "Adjust photo",
+      "cropHint": "Drag to frame it and zoom with two fingers or the slider.",
+      "zoom": "Zoom",
+      "cropSave": "Use photo",
+      "cropCancel": "Cancel"
     },
     "allAchievements": "See all achievements"
   },

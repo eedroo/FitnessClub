@@ -314,6 +314,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **Avatar** — a foto de perfil, ou as iniciais num círculo grafite. `mg-avatar`.
 - **PhotoPicker** (client) — até 4 fotos numa publicação, enviadas logo para o Blob, com miniaturas. `mg-photos`.
 - **AvatarPicker** (client) — pôr, mudar ou tirar a foto de perfil. `mg-avatar-picker`.
+- **AvatarCropper** (client) — antes de guardar a foto de perfil: arrastar, aproximar (dois dedos, roda ou barra) e recortar num quadrado de 512 px; o círculo mostra o que fica no perfil. `mg-cropper`.
 - **JoinCommunity** (client) — editar o perfil (@, nome, bio). `mg-social-join`.
 - **ProfileOverview** — um perfil (o meu no Eu, com o corpo no meio; o dos outros em `/u/[handle]`): avatar, @, bio, nível, amigos, emblemas, níveis de força, acções e publicações.
 - **PostComposer** (client) — texto, treino a partilhar (últimas sessões e atividades), público ou só amigos. `mg-composer`.

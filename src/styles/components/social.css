@@ -701,3 +701,55 @@ a.mg-level__seal {
   color: inherit;
   text-decoration: none;
 }
+
+/* AvatarCropper: enquadrar a foto de perfil antes de guardar */
+.mg-cropper__hint {
+  margin: 0 0 var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.mg-cropper__view {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--fill-3);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.mg-cropper__img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* Fora do círculo fica escurecido: o que se vê no círculo é o que aparece no perfil */
+.mg-cropper__mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 200px var(--scrim);
+  pointer-events: none;
+}
+
+.mg-cropper__zoom {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.mg-cropper__zoom input {
+  flex: 1;
+  accent-color: var(--text-primary);
+}

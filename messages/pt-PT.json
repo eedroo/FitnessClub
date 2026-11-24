@@ -1556,7 +1556,12 @@
       "error": "Não foi possível enviar a foto. Tenta outra vez.",
       "addAvatar": "Pôr foto de perfil",
       "changeAvatar": "Mudar a foto",
-      "removeAvatar": "Tirar a foto"
+      "removeAvatar": "Tirar a foto",
+      "cropTitle": "Ajustar a foto",
+      "cropHint": "Arrasta para enquadrar e aproxima com dois dedos ou com a barra.",
+      "zoom": "Zoom",
+      "cropSave": "Usar foto",
+      "cropCancel": "Cancelar"
     },
     "allAchievements": "Ver todas as conquistas"
   },

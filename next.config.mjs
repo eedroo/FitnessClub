@@ -7,6 +7,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Fotos de perfil e das publicações no Vercel Blob (store público) pelo next/image.
+  images: { remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com' }] },
   // src/instrumentation.ts valida o env no arranque (Next 14 precisa desta flag).
   experimental: {
     instrumentationHook: true,
