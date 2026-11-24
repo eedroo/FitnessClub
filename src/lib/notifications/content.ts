@@ -45,3 +45,9 @@ export function aiProgramNotification(locale: Locale, id: string): NotificationC
   const t = translatorFor(locale);
   return { title: t('notifications.push.aiProgram.title'), body: t('notifications.push.aiProgram.body'), url: `/ai/program/${id}` };
 }
+
+/** O Premium pedido no app ficou activo (o admin libertou). */
+export function premiumActiveNotification(locale: Locale): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t('notifications.push.premiumActive.title'), body: t('notifications.push.premiumActive.body'), url: '/ai/new' };
+}

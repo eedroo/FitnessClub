@@ -178,7 +178,12 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Boas-vindas: "por onde começas" abre com "A IA monta o meu programa" em destaque (com o recurso `ai`), que leva a `/ai/new` depois de concluir.
 
 ## Tour do app, IA em destaque e partilha no resumo (2026-11-24)
-- **Tour:** depois das boas-vindas (e uma vez para quem já tinha conta), em Treinos: Bem-vindo → Treinos → Programa feito pela IA → Feed → Sessões → Dia → Eu → Definições. Guardado em `FitnessPrefs.tourDoneAt`. Na abertura com tour não aparece o pedido de pesagem.
-- **IA em destaque:** cartão "Programa feito pela IA" no topo de Treinos e primeira opção (pré-escolhida) de "por onde começas" nas boas-vindas.
+- **Tour:** depois das boas-vindas (e uma vez para quem já tinha conta), em Treinos: Bem-vindo → Treinos → "Novo programa" (Criar com IA) → Feed → Sessões → Dia → Eu → Definições. Guardado em `FitnessPrefs.tourDoneAt`. Na abertura com tour não aparece o pedido de pesagem.
+- **IA em destaque:** "Criar com IA" continua dentro de "Novo programa", agora com mais destaque (azul mais forte, contorno, ícone cheio e seta); e é a primeira opção (pré-escolhida) de "por onde começas" nas boas-vindas.
 - **Partilhar o treino:** no resumo da sessão, logo a seguir às métricas, `QuickShare` publica o treino com um toque (texto opcional, só amigos por defeito); "Mais opções" abre o editor com fotos.
+
+## Pedido de Premium (2026-11-24)
+- Sem pagamentos: quem não é Premium vê que a IA é exclusiva do Premium e pode tocar "Quero o Premium" (boas-vindas, "Novo programa", `/ai/new`). Fica `User.premiumRequestedAt` e os admins (`ADMIN_EMAILS`) recebem um push.
+- Em `/admin/users`, a lista "Pedidos de Premium" (e o aviso nas Métricas): "Dar Premium" põe o plano manual sem fim, limpa o pedido e avisa a pessoa por push; "Recusar" só limpa o pedido.
+- Nas boas-vindas, "Criar com IA" fica dentro de "Novo programa" (sem cartão no topo de Treinos), com mais destaque.
 

@@ -27,7 +27,7 @@ export default async function WelcomePage() {
     getTranslations('common'),
     getFitnessPrefs(session.user.id),
     getTrainingProfile(session.user.id),
-    db.user.findUnique({ where: { id: session.user.id }, select: { name: true, wellbeingConsentAt: true } }),
+    db.user.findUnique({ where: { id: session.user.id }, select: { name: true, wellbeingConsentAt: true, premiumRequestedAt: true } }),
   ]);
   const ai = (await getEntitlements(session.user.id)).features.ai;
   const existing = await getMyProfile(session.user.id);
@@ -50,6 +50,7 @@ export default async function WelcomePage() {
             initialPublic={initialPublic}
             hasConsent={!!user?.wellbeingConsentAt}
             aiAvailable={!!ai}
+            premiumRequested={!!user?.premiumRequestedAt}
             templates={FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }))}
           />
         </div>

@@ -8,6 +8,8 @@ import { archiveProgram, copyTemplate, createProgram, updateProgram } from '@/ac
 import { Button } from '@/components/ui/Button';
 import { TextInput } from '@/components/ui/TextInput';
 import { MagicIcon } from '@/components/ui/MagicIcon';
+import { ChevronRight } from 'lucide-react';
+import { PremiumRequest } from '@/components/premium/PremiumRequest';
 
 type Kind = 'STRENGTH' | 'STRETCH' | 'MIXED';
 
@@ -16,7 +18,7 @@ interface ProgramFormProps {
   program?: { id: string; name: string; description: string | null; kind: Kind };
   templates?: { id: string; name: string; description: string }[];
   /** "Com IA" no novo programa: `available` = recurso `ai` e chave; sem o recurso mostra o selo Premium. */
-  ai?: { feature: boolean; available: boolean };
+  ai?: { feature: boolean; available: boolean; premiumRequested?: boolean };
 }
 
 /** Novo programa (do zero ou a partir de um modelo) ou edição de um programa. */
@@ -33,7 +35,12 @@ export function ProgramForm({ program, templates = [], ai }: ProgramFormProps) {
 
   if (!open) {
     return (
-      <Button className={program ? undefined : 'mg-btn--body'} variant={program ? 'ghost' : 'primary'} onClick={() => setOpen(true)}>
+      <Button
+        className={program ? undefined : 'mg-btn--body'}
+        variant={program ? 'ghost' : 'primary'}
+        onClick={() => setOpen(true)}
+        data-tour={program ? undefined : 'new-program'}
+      >
         {program ? t('edit') : t('new')}
       </Button>
     );
@@ -73,6 +80,7 @@ export function ProgramForm({ program, templates = [], ai }: ProgramFormProps) {
                 <span className="mg-ai-card__title">{t('withAi')}</span>
                 <span className="mg-ai-card__meta">{t('withAiText')}</span>
               </span>
+              <ChevronRight className="mg-program-form__ai-chevron" size={22} aria-hidden="true" />
             </Link>
           ) : (
             <div className="mg-program-form__ai-link" aria-disabled="true">
@@ -86,6 +94,7 @@ export function ProgramForm({ program, templates = [], ai }: ProgramFormProps) {
               {!ai.feature && <span className="mg-ai-card__badge">{te('ai.program.premiumBadge')}</span>}
             </div>
           )}
+          {!ai.feature && <PremiumRequest requested={!!ai.premiumRequested} />}
           <h3 className="mg-body-section-title">{t('manual')}</h3>
         </div>
       )}

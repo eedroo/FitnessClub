@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { db } from '@/lib/db';
 import { getAdminMetrics } from '@/lib/metrics/server';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MetricCard } from '@/components/admin/MetricCard';
@@ -5,12 +7,19 @@ import { ActivityBars } from '@/components/admin/ActivityBars';
 
 /** Métricas de produto, calculadas a pedido a partir da base de dados (só totais). */
 export default async function AdminMetricsPage() {
-  const m = await getAdminMetrics();
+  const [m, requests] = await Promise.all([getAdminMetrics(), db.user.count({ where: { premiumRequestedAt: { not: null }, plan: 'FREE' } })]);
   const n = (v: number) => v.toLocaleString('pt-PT');
   return (
     <>
       <h1 className="mg-admin__title">Métricas</h1>
       <p className="mg-admin__note">Dias em UTC.</p>
+      {requests > 0 && (
+        <p className="mg-admin__note">
+          <Link href="/admin/users">
+            {requests} {requests === 1 ? 'pedido' : 'pedidos'} de Premium por tratar
+          </Link>
+        </p>
+      )}
 
       <GlassCard title="Utilizadores">
         <div className="mg-admin__tiles">

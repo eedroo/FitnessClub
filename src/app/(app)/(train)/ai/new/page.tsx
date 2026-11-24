@@ -6,6 +6,8 @@ import { toProfileData } from '@/lib/fitness/profile';
 import { getAiAccess } from '@/lib/ai/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { AiProgramWizard } from '@/components/ai/AiProgramWizard';
+import { PremiumRequest } from '@/components/premium/PremiumRequest';
+import { db } from '@/lib/db';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('ai.wizard');
@@ -28,7 +30,12 @@ export default async function AiNewProgramPage() {
         {access.feature && access.configured ? (
           <AiProgramWizard initial={toProfileData(profile)} consent={access.consent} />
         ) : (
-          <p className="mg-ai-program__desc">{access.feature ? t('errors.unavailable') : t('program.premium')}</p>
+          <>
+            <p className="mg-ai-program__desc">{access.feature ? t('errors.unavailable') : t('program.premium')}</p>
+            {!access.feature && (
+              <PremiumRequest requested={!!(await db.user.findUnique({ where: { id: userId }, select: { premiumRequestedAt: true } }))?.premiumRequestedAt} />
+            )}
+          </>
         )}
       </div>
     </>

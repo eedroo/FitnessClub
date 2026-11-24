@@ -67,6 +67,7 @@ model User {
   planSource         PlanSource?
   planSince          DateTime?
   planExpiresAt      DateTime? // null = sem fim
+  premiumRequestedAt DateTime? // pediu o Premium no app (o admin vê a lista e liberta); limpo ao passar a Premium
 
   authTokens        AuthToken[]
   pushSubscriptions PushSubscription[]

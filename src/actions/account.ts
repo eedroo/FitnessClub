@@ -7,6 +7,8 @@ import { revalidatePath } from 'next/cache';
 import { Prisma } from '@prisma/client';
 import { auth, signIn, signOut } from '@/auth';
 import { db } from '@/lib/db';
+import { adminEmails } from '@/lib/admin';
+import { pushToUser } from '@/lib/notifications/send';
 import { legalVersions } from '@/lib/env';
 import { allowPasswordReset, allowVerificationResend, clientIp } from '@/lib/ratelimit';
 import { consumeAuthToken, createAuthToken } from '@/lib/auth/tokens';
@@ -250,4 +252,26 @@ async function deleteUserBlobs(userId: string): Promise<void> {
       console.error('[account] Falha a apagar fotos do Blob:', err instanceof Error ? err.message : err);
     }
   }
+}
+
+// ─── Pedido de Premium ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * "Quero o Premium": regista o pedido (uma vez; repetir não faz nada) e avisa os admins por push. O admin dá o Premium
+ * em /admin/users, o que limpa o pedido.
+ */
+export async function requestPremium(): Promise<AccountResult> {
+  const user = await currentUser();
+  if (!user) return fail('common.errors.unauthorized');
+  if (user.plan === 'PREMIUM' || user.premiumRequestedAt) return { ok: true };
+  await db.user.update({ where: { id: user.id }, data: { premiumRequestedAt: new Date() } });
+  const admins = await db.user.findMany({ where: { email: { in: adminEmails() } }, select: { id: true } });
+  // Área interna (admin): texto em PT-PT no código.
+  await Promise.all(
+    admins.map((a) =>
+      pushToUser(a.id, { title: 'Pedido de Premium', body: `${user.name ?? user.email} quer o Premium.`, url: '/admin/users', tag: 'premium-request' }).catch(() => 0),
+    ),
+  );
+  revalidatePath('/', 'layout');
+  return { ok: true };
 }

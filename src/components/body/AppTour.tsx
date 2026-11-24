@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 const STEPS: { key: string; target: string | null }[] = [
   { key: 'hello', target: null },
   { key: 'workouts', target: 'nav:/' },
-  { key: 'ai', target: 'ai' },
+  { key: 'ai', target: 'new-program' },
   { key: 'feed', target: 'nav:/feed' },
   { key: 'sessions', target: 'nav:/sessions' },
   { key: 'day', target: 'nav:/day' },

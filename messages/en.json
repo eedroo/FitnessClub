@@ -159,6 +159,10 @@
       "aiProgram": {
         "title": "Your programme is ready",
         "body": "Review and save your AI-built programme."
+      },
+      "premiumActive": {
+        "title": "Your Premium is active",
+        "body": "You can now build your programme with AI."
       }
     },
     "prompt": {
@@ -415,7 +419,12 @@
     "badge": "Premium",
     "lockLabel": "Premium content",
     "lockTitle": "FitnessClub is premium",
-    "lockText": "Your account doesn't have access to workouts yet. Once access is granted, everything opens here and nothing is lost."
+    "lockText": "Your account doesn't have access to workouts yet. Once access is granted, everything opens here and nothing is lost.",
+    "request": {
+      "text": "AI is only available on the Premium plan. Want to try it? Request it here and we'll let you know when it's active on your account.",
+      "cta": "I want Premium",
+      "sent": "Request sent. We'll let you know when Premium is active."
+    }
   },
   "body": {
     "title": "Body",
@@ -1218,11 +1227,6 @@
       "back": "Back",
       "next": "Next",
       "create": "Create programme"
-    },
-    "hero": {
-      "title": "AI-built programme",
-      "text": "Answer a few questions and AI builds a programme just for you, with sets, rest times and notes for every exercise.",
-      "cta": "Build my programme"
     }
   },
   "game": {
@@ -1743,7 +1747,7 @@
       },
       "ai": {
         "title": "AI-built programme",
-        "text": "Answer a few questions (goal, level, days, equipment) and AI builds a programme just for you, with sets, rest times and notes for every exercise."
+        "text": "In \"New programme\", choose \"Create with AI\": answer a few questions (goal, level, days, equipment) and AI builds a programme just for you, with sets, rest times and notes for every exercise."
       },
       "feed": {
         "title": "Feed",

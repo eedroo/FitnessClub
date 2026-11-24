@@ -12,7 +12,6 @@ import { db } from '@/lib/db';
 import { getAiAccess } from '@/lib/ai/server';
 import { getGamification } from '@/lib/gamification/server';
 import { LevelCard } from '@/components/gamification/LevelCard';
-import { AiProgramCard } from '@/components/ai/AiProgramCard';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness');
@@ -37,6 +36,7 @@ export default async function BodyHome() {
     }),
     getGamification(userId),
   ]);
+  const premiumRequested = !ai.feature && !!(await db.user.findUnique({ where: { id: userId }, select: { premiumRequestedAt: true } }))?.premiumRequestedAt;
   const insightHeadline = (insight?.result as { headline?: string } | null)?.headline;
   const templates = FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }));
 
@@ -44,12 +44,11 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
-        {/* Cabeçalho: nível e barra de XP; o programa feito pela IA em destaque; programas, novo programa, os meus exercícios e a retrospectiva. */}
+        {/* Cabeçalho: nível e barra de XP. Depois: programas, novo programa, os meus exercícios e a retrospectiva. */}
         <LevelCard summary={game.summary} href="/achievements" />
-        <AiProgramCard feature={ai.feature} available={ai.feature && ai.configured} />
         <h2 className="mg-body-section-title">{t('home.programs')}</h2>
         <ProgramList programs={programs} />
-        <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured }} />
+        <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured, premiumRequested }} />
         <Link href="/exercises?tab=mine" className="mg-program-row">
           <span className="mg-program-row__text">
             <span className="mg-program-row__name">{t('home.myExercises', { n: custom })}</span>

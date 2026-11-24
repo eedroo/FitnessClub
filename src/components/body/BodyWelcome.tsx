@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/Button';
 import { CheckChip } from '@/components/ui/CheckChip';
 import { TextInput } from '@/components/ui/TextInput';
 import { NotificationsPromptCard } from '@/components/notifications/NotificationsPromptCard';
+import { PremiumRequest } from '@/components/premium/PremiumRequest';
 
 const RESTS = [60, 90, 120, 180];
 // As perguntas do perfil de treino passaram para "Novo programa com IA" (cada programa tem as suas respostas).
@@ -35,11 +36,14 @@ export function BodyWelcome({
   initialPublic,
   hasConsent,
   aiAvailable,
+  premiumRequested,
 }: {
   initialRest: number;
   /** Já deu o consentimento de dados de saúde (preciso para guardar o peso). */
   hasConsent: boolean;
   aiAvailable: boolean;
+  /** Já pediu o Premium (sem o recurso `ai`, a IA aparece com o botão para o pedir). */
+  premiumRequested: boolean;
   /** O perfil público (toda a conta é um perfil): @ sugerido e nome. */
   initialPublic: { handle: string; displayName: string };
   templates: { id: string; name: string; description: string }[];
@@ -209,6 +213,13 @@ export function BodyWelcome({
                 <strong>{t('aiStart')}</strong>
                 <span>{t('aiStartText')}</span>
               </button>
+            )}
+            {!aiAvailable && (
+              <div className="mg-body-welcome__option mg-body-welcome__option--ai mg-body-welcome__option--locked">
+                <strong>{t('aiStart')}</strong>
+                <span>{t('aiStartText')}</span>
+                <PremiumRequest requested={premiumRequested} />
+              </div>
             )}
             {[...templates, { id: '', name: t('fromScratch'), description: t('fromScratchText') }].map((tpl) => {
               const active = (template ?? '') === tpl.id;

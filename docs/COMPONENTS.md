@@ -339,7 +339,10 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **InviteForm** (client) — título, tipo, dia e hora, duração, máx. pessoas, pesquisa do local (com pré-visualização no mapa), quem vê, amigos a convidar e detalhes. `mg-invite-search`, `mg-invite-place`.
 - **InviteActions** / **RequestButtons** (client) — quero ir, vou / não posso, já não vou, retirar pedido, cancelar; o anfitrião aceita ou recusa pedidos.
 
-### Boas-vindas do app e IA em destaque (`tour.css`, `ai.css`)
-- **AppTour** (client) — tour de boas-vindas, uma vez por conta (`FitnessPrefs.tourDoneAt`), em Treinos: acende cada separador (`data-tour="nav:/…"`), o programa feito pela IA (`data-tour="ai"`) e as definições (`data-tour="settings"`), com o texto de cada um; "Saltar" ou o fim marcam como visto. `mg-tour`.
-- **AiProgramCard** — em Treinos, logo a seguir ao nível: "Programa feito pela IA" em destaque (azul da IA) com "Criar o meu programa"; sem o recurso mostra "Premium". `mg-ai-hero`.
+### Boas-vindas do app (`tour.css`)
+- **AppTour** (client) — tour de boas-vindas, uma vez por conta (`FitnessPrefs.tourDoneAt`), em Treinos: acende cada separador (`data-tour="nav:/…"`), "Novo programa", onde está "Criar com IA" (`data-tour="new-program"`) e as definições (`data-tour="settings"`), com o texto de cada um; "Saltar" ou o fim marcam como visto. `mg-tour`.
+
+### Pedido de Premium (`premium-request.css`)
+- **PremiumRequest** (client) — "A IA é exclusiva do plano Premium" e o botão "Quero o Premium" (regista o pedido e avisa os admins por push); depois mostra "Pedido enviado". Nas boas-vindas, em "Novo programa" e em `/ai/new`. `mg-premium-request`.
+- **PremiumRequestActions** (client, admin) — em `/admin/users`, "Pedidos de Premium": "Dar Premium" (manual, sem fim; avisa a pessoa por push) ou "Recusar".
 

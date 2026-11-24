@@ -6,6 +6,8 @@ import { db } from '@/lib/db';
 import { requireAdmin } from '@/lib/admin';
 import { FEATURE_KEYS } from '@/lib/entitlements/features';
 import { generateJson } from '@/lib/ai/gemini';
+import { pushToUser } from '@/lib/notifications/send';
+import { premiumActiveNotification } from '@/lib/notifications/content';
 
 export type AdminResult = { ok: true } | { ok: false; error: string };
 
@@ -29,7 +31,7 @@ export async function setUserPlan(
   await requireAdmin();
   const p = planSchema.safeParse({ userId: id, plan, source, expiresAt });
   if (!p.success) return { ok: false, error: 'Dados inválidos.' };
-  const current = await db.user.findUnique({ where: { id: p.data.userId }, select: { plan: true } });
+  const current = await db.user.findUnique({ where: { id: p.data.userId }, select: { plan: true, premiumRequestedAt: true, locale: true } });
   if (!current) return { ok: false, error: 'Utilizador não encontrado.' };
   await db.user.update({
     where: { id: p.data.userId },
@@ -40,10 +42,24 @@ export async function setUserPlan(
             planSource: p.data.source,
             planExpiresAt: p.data.expiresAt ? new Date(`${p.data.expiresAt}T23:59:59Z`) : null,
             ...(current.plan !== 'PREMIUM' && { planSince: new Date() }),
+            premiumRequestedAt: null,
           }
         : { plan: 'FREE', planSource: null, planExpiresAt: null, planSince: null },
   });
+  // Tinha pedido no app: avisa que o Premium está activo.
+  if (p.data.plan === 'PREMIUM' && current.premiumRequestedAt) {
+    await pushToUser(p.data.userId, { ...premiumActiveNotification(current.locale), tag: 'premium-active' }).catch(() => 0);
+  }
   revalidatePath(`/admin/users/${p.data.userId}`);
+  revalidatePath('/admin/users');
+  return { ok: true };
+}
+
+/** Recusar (ou arquivar) um pedido de Premium: some da lista sem mudar o plano. */
+export async function dismissPremiumRequest(id: string): Promise<AdminResult> {
+  await requireAdmin();
+  if (!userId.safeParse(id).success) return { ok: false, error: 'Dados inválidos.' };
+  await db.user.updateMany({ where: { id }, data: { premiumRequestedAt: null } });
   revalidatePath('/admin/users');
   return { ok: true };
 }

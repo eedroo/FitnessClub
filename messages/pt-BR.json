@@ -159,6 +159,10 @@
       "aiProgram": {
         "title": "Seu programa está pronto",
         "body": "Revise e salve o programa criado pela IA."
+      },
+      "premiumActive": {
+        "title": "Seu Premium está ativo",
+        "body": "Agora você já pode criar seu programa com a IA."
       }
     },
     "prompt": {
@@ -415,7 +419,12 @@
     "badge": "Premium",
     "lockLabel": "Conteúdo premium",
     "lockTitle": "O FitnessClub é premium",
-    "lockText": "Sua conta ainda não tem acesso aos treinos. Quando o acesso for liberado, tudo abre aqui, sem você perder nada."
+    "lockText": "Sua conta ainda não tem acesso aos treinos. Quando o acesso for liberado, tudo abre aqui, sem você perder nada.",
+    "request": {
+      "text": "A IA é exclusiva do plano Premium. Quer experimentar? Peça aqui e avisamos quando estiver ativo na sua conta.",
+      "cta": "Quero o Premium",
+      "sent": "Pedido enviado. Avisamos quando o Premium estiver ativo."
+    }
   },
   "body": {
     "title": "Corpo",
@@ -1218,11 +1227,6 @@
       "back": "Voltar",
       "next": "Próximo",
       "create": "Criar programa"
-    },
-    "hero": {
-      "title": "Programa feito pela IA",
-      "text": "Você responde algumas perguntas e a IA monta um programa só para você, com séries, descansos e notas de cada exercício.",
-      "cta": "Criar meu programa"
     }
   },
   "game": {
@@ -1743,7 +1747,7 @@
       },
       "ai": {
         "title": "Programa feito pela IA",
-        "text": "Você responde algumas perguntas (objetivo, nível, dias, equipamento) e a IA monta um programa só para você, com séries, descansos e notas de cada exercício."
+        "text": "Em \"Novo programa\", escolha \"Criar com IA\": você responde algumas perguntas (objetivo, nível, dias, equipamento) e a IA monta um programa só para você, com séries, descansos e notas de cada exercício."
       },
       "feed": {
         "title": "Feed",
