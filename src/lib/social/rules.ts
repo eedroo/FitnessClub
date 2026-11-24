@@ -89,7 +89,38 @@ export const workoutSnapshotSchema = z.discriminatedUnion('kind', [
     distanceMeters: z.number().int().nullable(),
     effort: z.number().int().nullable(),
   }),
+  // O dia de treino: sessões e atividades desse dia somadas.
+  z.object({
+    kind: z.literal('day'),
+    date: z.string(),
+    sessions: z.number().int().nonnegative(),
+    activities: z.number().int().nonnegative(),
+    sets: z.number().int().nonnegative(),
+    volumeKg: z.number().nonnegative(),
+    prs: z.number().int().nonnegative(),
+    minutes: z.number().int().nonnegative(),
+    names: z.array(z.string()).max(8),
+  }),
+  // Conquistas: emblema, nível, medalha de força e vitória no ranking semanal.
+  z.object({ kind: z.literal('badge'), id: z.string(), earnedOn: z.string() }),
+  z.object({ kind: z.literal('level'), level: z.number().int().positive() }),
+  z.object({ kind: z.literal('tier'), exercise: z.string(), tier: z.string() }),
+  z.object({ kind: z.literal('league'), league: z.string(), rank: z.number().int().min(1).max(3), weekStart: z.string(), xp: z.number().int().nonnegative() }),
 ]);
+
+/** Conquistas e o dia partilhados num post (o resto são treinos: sessão ou atividade). */
+export const ACHIEVEMENT_KINDS = ['badge', 'level', 'tier', 'league'] as const;
+
+/**
+ * O que se pode anexar a um post, como vem do editor: `session:<id>`, `activity:<id>`, `day:<data>`, `badge:<id>`,
+ * `level`, `tier:<exercício>` ou `league:<domingo>`.
+ */
+export function parseAttachRef(ref: string): { kind: string; id: string } | null {
+  const m = /^(session|activity|day|badge|level|tier|league)(?::(.{1,191}))?$/.exec(ref);
+  if (!m) return null;
+  if (m[1] !== 'level' && !m[2]) return null;
+  return { kind: m[1]!, id: m[2] ?? '' };
+}
 export type WorkoutSnapshot = z.infer<typeof workoutSnapshotSchema>;
 
 /** Iniciais para o avatar (sem fotos por agora): "Ana Silva" → "AS". */

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Bell, Flag, MapPin, Plus, Users } from 'lucide-react';
+import Image from 'next/image';
+import { Bell, ChevronRight, Flag, MapPin, Plus, Users } from 'lucide-react';
+import { getLeagueBoard } from '@/lib/social/ranking';
+import { tierArt } from '@/lib/gamification/art';
 import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
 import { ensureProfile, getFeed, unreadNotices } from '@/lib/social/server';
@@ -19,11 +22,14 @@ export default async function FeedPage({ searchParams }: { searchParams: { scope
   const [t, tg, ti, profile] = await Promise.all([getTranslations('social'), getTranslations('groups'), getTranslations('invites'), ensureProfile(userId)]);
   const scope = searchParams.scope === 'friends' ? 'friends' : 'all';
   const before = searchParams.before && !Number.isNaN(Date.parse(searchParams.before)) ? new Date(searchParams.before) : undefined;
-  const [posts, unread, pending] = await Promise.all([
+  const [posts, unread, pending, board, tr] = await Promise.all([
     getFeed(userId, { scope, before }),
     unreadNotices(userId),
     db.friendship.count({ where: { addresseeId: userId, status: 'PENDING' } }),
+    before ? null : getLeagueBoard(userId),
+    getTranslations('ranking'),
   ]);
+  const myRow = board?.rows.find((r) => r.me);
   const last = posts[posts.length - 1];
 
   return (
@@ -52,6 +58,17 @@ export default async function FeedPage({ searchParams }: { searchParams: { scope
             <Plus size={22} strokeWidth={2} aria-hidden="true" />
           </Link>
         </nav>
+        {/* Ranking da semana: a liga e a posição de quem vê (só na primeira página do feed). */}
+        {board && (
+          <Link href="/ranking" className="mg-feed-ranking">
+            <Image src={tierArt(board.myLeague)} alt="" width={40} height={40} />
+            <span className="mg-feed-ranking__text">
+              <span className="mg-feed-ranking__title">{tr('feedTitle', { name: tr(`leagues.${board.myLeague}`) })}</span>
+              <span className="mg-feed-ranking__meta">{myRow ? tr('feedRank', { rank: myRow.rank, total: board.rows.length, xp: myRow.xp }) : tr('feedJoin')}</span>
+            </span>
+            <ChevronRight size={20} aria-hidden="true" />
+          </Link>
+        )}
         <div className="mg-feed-scope" role="tablist" aria-label={t('scope.label')}>
           <Link href="/feed" role="tab" aria-selected={scope === 'all'} className={scope === 'all' ? 'mg-feed-scope__tab mg-feed-scope__tab--on' : 'mg-feed-scope__tab'}>
             {t('scope.all')}

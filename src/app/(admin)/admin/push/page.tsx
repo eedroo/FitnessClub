@@ -2,6 +2,7 @@ import { hasPush } from '@/lib/env';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { VapidGenerator } from '@/components/admin/VapidGenerator';
 import { PushTestButton } from '@/components/admin/PushTestButton';
+import { RankingAnnounceButton } from '@/components/admin/RankingAnnounceButton';
 
 /** Notificações push: estado, gerar as chaves VAPID neste dispositivo e enviar um teste. */
 export default function AdminPushPage() {
@@ -35,6 +36,15 @@ export default function AdminPushPage() {
       <GlassCard title={configured ? 'Testar' : '2. Testar (depois do Redeploy)'}>
         <PushTestButton />
       </GlassCard>
+      {configured && (
+        <GlassCard title="Anúncios">
+          <p className="mg-admin__note">
+            Ranking semanal: os avisos de domingo (vitórias e nova semana) são automáticos (Inngest, domingo às 12h UTC). O anúncio de
+            lançamento é só uma vez, daqui.
+          </p>
+          <RankingAnnounceButton />
+        </GlassCard>
+      )}
     </>
   );
 }

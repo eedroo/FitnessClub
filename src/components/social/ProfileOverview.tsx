@@ -7,8 +7,10 @@ import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { getPostsBy } from '@/lib/social/server';
 import type { Relationship } from '@/lib/social/rules';
 import { getGamification, getStrengthLevels } from '@/lib/gamification/server';
-import { levelArtHasNumber, levelFrame } from '@/lib/gamification/art';
-import { formatDayMonth } from '@/lib/dates';
+import { levelArtHasNumber, levelFrame, tierArt } from '@/lib/gamification/art';
+import type { StrengthTier as StrengthTierId } from '@/lib/gamification/strength';
+import { Share2 } from 'lucide-react';
+import { formatDayMonth, fromDbDate } from '@/lib/dates';
 import { Avatar } from './Avatar';
 import { PostCard } from './PostCard';
 import { ProfileActions } from './ProfileActions';
@@ -39,10 +41,13 @@ export async function ProfileOverview({
 }) {
   const [t, tg] = await Promise.all([getTranslations('social'), getTranslations('game')]);
   const self = rel === 'self';
-  const [game, posts, strength] = await Promise.all([
+  const [game, posts, strength, wins, tr, ts] = await Promise.all([
     getGamification(profile.userId),
     rel === 'blocked' ? Promise.resolve([]) : getPostsBy(viewerId, profile.userId),
     (self || profile.shareLevels) && rel !== 'blocked' ? getStrengthLevels(profile.userId) : Promise.resolve(null),
+    rel === 'blocked' ? Promise.resolve([]) : db.leagueResult.findMany({ where: { userId: profile.userId }, orderBy: { weekStart: 'desc' }, take: 12 }),
+    getTranslations('ranking'),
+    getTranslations('social.share'),
   ]);
   const earned = game.badges.filter((b) => b.earnedOn);
   const tiers = strength?.levels.filter((l) => l.tier) ?? [];
@@ -90,7 +95,32 @@ export async function ProfileOverview({
       {rel !== 'blocked' && (self || earned.length > 0) && (
         <>
           <h2 className="mg-body-section-title">{tg('badgesTitle')}</h2>
-          <BadgeGrid badges={self ? game.badges : earned} formatDate={(d) => formatDayMonth(d, locale)} />
+          <BadgeGrid badges={self ? game.badges : earned} formatDate={(d) => formatDayMonth(d, locale)} share={self} />
+        </>
+      )}
+      {/* Vitórias no ranking semanal (pódio de cada semana); as minhas com "Partilhar". */}
+      {wins.length > 0 && (
+        <>
+          <h2 className="mg-body-section-title">{tr('wins')}</h2>
+          <ul className="mg-program-list">
+            {wins.map((w) => {
+              const week = fromDbDate(w.weekStart);
+              return (
+                <li key={w.id} className="mg-program-row">
+                  <Image src={tierArt(w.league as StrengthTierId)} alt="" width={36} height={36} />
+                  <span className="mg-program-row__text">
+                    <span className="mg-program-row__name">{tr('winTitle', { rank: w.rank, name: tr(`leagues.${w.league}`) })}</span>
+                    <span className="mg-program-row__meta">{tr('winMeta', { date: formatDayMonth(week, locale), xp: w.xp })}</span>
+                  </span>
+                  {self && (
+                    <Link href={`/feed/new?share=league:${week}`} className="mg-share-link">
+                      <Share2 size={14} aria-hidden="true" /> {ts('short')}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </>
       )}
       {tiers.length > 0 && (

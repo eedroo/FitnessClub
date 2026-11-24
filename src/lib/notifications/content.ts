@@ -51,3 +51,25 @@ export function premiumActiveNotification(locale: Locale): NotificationContent {
   const t = translatorFor(locale);
   return { title: t('notifications.push.premiumActive.title'), body: t('notifications.push.premiumActive.body'), url: '/ai/new' };
 }
+
+/** Ranking por ligas: ficou no pódio da semana que acabou. */
+export function leagueWinNotification(locale: Locale, league: string, rank: number): NotificationContent {
+  const t = translatorFor(locale);
+  return {
+    title: t('notifications.push.leagueWin.title', { rank }),
+    body: t('notifications.push.leagueWin.body', { rank, league: t(`ranking.leagues.${league}`) }),
+    url: '/corpo',
+  };
+}
+
+/** Ranking por ligas: começou uma nova semana (domingo). */
+export function leagueStartNotification(locale: Locale): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t('notifications.push.leagueStart.title'), body: t('notifications.push.leagueStart.body'), url: '/ranking' };
+}
+
+/** Anúncio único: o ranking semanal chegou ao app (enviado pelo admin). */
+export function rankingLaunchNotification(locale: Locale): NotificationContent {
+  const t = translatorFor(locale);
+  return { title: t('notifications.push.rankingLaunch.title'), body: t('notifications.push.rankingLaunch.body'), url: '/ranking' };
+}

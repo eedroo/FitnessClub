@@ -101,6 +101,7 @@ model User {
   groupMemberships  GroupMember[]
   invitesHosted     WorkoutInvite[]
   inviteGuests      InviteGuest[]
+  leagueResults     LeagueResult[]
 }
 
 enum AuthTokenType {
@@ -228,17 +229,17 @@ enum WeighInFrequency {
 }
 
 model FitnessPrefs {
-  userId          String    @id
-  defaultRestSec  Int       @default(90)
-  restAlert       Boolean   @default(true) // aviso de fim de descanso
-  keepAwake       Boolean   @default(true) // manter o ecrã ligado durante o treino
-  weighInReminder Boolean   @default(false) // obsoleto: substituído por weighInFrequency (copiado na migração weigh_in)
+  userId           String           @id
+  defaultRestSec   Int              @default(90)
+  restAlert        Boolean          @default(true) // aviso de fim de descanso
+  keepAwake        Boolean          @default(true) // manter o ecrã ligado durante o treino
+  weighInReminder  Boolean          @default(false) // obsoleto: substituído por weighInFrequency (copiado na migração weigh_in)
   weighInFrequency WeighInFrequency @default(OFF) // pedir o peso ao abrir a app: nunca, todos os dias ou uma vez por semana
-  weighInTime     String    @default("08:00")
-  aiWeeklyInsights Boolean  @default(true) // retrospectiva semanal da IA (com o recurso `ai` e o consentimento)
-  tourDoneAt      DateTime? // tour de boas-vindas do app visto (ou saltado)
-  onboardedAt     DateTime?
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weighInTime      String           @default("08:00")
+  aiWeeklyInsights Boolean          @default(true) // retrospectiva semanal da IA (com o recurso `ai` e o consentimento)
+  tourDoneAt       DateTime? // tour de boas-vindas do app visto (ou saltado)
+  onboardedAt      DateTime?
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model FitnessProgram {
@@ -456,15 +457,31 @@ model Activity {
 // ─── Fase C: rede social ─────────────────────────────────────────────────────────────────────────
 
 // Perfil público: só existe depois de a pessoa entrar na comunidade (escolhe o @ e aceita as regras).
+// Pódio de uma semana do ranking por ligas (os 3 primeiros de cada liga), gravado ao fechar a semana.
+model LeagueResult {
+  id        String   @id @default(cuid())
+  userId    String
+  weekStart DateTime @db.Date // domingo da semana
+  league    String // bronze, silver, gold, platinum, diamond
+  rank      Int // 1, 2 ou 3
+  xp        Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weekStart])
+  @@index([weekStart])
+}
+
 model SocialProfile {
-  userId       String   @id
-  handle       String   @unique // minúsculas, 3–20 de [a-z0-9_.]
-  displayName  String
-  bio          String?
-  shareLevels  Boolean  @default(false) // mostrar os níveis de força no perfil (desligado por defeito)
-  avatarUrl    String? // foto de perfil no Vercel Blob (avatars/<userId>/…)
-  createdAt    DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String   @id
+  handle      String   @unique // minúsculas, 3–20 de [a-z0-9_.]
+  displayName String
+  bio         String?
+  shareLevels Boolean  @default(false) // mostrar os níveis de força no perfil (desligado por defeito)
+  avatarUrl   String? // foto de perfil no Vercel Blob (avatars/<userId>/…)
+  inRanking   Boolean  @default(true) // aparece no ranking semanal por ligas (e recebe os avisos dele)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum FriendshipStatus {
@@ -514,6 +531,7 @@ model Post {
   activityId String?
   workout    Json?
   images     String[]       @default([]) // até 4 fotos no Vercel Blob (posts/<userId>/…)
+  carousel   Boolean        @default(false) // fotos + anexo em carrossel (a foto na capa, o anexo editorial a seguir)
   createdAt  DateTime       @default(now())
   hiddenAt   DateTime? // escondido pela moderação
   author     User           @relation(fields: [authorId], references: [id], onDelete: Cascade)

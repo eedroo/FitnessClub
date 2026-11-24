@@ -13,7 +13,7 @@ export async function BodyShell({ children, activeSession }: { children: ReactNo
       <BodyNav
         label={t('nav.label')}
         items={[
-          { href: '/feed', label: t('nav.feed'), match: ['/feed', '/friends', '/u', '/p', '/groups', '/invites'] },
+          { href: '/feed', label: t('nav.feed'), match: ['/feed', '/friends', '/u', '/p', '/groups', '/invites', '/ranking'] },
           { href: '/', label: t('nav.workouts'), match: ['/', '/programs', '/workouts'] },
           { href: '/sessions', label: t('nav.sessions'), match: ['/sessions', '/session', '/activities'] },
           { href: '/day', label: t('nav.day'), match: ['/day'] },

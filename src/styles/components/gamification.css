@@ -278,3 +278,14 @@
   color: var(--text-secondary);
   font-size: var(--text-xs);
 }
+
+/* "Partilhar" uma conquista (emblema, nível, medalha, vitória) numa publicação */
+.mg-share-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--highlight);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}

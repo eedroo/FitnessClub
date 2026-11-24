@@ -187,3 +187,10 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Em `/admin/users`, a lista "Pedidos de Premium" (e o aviso nas Métricas): "Dar Premium" põe o plano manual sem fim, limpa o pedido e avisa a pessoa por push; "Recusar" só limpa o pedido.
 - Nas boas-vindas, "Criar com IA" fica dentro de "Novo programa" (sem cartão no topo de Treinos), com mais destaque.
 
+## Ranking semanal por ligas, partilha de conquistas e carrossel (2026-11-24)
+- **Ligas pelo nível** (XP de sempre): Bronze 1–5, Prata 6–10, Ouro 11–20, Platina 21–35, Diamante 36+. Posição pelo **XP desta semana** (as mesmas regras e limites do XP: treinos, séries, recordes, atividades e a semana cumprida), domingo a sábado nas datas de cada pessoa; empates na mesma posição. Entra quem treinou na semana e está no ranking (`SocialProfile.inRanking`, ligado por defeito, desligável no perfil). Sem quem bloqueou ou foi bloqueado.
+- **Fecho da semana:** Inngest `league-weekly`, domingo às 12h UTC: grava o pódio de cada liga (`LeagueResult`, só os 3 primeiros com XP) e envia push: vitória a quem ficou no pódio, "começou uma nova semana" aos outros que estão no ranking. O anúncio de lançamento é um botão no admin (uma vez).
+- **Vitórias no perfil** (todos veem, menos quem está bloqueado) e partilháveis.
+- **Partilhar conquistas e o dia:** anexos `day:<data>`, `badge:<id>`, `level`, `tier:<exercício>`, `league:<domingo>`; o servidor confirma que foram ganhos antes de publicar (retrato guardado no post).
+- **Carrossel:** com fotos e um anexo, o editor oferece "Carrossel" (ligado por defeito): a primeira foto na capa, o slide editorial a seguir e as outras fotos depois (`Post.carousel`).
+

@@ -47,6 +47,10 @@ export async function BodyDayView({ data, trained }: { data: DayPageData; traine
               compare={data.comparison ? compareTotals(data.comparison.current, data.comparison.previous) : null}
               compareDates={data.comparison?.dates}
             />
+            {/* Partilhar o dia de treino na comunidade (com foto, fica em carrossel). */}
+            <Link href={`/feed/new?share=day:${data.date}`} className="mg-btn mg-btn--subtle mg-btn--block">
+              {t('share')}
+            </Link>
             <GlassCard title={t('details')}>
               <SetDetails details={data.details} />
             </GlassCard>

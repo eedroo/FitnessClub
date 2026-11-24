@@ -6,6 +6,7 @@ import { ensureProfile } from '@/lib/social/server';
 import { BodyHeader } from '@/components/body/BodyHeader';
 import { JoinCommunity } from '@/components/social/JoinCommunity';
 import { ShareLevelsToggle } from '@/components/social/ShareLevelsToggle';
+import { RankingToggle } from '@/components/social/RankingToggle';
 import { AvatarPicker } from '@/components/social/AvatarPicker';
 import { ProfileActions } from '@/components/social/ProfileActions';
 
@@ -30,6 +31,7 @@ export default async function EditSocialProfilePage() {
         <AvatarPicker userId={userId} name={profile.displayName} url={profile.avatarUrl} />
         <JoinCommunity edit initial={{ handle: profile.handle, displayName: profile.displayName, bio: profile.bio ?? '' }} />
         <ShareLevelsToggle initial={profile.shareLevels} />
+        <RankingToggle initial={profile.inRanking} />
         <h2 className="mg-body-section-title">{t('blocked')}</h2>
         {blocked.length ? (
           <ul className="mg-program-list">

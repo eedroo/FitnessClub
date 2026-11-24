@@ -163,6 +163,18 @@
       "premiumActive": {
         "title": "O teu Premium está ativo",
         "body": "Já podes criar o teu programa com a IA."
+      },
+      "leagueWin": {
+        "title": "{rank, select, 1 {🥇} 2 {🥈} other {🥉}} Ficaste em {rank}.º lugar!",
+        "body": "Ganhaste a semana na liga {league} com o {rank}.º lugar. A vitória já está no teu perfil."
+      },
+      "leagueStart": {
+        "title": "Começou uma nova semana do ranking",
+        "body": "Todos voltam a zero. Treina esta semana e sobe na tua liga."
+      },
+      "rankingLaunch": {
+        "title": "Novidade: ranking semanal",
+        "body": "Compete na liga do teu nível, com quem está num ponto parecido. Vê em que lugar estás."
       }
     },
     "prompt": {
@@ -926,7 +938,8 @@
         "prs": "Recordes",
         "kg": "{kg} kg",
         "top": "Carga máxima"
-      }
+      },
+      "share": "Partilhar este dia de treino"
     },
     "records": {
       "trophy": "Recorde: {kinds}",
@@ -1496,7 +1509,13 @@
     "workout": {
       "free": "Treino livre",
       "sets": "{n, plural, one {# série} other {# séries}}",
-      "prs": "{n, plural, one {# recorde} other {# recordes}}"
+      "prs": "{n, plural, one {# recorde} other {# recordes}}",
+      "badge": "Novo emblema",
+      "level": "Subiu de nível",
+      "tier": "Medalha de força em {exercise}",
+      "leagueRank": "{rank}.º lugar no ranking semanal",
+      "dayTitle": "Dia de treino · {date}",
+      "minutes": "{n} min"
     },
     "post": {
       "like": "Gostar",
@@ -1538,7 +1557,15 @@
       "visibility": "Quem vê",
       "friends": "Só amigos",
       "public": "Público",
-      "publish": "Publicar"
+      "publish": "Publicar",
+      "groups": {
+        "workouts": "Treinos",
+        "days": "Dias de treino",
+        "achievements": "Conquistas"
+      },
+      "dayOption": "Dia de treino · {date}",
+      "winOption": "{rank}.º lugar · Liga {league} · {date}",
+      "carousel": "Carrossel: a foto na capa e o resto a seguir"
     },
     "comments": {
       "title": "{n, plural, =0 {Comentários} one {# comentário} other {# comentários}}",
@@ -1607,6 +1634,31 @@
       "more": "Mais opções (fotos)",
       "done": "Treino partilhado",
       "seeFeed": "Ver no feed"
+    },
+    "share": {
+      "short": "Partilhar",
+      "badge": "Partilhar o emblema {name}",
+      "level": "Partilhar o nível {n}"
+    },
+    "editorial": {
+      "carousel": "Fotos e treino",
+      "slide": "{n} de {total}",
+      "session": "Treino · {date}",
+      "activity": "Atividade · {date}",
+      "day": "Dia de treino · {date}",
+      "dayTitle": "O meu dia de treino",
+      "badge": "Novo emblema · {date}",
+      "level": "Novo nível",
+      "tier": "Medalha de força",
+      "league": "Ranking semanal · semana de {date}",
+      "time": "Tempo",
+      "sets": "Séries",
+      "volume": "Volume",
+      "prs": "Recordes",
+      "distance": "Distância",
+      "effort": "Esforço",
+      "minutes": "Minutos",
+      "xp": "XP da semana"
     }
   },
   "groups": {
@@ -1770,5 +1822,37 @@
         "text": "Descanso entre séries, avisos, lembrete de pesagem e a IA. Muda o que quiseres a qualquer momento."
       }
     }
+  },
+  "ranking": {
+    "title": "Ranking",
+    "league": "Liga {name}",
+    "leagues": {
+      "bronze": "Bronze",
+      "silver": "Prata",
+      "gold": "Ouro",
+      "platinum": "Platina",
+      "diamond": "Diamante"
+    },
+    "leaguesLabel": "Ligas",
+    "mine": "a tua",
+    "week": "Semana de {from} a {to}",
+    "myRank": "Estás em {rank}.º de {total} · {xp} XP esta semana",
+    "you": "{name} (tu)",
+    "xp": "{n} XP",
+    "empty": "Ainda ninguém treinou esta semana nesta liga.",
+    "out": "Não apareces no ranking. Para voltar a aparecer, liga-o no teu perfil.",
+    "toggle": "Aparecer no ranking semanal",
+    "feedTitle": "Ranking da semana · Liga {name}",
+    "feedRank": "Estás em {rank}.º de {total} · {xp} XP",
+    "feedJoin": "Treina esta semana para entrares no ranking",
+    "how": {
+      "title": "Como funciona",
+      "text": "Cada pessoa compete na liga do seu nível, com quem está num ponto parecido. A posição é pelo XP ganho esta semana (treinos, séries, recordes, atividades e a semana cumprida), de domingo a sábado. Todas as semanas começa do zero, e os 3 primeiros de cada liga ganham uma vitória para o perfil.",
+      "range": "{name}: níveis {from} a {to}",
+      "rangeTop": "{name}: nível {from} ou mais"
+    },
+    "wins": "Vitórias no ranking",
+    "winTitle": "{rank}.º lugar · Liga {name}",
+    "winMeta": "Semana de {date} · {xp} XP"
   }
 }

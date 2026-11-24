@@ -43,3 +43,15 @@ describe('@ automático', () => {
     expect([handleBase('Ana Lúcia Silva'), handleBase('JOÃO'), handleBase('  '), handleBase('Admin')]).toEqual(['ana.silva', 'joao', 'atleta', 'atleta']);
   });
 });
+
+describe('anexos de um post', () => {
+  it('lê as referências do editor', async () => {
+    const { parseAttachRef } = await import('./rules');
+    expect(parseAttachRef('session:abc')).toEqual({ kind: 'session', id: 'abc' });
+    expect(parseAttachRef('level')).toEqual({ kind: 'level', id: '' });
+    expect(parseAttachRef('badge:streak_4')).toEqual({ kind: 'badge', id: 'streak_4' });
+    expect(parseAttachRef('league:2026-11-22')).toEqual({ kind: 'league', id: '2026-11-22' });
+    expect(parseAttachRef('badge')).toBeNull();
+    expect(parseAttachRef('other:x')).toBeNull();
+  });
+});

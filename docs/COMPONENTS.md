@@ -346,3 +346,13 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **PremiumRequest** (client) — "A IA é exclusiva do plano Premium" e o botão "Quero o Premium" (regista o pedido e avisa os admins por push); depois mostra "Pedido enviado". Nas boas-vindas, em "Novo programa" e em `/ai/new`. `mg-premium-request`.
 - **PremiumRequestActions** (client, admin) — em `/admin/users`, "Pedidos de Premium": "Dar Premium" (manual, sem fim; avisa a pessoa por push) ou "Recusar".
 
+### Ranking semanal, partilha de conquistas e carrossel (`ranking.css`, `carousel.css`)
+- Página `/ranking` — a liga da pessoa (medalha, semana, "Estás em N.º de M"), separadores das 5 ligas, a lista (posição, avatar, nome, nível, XP da semana; a pessoa destacada) e "Como funciona". `mg-league-*`.
+- Entrada no Feed — cartão "Ranking da semana · Liga X" com a posição, no topo do Feed. `mg-feed-ranking`.
+- **RankingToggle** (client) — no perfil: "Aparecer no ranking semanal" (ligado por defeito).
+- **RankingAnnounceButton** (client, admin) — em Notificações: enviar o anúncio do ranking uma vez.
+- **PostCarousel** (client) — carrossel de um post (deslizar, pontos): a foto na capa, o slide editorial e as outras fotos. `mg-carousel`.
+- **EditorialSlide** — o treino, dia ou conquista numa página de revista: etiqueta, título grande, números grandes em grelha, assinatura; cores invertidas do tema. `mg-editorial`.
+- **WorkoutAttachment** passa a mostrar também o dia de treino e as conquistas (emblema, nível, medalha de força, vitória) com a arte.
+- "Partilhar" (`mg-share-link`) — emblemas ganhos (BadgeGrid com `share`), nível e medalhas de força nas conquistas, vitórias no perfil; "Partilhar este dia de treino" no Dia.
+

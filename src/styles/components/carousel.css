@@ -1,0 +1,157 @@
+/* PostCarousel e EditorialSlide: fotos e o treino, dia ou conquista em carrossel (estética editorial) */
+
+.mg-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.mg-carousel__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mg-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.mg-carousel__slide {
+  flex: 0 0 100%;
+  aspect-ratio: 4 / 5;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.mg-carousel__slide img.mg-carousel__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mg-carousel__dots {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  display: flex;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--scrim);
+  transform: translateX(-50%);
+}
+
+.mg-carousel__dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--system-bg);
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.mg-carousel__dot--on {
+  opacity: 1;
+}
+
+/* Slide editorial: cores invertidas do tema (escuro no tema claro, claro no escuro), tipografia grande */
+.mg-editorial {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+  background: var(--text-primary);
+  color: var(--system-bg);
+}
+
+.mg-editorial__kicker {
+  margin: 0;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.7;
+}
+
+.mg-editorial__title {
+  margin: var(--space-3) 0 var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.mg-editorial__art {
+  align-self: center;
+  width: 46%;
+  height: auto;
+  margin-top: var(--space-5);
+}
+
+.mg-editorial--art {
+  align-items: center;
+  text-align: center;
+}
+
+.mg-editorial__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-3);
+  width: 100%;
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid color-mix(in srgb, var(--system-bg) 25%, transparent);
+}
+
+.mg-editorial__stat dt {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.65;
+}
+
+.mg-editorial__stat dd {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-editorial__list {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+.mg-editorial__sign {
+  margin: auto 0 0;
+  padding-top: var(--space-4);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-carousel__track {
+    scroll-behavior: auto;
+  }
+}
+
+.mg-editorial__stat dd {
+  white-space: nowrap;
+}
+
+.mg-editorial__unit {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  opacity: 0.7;
+}

@@ -8,6 +8,7 @@ import { FEATURE_KEYS } from '@/lib/entitlements/features';
 import { generateJson } from '@/lib/ai/gemini';
 import { pushToUser } from '@/lib/notifications/send';
 import { premiumActiveNotification } from '@/lib/notifications/content';
+import { announceRanking } from '@/lib/social/ranking';
 
 export type AdminResult = { ok: true } | { ok: false; error: string };
 
@@ -154,3 +155,11 @@ export async function dismissReport(id: string): Promise<AdminResult> {
   revalidatePath('/admin/reports');
   return { ok: true };
 }
+
+/** Anúncio do ranking semanal por push a todos os que estão no ranking e têm notificações (enviar uma vez). */
+export async function sendRankingAnnouncement(): Promise<{ ok: true; people: number; sent: number } | { ok: false; error: string }> {
+  await requireAdmin();
+  const r = await announceRanking();
+  return { ok: true, ...r };
+}
+

@@ -163,6 +163,18 @@
       "premiumActive": {
         "title": "Your Premium is active",
         "body": "You can now build your programme with AI."
+      },
+      "leagueWin": {
+        "title": "{rank, select, 1 {🥇} 2 {🥈} other {🥉}} You finished {rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}!",
+        "body": "You won the week in the {league} league in {rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} place. The win is on your profile."
+      },
+      "leagueStart": {
+        "title": "A new ranking week has started",
+        "body": "Everyone's back to zero. Train this week and climb your league."
+      },
+      "rankingLaunch": {
+        "title": "New: weekly ranking",
+        "body": "Compete in the league for your level, against people at a similar stage. See where you stand."
       }
     },
     "prompt": {
@@ -926,7 +938,8 @@
         "prs": "Records",
         "kg": "{kg} kg",
         "top": "Top weight"
-      }
+      },
+      "share": "Share this training day"
     },
     "records": {
       "trophy": "Record: {kinds}",
@@ -1496,7 +1509,13 @@
     "workout": {
       "free": "Free workout",
       "sets": "{n, plural, one {# set} other {# sets}}",
-      "prs": "{n, plural, one {# record} other {# records}}"
+      "prs": "{n, plural, one {# record} other {# records}}",
+      "badge": "New badge",
+      "level": "Levelled up",
+      "tier": "Strength medal in {exercise}",
+      "leagueRank": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} place in the weekly ranking",
+      "dayTitle": "Training day · {date}",
+      "minutes": "{n} min"
     },
     "post": {
       "like": "Like",
@@ -1538,7 +1557,15 @@
       "visibility": "Who can see",
       "friends": "Friends",
       "public": "Public",
-      "publish": "Post"
+      "publish": "Post",
+      "groups": {
+        "workouts": "Workouts",
+        "days": "Training days",
+        "achievements": "Achievements"
+      },
+      "dayOption": "Training day · {date}",
+      "winOption": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} · {league} league · {date}",
+      "carousel": "Carousel: photo on the cover, the rest after it"
     },
     "comments": {
       "title": "{n, plural, =0 {Comments} one {# comment} other {# comments}}",
@@ -1607,6 +1634,31 @@
       "more": "More options (photos)",
       "done": "Workout shared",
       "seeFeed": "See it in the feed"
+    },
+    "share": {
+      "short": "Share",
+      "badge": "Share the {name} badge",
+      "level": "Share level {n}"
+    },
+    "editorial": {
+      "carousel": "Photos and workout",
+      "slide": "{n} of {total}",
+      "session": "Workout · {date}",
+      "activity": "Activity · {date}",
+      "day": "Training day · {date}",
+      "dayTitle": "My training day",
+      "badge": "New badge · {date}",
+      "level": "New level",
+      "tier": "Strength medal",
+      "league": "Weekly ranking · week of {date}",
+      "time": "Time",
+      "sets": "Sets",
+      "volume": "Volume",
+      "prs": "Records",
+      "distance": "Distance",
+      "effort": "Effort",
+      "minutes": "Minutes",
+      "xp": "Weekly XP"
     }
   },
   "groups": {
@@ -1770,5 +1822,37 @@
         "text": "Rest between sets, alerts, weigh-in reminder and AI. Change anything whenever you like."
       }
     }
+  },
+  "ranking": {
+    "title": "Ranking",
+    "league": "{name} league",
+    "leagues": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum",
+      "diamond": "Diamond"
+    },
+    "leaguesLabel": "Leagues",
+    "mine": "yours",
+    "week": "Week of {from} to {to}",
+    "myRank": "You're {rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} of {total} · {xp} XP this week",
+    "you": "{name} (you)",
+    "xp": "{n} XP",
+    "empty": "Nobody in this league has trained this week yet.",
+    "out": "You're not in the ranking. To join again, turn it on in your profile.",
+    "toggle": "Show me in the weekly ranking",
+    "feedTitle": "This week's ranking · {name} league",
+    "feedRank": "You're {rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} of {total} · {xp} XP",
+    "feedJoin": "Train this week to join the ranking",
+    "how": {
+      "title": "How it works",
+      "text": "Everyone competes in the league for their level, against people at a similar stage. Your position is the XP you earn this week (workouts, sets, records, activities and hitting your weekly goal), Sunday to Saturday. It resets every week, and the top 3 in each league earn a win for their profile.",
+      "range": "{name}: levels {from} to {to}",
+      "rangeTop": "{name}: level {from} and up"
+    },
+    "wins": "Ranking wins",
+    "winTitle": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} · {name} league",
+    "winMeta": "Week of {date} · {xp} XP"
   }
 }

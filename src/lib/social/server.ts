@@ -53,6 +53,8 @@ export interface PostView {
   author: { id: string; handle: string; displayName: string; avatarUrl: string | null };
   text: string | null;
   images: string[];
+  /** Fotos e anexo em carrossel (capa = foto, a seguir o anexo editorial). */
+  carousel: boolean;
   visibility: Visibility;
   workout: WorkoutSnapshot | null;
   createdAt: string;
@@ -79,6 +81,7 @@ function toView(p: PostRow, viewerId: string, liked: Set<string>): PostView | nu
     author: { id: p.author.id, handle: prof.handle, displayName: prof.displayName, avatarUrl: prof.avatarUrl },
     text: p.text,
     images: p.images,
+    carousel: p.carousel && p.images.length > 0 && !!(w?.success && w.data),
     visibility: p.visibility,
     workout: w?.success ? w.data : null,
     createdAt: p.createdAt.toISOString(),

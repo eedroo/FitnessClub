@@ -135,3 +135,34 @@ export async function weekStats(userIds: string[], weekStart: string): Promise<W
     return { userId, sessions: count, minutes, xp };
   });
 }
+
+/**
+ * Nível (XP de sempre) de várias pessoas de uma vez, com as mesmas regras de `getGamification` (para o ranking por
+ * ligas): poucas consultas para todas, em vez de uma série por pessoa.
+ */
+export async function levelsFor(userIds: string[]): Promise<Map<string, number>> {
+  const out = new Map<string, number>();
+  if (!userIds.length) return out;
+  const [users, profiles, sessions, prs, activities] = await Promise.all([
+    db.user.findMany({ where: { id: { in: userIds } }, select: { id: true, timezone: true } }),
+    db.trainingProfile.findMany({ where: { userId: { in: userIds } }, select: { userId: true, trainingDays: true } }),
+    db.fitnessSession.findMany({
+      where: { userId: { in: userIds }, endedAt: { not: null } },
+      select: { id: true, userId: true, date: true, startedAt: true, _count: { select: { sets: true } } },
+    }),
+    db.sessionSet.groupBy({ by: ['sessionId'], where: { userId: { in: userIds }, NOT: { prKinds: { isEmpty: true } } }, _count: { _all: true } }),
+    db.activity.findMany({ where: { userId: { in: userIds } }, select: { id: true, userId: true, date: true, startedAt: true, durationSec: true } }),
+  ]);
+  const prBy = new Map(prs.map((p) => [p.sessionId, p._count._all]));
+  const planned = new Map(profiles.map((p) => [p.userId, p.trainingDays.length || null]));
+  const byUser = new Map<string, { at: number; s: Omit<XpSession, 'weekStart'> }[]>();
+  const push = (uid: string, at: number, s: Omit<XpSession, 'weekStart'>) => byUser.set(uid, [...(byUser.get(uid) ?? []), { at, s }]);
+  for (const s of sessions) push(s.userId, s.startedAt.getTime(), { id: s.id, date: fromDbDate(s.date), sets: s._count.sets, prs: prBy.get(s.id) ?? 0 });
+  for (const a of activities)
+    push(a.userId, a.startedAt.getTime(), { id: a.id, date: fromDbDate(a.date), sets: 0, prs: 0, activityMinutes: Math.floor(a.durationSec / 60) });
+  for (const u of users) {
+    const list = (byUser.get(u.id) ?? []).sort((a, b) => a.at - b.at).map(({ s }) => ({ ...s, weekStart: weekStartOf(s.date) }));
+    out.set(u.id, compute(list, todayInTz(u.timezone), planned.get(u.id) ?? null).summary.level);
+  }
+  return out;
+}

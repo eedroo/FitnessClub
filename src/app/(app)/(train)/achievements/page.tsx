@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Share2 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { db } from '@/lib/db';
 import { bodyPage } from '@/lib/fitness/page';
@@ -19,9 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Conquistas: nível e de onde veio o XP, emblemas e níveis de força por exercício (estes só a pessoa vê). */
 export default async function AchievementsPage() {
   const { userId, locale } = await bodyPage();
-  const [t, tf, game, strength] = await Promise.all([
+  const [t, tf, ts, game, strength] = await Promise.all([
     getTranslations('game'),
     getTranslations('fitness'),
+    getTranslations('social.share'),
     getGamification(userId),
     getStrengthLevels(userId),
   ]);
@@ -46,6 +48,9 @@ export default async function AchievementsPage() {
       <BodyHeader title={t('title')} backHref="/" backLabel={tf('nav.workouts')} />
       <div className="mg-body-shell__main">
         <LevelCard summary={summary} />
+        <Link href="/feed/new?share=level" className="mg-share-link">
+          <Share2 size={14} aria-hidden="true" /> {ts('level', { n: summary.level })}
+        </Link>
         <ul className="mg-program-list">
           {parts.map((p) => (
             <li key={p.key} className="mg-program-row">
@@ -59,7 +64,7 @@ export default async function AchievementsPage() {
         <p className="mg-day-metrics__note">{t('fair')}</p>
 
         <h2 className="mg-body-section-title">{t('badgesTitle')}</h2>
-        <BadgeGrid badges={game.badges} formatDate={(d) => formatDayMonth(d, locale)} />
+        <BadgeGrid badges={game.badges} formatDate={(d) => formatDayMonth(d, locale)} share />
 
         <h2 className="mg-body-section-title">{t('strength.title')}</h2>
         <p className="mg-day-metrics__note">{t('strength.private')}</p>
@@ -85,6 +90,11 @@ export default async function AchievementsPage() {
                   </span>
                   {l.tier ? <StrengthTier tier={l.tier} /> : <span className="mg-program-row__meta">{t('strength.belowBronze')}</span>}
                 </Link>
+                {l.tier && (
+                  <Link href={`/feed/new?share=tier:${encodeURIComponent(l.exerciseId)}`} className="mg-share-link mg-game__share">
+                    <Share2 size={14} aria-hidden="true" /> {ts('short')}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

@@ -8,12 +8,15 @@ import { requireFeature } from '@/lib/entitlements/server';
 import { fromDbDate } from '@/lib/dates';
 import { exerciseName, type ExerciseNames } from '@/lib/fitness/library';
 import { dbToAppLocale } from '@/i18n/locales';
+import { translatorFor } from '@/i18n/translator';
 import { socialNotification } from '@/lib/notifications/content';
 import { pushToUser } from '@/lib/notifications/send';
 import { blockedIds, ensureProfile, friendIds } from '@/lib/social/server';
 import { del } from '@vercel/blob';
 import { MAX_POST_IMAGES, ownBlobUrl } from '@/lib/media/blob';
-import { commentSchema, postTextSchema, profileSchema, reportReasonSchema, type WorkoutSnapshot } from '@/lib/social/rules';
+import { commentSchema, parseAttachRef, postTextSchema, profileSchema, reportReasonSchema, type WorkoutSnapshot } from '@/lib/social/rules';
+import { getGamification, getStrengthLevels } from '@/lib/gamification/server';
+import { isDateISO, toDbDate } from '@/lib/dates';
 
 /**
  * Acções da rede social (Fase C). Sessão + recurso `pro` + perfil na comunidade; Zod; bloqueios verificados no
@@ -86,6 +89,15 @@ export async function setShareLevels(on: boolean): Promise<Result> {
   const m = await member();
   if (!m) return fail('common.errors.unauthorized');
   await db.socialProfile.update({ where: { userId: m.id }, data: { shareLevels: on === true } });
+  refresh();
+  return { ok: true };
+}
+
+/** Aparecer no ranking semanal por ligas (ligado por defeito); desligado, também não chegam os avisos dele. */
+export async function setInRanking(on: boolean): Promise<Result> {
+  const m = await member();
+  if (!m) return fail('common.errors.unauthorized');
+  await db.socialProfile.update({ where: { userId: m.id }, data: { inRanking: on === true } });
   refresh();
   return { ok: true };
 }
@@ -199,12 +211,73 @@ async function activitySnapshot(uid: string, activityId: string): Promise<Workou
   return { kind: 'activity', type: a.type, date: fromDbDate(a.date), durationSec: a.durationSec, distanceMeters: a.distanceMeters, effort: a.effort };
 }
 
+/** O dia de treino (data local da pessoa): sessões e atividades desse dia somadas. */
+async function daySnapshot(uid: string, date: string): Promise<WorkoutSnapshot | null> {
+  if (!isDateISO(date)) return null;
+  const [sessions, activities, user] = await Promise.all([
+    db.fitnessSession.findMany({
+      where: { userId: uid, date: toDbDate(date), endedAt: { not: null }, sets: { some: {} } },
+      include: { workout: { select: { name: true } }, sets: { select: { reps: true, weightGrams: true, prKinds: true } } },
+    }),
+    db.activity.findMany({ where: { userId: uid, date: toDbDate(date) }, select: { type: true, durationSec: true } }),
+    db.user.findUnique({ where: { id: uid }, select: { locale: true } }),
+  ]);
+  if (!sessions.length && !activities.length) return null;
+  const sets = sessions.flatMap((s) => s.sets);
+  const minutes =
+    sessions.reduce((n, s) => n + Math.round((s.endedAt!.getTime() - s.startedAt.getTime()) / 60000), 0) + activities.reduce((n, a) => n + Math.floor(a.durationSec / 60), 0);
+  const tf = translatorFor(user?.locale ?? 'PT_PT');
+  const names = [
+    ...sessions.map((s) => s.workout?.name ?? tf('fitness.sessions.free')),
+    ...activities.map((a) => tf(`activities.types.${a.type}`)),
+  ];
+  return {
+    kind: 'day',
+    date,
+    sessions: sessions.length,
+    activities: activities.length,
+    sets: sets.length,
+    volumeKg: Math.round(sets.reduce((n, x) => n + (x.reps ?? 0) * (x.weightGrams ?? 0), 0) / 100) / 10,
+    prs: sets.filter((x) => x.prKinds.length > 0).length,
+    minutes,
+    names: names.slice(0, 8),
+  };
+}
+
+/** Conquista da pessoa, verificada no servidor (só se partilha o que foi mesmo ganho). */
+async function achievementSnapshot(uid: string, kind: string, ref: string): Promise<WorkoutSnapshot | null> {
+  if (kind === 'badge' || kind === 'level') {
+    const game = await getGamification(uid);
+    if (kind === 'level') return { kind: 'level', level: game.summary.level };
+    const b = game.badges.find((x) => x.id === ref && x.earnedOn);
+    return b ? { kind: 'badge', id: b.id, earnedOn: b.earnedOn! } : null;
+  }
+  if (kind === 'tier') {
+    const lvl = (await getStrengthLevels(uid)).levels.find((l) => l.exerciseId === ref && l.tier);
+    if (!lvl) return null;
+    const [ex, user] = await Promise.all([
+      db.exercise.findUnique({ where: { id: ref }, select: { names: true } }),
+      db.user.findUnique({ where: { id: uid }, select: { locale: true } }),
+    ]);
+    return { kind: 'tier', exercise: ex ? exerciseName(ex.names as ExerciseNames, dbToAppLocale(user?.locale ?? 'PT_PT')) : ref, tier: lvl.tier! };
+  }
+  if (kind === 'league' && isDateISO(ref)) {
+    const r = await db.leagueResult.findUnique({ where: { userId_weekStart: { userId: uid, weekStart: toDbDate(ref) } } });
+    return r ? { kind: 'league', league: r.league, rank: r.rank, weekStart: ref, xp: r.xp } : null;
+  }
+  return null;
+}
+
 export async function createPost(input: {
   text: string;
   visibility: 'PUBLIC' | 'FRIENDS';
   sessionId?: string | null;
   activityId?: string | null;
+  /** Outros anexos do editor: `day:<data>`, `badge:<id>`, `level`, `tier:<exercício>`, `league:<domingo>`. */
+  attach?: string | null;
   images?: string[];
+  /** Com fotos e um anexo: carrossel (a foto na capa e o anexo no slide seguinte). */
+  carousel?: boolean;
 }): Promise<Result<{ id: string }>> {
   const m = await member();
   if (!m) return fail('social.errors.join');
@@ -214,11 +287,24 @@ export async function createPost(input: {
       visibility: z.enum(['PUBLIC', 'FRIENDS']),
       sessionId: id.nullable().optional(),
       activityId: id.nullable().optional(),
+      attach: z.string().max(200).nullable().optional(),
       images: z.array(z.string().max(500)).max(MAX_POST_IMAGES).optional(),
+      carousel: z.boolean().optional(),
     })
     .safeParse(input);
   if (!p.success) return fail('social.errors.post');
-  const workout = p.data.sessionId ? await sessionSnapshot(m.id, p.data.sessionId) : p.data.activityId ? await activitySnapshot(m.id, p.data.activityId) : null;
+  const ref = p.data.attach ? parseAttachRef(p.data.attach) : null;
+  if (p.data.attach && !ref) return fail('social.errors.post');
+  const workout = p.data.sessionId
+    ? await sessionSnapshot(m.id, p.data.sessionId)
+    : p.data.activityId
+      ? await activitySnapshot(m.id, p.data.activityId)
+      : ref?.kind === 'day'
+        ? await daySnapshot(m.id, ref.id)
+        : ref
+          ? await achievementSnapshot(m.id, ref.kind, ref.id)
+          : null;
+  if (ref && !workout) return fail('social.errors.post');
   const images = p.data.images ?? [];
   if (images.some((u) => !ownBlobUrl(u, m.id, 'posts'))) return fail('social.errors.post');
   if (!p.data.text && !workout && !images.length) return fail('social.errors.empty');
@@ -232,6 +318,7 @@ export async function createPost(input: {
       activityId: workout?.kind === 'activity' ? p.data.activityId : null,
       workout: workout ?? undefined,
       images,
+      carousel: !!p.data.carousel && images.length > 0 && !!workout,
     },
     select: { id: true },
   });

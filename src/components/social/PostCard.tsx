@@ -6,6 +6,8 @@ import { Avatar } from './Avatar';
 import { LikeButton } from './LikeButton';
 import { PostMenu } from './PostMenu';
 import { WorkoutAttachment } from './WorkoutAttachment';
+import { PostCarousel } from './PostCarousel';
+import { EditorialSlide } from './EditorialSlide';
 
 /** "há 5 min", "há 2 h", "ontem"… a partir de agora. */
 export function relTime(iso: string, locale: string): string {
@@ -40,7 +42,18 @@ export function PostCard({ post, locale, link = true }: { post: PostView; locale
       </header>
       {post.hidden && <p className="mg-post__hidden">{t('hidden')}</p>}
       {post.text && <p className="mg-post__text">{post.text}</p>}
-      {post.images.length > 0 && (
+      {/* Carrossel: a primeira foto na capa, o slide editorial a seguir e as outras fotos depois. */}
+      {post.carousel && post.workout ? (
+        <PostCarousel>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="mg-carousel__photo" src={post.images[0]} alt="" loading="lazy" />
+          <EditorialSlide workout={post.workout} locale={locale} author={post.author.displayName} />
+          {post.images.slice(1).map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} className="mg-carousel__photo" src={src} alt="" loading="lazy" />
+          ))}
+        </PostCarousel>
+      ) : post.images.length > 0 && (
         <div className={`mg-post__photos mg-post__photos--${post.images.length}`}>
           {post.images.map((src) => (
             <a key={src} href={src} target="_blank" rel="noreferrer" className="mg-post__photo">
@@ -50,7 +63,7 @@ export function PostCard({ post, locale, link = true }: { post: PostView; locale
           ))}
         </div>
       )}
-      {post.workout && <WorkoutAttachment workout={post.workout} locale={locale} />}
+      {post.workout && !post.carousel && <WorkoutAttachment workout={post.workout} locale={locale} />}
       <footer className="mg-post__actions">
         <LikeButton postId={post.id} liked={post.liked} count={post.likes} />
         {link ? (

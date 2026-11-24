@@ -19,3 +19,10 @@ export function levelFrame(level: number): string {
 
 export const badgeArt = (id: BadgeId) => `/game/badge-${id}.webp`;
 export const tierArt = (tier: StrengthTier) => `/game/tier-${tier}.webp`;
+
+/** Arte de uma conquista partilhada num post (emblema, selo do nível, medalha de força ou da liga). */
+export function achievementArt(a: { kind: 'badge'; id: string } | { kind: 'level'; level: number } | { kind: 'tier' | 'league'; tier: string }): string {
+  if (a.kind === 'badge') return `/game/badge-${a.id}.webp`;
+  if (a.kind === 'level') return levelFrame(a.level);
+  return `/game/tier-${a.tier}.webp`;
+}
