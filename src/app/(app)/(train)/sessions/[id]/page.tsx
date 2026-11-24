@@ -7,7 +7,8 @@ import { BodyHeader } from '@/components/body/BodyHeader';
 import { SessionSummary } from '@/components/body/SessionSummary';
 import { sessionRewards } from '@/lib/gamification/server';
 import { SessionRewards } from '@/components/gamification/SessionRewards';
-import Link from 'next/link';
+import { db } from '@/lib/db';
+import { QuickShare } from '@/components/social/QuickShare';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness.summary');
@@ -17,17 +18,19 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Resumo de uma sessão; `?done=1` ao terminar (entrada animada). */
 export default async function SessionSummaryRoute({ params, searchParams }: { params: { id: string }; searchParams: { done?: string } }) {
   const { userId, locale } = await bodyPage();
-  const [t, summary, rewards] = await Promise.all([getTranslations('fitness'), getSessionSummary(userId, params.id, locale), sessionRewards(userId, params.id)]);
+  const [t, summary, rewards, shared] = await Promise.all([
+    getTranslations('fitness'),
+    getSessionSummary(userId, params.id, locale),
+    sessionRewards(userId, params.id),
+    db.post.count({ where: { authorId: userId, sessionId: params.id } }),
+  ]);
   if (!summary) notFound();
   return (
     <>
       <BodyHeader title={summary.name ?? t('sessions.free')} backHref="/sessions" backLabel={t('nav.sessions')} />
       <div className="mg-body-shell__main">
         {rewards && <SessionRewards {...rewards} />}
-        <SessionSummary summary={summary} fresh={searchParams.done === '1'} />
-        <Link href={`/feed/new?share=session:${summary.id}`} className="mg-btn mg-btn--subtle mg-btn--block">
-          {t('summary.share')}
-        </Link>
+        <SessionSummary summary={summary} fresh={searchParams.done === '1'} share={<QuickShare sessionId={summary.id} shared={shared > 0} />} />
       </div>
     </>
   );

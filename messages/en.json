@@ -97,7 +97,14 @@
     "training": {
       "rest": "Default rest",
       "restCustom": "Currently {n} s. Pick one of the values to change it.",
-      "keepAwake": "Keep the screen on during a session"
+      "keepAwake": "Keep the screen on during a session",
+      "weighIn": "Ask for my weight when I open the app",
+      "weighInOptions": {
+        "OFF": "Never",
+        "DAILY": "Daily",
+        "WEEKLY": "Weekly"
+      },
+      "weighInConsent": "To see the prompt, give your health data consent further down."
     },
     "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session."
   },
@@ -508,6 +515,14 @@
       "date": "Pick today or a day in the last year.",
       "goal": "Pick a direction and one of the paces.",
       "noWeight": "Log your weight first to set a goal."
+    },
+    "weighIn": {
+      "title": "Today's weigh-in",
+      "titleWeekly": "This week's weigh-in",
+      "kgLabel": "What do you weigh today? (kg)",
+      "save": "Log weight",
+      "skip": "Not now",
+      "change": "Change the reminder in settings"
     }
   },
   "fitness": {
@@ -673,7 +688,21 @@
       "profileTitle": "Your profile",
       "profileText": "This is how friends find you and see your level and badges. You can change it anytime in the Me tab.",
       "profileHandle": "Your @",
-      "profileName": "Display name"
+      "profileName": "Display name",
+      "weighInTitle": "Want a weigh-in reminder?",
+      "weighInText": "When you open the app, we'll ask for your weight and log it. Change it anytime in settings.",
+      "weighIn": {
+        "DAILY": "Every day",
+        "DAILYText": "The first time you open the app each day",
+        "WEEKLY": "Once a week",
+        "WEEKLYText": "The first time you open the app each week",
+        "OFF": "No, thanks",
+        "OFFText": "I'll log my weight when I want"
+      },
+      "weighInConsent": "Weight is health data, so we only store it with your consent. It's just for you, and you can withdraw consent in settings.",
+      "weighInConsentToggle": "I agree to the app storing my weight",
+      "aiStart": "Let AI build my programme",
+      "aiStartText": "Answer a few questions and get a programme made for you, with sets, rest times and notes for every exercise."
     },
     "programs": {
       "new": "New program",
@@ -1189,6 +1218,11 @@
       "back": "Back",
       "next": "Next",
       "create": "Create programme"
+    },
+    "hero": {
+      "title": "AI-built programme",
+      "text": "Answer a few questions and AI builds a programme just for you, with sets, rest times and notes for every exercise.",
+      "cta": "Build my programme"
     }
   },
   "game": {
@@ -1563,7 +1597,13 @@
       "cropSave": "Use photo",
       "cropCancel": "Cancel"
     },
-    "allAchievements": "See all achievements"
+    "allAchievements": "See all achievements",
+    "quickShare": {
+      "cta": "Share this workout with the community",
+      "more": "More options (photos)",
+      "done": "Workout shared",
+      "seeFeed": "See it in the feed"
+    }
   },
   "groups": {
     "title": "Groups",
@@ -1684,6 +1724,47 @@
       "place": "Choose the place.",
       "search": "Place search failed. Please try again.",
       "full": "This workout is full."
+    }
+  },
+  "tour": {
+    "count": "{n} of {total}",
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "done": "Start training",
+    "steps": {
+      "hello": {
+        "title": "Welcome to FitnessClub",
+        "text": "A quick tour of the app: in under a minute you'll know where everything is."
+      },
+      "workouts": {
+        "title": "Workouts",
+        "text": "Your programmes and workouts. This is where you start a session, with a timer, rest periods and records."
+      },
+      "ai": {
+        "title": "AI-built programme",
+        "text": "Answer a few questions (goal, level, days, equipment) and AI builds a programme just for you, with sets, rest times and notes for every exercise."
+      },
+      "feed": {
+        "title": "Feed",
+        "text": "Workouts from your friends and the community. Post your own with +, join groups and plan workouts together."
+      },
+      "sessions": {
+        "title": "Sessions",
+        "text": "A history of everything you've done. Log runs, walks and other activities too."
+      },
+      "day": {
+        "title": "Day",
+        "text": "Your day at a glance: workouts, activities and stats, compared with last time."
+      },
+      "me": {
+        "title": "Me",
+        "text": "Your profile, level and achievements, your weight and a map of the muscles you've trained."
+      },
+      "settings": {
+        "title": "Settings",
+        "text": "Rest between sets, alerts, weigh-in reminder and AI. Change anything whenever you like."
+      }
     }
   }
 }

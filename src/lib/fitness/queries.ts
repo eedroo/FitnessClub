@@ -1,5 +1,5 @@
 import 'server-only';
-import type { Exercise, Prisma } from '@prisma/client';
+import type { Exercise, Prisma, WeighInFrequency } from '@prisma/client';
 import { db } from '@/lib/db';
 import { fromDbDate, type DateISO } from '@/lib/dates';
 import type { AppLocale } from '@/i18n/locales';
@@ -10,7 +10,7 @@ import type { ActiveSessionView, ExerciseHistoryGroup, ExerciseView, LastPerform
 
 /** Leituras dos treinos. Só lêem (excepto fechar uma sessão esquecida há mais de 6 h). */
 
-export const DEFAULT_PREFS = { defaultRestSec: 90, restAlert: true, keepAwake: true, onboardedAt: null as Date | null };
+export const DEFAULT_PREFS = { defaultRestSec: 90, restAlert: true, keepAwake: true, weighInFrequency: 'OFF' as WeighInFrequency, onboardedAt: null as Date | null };
 
 export async function getFitnessPrefs(userId: string) {
   return (await db.fitnessPrefs.findUnique({ where: { userId } })) ?? { userId, ...DEFAULT_PREFS };

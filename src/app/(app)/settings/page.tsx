@@ -137,7 +137,10 @@ export default async function SettingsPage() {
 
           {prefs && (
             <GlassCard id="training" className="mg-settings__section" title={t('sections.training')}>
-              <TrainingPrefsForm initial={{ defaultRestSec: prefs.defaultRestSec, restAlert: prefs.restAlert, keepAwake: prefs.keepAwake }} />
+              <TrainingPrefsForm
+                initial={{ defaultRestSec: prefs.defaultRestSec, restAlert: prefs.restAlert, keepAwake: prefs.keepAwake, weighInFrequency: prefs.weighInFrequency }}
+                hasConsent={!!user.wellbeingConsentAt}
+              />
             </GlassCard>
           )}
 

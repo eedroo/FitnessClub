@@ -27,7 +27,7 @@ async function localeTools() {
  * Resumo de uma sessão: números grandes, a comparação com a sessão anterior do mesmo treino (volume, carga máxima,
  * reps, séries) e, por exercício, as séries e a comparação com a última vez. `fresh` anima a entrada ao terminar.
  */
-export async function SessionSummary({ summary, fresh }: { summary: Summary; fresh: boolean }) {
+export async function SessionSummary({ summary, fresh, share }: { summary: Summary; fresh: boolean; share?: React.ReactNode }) {
   const [t, { locale, kg }] = await Promise.all([getTranslations('fitness.summary'), localeTools()]);
   const prs = summary.byExercise.reduce((n, g) => n + g.sets.filter((s) => s.prKinds.length > 0).length, 0);
   // Os mesmos mosaicos do Dia, com a variação contra a última vez do mesmo treino dentro de cada número.
@@ -51,6 +51,8 @@ export async function SessionSummary({ summary, fresh }: { summary: Summary; fre
         compare={summary.previous ? compareTotals(summary.totals, summary.previous.totals) : null}
         compareDates={summary.previous ? [summary.previous.date] : undefined}
       />
+      {/* Partilhar na comunidade, logo a seguir às métricas */}
+      {share}
       <h2 className="mg-body-section-title">{t('byExercise')}</h2>
       {summary.byExercise.map(({ exercise, sets, previous }) => (
         <div key={exercise.id} className="mg-session-summary__ex">

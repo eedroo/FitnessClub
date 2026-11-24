@@ -22,6 +22,7 @@ export function BodyNav({ label, items }: { label: string; items: { href: string
             href={item.href}
             className={active ? 'mg-body-nav__item mg-body-nav__item--active' : 'mg-body-nav__item'}
             aria-current={active ? 'page' : undefined}
+            data-tour={`nav:${item.href}`}
           >
             <Icon size={22} strokeWidth={1.75} aria-hidden="true" />
             {item.label}

@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { completeFitnessOnboarding } from '@/actions/fitness';
 import { saveSocialProfile } from '@/actions/social';
+import { grantWellbeingConsent } from '@/actions/account';
 import { recommendTemplate, type TrainingProfileData } from '@/lib/fitness/profile';
 import { Button } from '@/components/ui/Button';
 import { CheckChip } from '@/components/ui/CheckChip';
@@ -14,21 +15,31 @@ import { NotificationsPromptCard } from '@/components/notifications/Notification
 
 const RESTS = [60, 90, 120, 180];
 // As perguntas do perfil de treino passaram para "Novo programa com IA" (cada programa tem as suas respostas).
-type FlowStep = 'hello' | 'profile' | 'rest' | 'alert' | 'start';
-const FLOW: FlowStep[] = ['hello', 'profile', 'rest', 'alert', 'start'];
+type FlowStep = 'hello' | 'profile' | 'rest' | 'alert' | 'weighIn' | 'start';
+const FLOW: FlowStep[] = ['hello', 'profile', 'rest', 'alert', 'weighIn', 'start'];
+const WEIGH_INS = ['DAILY', 'WEEKLY', 'OFF'] as const;
+type WeighIn = (typeof WEIGH_INS)[number];
+/** Opção "a IA monta o meu programa" em "por onde começar" (só com o recurso `ai`). */
+const AI_START = 'ai';
 const STEPS = FLOW.length;
 
 /**
- * Boas-vindas (onboarding): olá, descanso, aviso de fim de descanso e por onde começar (com o modelo sugerido pelo
- * perfil de treino, se já existir). As perguntas do perfil fazem-se ao criar um programa com IA.
+ * Boas-vindas (onboarding): olá, perfil, descanso, aviso de fim de descanso, lembrete de pesagem e por onde
+ * começar: o programa feito pela IA em destaque (com o recurso `ai`), um modelo (o sugerido pelo perfil de treino,
+ * se já existir) ou do zero. As perguntas do perfil fazem-se ao criar um programa com IA.
  */
 export function BodyWelcome({
   initialRest,
   templates,
   initialProfile,
   initialPublic,
+  hasConsent,
+  aiAvailable,
 }: {
   initialRest: number;
+  /** Já deu o consentimento de dados de saúde (preciso para guardar o peso). */
+  hasConsent: boolean;
+  aiAvailable: boolean;
   /** O perfil público (toda a conta é um perfil): @ sugerido e nome. */
   initialPublic: { handle: string; displayName: string };
   templates: { id: string; name: string; description: string }[];
@@ -44,7 +55,9 @@ export function BodyWelcome({
   const [rest, setRest] = useState(initialRest);
   const [custom, setCustom] = useState(RESTS.includes(initialRest) ? '' : String(initialRest));
   const [alert, setAlert] = useState(true);
-  const [template, setTemplate] = useState<string | null>('ppl');
+  const [template, setTemplate] = useState<string | null>(aiAvailable ? AI_START : 'ppl');
+  const [weighIn, setWeighIn] = useState<WeighIn>('OFF');
+  const [consent, setConsent] = useState(false);
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -55,11 +68,20 @@ export function BodyWelcome({
         setStep(FLOW.indexOf('profile'));
         return setError(te(saved.error));
       }
-      const res = await completeFitnessOnboarding({ defaultRestSec: rest, restAlert: alert, templateId: template });
+      // Lembrete de pesagem sem consentimento de dados de saúde: só com a caixa marcada (senão fica desligado).
+      const wantsWeighIn = weighIn !== 'OFF' && (hasConsent || consent);
+      if (wantsWeighIn && !hasConsent) await grantWellbeingConsent();
+      const ai = template === AI_START;
+      const res = await completeFitnessOnboarding({
+        defaultRestSec: rest,
+        restAlert: alert,
+        templateId: ai ? null : template,
+        weighInFrequency: wantsWeighIn ? weighIn : 'OFF',
+      });
       if (!res.ok) return setError(te(res.error));
-      // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos.
+      // O token passa a `onboarded` (o middleware deixa de trazer aqui) e entra-se nos treinos (ou na IA).
       await update({});
-      router.push('/');
+      router.push(ai ? '/ai/new' : '/');
       router.refresh();
     });
 
@@ -140,10 +162,54 @@ export function BodyWelcome({
         </section>
       )}
 
+      {cur === 'weighIn' && (
+        <section className="mg-body-welcome__step" aria-live="polite">
+          <h2 className="mg-body-welcome__title">{t('weighInTitle')}</h2>
+          <p className="mg-body-welcome__text">{t('weighInText')}</p>
+          <div className="mg-body-welcome__options" role="radiogroup" aria-label={t('weighInTitle')}>
+            {WEIGH_INS.map((w) => (
+              <button
+                key={w}
+                type="button"
+                role="radio"
+                aria-checked={weighIn === w}
+                className={weighIn === w ? 'mg-body-welcome__option mg-body-welcome__option--active' : 'mg-body-welcome__option'}
+                onClick={() => setWeighIn(w)}
+              >
+                <strong>{t(`weighIn.${w}`)}</strong>
+                <span>{t(`weighIn.${w}Text`)}</span>
+              </button>
+            ))}
+          </div>
+          {weighIn !== 'OFF' && !hasConsent && (
+            <>
+              <p className="mg-body-welcome__text">{t('weighInConsent')}</p>
+              <CheckChip icon="heart" label={t('weighInConsentToggle')} checked={consent} onCheckedChange={setConsent} />
+            </>
+          )}
+        </section>
+      )}
+
       {cur === 'start' && (
         <section className="mg-body-welcome__step" aria-live="polite">
           <h2 className="mg-body-welcome__title">{t('startTitle')}</h2>
           <div className="mg-body-welcome__options" role="radiogroup" aria-label={t('startTitle')}>
+            {aiAvailable && (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={template === AI_START}
+                className={
+                  template === AI_START
+                    ? 'mg-body-welcome__option mg-body-welcome__option--ai mg-body-welcome__option--active'
+                    : 'mg-body-welcome__option mg-body-welcome__option--ai'
+                }
+                onClick={() => setTemplate(AI_START)}
+              >
+                <strong>{t('aiStart')}</strong>
+                <span>{t('aiStartText')}</span>
+              </button>
+            )}
             {[...templates, { id: '', name: t('fromScratch'), description: t('fromScratchText') }].map((tpl) => {
               const active = (template ?? '') === tpl.id;
               return (
@@ -183,7 +249,7 @@ export function BodyWelcome({
             className="mg-btn--body"
             onClick={() => {
               // Ao chegar a "por onde começar", sugere o modelo que combina com o perfil.
-              if (FLOW[step + 1] === 'start') setTemplate(recommendTemplate(initialProfile));
+              if (FLOW[step + 1] === 'start' && template !== AI_START) setTemplate(recommendTemplate(initialProfile));
               setStep(step + 1);
             }}
           >

@@ -97,7 +97,14 @@
     "training": {
       "rest": "Descanso padrão",
       "restCustom": "Agora: {n} s. Escolha um dos valores para mudar.",
-      "keepAwake": "Tela acesa durante a sessão"
+      "keepAwake": "Tela acesa durante a sessão",
+      "weighIn": "Pedir o peso ao abrir o app",
+      "weighInOptions": {
+        "OFF": "Nunca",
+        "DAILY": "Diário",
+        "WEEKLY": "Semanal"
+      },
+      "weighInConsent": "Para o pedido aparecer, dê o consentimento de dados de saúde mais abaixo."
     },
     "notificationsHint": "O único aviso é o de fim do descanso, e ele só chega quando você sai do app durante a sessão."
   },
@@ -508,6 +515,14 @@
       "date": "Escolha hoje ou um dia do último ano.",
       "goal": "Escolha a direção e um dos ritmos.",
       "noWeight": "Registre o peso primeiro para criar a meta."
+    },
+    "weighIn": {
+      "title": "Pesagem de hoje",
+      "titleWeekly": "Pesagem da semana",
+      "kgLabel": "Quanto você pesa hoje? (kg)",
+      "save": "Registrar",
+      "skip": "Agora não",
+      "change": "Mudar o lembrete nas configurações"
     }
   },
   "fitness": {
@@ -673,7 +688,21 @@
       "profileTitle": "Seu perfil",
       "profileText": "É assim que os amigos encontram você e veem seu nível e emblemas. Dá para mudar quando quiser na aba Eu.",
       "profileHandle": "Seu @",
-      "profileName": "Nome que aparece"
+      "profileName": "Nome que aparece",
+      "weighInTitle": "Quer um lembrete de pesagem?",
+      "weighInText": "Ao abrir o app, pedimos o seu peso e ele fica registrado. Mude quando quiser nas configurações.",
+      "weighIn": {
+        "DAILY": "Todo dia",
+        "DAILYText": "Na primeira vez que você abre o app em cada dia",
+        "WEEKLY": "Uma vez por semana",
+        "WEEKLYText": "Na primeira vez que você abre o app em cada semana",
+        "OFF": "Não, obrigado",
+        "OFFText": "Registro o peso quando quiser"
+      },
+      "weighInConsent": "O peso é um dado de saúde: só guardamos com o seu consentimento. Fica só para você e pode ser retirado nas configurações.",
+      "weighInConsentToggle": "Aceito que o app guarde o meu peso",
+      "aiStart": "A IA monta meu programa",
+      "aiStartText": "Você responde algumas perguntas e recebe um programa feito para você, com séries, descansos e notas de cada exercício."
     },
     "programs": {
       "new": "Novo programa",
@@ -1189,6 +1218,11 @@
       "back": "Voltar",
       "next": "Próximo",
       "create": "Criar programa"
+    },
+    "hero": {
+      "title": "Programa feito pela IA",
+      "text": "Você responde algumas perguntas e a IA monta um programa só para você, com séries, descansos e notas de cada exercício.",
+      "cta": "Criar meu programa"
     }
   },
   "game": {
@@ -1563,7 +1597,13 @@
       "cropSave": "Usar foto",
       "cropCancel": "Cancelar"
     },
-    "allAchievements": "Ver todas as conquistas"
+    "allAchievements": "Ver todas as conquistas",
+    "quickShare": {
+      "cta": "Compartilhar este treino com a comunidade",
+      "more": "Mais opções (fotos)",
+      "done": "Treino compartilhado",
+      "seeFeed": "Ver no feed"
+    }
   },
   "groups": {
     "title": "Grupos",
@@ -1684,6 +1724,47 @@
       "place": "Escolha o local.",
       "search": "A busca de locais falhou. Tente de novo.",
       "full": "Este treino já está cheio."
+    }
+  },
+  "tour": {
+    "count": "{n} de {total}",
+    "skip": "Pular",
+    "back": "Voltar",
+    "next": "Próximo",
+    "done": "Começar a treinar",
+    "steps": {
+      "hello": {
+        "title": "Boas-vindas ao FitnessClub",
+        "text": "Um tour rápido pelo app: em menos de um minuto você sabe onde está tudo."
+      },
+      "workouts": {
+        "title": "Treinos",
+        "text": "Seus programas e treinos. É daqui que você começa uma sessão, com cronômetro, descanso e recordes."
+      },
+      "ai": {
+        "title": "Programa feito pela IA",
+        "text": "Você responde algumas perguntas (objetivo, nível, dias, equipamento) e a IA monta um programa só para você, com séries, descansos e notas de cada exercício."
+      },
+      "feed": {
+        "title": "Feed",
+        "text": "Os treinos dos seus amigos e da comunidade. Publique os seus com o +, entre em grupos e combine treinos."
+      },
+      "sessions": {
+        "title": "Sessões",
+        "text": "O histórico de tudo o que você fez. Registre também corridas, caminhadas e outras atividades."
+      },
+      "day": {
+        "title": "Dia",
+        "text": "Seu dia de relance: treinos, atividades e métricas, comparados com a última vez."
+      },
+      "me": {
+        "title": "Eu",
+        "text": "Seu perfil, nível e conquistas, o peso e o mapa dos músculos que você treinou."
+      },
+      "settings": {
+        "title": "Configurações",
+        "text": "Descanso entre séries, avisos, lembrete de pesagem e a IA. Mude o que quiser a qualquer momento."
+      }
     }
   }
 }

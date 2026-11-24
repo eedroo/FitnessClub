@@ -38,7 +38,7 @@ export async function BodyHeader({
         <div className="mg-body-header__actions">
           {actions}
           {!historyBack && !backHref && (
-            <Link href="/settings" className="mg-body-header__icon" aria-label={backLabel ?? t('settingsLink')}>
+            <Link href="/settings" className="mg-body-header__icon" aria-label={backLabel ?? t('settingsLink')} data-tour="settings">
               <Settings size={24} strokeWidth={1.75} aria-hidden="true" />
             </Link>
           )}

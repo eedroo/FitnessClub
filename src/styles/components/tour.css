@@ -1,0 +1,80 @@
+/* AppTour: destaques por separador nas boas-vindas do app */
+
+.mg-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.mg-tour__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+}
+
+/* O alvo fica aceso: o resto do ecrã escurece pela sombra à volta */
+.mg-tour__spot {
+  position: fixed;
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 0 9999px var(--scrim);
+  transition: top var(--duration) var(--ease), left var(--duration) var(--ease), width var(--duration) var(--ease), height var(--duration) var(--ease);
+  pointer-events: none;
+}
+
+.mg-tour__card {
+  position: fixed;
+  right: var(--space-4);
+  left: var(--space-4);
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  border-radius: var(--radius-lg);
+  /* opaco: por baixo está o ecrã escurecido e o texto tem de se ler bem */
+  background: var(--system-bg);
+  box-shadow: var(--shadow-menu);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.mg-tour__card--center {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* O passo da IA leva a cor da IA */
+.mg-tour__card--ai {
+  box-shadow: var(--shadow-menu), inset 0 0 0 2px var(--highlight);
+}
+
+.mg-tour__count {
+  margin: 0 0 var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mg-tour__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.mg-tour__text {
+  margin: 0 0 var(--space-4);
+  color: var(--text-secondary);
+}
+
+.mg-tour__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-tour__spot {
+    transition: none;
+  }
+}

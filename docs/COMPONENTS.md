@@ -243,6 +243,7 @@ Peso diário com média semanal, objectivo em linguagem neutra, recordes e evolu
 | `MuscleExercisesSheet` | client | `muscle-map.css` | `mg-muscle-sheet` | últimos exercícios do músculo, com data e link |
 | `WeightChart` | client | `weight-chart.css` | `mg-weight-chart`, `__point`, `__trend`, `__goal`, `__axis`, `__tip` | SVG responsivo: pontos diários vazios ligados por uma linha que passa por cada pesagem, linha tracejada do alvo, 4 a 5 marcas por eixo; toque num ponto mostra data e kg; selector M · 6M · A (`SegmentedControl`); períodos Semana (por defeito), Mês e 6 meses |
 | `WeightEntrySheet` | client | `weight-entry.css` | `mg-weight-entry` | folha (`dialog`): data (hoje por defeito), kg com teclado decimal, "Guardar"; abre sozinha com `?new=1` |
+| `WeighInPrompt` | client | `weight-entry.css` | `mg-weight-entry` | lembrete de pesagem (diário ou semanal) ao abrir a app: peso de hoje pré-preenchido com o último, "Registar" ou "Agora não" (não volta a perguntar neste período, neste dispositivo); nunca durante um treino |
 | `WeightList` | client | `weight-entry.css` | `mg-weight-list`, `__row`, `__delete` | registos (data e kg), deslizar para a esquerda (ou botão) para apagar |
 | `BodyGoalSheet` | client | `goal.css` | `mg-goal-sheet` | direcção (Ganhar · Manter · Perder em `SegmentedControl`), ritmo de `GOAL_RATES` ("+0,25 kg por semana"), alvo opcional; remover objectivo |
 | `BodyGoalCard` | server | `goal.css` | `mg-goal-card` | "Objectivo: ganhar 0,25 kg/semana" · "Esta semana: +0,3 kg (dentro do ritmo)" · "Faltam 2,0 kg (≈ 8 semanas)" |
@@ -318,6 +319,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **JoinCommunity** (client) — editar o perfil (@, nome, bio). `mg-social-join`.
 - **ProfileOverview** — um perfil (o meu no Eu, com o corpo no meio; o dos outros em `/u/[handle]`): avatar, @, bio, nível, amigos, emblemas, níveis de força, acções e publicações.
 - **PostComposer** (client) — texto, treino a partilhar (últimas sessões e atividades), público ou só amigos. `mg-composer`.
+- **QuickShare** (client) — no resumo da sessão, logo a seguir às métricas: partilhar o treino na comunidade com um toque (texto opcional e quem vê); "Mais opções" abre o editor completo com fotos; já partilhado mostra a ligação para o feed. `mg-quick-share`.
 - **PostCard** — autor, tempo relativo, visibilidade, texto, treino partilhado, gostos e comentários. `mg-post`.
 - **WorkoutAttachment** — retrato do treino partilhado (sessão ou atividade). `mg-post-workout`.
 - **LikeButton** (client), **PostMenu** (client, apagar/denunciar), **ReportDialog** (client, motivos; `mg-social-sheet`).
@@ -336,3 +338,8 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **MapClient** (client) — carrega o mapa só no browser.
 - **InviteForm** (client) — título, tipo, dia e hora, duração, máx. pessoas, pesquisa do local (com pré-visualização no mapa), quem vê, amigos a convidar e detalhes. `mg-invite-search`, `mg-invite-place`.
 - **InviteActions** / **RequestButtons** (client) — quero ir, vou / não posso, já não vou, retirar pedido, cancelar; o anfitrião aceita ou recusa pedidos.
+
+### Boas-vindas do app e IA em destaque (`tour.css`, `ai.css`)
+- **AppTour** (client) — tour de boas-vindas, uma vez por conta (`FitnessPrefs.tourDoneAt`), em Treinos: acende cada separador (`data-tour="nav:/…"`), o programa feito pela IA (`data-tour="ai"`) e as definições (`data-tour="settings"`), com o texto de cada um; "Saltar" ou o fim marcam como visto. `mg-tour`.
+- **AiProgramCard** — em Treinos, logo a seguir ao nível: "Programa feito pela IA" em destaque (azul da IA) com "Criar o meu programa"; sem o recurso mostra "Premium". `mg-ai-hero`.
+

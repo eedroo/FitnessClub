@@ -52,6 +52,7 @@ const prefsSchema = z.object({
   defaultRestSec: z.number().int().min(10).max(900).optional(),
   restAlert: z.boolean().optional(),
   keepAwake: z.boolean().optional(),
+  weighInFrequency: z.enum(['OFF', 'DAILY', 'WEEKLY']).optional(),
 });
 
 export async function updateFitnessPrefs(patch: z.input<typeof prefsSchema>): Promise<FitnessResult> {
@@ -112,6 +113,7 @@ const onboardingSchema = z.object({
   defaultRestSec: z.number().int().min(10).max(900),
   restAlert: z.boolean(),
   templateId: z.string().max(40).nullable().optional(),
+  weighInFrequency: z.enum(['OFF', 'DAILY', 'WEEKLY']).optional(),
 });
 
 /**
@@ -125,7 +127,7 @@ export async function completeFitnessOnboarding(input: z.input<typeof onboarding
   const p = onboardingSchema.safeParse(input);
   if (!p.success) return fail();
   const now = new Date();
-  const data = { defaultRestSec: p.data.defaultRestSec, restAlert: p.data.restAlert, onboardedAt: now };
+  const data = { defaultRestSec: p.data.defaultRestSec, restAlert: p.data.restAlert, weighInFrequency: p.data.weighInFrequency ?? 'OFF', onboardedAt: now };
   await db.fitnessPrefs.upsert({ where: { userId: uid }, create: { userId: uid, ...data }, update: data });
   await db.user.updateMany({ where: { id: uid, onboardedAt: null }, data: { onboardedAt: now } });
   if (p.data.templateId && (await getEntitlements(uid)).features.pro) await copyTemplateFor(uid, p.data.templateId);
@@ -599,4 +601,13 @@ export async function moveExerciseHistory(fromId: string, toId: string): Promise
   await recomputeExercisePrs(uid, fromId);
   refresh();
   return { ok: true, data: { moved: count } };
+}
+
+/** Tour de boas-vindas do app visto (ou saltado): não volta a aparecer nesta conta. */
+export async function completeTour(): Promise<FitnessResult> {
+  const uid = await userId();
+  if (!uid) return fail('common.errors.unauthorized');
+  const now = new Date();
+  await db.fitnessPrefs.upsert({ where: { userId: uid }, create: { userId: uid, tourDoneAt: now }, update: { tourDoneAt: now } });
+  return ok();
 }

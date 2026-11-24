@@ -220,14 +220,22 @@ model Exercise {
   @@index([ownerId])
 }
 
+enum WeighInFrequency {
+  OFF
+  DAILY
+  WEEKLY
+}
+
 model FitnessPrefs {
   userId          String    @id
   defaultRestSec  Int       @default(90)
   restAlert       Boolean   @default(true) // aviso de fim de descanso
   keepAwake       Boolean   @default(true) // manter o ecrã ligado durante o treino
-  weighInReminder Boolean   @default(false) // lembrete de pesagem (sem envio por agora)
+  weighInReminder Boolean   @default(false) // obsoleto: substituído por weighInFrequency (copiado na migração weigh_in)
+  weighInFrequency WeighInFrequency @default(OFF) // pedir o peso ao abrir a app: nunca, todos os dias ou uma vez por semana
   weighInTime     String    @default("08:00")
   aiWeeklyInsights Boolean  @default(true) // retrospectiva semanal da IA (com o recurso `ai` e o consentimento)
+  tourDoneAt      DateTime? // tour de boas-vindas do app visto (ou saltado)
   onboardedAt     DateTime?
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -80,3 +80,15 @@
   justify-content: space-between;
   gap: var(--space-3);
 }
+
+/* "A IA monta o meu programa": a primeira opção de "por onde começas", ocupa a linha toda e destaca-se */
+.mg-body-welcome__option--ai {
+  grid-column: 1 / -1;
+  background: var(--highlight-soft);
+  box-shadow: inset 0 0 0 1.5px var(--highlight);
+}
+
+.mg-body-welcome__option--ai.mg-body-welcome__option--active {
+  background: var(--highlight-soft);
+  box-shadow: inset 0 0 0 2.5px var(--highlight);
+}

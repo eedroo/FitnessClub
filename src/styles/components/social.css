@@ -753,3 +753,25 @@ a.mg-level__seal {
   flex: 1;
   accent-color: var(--text-primary);
 }
+
+/* QuickShare: partilhar o treino no resumo da sessão */
+.mg-quick-share {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+}
+
+.mg-quick-share__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.mg-quick-share__done {
+  margin: 0;
+  color: var(--text-secondary);
+  text-align: center;
+}

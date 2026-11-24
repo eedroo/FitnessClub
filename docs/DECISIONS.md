@@ -171,3 +171,14 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Escritas sem rede:** as do treino em curso (séries, esconder, notas da sessão) e o **fim do treino**, na fila do dispositivo (`sessionQueue`), reenviadas quando a rede volta por `PendingSync` em qualquer página (séries primeiro, depois o fim com a hora real, entre a última série e o envio). Séries que chegam depois de a sessão fechar (terminada sem rede ou fechada por inactividade) entram se foram feitas dentro da janela da sessão (até 6 h do início, até 7 dias depois) e alargam o fim. Começar um treino e as outras gravações (peso, notas, publicações) precisam de rede.
 - **Privacidade:** as páginas guardadas têm dados da pessoa; apagam-se no login, registo e despedida (`ClearPrivateCache`). Imagens do Blob (outra origem) não ficam guardadas.
 
+## Lembrete de pesagem (2026-11-24)
+- `FitnessPrefs.weighInFrequency`: `OFF`, `DAILY` ou `WEEKLY` (escolhido nas boas-vindas e nas definições; quem tinha `weighInReminder` passou a diário). `weighInReminder` fica obsoleto.
+- Ao abrir a app, enquanto não houver peso no período (hoje, ou a semana de domingo a sábado), a folha `WeighInPrompt` pede o peso de hoje. "Agora não" vale até ao período seguinte, neste dispositivo. Nunca durante um treino, nem por cima dos Termos ou do tour.
+- Só com o consentimento de dados de saúde: nas boas-vindas, escolher um lembrete sem consentimento mostra a caixa para o dar; sem ela, fica desligado.
+- Boas-vindas: "por onde começas" abre com "A IA monta o meu programa" em destaque (com o recurso `ai`), que leva a `/ai/new` depois de concluir.
+
+## Tour do app, IA em destaque e partilha no resumo (2026-11-24)
+- **Tour:** depois das boas-vindas (e uma vez para quem já tinha conta), em Treinos: Bem-vindo → Treinos → Programa feito pela IA → Feed → Sessões → Dia → Eu → Definições. Guardado em `FitnessPrefs.tourDoneAt`. Na abertura com tour não aparece o pedido de pesagem.
+- **IA em destaque:** cartão "Programa feito pela IA" no topo de Treinos e primeira opção (pré-escolhida) de "por onde começas" nas boas-vindas.
+- **Partilhar o treino:** no resumo da sessão, logo a seguir às métricas, `QuickShare` publica o treino com um toque (texto opcional, só amigos por defeito); "Mais opções" abre o editor com fotos.
+

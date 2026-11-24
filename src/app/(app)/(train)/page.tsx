@@ -12,6 +12,7 @@ import { db } from '@/lib/db';
 import { getAiAccess } from '@/lib/ai/server';
 import { getGamification } from '@/lib/gamification/server';
 import { LevelCard } from '@/components/gamification/LevelCard';
+import { AiProgramCard } from '@/components/ai/AiProgramCard';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('fitness');
@@ -43,8 +44,9 @@ export default async function BodyHome() {
     <>
       <BodyHeader title={t('title')} />
       <div className="mg-body-shell__main">
-        {/* Cabeçalho: nível e barra de XP. Depois: programas, novo programa, os meus exercícios e a retrospectiva. */}
+        {/* Cabeçalho: nível e barra de XP; o programa feito pela IA em destaque; programas, novo programa, os meus exercícios e a retrospectiva. */}
         <LevelCard summary={game.summary} href="/achievements" />
+        <AiProgramCard feature={ai.feature} available={ai.feature && ai.configured} />
         <h2 className="mg-body-section-title">{t('home.programs')}</h2>
         <ProgramList programs={programs} />
         <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured }} />

@@ -10,6 +10,7 @@ import { AmbientBackground } from '@/components/shell/AmbientBackground';
 import { ThemeSync } from '@/components/providers/ThemeSync';
 import { freeHandle, getMyProfile } from '@/lib/social/server';
 import { BodyWelcome } from '@/components/body/BodyWelcome';
+import { getEntitlements } from '@/lib/entitlements/server';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('welcome');
@@ -26,8 +27,9 @@ export default async function WelcomePage() {
     getTranslations('common'),
     getFitnessPrefs(session.user.id),
     getTrainingProfile(session.user.id),
-    db.user.findUnique({ where: { id: session.user.id }, select: { name: true } }),
+    db.user.findUnique({ where: { id: session.user.id }, select: { name: true, wellbeingConsentAt: true } }),
   ]);
+  const ai = (await getEntitlements(session.user.id)).features.ai;
   const existing = await getMyProfile(session.user.id);
   const initialPublic = existing
     ? { handle: existing.handle, displayName: existing.displayName }
@@ -46,6 +48,8 @@ export default async function WelcomePage() {
             initialRest={prefs.defaultRestSec}
             initialProfile={toProfileData(profile)}
             initialPublic={initialPublic}
+            hasConsent={!!user?.wellbeingConsentAt}
+            aiAvailable={!!ai}
             templates={FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }))}
           />
         </div>
