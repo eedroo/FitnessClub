@@ -16,10 +16,12 @@ import { PostCard } from './PostCard';
 import { ProfileActions } from './ProfileActions';
 import { StrengthTier } from '@/components/gamification/StrengthTier';
 import { BadgeGrid } from '@/components/gamification/BadgeGrid';
+import { ProfileTabs } from './ProfileTabs';
 
 /**
- * Um perfil (o meu no "Eu" ou o de outra pessoa): avatar, @, bio, nível, amigos, emblemas, níveis de força (os meus
- * sempre; os dos outros só se o mostrarem), acções de amizade e publicações.
+ * Um perfil (o meu no "Eu" ou o de outra pessoa): cabeçalho (avatar, @, bio, nível, amigos, barra de XP, editar ou
+ * acções de amizade) e, a seguir, separadores: Corpo (só no "Eu") · Publicações · Emblemas (e vitórias) · Força (os
+ * meus sempre; os dos outros só se os mostrarem).
  */
 export async function ProfileOverview({
   viewerId,
@@ -90,64 +92,76 @@ export async function ProfileOverview({
       ) : (
         <ProfileActions userId={profile.userId} rel={rel} friendshipId={friendshipId} />
       )}
-      {/* No "Eu": o corpo (peso e mapa muscular) vem antes dos emblemas e das conquistas. */}
-      {children}
-      {rel !== 'blocked' && (self || earned.length > 0) && (
-        <>
-          <h2 className="mg-body-section-title">{tg('badgesTitle')}</h2>
-          <BadgeGrid badges={self ? game.badges : earned} formatDate={(d) => formatDayMonth(d, locale)} share={self} />
-        </>
-      )}
-      {/* Vitórias no ranking semanal (pódio de cada semana); as minhas com "Partilhar". */}
-      {wins.length > 0 && (
-        <>
-          <h2 className="mg-body-section-title">{tr('wins')}</h2>
-          <ul className="mg-program-list">
-            {wins.map((w) => {
-              const week = fromDbDate(w.weekStart);
-              return (
-                <li key={w.id} className="mg-program-row">
-                  <Image src={tierArt(w.league as StrengthTierId)} alt="" width={36} height={36} />
-                  <span className="mg-program-row__text">
-                    <span className="mg-program-row__name">{tr('winTitle', { rank: w.rank, name: tr(`leagues.${w.league}`) })}</span>
-                    <span className="mg-program-row__meta">{tr('winMeta', { date: formatDayMonth(week, locale), xp: w.xp })}</span>
-                  </span>
-                  {self && (
-                    <Link href={`/feed/new?share=league:${week}`} className="mg-share-link">
-                      <Share2 size={14} aria-hidden="true" /> {ts('short')}
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </>
-      )}
-      {tiers.length > 0 && (
-        <>
-          <h2 className="mg-body-section-title">{tg('strength.title')}</h2>
-          <ul className="mg-program-list">
-            {tiers.map((l) => (
-              <li key={l.exerciseId}>
-                <Link href={self ? `/exercises/${encodeURIComponent(l.exerciseId)}` : `/u/${profile.handle}`} className="mg-program-row">
-                  <span className="mg-program-row__name">{names.get(l.exerciseId) ?? l.exerciseId}</span>
-                  <StrengthTier tier={l.tier} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-      {self && (
-        <Link href="/achievements" className="mg-btn mg-btn--subtle mg-btn--block">
-          {t('allAchievements')}
-        </Link>
-      )}
-      <h2 className="mg-body-section-title">{t('posts')}</h2>
-      {posts.length ? (
-        posts.map((p) => <PostCard key={p.id} post={p} locale={locale} />)
-      ) : (
-        <p className="mg-notes__empty">{self ? t('noPostsMine') : rel === 'none' || rel === 'outgoing' ? t('onlyPublic') : t('noPosts')}</p>
+      {/* Separadores: Corpo (no "Eu") · Publicações · Emblemas (com as vitórias) · Força. */}
+      {rel === 'blocked' ? null : (
+        <ProfileTabs
+          panels={{
+            ...(children ? { body: children } : {}),
+            posts: posts.length ? (
+              posts.map((p) => <PostCard key={p.id} post={p} locale={locale} />)
+            ) : (
+              <p className="mg-notes__empty">{self ? t('noPostsMine') : rel === 'none' || rel === 'outgoing' ? t('onlyPublic') : t('noPosts')}</p>
+            ),
+            badges: (
+              <>
+                {self || earned.length > 0 ? (
+                  <BadgeGrid badges={self ? game.badges : earned} formatDate={(d) => formatDayMonth(d, locale)} share={self} />
+                ) : (
+                  <p className="mg-notes__empty">{t('noBadges')}</p>
+                )}
+                {/* Vitórias no ranking semanal (pódio de cada semana); as minhas com "Partilhar". */}
+                {wins.length > 0 && (
+                  <>
+                    <h2 className="mg-body-section-title">{tr('wins')}</h2>
+                    <ul className="mg-program-list">
+                      {wins.map((w) => {
+                        const week = fromDbDate(w.weekStart);
+                        return (
+                          <li key={w.id} className="mg-program-row">
+                            <Image src={tierArt(w.league as StrengthTierId)} alt="" width={36} height={36} />
+                            <span className="mg-program-row__text">
+                              <span className="mg-program-row__name">{tr('winTitle', { rank: w.rank, name: tr(`leagues.${w.league}`) })}</span>
+                              <span className="mg-program-row__meta">{tr('winMeta', { date: formatDayMonth(week, locale), xp: w.xp })}</span>
+                            </span>
+                            {self && (
+                              <Link href={`/feed/new?share=league:${week}`} className="mg-share-link">
+                                <Share2 size={14} aria-hidden="true" /> {ts('short')}
+                              </Link>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </>
+                )}
+                {self && (
+                  <Link href="/achievements" className="mg-btn mg-btn--subtle mg-btn--block">
+                    {t('allAchievements')}
+                  </Link>
+                )}
+              </>
+            ),
+            // Força: os meus níveis sempre; os dos outros só se os mostrarem.
+            ...(self || tiers.length > 0
+              ? {
+                  strength: tiers.length ? (
+                    <ul className="mg-program-list">
+                      {tiers.map((l) => (
+                        <li key={l.exerciseId}>
+                          <Link href={self ? `/exercises/${encodeURIComponent(l.exerciseId)}` : `/u/${profile.handle}`} className="mg-program-row">
+                            <span className="mg-program-row__name">{names.get(l.exerciseId) ?? l.exerciseId}</span>
+                            <StrengthTier tier={l.tier} />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mg-notes__empty">{tg('strength.empty')}</p>
+                  ),
+                }
+              : {}),
+          }}
+        />
       )}
     </>
   );

@@ -137,3 +137,18 @@
 .mg-body-welcome__option {
   overflow-wrap: anywhere;
 }
+
+/* ProfileTabs: separadores logo a seguir ao cabeçalho do perfil */
+.mg-profile-tabs {
+  margin-top: var(--space-2);
+}
+
+.mg-profile-tabs__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mg-profile-tabs__panel[hidden] {
+  display: none;
+}

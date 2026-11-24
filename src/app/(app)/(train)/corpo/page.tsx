@@ -34,7 +34,6 @@ export default async function BodyRoute() {
       <BodyHeader title={tn('body')} />
       <div className="mg-body-shell__main">
         <ProfileOverview viewerId={userId} profile={profile} rel="self" friendshipId={null} friendsCount={friends.size} locale={locale}>
-        <h2 className="mg-body-section-title">{t('title')}</h2>
         {weight ? <BodyWeightCard data={weight} /> : <WellbeingConsentCard consentedOn={null} />}
         <h2 className="mg-body-section-title">{t('map.title')}</h2>
         <MuscleMap recovery={muscles.recovery} recent={muscles.recent} />

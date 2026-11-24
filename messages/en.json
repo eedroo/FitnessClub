@@ -1659,7 +1659,15 @@
       "effort": "Effort",
       "minutes": "Minutes",
       "xp": "Weekly XP"
-    }
+    },
+    "profileTabs": {
+      "label": "Profile",
+      "body": "Body",
+      "posts": "Posts",
+      "badges": "Badges",
+      "strength": "Strength"
+    },
+    "noBadges": "No badges yet."
   },
   "groups": {
     "title": "Groups",

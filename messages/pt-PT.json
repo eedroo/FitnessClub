@@ -1659,7 +1659,15 @@
       "effort": "Esforço",
       "minutes": "Minutos",
       "xp": "XP da semana"
-    }
+    },
+    "profileTabs": {
+      "label": "Perfil",
+      "body": "Corpo",
+      "posts": "Publicações",
+      "badges": "Emblemas",
+      "strength": "Força"
+    },
+    "noBadges": "Ainda sem emblemas."
   },
   "groups": {
     "title": "Grupos",

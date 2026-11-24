@@ -355,4 +355,5 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - **EditorialSlide** — o treino, dia ou conquista numa página de revista: etiqueta, título grande, números grandes em grelha, assinatura; cores invertidas do tema. `mg-editorial`.
 - **WorkoutAttachment** passa a mostrar também o dia de treino e as conquistas (emblema, nível, medalha de força, vitória) com a arte.
 - "Partilhar" (`mg-share-link`) — emblemas ganhos (BadgeGrid com `share`), nível e medalhas de força nas conquistas, vitórias no perfil; "Partilhar este dia de treino" no Dia.
+- **ProfileTabs** (client) — no perfil, logo a seguir ao cabeçalho (até "Editar perfil"): Corpo (só no "Eu", abre aqui) · Publicações · Emblemas (com as vitórias e "Ver todas as conquistas") · Força. Reaproveita `mg-ex-tabs`; `mg-profile-tabs`.
 
