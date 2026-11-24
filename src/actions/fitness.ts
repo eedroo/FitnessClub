@@ -11,7 +11,7 @@ import { translatorFor } from '@/i18n/translator';
 import { findTemplate } from '@/lib/fitness/templates';
 import { getFitnessPrefs, recomputeExercisePrs, usableExercise } from '@/lib/fitness/queries';
 import { validateSet } from '@/lib/fitness/session';
-import { activeSession, logSetFor, sendRestEvent, type SetPayload } from '@/lib/fitness/write';
+import { activeSession, endSessionFor, logSetFor, sendRestEvent, type SetPayload } from '@/lib/fitness/write';
 
 /**
  * Acções dos treinos. Todas: sessão, `requireFeature('pro')` (sem acesso → 404), Zod e
@@ -502,12 +502,9 @@ export async function setSessionNotes(sessionId: string, notes: string): Promise
 export async function endSession(sessionId: string): Promise<FitnessResult<{ id: string; next: string }>> {
   const uid = await userId();
   if (!uid) return fail('common.errors.unauthorized');
-  if (!id.safeParse(sessionId).success) return fail();
-  const s = await activeSession(uid, sessionId);
-  if (!s) return fail('fitness.errors.noSession');
-  await db.fitnessSession.update({ where: { id: s.id }, data: { endedAt: new Date(), restEndsAt: null, restExerciseId: null, clientHidden: false } });
-  refresh();
-  return { ok: true, data: { id: s.id, next: `/sessions/${encodeURIComponent(s.id)}?done=1` } };
+  const res = await endSessionFor(uid, sessionId);
+  if (res.ok) refresh();
+  return res;
 }
 
 /** Descarta uma sessão sem séries. */

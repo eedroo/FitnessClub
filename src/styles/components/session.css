@@ -263,3 +263,24 @@
   color: var(--text-secondary);
   white-space: pre-wrap;
 }
+
+/* Treino terminado à espera de rede (o fim segue sozinho quando a rede voltar) */
+.mg-session-ended {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+}
+
+.mg-session-ended__title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+}
+
+.mg-session-ended__text {
+  margin: 0;
+  color: var(--text-secondary);
+}

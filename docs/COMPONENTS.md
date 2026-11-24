@@ -114,6 +114,7 @@ Compõem primitivos; não têm CSS próprio além de `field.css` (`mg-form-error
 | `ThemeSync` | client | ao montar, aplica o `theme` da sessão se for diferente do actual |
 | `ServiceWorkerRegister` | client | regista `/sw.js` apenas em produção |
 | `OfflineBanner` | client | aviso «sem rede» no topo da app (`mg-banner--offline`) e pede ao service worker para guardar as páginas abertas pela navegação interna |
+| `PendingSync` | client | em toda a app: ao abrir e quando a rede volta, envia as séries e o fim de treinos feitos sem rede (`syncSession`) |
 | `ClearPrivateCache` | client | no login, registo e despedida: apaga as páginas guardadas para uso sem rede (menos `/offline`) |
 | `AuthSessionProvider` | client | `SessionProvider` do Auth.js — dá `useSession().update()` aos formulários |
 

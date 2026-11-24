@@ -787,7 +787,6 @@
       "pill": "Sessão em andamento · {time}",
       "pillLabel": "Voltar para a sessão em andamento, {time}",
       "queued": "{n, plural, one {# série a enviar} other {# séries a enviar}}. Elas vão quando a internet voltar.",
-      "offlineFinish": "Sem internet. Termine quando as séries forem enviadas.",
       "emptyFree": "Treino livre: adicione o primeiro exercício.",
       "addExercise": "+ Exercício",
       "addExerciseConfirm": "Adicionar",
@@ -811,6 +810,11 @@
         "add-weight": "Hora de aumentar a carga",
         "complete-sets": "Hoje: complete as séries",
         "top-of-range": "No topo do alvo: deixe mais difícil"
+      },
+      "endedOffline": {
+        "title": "Treino finalizado",
+        "text": "Se você estiver sem internet, o treino fica salvo neste celular e é enviado sozinho assim que a conexão voltar, com o horário em que você terminou. Pode fechar o app.",
+        "home": "Ir para Treinos"
       }
     },
     "rest": {

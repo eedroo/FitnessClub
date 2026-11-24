@@ -36,7 +36,7 @@ export function newSetId(): string {
   return Array.from(bytes, (b) => (b % 36).toString(36)).join('').padEnd(24, '0').slice(0, 24);
 }
 
-type SessionOp = { op: 'set'; set: QueuedSet } | { op: 'hidden'; hidden: boolean } | { op: 'notes'; notes: string };
+type SessionOp = { op: 'set'; set: QueuedSet } | { op: 'hidden'; hidden: boolean } | { op: 'notes'; notes: string } | { op: 'end'; endedAt: string };
 
 /**
  * Escritas de fundo da sessão pela rota `/api/fitness/sessions/[id]`. Sem rede devolve `null` e nunca lança:
@@ -58,3 +58,62 @@ export async function postSession<T = { ok: boolean; error?: string }>(sessionId
 
 /** A app está à vista e com rede (para refrescar dados do servidor sem arriscar um erro). */
 export const canSync = () => typeof document !== 'undefined' && document.visibilityState === 'visible' && navigator.onLine !== false;
+
+// ─── Fim sem rede ────────────────────────────────────────────────────────────────────────────────
+
+const endKey = (sessionId: string) => `mg-fitness-end:${sessionId}`;
+
+/** Treino terminado sem rede: a hora real fica no dispositivo até ser enviada. */
+export function readEnd(sessionId: string): string | null {
+  try {
+    return window.localStorage.getItem(endKey(sessionId));
+  } catch {
+    return null;
+  }
+}
+
+export function writeEnd(sessionId: string, endedAt: string | null): void {
+  try {
+    if (endedAt) window.localStorage.setItem(endKey(sessionId), endedAt);
+    else window.localStorage.removeItem(endKey(sessionId));
+  } catch {
+    // armazenamento indisponível
+  }
+}
+
+/** Sessões com algo por enviar neste dispositivo (séries na fila ou o fim). */
+export function pendingSessionIds(): string[] {
+  const ids = new Set<string>();
+  try {
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const k = window.localStorage.key(i) ?? '';
+      const m = /^mg-fitness-(?:queue|end):(.+)$/.exec(k);
+      if (m?.[1]) ids.add(m[1]);
+    }
+  } catch {
+    // sem armazenamento
+  }
+  return [...ids];
+}
+
+type EndResult = { ok: true; data: { id: string; next: string } } | { ok: false; error: string };
+
+/**
+ * Envia o que uma sessão tem por enviar: as séries da fila (pela ordem) e depois o fim, se foi terminada sem rede.
+ * Devolve `null` sem rede (fica tudo para a próxima), senão o resultado do fim (ou `{ ok: true }` sem fim pendente).
+ * Repetir é seguro: cada série tem o id do dispositivo e o fim com hora é idempotente.
+ */
+export async function syncSession(sessionId: string): Promise<EndResult | { ok: true; data: null } | null> {
+  for (const q of readQueue(sessionId)) {
+    const res = await postSession(sessionId, { op: 'set', set: q });
+    if (!res) return null;
+    // Enviada (ou recusada de vez): sai da fila.
+    writeQueue(sessionId, readQueue(sessionId).filter((x) => x.id !== q.id));
+  }
+  const endedAt = readEnd(sessionId);
+  if (!endedAt) return { ok: true, data: null };
+  const res = await postSession<EndResult>(sessionId, { op: 'end', endedAt });
+  if (!res) return null;
+  writeEnd(sessionId, null);
+  return res;
+}

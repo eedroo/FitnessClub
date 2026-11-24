@@ -787,7 +787,6 @@
       "pill": "Session in progress · {time}",
       "pillLabel": "Back to the session in progress, {time}",
       "queued": "{n, plural, one {# set waiting to send} other {# sets waiting to send}}. They'll go when you're back online.",
-      "offlineFinish": "You're offline. Finish once your sets have been sent.",
       "emptyFree": "Free workout: add your first exercise.",
       "addExercise": "+ Exercise",
       "addExerciseConfirm": "Add",
@@ -811,6 +810,11 @@
         "add-weight": "Time to add weight",
         "complete-sets": "Today: finish all sets",
         "top-of-range": "Top of the range: make it harder"
+      },
+      "endedOffline": {
+        "title": "Workout finished",
+        "text": "If you're offline, your workout is saved on this phone and sent automatically as soon as you're back online, with the time you finished. You can close the app.",
+        "home": "Go to Workouts"
       }
     },
     "rest": {

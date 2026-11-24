@@ -9,7 +9,6 @@ import {
   addSessionExercise,
   deleteSet,
   discardSession,
-  endSession,
   skipRest,
   updateSet,
 } from '@/actions/fitness';
@@ -20,7 +19,7 @@ import { ExercisePicker } from './ExercisePicker';
 import { RestTimer } from './RestTimer';
 import { SessionExerciseCard, type ShownSet } from './SessionExerciseCard';
 import type { StrengthBest } from '@/lib/gamification/strength';
-import { canSync, newSetId, postSession, readQueue, writeQueue, type QueuedSet } from './sessionQueue';
+import { canSync, newSetId, postSession, readEnd, readQueue, syncSession, writeEnd, writeQueue, type QueuedSet } from './sessionQueue';
 import type { SetValues } from './SetRow';
 import { formatClock, useNow } from './useNow';
 
@@ -86,8 +85,9 @@ export function SessionScreen({
   const [menu, setMenu] = useState(false);
   const [picker, setPicker] = useState(false);
   const [notes, setNotes] = useState(session.notes ?? '');
-  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Terminado sem rede: o fim (com a hora real) espera no dispositivo e segue quando a rede voltar.
+  const [ended, setEnded] = useState(false);
   const flushing = useRef(false);
   // recordes batidos nesta visita (o troféu aparece logo, com animação).
   const [freshPrs, setFreshPrs] = useState<Record<string, string[]>>({});
@@ -207,24 +207,49 @@ export function SessionScreen({
   const restName = rest?.exerciseId ? (session.items.find((i) => i.exercise.id === rest.exerciseId)?.exercise.name ?? null) : null;
   const totalSets = session.items.reduce((n, i) => n + i.doneSets.length, 0) + queue.filter((q) => !serverIds.has(q.id)).length;
 
+  /** Envia as séries e o fim; sem rede fica tudo no dispositivo e o ecrã diz que o treino está terminado. */
+  const sendEnd = useCallback(async () => {
+    const res = await syncSession(session.id).catch(() => null);
+    if (!res) return;
+    if (!res.ok) {
+      setEnded(false);
+      return setError(te(res.error));
+    }
+    router.push(res.data ? res.data.next : '/');
+  }, [router, session.id, te]);
+
+  useEffect(() => {
+    if (readEnd(session.id)) setEnded(true);
+  }, [session.id]);
+
+  useEffect(() => {
+    if (!ended) return;
+    void sendEnd();
+    const onOnline = () => void sendEnd();
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [ended, sendEnd]);
+
   const finish = async () => {
-    if (queue.length) {
-      await flush();
-      if (queueRef.current.some((q) => !serverIds.has(q.id)) && !navigator.onLine) return setError(t('offlineFinish'));
-    }
     if (!window.confirm(t('finishConfirm'))) return;
-    setBusy(true);
-    try {
-      const res = await endSession(session.id);
-      if (!res.ok) return setError(te(res.error));
-      // Corpo passo a passo (água e alongamento) e depois o resumo; ou logo o resumo.
-      router.push(res.data.next);
-    } catch {
-      setError(t('offlineFinish'));
-    } finally {
-      setBusy(false);
-    }
+    writeEnd(session.id, new Date().toISOString());
+    setEnded(true);
   };
+
+  if (ended) {
+    return (
+      <div className="mg-session">
+        <section className="mg-session-ended" role="status">
+          <h1 className="mg-session-ended__title">{t('endedOffline.title')}</h1>
+          <p className="mg-session-ended__text">{t('endedOffline.text')}</p>
+          {/* Link normal: sem rede, o service worker abre a página guardada. */}
+          <a href="/" className="mg-btn mg-btn--subtle">
+            {t('endedOffline.home')}
+          </a>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="mg-session">
@@ -232,7 +257,7 @@ export function SessionScreen({
         <h1 className="mg-session__name">{session.workoutName ?? t('free')}</h1>
         <SessionTimer startedAt={session.startedAt} />
         <div className="mg-session__actions">
-          <Button className="mg-btn--body" loading={busy} onClick={finish}>
+          <Button className="mg-btn--body" onClick={finish}>
             {t('finish')}
           </Button>
           <Button variant="subtle" aria-label={t('more')} aria-expanded={menu} onClick={() => setMenu(!menu)}>

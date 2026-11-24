@@ -15,6 +15,7 @@ import { EntitlementsProvider } from '@/components/premium/EntitlementsProvider'
 import { VerifyEmailBanner } from '@/components/account/VerifyEmailBanner';
 import { PolicyUpdateDialog } from '@/components/account/PolicyUpdateDialog';
 import { OfflineBanner } from '@/components/providers/OfflineBanner';
+import { PendingSync } from '@/components/providers/PendingSync';
 
 /** Tudo o que precisa de sessão e de boas-vindas concluídas: treinos, definições. */
 export default async function AppLayout({ children }: { children: ReactNode }) {
@@ -50,6 +51,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       </Suspense>
       <EntitlementsProvider value={entitlements}>
         <OfflineBanner />
+        <PendingSync />
         <VerifyEmailBanner verified={!user || user.emailVerifiedAt !== null} />
         {children}
         {policyPending && <PolicyUpdateDialog askWellbeing={!user?.wellbeingConsentAt} />}

@@ -787,7 +787,6 @@
       "pill": "Sessão em curso · {time}",
       "pillLabel": "Voltar à sessão em curso, {time}",
       "queued": "{n, plural, one {# série por enviar} other {# séries por enviar}}. Seguem quando voltar a rede.",
-      "offlineFinish": "Sem rede. Termina quando as séries estiverem enviadas.",
       "emptyFree": "Treino livre: acrescenta o primeiro exercício.",
       "addExercise": "+ Exercício",
       "addExerciseConfirm": "Acrescentar",
@@ -811,6 +810,11 @@
         "add-weight": "Hora de subir a carga",
         "complete-sets": "Hoje: completa as séries",
         "top-of-range": "No topo do alvo: torna-o mais difícil"
+      },
+      "endedOffline": {
+        "title": "Treino terminado",
+        "text": "Se estiveres sem rede, o treino fica guardado neste telemóvel e é enviado sozinho assim que a rede voltar, com a hora a que terminaste. Podes fechar o app.",
+        "home": "Ir para Treinos"
       }
     },
     "rest": {
