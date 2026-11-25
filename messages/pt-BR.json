@@ -1862,5 +1862,134 @@
     "wins": "Vitórias no ranking",
     "winTitle": "{rank}º lugar · Liga {name}",
     "winMeta": "Semana de {date} · {xp} XP"
+  },
+  "landing": {
+    "beta": "Beta fechado",
+    "heroTitle": "Seu treino, do primeiro aquecimento ao recorde",
+    "heroLead": "Programas, sessões com descanso cronometrado, recordes, um programa feito pela IA e uma comunidade com ranking justo. Funciona como um app no seu celular, até sem internet.",
+    "cta": "Entrar no beta",
+    "login": "Já tenho conta",
+    "free": "Grátis durante o beta. Sem anúncios.",
+    "featuresTitle": "Tudo o que você precisa para treinar",
+    "featuresLead": "Do plano ao compartilhamento, sem planilha.",
+    "features": {
+      "programs": {
+        "title": "Programas e modelos",
+        "body": "Crie os seus ou comece por um modelo: Push · Pull · Legs, corpo inteiro, superior e inferior, alongamento e mobilidade."
+      },
+      "ai": {
+        "title": "Programa feito pela IA",
+        "body": "Você responde algumas perguntas e recebe um programa só seu, com séries, descansos e notas de cada exercício. Premium."
+      },
+      "sessions": {
+        "title": "Sessões com descanso",
+        "body": "Cronômetro, aviso de fim de descanso e cada série já preenchida com o que você fez da última vez. Funciona até sem internet."
+      },
+      "progress": {
+        "title": "Recordes e progressão",
+        "body": "Troféus quando você bate um recorde, 1RM estimado, gráficos por exercício e o aviso de quando aumentar a carga."
+      },
+      "library": {
+        "title": "Biblioteca de exercícios",
+        "body": "Mais de 900 exercícios com instruções passo a passo, incluindo mobilidade, ginástica e alongamentos."
+      },
+      "activities": {
+        "title": "Corridas e outras atividades",
+        "body": "Registre corrida, caminhada, bike, natação e dezenas de outras, como no app Saúde."
+      },
+      "game": {
+        "title": "Níveis, emblemas e medalhas",
+        "body": "XP a cada treino, emblemas de constância e medalhas de força por exercício, do bronze ao diamante."
+      },
+      "community": {
+        "title": "Comunidade e ranking",
+        "body": "Feed com amigos, grupos com metas, convites para treinar e um ranking semanal por ligas do seu nível."
+      },
+      "body": {
+        "title": "Peso e corpo",
+        "body": "Pesagem diária ou semanal, média e tendência, meta no seu ritmo e o mapa dos músculos que você treinou. Só você vê."
+      }
+    },
+    "howTitle": "Como funciona",
+    "how": {
+      "one": {
+        "title": "Crie a conta",
+        "body": "Escolha seu @, o descanso entre séries e os avisos."
+      },
+      "two": {
+        "title": "Escolha por onde começar",
+        "body": "Um modelo pronto, um programa feito pela IA ou do zero."
+      },
+      "three": {
+        "title": "Treine e compartilhe",
+        "body": "Registre as séries, bata recordes, suba no ranking e compartilhe com os amigos."
+      }
+    },
+    "installTitle": "Instale no celular",
+    "installLead": "O FitnessClub é um app web: instala em segundos, sem loja, e abre em tela cheia.",
+    "install": {
+      "ios": {
+        "title": "iPhone",
+        "body": "Abra no Safari, toque em Compartilhar e depois em \"Adicionar à Tela de Início\"."
+      },
+      "android": {
+        "title": "Android",
+        "body": "Abra no Chrome, toque no menu ⋮ e depois em \"Instalar app\"."
+      }
+    },
+    "faqTitle": "Perguntas frequentes",
+    "faq": {
+      "free": {
+        "q": "Quanto custa?",
+        "a": "Durante o beta é grátis. A IA (programa feito para você e retrospectiva da semana) é Premium: peça acesso dentro do app que eu libero manualmente."
+      },
+      "store": {
+        "q": "Preciso instalar pela App Store ou pelo Google Play?",
+        "a": "Não. É um app web: você abre o link, adiciona à tela de início e ele fica como um app normal, com notificações."
+      },
+      "offline": {
+        "q": "Funciona sem internet na academia?",
+        "a": "Sim. As páginas que você já abriu funcionam sem internet, e as séries e o fim do treino ficam salvos no celular e são enviados quando a conexão voltar."
+      },
+      "data": {
+        "q": "Quem vê meus dados?",
+        "a": "O peso e a meta são só seus e precisam do seu consentimento. As publicações podem ser só para amigos, e os níveis de força só aparecem no perfil se você quiser. Dá para exportar ou apagar tudo nas configurações."
+      },
+      "ai": {
+        "q": "Como funciona a IA?",
+        "a": "Usa o Gemini, do Google, só com o seu consentimento. Vão os dados de treino (objetivos, nível, equipamento, séries); nunca o nome, o e-mail, o peso nem fotos."
+      },
+      "ranking": {
+        "q": "O ranking é justo para quem está começando?",
+        "a": "Sim. Cada pessoa disputa na liga do seu nível, e a posição é pelo esforço da semana, não pela força. Toda semana começa do zero."
+      },
+      "languages": {
+        "q": "Em quais idiomas está?",
+        "a": "Português do Brasil, português de Portugal e inglês. Mude nas configurações."
+      },
+      "beta": {
+        "q": "O que significa beta?",
+        "a": "Que o app ainda está sendo ajustado com um grupo pequeno. Pode ter erros: me conte o que você encontrar e o que gostaria de ver."
+      }
+    },
+    "blogTitle": "Do blog",
+    "blogMore": "Ver todos os artigos",
+    "finalTitle": "Bora treinar?",
+    "finalLead": "Crie a conta em menos de um minuto e convide quem treina com você.",
+    "footer": {
+      "terms": "Termos e condições",
+      "privacy": "Privacidade",
+      "blog": "Blog",
+      "contact": "Contato"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Treino, progressão, mobilidade e comunidade, em artigos curtos.",
+    "minutes": "{n} min de leitura",
+    "back": "Blog",
+    "cta": "Experimente o FitnessClub",
+    "ctaLead": "Programas, recordes, IA e um ranking justo. Grátis durante o beta.",
+    "empty": "Ainda sem artigos."
   }
 }

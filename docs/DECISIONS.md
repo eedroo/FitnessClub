@@ -194,3 +194,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Partilhar conquistas e o dia:** anexos `day:<data>`, `badge:<id>`, `level`, `tier:<exercício>`, `league:<domingo>`; o servidor confirma que foram ganhos antes de publicar (retrato guardado no post).
 - **Carrossel:** com fotos e um anexo, o editor oferece "Carrossel" (ligado por defeito): a primeira foto na capa, o slide editorial a seguir e as outras fotos depois (`Post.carousel`).
 
+## Landing do beta e blog (2026-11-25)
+- `/start` passa a ser a landing completa (antes: o ecrã curto de boas-vindas): o que o app faz, como começar, como instalar a app web, FAQ, os últimos artigos e as ligações legais. Quem tem sessão continua a ir direto para o app.
+- **Blog** público (com ou sem sessão) em `/blog`: artigos em `content/blog/<slug>/<pt-PT|pt-BR|en>.md` (cabeçalho `title`, `description`, `date`; markdown mínimo dos documentos legais), na língua da pessoa. Entram no `sitemap.xml` e o `robots.txt` deixa indexar `/start`, `/blog`, `/terms` e `/privacy`.
+- Os Termos e a Política continuam marcados como rascunho: rever com jurista antes de abrir além dos amigos.
+

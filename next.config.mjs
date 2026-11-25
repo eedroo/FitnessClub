@@ -12,8 +12,8 @@ const nextConfig = {
   // src/instrumentation.ts valida o env no arranque (Next 14 precisa desta flag).
   experimental: {
     instrumentationHook: true,
-    // Os documentos legais lêem content/ do disco no servidor: incluir os ficheiros no bundle das funções.
-    outputFileTracingIncludes: { '/**': ['./content/legal/**/*'] },
+    // Os documentos legais e o blog lêem content/ do disco no servidor: incluir os ficheiros no bundle das funções.
+    outputFileTracingIncludes: { '/**': ['./content/legal/**/*', './content/blog/**/*'] },
   },
   async headers() {
     return [

@@ -1862,5 +1862,134 @@
     "wins": "Ranking wins",
     "winTitle": "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} · {name} league",
     "winMeta": "Week of {date} · {xp} XP"
+  },
+  "landing": {
+    "beta": "Private beta",
+    "heroTitle": "Your training, from the first warm-up to the next record",
+    "heroLead": "Programmes, sessions with timed rest, personal records, an AI-built programme and a community with a fair ranking. It works like an app on your phone, even offline.",
+    "cta": "Join the beta",
+    "login": "I already have an account",
+    "free": "Free during the beta. No ads.",
+    "featuresTitle": "Everything you need to train",
+    "featuresLead": "From planning to sharing, no spreadsheets.",
+    "features": {
+      "programs": {
+        "title": "Programmes and templates",
+        "body": "Build your own or start from a template: Push · Pull · Legs, full body, upper/lower, stretching and mobility."
+      },
+      "ai": {
+        "title": "AI-built programme",
+        "body": "Answer a few questions and get a programme just for you, with sets, rest times and notes for every exercise. Premium."
+      },
+      "sessions": {
+        "title": "Sessions with rest timer",
+        "body": "A timer, a rest-over alert and every set pre-filled with what you did last time. It works offline too."
+      },
+      "progress": {
+        "title": "Records and progression",
+        "body": "Trophies when you set a record, estimated 1RM, charts for every exercise and a nudge when it's time to add weight."
+      },
+      "library": {
+        "title": "Exercise library",
+        "body": "Over 900 exercises with step-by-step instructions, including mobility, gymnastics and stretches."
+      },
+      "activities": {
+        "title": "Runs and other activities",
+        "body": "Log runs, walks, rides, swims and dozens more, just like in the Health app."
+      },
+      "game": {
+        "title": "Levels, badges and medals",
+        "body": "XP for every workout, consistency badges and strength medals per exercise, from bronze to diamond."
+      },
+      "community": {
+        "title": "Community and ranking",
+        "body": "A feed with friends, groups with goals, workout invites and a weekly ranking in leagues for your level."
+      },
+      "body": {
+        "title": "Weight and body",
+        "body": "Daily or weekly weigh-ins, average and trend, a goal at your pace and a map of the muscles you've trained. Only you see it."
+      }
+    },
+    "howTitle": "How it works",
+    "how": {
+      "one": {
+        "title": "Create your account",
+        "body": "Pick your @, your rest time between sets and your alerts."
+      },
+      "two": {
+        "title": "Choose where to start",
+        "body": "A ready-made template, an AI-built programme or from scratch."
+      },
+      "three": {
+        "title": "Train and share",
+        "body": "Log your sets, set records, climb the ranking and share with friends."
+      }
+    },
+    "installTitle": "Install it on your phone",
+    "installLead": "FitnessClub is a web app: it installs in seconds, with no app store, and opens full screen.",
+    "install": {
+      "ios": {
+        "title": "iPhone",
+        "body": "Open it in Safari, tap Share, then \"Add to Home Screen\"."
+      },
+      "android": {
+        "title": "Android",
+        "body": "Open it in Chrome, tap the ⋮ menu, then \"Install app\"."
+      }
+    },
+    "faqTitle": "FAQ",
+    "faq": {
+      "free": {
+        "q": "How much does it cost?",
+        "a": "It's free during the beta. AI (a programme built for you and a weekly review) is Premium: request access in the app and I'll switch it on for you."
+      },
+      "store": {
+        "q": "Do I need the App Store or Google Play?",
+        "a": "No. It's a web app: open the link, add it to your home screen and it behaves like any other app, notifications included."
+      },
+      "offline": {
+        "q": "Does it work offline at the gym?",
+        "a": "Yes. Pages you've already opened work offline, and your sets and the end of your workout are saved on your phone and sent when you're back online."
+      },
+      "data": {
+        "q": "Who sees my data?",
+        "a": "Your weight and goal are yours alone and need your consent. Posts can be friends-only, and strength levels only appear on your profile if you want. You can export or delete everything in settings."
+      },
+      "ai": {
+        "q": "How does the AI work?",
+        "a": "It uses Google's Gemini, only with your consent. It receives training data (goals, level, equipment, sets); never your name, email, weight or photos."
+      },
+      "ranking": {
+        "q": "Is the ranking fair for beginners?",
+        "a": "Yes. Everyone competes in the league for their level, and position is based on this week's effort, not strength. It resets every week."
+      },
+      "languages": {
+        "q": "Which languages is it in?",
+        "a": "English, European Portuguese and Brazilian Portuguese. Change it in settings."
+      },
+      "beta": {
+        "q": "What does beta mean?",
+        "a": "The app is still being fine-tuned with a small group. You may hit bugs: tell me what you find and what you'd like to see."
+      }
+    },
+    "blogTitle": "From the blog",
+    "blogMore": "See all articles",
+    "finalTitle": "Ready to train?",
+    "finalLead": "Create your account in under a minute and invite the people you train with.",
+    "footer": {
+      "terms": "Terms and conditions",
+      "privacy": "Privacy",
+      "blog": "Blog",
+      "contact": "Contact"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Training, progression, mobility and community, in short reads.",
+    "minutes": "{n} min read",
+    "back": "Blog",
+    "cta": "Try FitnessClub",
+    "ctaLead": "Programmes, records, AI and a fair ranking. Free during the beta.",
+    "empty": "No articles yet."
   }
 }

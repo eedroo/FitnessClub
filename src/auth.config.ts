@@ -23,7 +23,8 @@ export const authConfig = {
       const isOnboarding = pathname === '/welcome';
       const isApi = pathname.startsWith('/api/');
 
-      if (PUBLIC_PAGES.includes(pathname)) return true;
+      // O blog é público (captação), com sessão ou sem.
+      if (PUBLIC_PAGES.includes(pathname) || pathname === '/blog' || pathname.startsWith('/blog/')) return true;
 
       if (!user) {
         if (isAuthPage) return true;

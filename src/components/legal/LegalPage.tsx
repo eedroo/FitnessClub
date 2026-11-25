@@ -5,7 +5,7 @@ import { isAppLocale } from '@/i18n/locales';
 import { parseRich, type MdBlock } from '@/lib/markdown';
 import { getLegalDocument, type LegalDoc } from '@/lib/legal/content';
 
-function Rich({ text }: { text: string }) {
+export function Rich({ text }: { text: string }) {
   return (
     <>
       {parseRich(text).map((s, i) => {
@@ -22,7 +22,8 @@ function Rich({ text }: { text: string }) {
   );
 }
 
-function Block({ block }: { block: MdBlock }) {
+/** Um bloco de markdown mínimo (também usado pelo blog). */
+export function Block({ block }: { block: MdBlock }) {
   switch (block.type) {
     case 'heading': {
       const Tag = (['h1', 'h2', 'h3'] as const)[block.level - 1]!;

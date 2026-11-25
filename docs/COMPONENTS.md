@@ -267,7 +267,8 @@ Quem abre o app sem sessão em `/` vai para `/start` (middleware); com sessão, 
 
 | Componente | Tipo | CSS | Classes | Conteúdo |
 |---|---|---|---|---|
-| `StartScreen` | server | `start.css` | `mg-start`, `__content`, `__icon`, `__title`, `__features`, `__feature`, `--programs`/`--sessions`/`--records`/`--weight`, `__feature-icon`, `__feature-text`, `__feature-title`, `__feature-body`, `__actions`, `__privacy` | ecrã de boas-vindas ao estilo das apps do iPhone: ícone do app, "Boas-vindas ao FitnessClub", quatro linhas com ícone de cor (programas, sessões, recordes, peso) e, em baixo, a nota de privacidade, "Criar conta" (preenchido) e "Já tenho conta" (simples) |
+| `LandingPage` | server | `landing.css` | `mg-landing`, `__bar`, `__hero`, `__beta`, `__features`, `__feature--ai`, `__steps`, `__install`, `__faq`, `__qa`, `__final`, `__footer` | página de entrada pública do beta (`/start`): cabeçalho com Blog e Entrar, hero com "Entrar no beta", 9 funcionalidades (a IA em azul), como funciona em 3 passos, como instalar (iPhone e Android), perguntas frequentes, os últimos artigos do blog, convite final e rodapé (termos, privacidade, blog, contacto) |
+| Blog (`/blog`, `/blog/[slug]`) | server | `landing.css` | `mg-blog-list`, `mg-blog-card`, `mg-blog-post__meta`, `mg-blog-cta` | artigos em `content/blog/<slug>/<língua>.md` no layout público (`mg-legal`); o artigo acaba com o convite para criar conta |
 
 ### Perfil de treino (`src/components/profile/`, lógica em `src/lib/fitness/profile.ts`, rota `/training-profile`)
 
