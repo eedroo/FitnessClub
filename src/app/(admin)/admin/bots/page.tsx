@@ -15,7 +15,7 @@ export default async function AdminBotsPage() {
       <h1 className="mg-admin__title">Bots</h1>
       <GlassCard title="Estado">
         <p className="mg-admin__note">
-          {bots.length ? `${bots.length} bots · ${settings.visible ? 'visíveis' : 'ocultos'}` : `Ainda sem bots (${BOTS.length} prontos a criar: 5 no Bronze e 4 na Prata).`}
+          {bots.length ? `${bots.length} bots · ${settings.visible ? 'visíveis' : 'ocultos'}` : `Ainda sem bots (${BOTS.length} prontos a criar: 5 no Bronze, nível 1, e 4 na Prata, nível 7).`}
         </p>
         <p className="mg-admin__note">
           Aparecem como perfis normais no feed e no ranking (Bronze e Prata) e competem a sério: podem ganhar o pódio da semana. Não

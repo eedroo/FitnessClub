@@ -9,6 +9,9 @@ describe('bots', () => {
     expect(new Set(BOTS.map((b) => b.handle)).size).toBe(BOTS.length);
     const leagues = BOTS.map((b) => leagueOf(b.level));
     expect(leagues.filter((x) => x === 'bronze').length).toBe(5);
+    // Bronze: nível 1 (acabados de chegar); Prata: nível 7.
+    expect(BOTS.filter((b) => leagueOf(b.level) === 'bronze').every((b) => b.level === 1)).toBe(true);
+    expect(BOTS.filter((b) => leagueOf(b.level) === 'silver').every((b) => b.level === 7)).toBe(true);
     expect(leagues.filter((x) => x === 'silver').length).toBe(4);
     expect(leagues.filter((x) => x !== 'bronze' && x !== 'silver')).toEqual([]);
   });
