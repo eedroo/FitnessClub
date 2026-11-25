@@ -26,9 +26,10 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
 
         const user = await db.user.findUnique({ where: { email: parsed.data.email } });
         // Compara sempre com um hash para não revelar, pelo tempo de resposta, se o email existe.
-        const hash = user?.passwordHash ?? '$2b$12$Ol8IIKeHbqT84tHIY0dAlu7hN9znZmXii0.blvgV7xUyC4VNd14tG';
+        // Bots (contas de demonstração) nunca entram: usam o hash de referência, como um email que não existe.
+        const hash = user && !user.isBot ? user.passwordHash : '$2b$12$Ol8IIKeHbqT84tHIY0dAlu7hN9znZmXii0.blvgV7xUyC4VNd14tG';
         const ok = await bcrypt.compare(parsed.data.password, hash);
-        if (!user || !ok) return null;
+        if (!user || user.isBot || !ok) return null;
 
         return {
           id: user.id,

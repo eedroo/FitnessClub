@@ -68,6 +68,7 @@ model User {
   planSince          DateTime?
   planExpiresAt      DateTime? // null = sem fim
   premiumRequestedAt DateTime? // pediu o Premium no app (o admin vê a lista e liberta); limpo ao passar a Premium
+  isBot              Boolean     @default(false) // conta de demonstração (bot), sempre com a etiqueta «Bot»; sem login
 
   authTokens        AuthToken[]
   pushSubscriptions PushSubscription[]
@@ -164,6 +165,13 @@ model UserActiveDay {
 }
 
 // Estado global de cada funcionalidade (sem linha = valor por defeito do código)
+// Definições globais da app (chave → valor JSON), mudadas no admin sem novo deploy. Ex.: `bots` = { visible }.
+model AppSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
 model FeatureFlag {
   key       String         @id
   rollout   FeatureRollout

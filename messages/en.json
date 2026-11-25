@@ -106,7 +106,12 @@
       },
       "weighInConsent": "To see the prompt, give your health data consent further down."
     },
-    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session."
+    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session.",
+    "admin": {
+      "title": "Admin",
+      "text": "Metrics, users, Premium requests, bots, notifications and AI.",
+      "open": "Open admin"
+    }
   },
   "validation": {
     "required": "This field is required.",

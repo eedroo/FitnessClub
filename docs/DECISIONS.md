@@ -199,3 +199,10 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Blog** público (com ou sem sessão) em `/blog`: artigos em `content/blog/<slug>/<pt-PT|pt-BR|en>.md` (cabeçalho `title`, `description`, `date`; markdown mínimo dos documentos legais), na língua da pessoa. Entram no `sitemap.xml` e o `robots.txt` deixa indexar `/start`, `/blog`, `/terms` e `/privacy`.
 - Os Termos e a Política continuam marcados como rascunho: rever com jurista antes de abrir além dos amigos.
 
+## Bots (contas de demonstração) (2026-11-25)
+- Para o feed e as 3 primeiras ligas do ranking não estarem vazios no beta: 9 contas (`src/lib/bots/roster.ts`), 3 por liga (Bronze, Prata, Ouro). Aparecem como perfis normais, sem etiqueta (decisão da dona do projecto, a ocultar quando houver pessoas suficientes).
+- Por dentro são `User.isBot`: sem login (o `authorize` recusa-os), fora das métricas do admin e do pódio semanal (as vitórias e os avisos de vitória são só de pessoas); os pedidos de amizade feitos a bots são aceites no dia seguinte.
+- **Criar** (admin): cada bot recebe um programa de um modelo e o histórico das últimas semanas, ao seu ritmo (3 a 5 treinos por semana) e com progressão dupla, até ao nível dele; algumas publicações da última semana.
+- **Todos os dias** às 20h de Brasília (Inngest `bots-daily`): cada bot, ao acaso e ao seu ritmo, faz o treino seguinte (antes da hora actual) e às vezes publica (textos em `content/bots/posts.json`).
+- **Ocultar** (admin, `AppSetting` `bots` = `{ visible: false }`): os bots entram na lista de bloqueados de toda a gente (`blockedIds`), por isso somem do feed, perfis, pesquisa, comentários e ranking, e deixam de treinar. "Mostrar" volta atrás; "Apagar" remove-os de vez.
+

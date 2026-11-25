@@ -14,9 +14,10 @@ export async function getAdminMetrics(now = new Date()): Promise<AdminMetrics> {
   const today = todayInTz('UTC', now);
   const since = (days: number) => new Date(now.getTime() - days * 86_400_000);
   const [total, new7, new30, premium, activeRows] = await Promise.all([
-    db.user.count(),
-    db.user.count({ where: { createdAt: { gte: since(7) } } }),
-    db.user.count({ where: { createdAt: { gte: since(30) } } }),
+    // Sem os bots (contas de demonstração).
+    db.user.count({ where: { isBot: false } }),
+    db.user.count({ where: { isBot: false, createdAt: { gte: since(7) } } }),
+    db.user.count({ where: { isBot: false, createdAt: { gte: since(30) } } }),
     db.user.count({ where: { plan: 'PREMIUM', OR: [{ planExpiresAt: null }, { planExpiresAt: { gt: now } }] } }),
     db.userActiveDay.findMany({ where: { day: { gte: toDbDate(addDays(today, -29)) } }, select: { userId: true, day: true } }),
   ]);

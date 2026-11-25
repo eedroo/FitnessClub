@@ -9,6 +9,7 @@ import { generateJson } from '@/lib/ai/gemini';
 import { pushToUser } from '@/lib/notifications/send';
 import { premiumActiveNotification } from '@/lib/notifications/content';
 import { announceRanking } from '@/lib/social/ranking';
+import { createBots, deleteBots, runBotsDay, setBotsVisible } from '@/lib/bots/server';
 
 export type AdminResult = { ok: true } | { ok: false; error: string };
 
@@ -161,5 +162,30 @@ export async function sendRankingAnnouncement(): Promise<{ ok: true; people: num
   await requireAdmin();
   const r = await announceRanking();
   return { ok: true, ...r };
+}
+
+// ─── Bots (contas de demonstração) ───────────────────────────────────────────────────────────────
+
+export type BotAction = 'create' | 'run' | 'hide' | 'show' | 'delete';
+
+/** Criar, rodar o dia agora, ocultar, mostrar ou apagar os bots. Devolve uma frase para o admin. */
+export async function botAction(action: BotAction): Promise<{ ok: true; message: string } | { ok: false; error: string }> {
+  await requireAdmin();
+  const a = z.enum(['create', 'run', 'hide', 'show', 'delete']).safeParse(action);
+  if (!a.success) return { ok: false, error: 'Acção inválida.' };
+  let message: string;
+  if (a.data === 'create') message = `${await createBots()} bot(s) criado(s) com histórico.`;
+  else if (a.data === 'run') {
+    const r = await runBotsDay();
+    message = `Hoje: ${r.trained} treino(s), ${r.posted} publicação(ões).`;
+  } else if (a.data === 'hide') {
+    await setBotsVisible(false);
+    message = 'Bots ocultos: saíram do feed, perfis, pesquisa e ranking, e deixaram de treinar.';
+  } else if (a.data === 'show') {
+    await setBotsVisible(true);
+    message = 'Bots visíveis outra vez.';
+  } else message = `${await deleteBots()} bot(s) apagado(s), com treinos e publicações.`;
+  revalidatePath('/', 'layout');
+  return { ok: true, message };
 }
 

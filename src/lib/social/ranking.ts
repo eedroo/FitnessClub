@@ -35,6 +35,7 @@ export interface BoardRow {
   xp: number;
   rank: number;
   me: boolean;
+  isBot: boolean;
 }
 
 /** Todos os participantes da semana, com nível, liga, XP e posição dentro da liga. */
@@ -44,12 +45,12 @@ async function standings(weekStart: DateISO, extra: string[] = []) {
   const [levels, stats, profiles] = await Promise.all([
     levelsFor(ids),
     weekStats(ids, weekStart),
-    db.socialProfile.findMany({ where: { userId: { in: ids } }, select: { userId: true, handle: true, displayName: true, avatarUrl: true } }),
+    db.socialProfile.findMany({ where: { userId: { in: ids } }, select: { userId: true, handle: true, displayName: true, avatarUrl: true, user: { select: { isBot: true } } } }),
   ]);
   const xp = new Map(stats.map((s) => [s.userId, s.xp]));
   const rows = profiles.map((p) => {
     const level = levels.get(p.userId) ?? 1;
-    return { userId: p.userId, handle: p.handle, name: p.displayName, avatarUrl: p.avatarUrl, level, league: leagueOf(level), xp: xp.get(p.userId) ?? 0 };
+    return { userId: p.userId, handle: p.handle, name: p.displayName, avatarUrl: p.avatarUrl, isBot: p.user.isBot, level, league: leagueOf(level), xp: xp.get(p.userId) ?? 0 };
   });
   const out: (Omit<BoardRow, 'me'> & { league: League })[] = [];
   for (const league of new Set(rows.map((r) => r.league))) out.push(...rankLeague(rows.filter((r) => r.league === league)));
@@ -94,8 +95,10 @@ export async function getLeagueBoard(viewerId: string, league?: League): Promise
  * avisos. Corre ao domingo, depois de a semana ter acabado para toda a gente.
  */
 export async function closeLeagueWeek(weekStart: DateISO): Promise<{ userId: string; league: League; rank: number; xp: number }[]> {
-  const all = await standings(weekStart);
-  const winners = [...new Set(all.map((r) => r.league))].flatMap((league) => podium(all.filter((r) => r.league === league)));
+  // Os bots (contas de demonstração) contam na lista mas nunca ganham: o pódio é só de pessoas.
+  const bots = new Set((await db.user.findMany({ where: { isBot: true }, select: { id: true } })).map((u) => u.id));
+  const all = (await standings(weekStart)).filter((r) => !bots.has(r.userId));
+  const winners = [...new Set(all.map((r) => r.league))].flatMap((league) => podium(rankLeague(all.filter((r) => r.league === league))));
   const out = winners.map((w) => ({ userId: w.userId, league: w.league, rank: w.rank, xp: w.xp }));
   for (const w of out) {
     await db.leagueResult.upsert({

@@ -1,6 +1,7 @@
 import 'server-only';
 import type { Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
+import { hiddenBotIds } from '@/lib/bots/server';
 import { handleBase, workoutSnapshotSchema, type Visibility, type WorkoutSnapshot } from './rules';
 
 /** Leitura da rede social (Fase C). Toda a filtragem por amizade, bloqueio e moderação acontece aqui, no servidor. */
@@ -42,15 +43,21 @@ export async function friendIds(userId: string): Promise<Set<string>> {
   return new Set(rows.map((r) => (r.requesterId === userId ? r.addresseeId : r.requesterId)));
 }
 
-/** Bloqueados nos dois sentidos (quem bloqueei e quem me bloqueou). */
+/**
+ * Bloqueados nos dois sentidos (quem bloqueei e quem me bloqueou). Com os bots ocultos no admin, eles também entram
+ * aqui: somem do feed, dos perfis, da pesquisa, dos comentários e do ranking de uma vez.
+ */
 export async function blockedIds(userId: string): Promise<Set<string>> {
-  const rows = await db.block.findMany({ where: { OR: [{ blockerId: userId }, { blockedId: userId }] }, select: { blockerId: true, blockedId: true } });
-  return new Set(rows.map((r) => (r.blockerId === userId ? r.blockedId : r.blockerId)));
+  const [rows, bots] = await Promise.all([
+    db.block.findMany({ where: { OR: [{ blockerId: userId }, { blockedId: userId }] }, select: { blockerId: true, blockedId: true } }),
+    hiddenBotIds(),
+  ]);
+  return new Set([...rows.map((r) => (r.blockerId === userId ? r.blockedId : r.blockerId)), ...bots]);
 }
 
 export interface PostView {
   id: string;
-  author: { id: string; handle: string; displayName: string; avatarUrl: string | null };
+  author: { id: string; handle: string; displayName: string; avatarUrl: string | null; isBot: boolean };
   text: string | null;
   images: string[];
   /** Fotos e anexo em carrossel (capa = foto, a seguir o anexo editorial). */
@@ -66,7 +73,7 @@ export interface PostView {
 }
 
 const POST_INCLUDE = {
-  author: { select: { id: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } },
+  author: { select: { id: true, isBot: true, socialProfile: { select: { handle: true, displayName: true, avatarUrl: true } } } },
   _count: { select: { likes: true, comments: { where: { hiddenAt: null } } } },
 } satisfies Prisma.PostInclude;
 
@@ -78,7 +85,7 @@ function toView(p: PostRow, viewerId: string, liked: Set<string>): PostView | nu
   const w = p.workout ? workoutSnapshotSchema.safeParse(p.workout) : null;
   return {
     id: p.id,
-    author: { id: p.author.id, handle: prof.handle, displayName: prof.displayName, avatarUrl: prof.avatarUrl },
+    author: { id: p.author.id, handle: prof.handle, displayName: prof.displayName, avatarUrl: prof.avatarUrl, isBot: p.author.isBot },
     text: p.text,
     images: p.images,
     carousel: p.carousel && p.images.length > 0 && !!(w?.success && w.data),

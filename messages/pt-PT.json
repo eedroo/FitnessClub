@@ -106,7 +106,12 @@
       },
       "weighInConsent": "Para o pedido aparecer, dá o consentimento de dados de saúde mais abaixo."
     },
-    "notificationsHint": "O único aviso é o de fim de descanso, e só chega quando saíste da app durante a sessão."
+    "notificationsHint": "O único aviso é o de fim de descanso, e só chega quando saíste da app durante a sessão.",
+    "admin": {
+      "title": "Administração",
+      "text": "Métricas, utilizadores, pedidos de Premium, bots, notificações e IA.",
+      "open": "Abrir a administração"
+    }
   },
   "validation": {
     "required": "Campo obrigatório.",

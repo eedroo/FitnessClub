@@ -358,3 +358,7 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 - "Partilhar" (`mg-share-link`) — emblemas ganhos (BadgeGrid com `share`), nível e medalhas de força nas conquistas, vitórias no perfil; "Partilhar este dia de treino" no Dia.
 - **ProfileTabs** (client) — no perfil, logo a seguir ao cabeçalho (até "Editar perfil"): Corpo (só no "Eu", abre aqui) · Publicações · Emblemas (com as vitórias e "Ver todas as conquistas") · Força. Reaproveita `mg-ex-tabs`; `mg-profile-tabs`.
 
+### Administração no telemóvel e bots
+- Definições → **Administração** (só para os emails de `ADMIN_EMAILS`): botão "Abrir a administração", para chegar ao admin sem escrever `/admin`.
+- **BotActions** (client, admin) — em `/admin/bots`: "Criar os bots", "Rodar o dia agora", "Ocultar os bots" / "Mostrar os bots outra vez" e "Apagar"; a página mostra cada bot com a liga, o nível, os treinos, as publicações e o último treino.
+

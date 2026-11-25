@@ -27,6 +27,7 @@ import { getEntitlements } from '@/lib/entitlements/server';
 import { getFitnessPrefs, getTrainingProfile } from '@/lib/fitness/queries';
 import { toProfileData } from '@/lib/fitness/profile';
 import { intlLocale, isAppLocale } from '@/i18n/locales';
+import { isAdminEmail } from '@/lib/admin';
 
 const SECTIONS = ['profile', 'account', 'preferences', 'trainingProfile', 'training', 'notifications', 'privacy', 'sessions', 'danger'] as const;
 
@@ -93,6 +94,17 @@ export default async function SettingsPage() {
       <div className="mg-settings">
         <SettingsNav label={t('sections.label')} sections={sections.map((id) => ({ id, label: t(`sections.${id}`) }))} />
         <div className="mg-settings__sections">
+          {/* Só para admins (ADMIN_EMAILS): abrir a administração no telemóvel, sem escrever /admin. */}
+          {isAdminEmail(session.user.email) && (
+            <GlassCard id="admin" className="mg-settings__section" title={t('admin.title')}>
+              <div className="mg-form">
+                <p className="mg-form__status">{t('admin.text')}</p>
+                <Link href="/admin" className="mg-btn mg-btn--primary mg-btn--block">
+                  {t('admin.open')}
+                </Link>
+              </div>
+            </GlassCard>
+          )}
           <GlassCard id="profile" className="mg-settings__section" title={t('sections.profile')} header={entitlements.plan === 'PREMIUM' ? <PremiumBadge /> : undefined}>
             <SettingsForm part="profile" initial={formInitial} timezones={timezones} />
           </GlassCard>
