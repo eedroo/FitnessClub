@@ -1204,7 +1204,13 @@
       "save": "Guardar programa",
       "again": "Pedir outro",
       "discard": "Descartar",
-      "slow": "Está a demorar um pouco mais do que o normal. Podes sair: quando estiver pronto, recebes uma notificação."
+      "slow": "Está a demorar um pouco mais do que o normal. Podes sair: quando estiver pronto, recebes uma notificação.",
+      "ready": {
+        "title": "O teu programa com IA está pronto",
+        "text": "Revê-o e guarda-o para começares a treinar.",
+        "pending": "A IA está a montar o teu programa",
+        "pendingText": "Avisamos quando estiver pronto."
+      }
     },
     "insights": {
       "title": "Retrospectiva da semana",

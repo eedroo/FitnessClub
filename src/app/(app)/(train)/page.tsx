@@ -21,10 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Treinos: programas, os meus exercícios e um treino livre (as boas-vindas são o onboarding, em `/welcome`). */
 export default async function BodyHome() {
   const { userId } = await bodyPage();
-  const [t, ti, ta, programs, custom, profile, ai, insight, game] = await Promise.all([
+  const [t, ti, ta, ta2, programs, custom, profile, ai, insight, game] = await Promise.all([
     getTranslations('fitness'),
     getTranslations('ai.insights'),
     getTranslations('activities'),
+    getTranslations('ai.program'),
     listPrograms(userId),
     countCustomExercises(userId),
     getTrainingProfile(userId),
@@ -36,6 +37,12 @@ export default async function BodyHome() {
     }),
     getGamification(userId),
   ]);
+  // Programa com IA pronto para rever (ou a ser gerado, ex.: pedido de novo pelo admin): leva à revisão.
+  const aiReady = await db.aiRequest.findFirst({
+    where: { userId, kind: 'PROGRAM', OR: [{ status: 'DONE' }, { status: 'PENDING', createdAt: { gte: new Date(Date.now() - 10 * 60_000) } }] },
+    orderBy: { createdAt: 'desc' },
+    select: { id: true, status: true },
+  });
   const premiumRequested = !ai.feature && !!(await db.user.findUnique({ where: { id: userId }, select: { premiumRequestedAt: true } }))?.premiumRequestedAt;
   const insightHeadline = (insight?.result as { headline?: string } | null)?.headline;
   const templates = FITNESS_TEMPLATES.map((tpl) => ({ id: tpl.id, name: t(`templates.${tpl.id}.name`), description: t(`templates.${tpl.id}.description`) }));
@@ -46,6 +53,14 @@ export default async function BodyHome() {
       <div className="mg-body-shell__main">
         {/* Cabeçalho: nível e barra de XP. Depois: programas, novo programa, os meus exercícios e a retrospectiva. */}
         <LevelCard summary={game.summary} href="/achievements" />
+        {aiReady && (
+          <Link href={`/ai/program/${aiReady.id}`} className="mg-program-form__ai-link">
+            <span className="mg-ai-card__text">
+              <span className="mg-ai-card__title">{ta2(aiReady.status === 'DONE' ? 'ready.title' : 'ready.pending')}</span>
+              <span className="mg-ai-card__meta">{ta2(aiReady.status === 'DONE' ? 'ready.text' : 'ready.pendingText')}</span>
+            </span>
+          </Link>
+        )}
         <h2 className="mg-body-section-title">{t('home.programs')}</h2>
         <ProgramList programs={programs} />
         <ProgramForm templates={templates} ai={{ feature: ai.feature, available: ai.feature && ai.configured, premiumRequested }} />

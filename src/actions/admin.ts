@@ -10,6 +10,7 @@ import { pushToUser } from '@/lib/notifications/send';
 import { premiumActiveNotification } from '@/lib/notifications/content';
 import { announceRanking } from '@/lib/social/ranking';
 import { createBots, deleteBots, runBotsDay, setBotsVisible } from '@/lib/bots/server';
+import { adminRetryProgram } from '@/lib/ai/server';
 
 export type AdminResult = { ok: true } | { ok: false; error: string };
 
@@ -187,5 +188,22 @@ export async function botAction(action: BotAction): Promise<{ ok: true; message:
   } else message = `${await deleteBots()} bot(s) apagado(s), com treinos e publicações.`;
   revalidatePath('/', 'layout');
   return { ok: true, message };
+}
+
+// ─── IA de uma pessoa ────────────────────────────────────────────────────────────────────────────
+
+/** Repor as tentativas de programa com IA (o limite volta a zero) ou gerar de novo com as respostas do último pedido. */
+export async function aiUserAction(id: string, action: 'reset' | 'retry'): Promise<{ ok: true; message: string } | { ok: false; error: string }> {
+  await requireAdmin();
+  const p = z.object({ id: userId, action: z.enum(['reset', 'retry']) }).safeParse({ id, action });
+  if (!p.success) return { ok: false, error: 'Dados inválidos.' };
+  if (p.data.action === 'reset') {
+    await db.user.update({ where: { id: p.data.id }, data: { aiQuotaResetAt: new Date() } });
+    revalidatePath(`/admin/users/${p.data.id}`);
+    return { ok: true, message: 'Tentativas repostas: já pode pedir outra vez.' };
+  }
+  const r = await adminRetryProgram(p.data.id);
+  revalidatePath(`/admin/users/${p.data.id}`);
+  return r.ok ? { ok: true, message: 'Pedido enviado. Quando ficar pronto, ela recebe o aviso e vê-o em Treinos.' } : r;
 }
 

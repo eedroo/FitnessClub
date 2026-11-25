@@ -48,9 +48,12 @@ export async function programQuota(userId: string): Promise<{ day: number; month
     kind: 'PROGRAM' as const,
     OR: [{ status: { in: ['DONE', 'APPLIED', 'DISCARDED'] as ('DONE' | 'APPLIED' | 'DISCARDED')[] } }, { status: 'PENDING' as const, createdAt: { gte: new Date(now.getTime() - AI_JOB_TIMEOUT_MS) } }],
   };
+  // O admin pode repor as tentativas (`aiQuotaResetAt`): só contam os pedidos depois disso.
+  const reset = (await db.user.findUnique({ where: { id: userId }, select: { aiQuotaResetAt: true } }))?.aiQuotaResetAt?.getTime() ?? 0;
+  const since = (ms: number) => new Date(Math.max(now.getTime() - ms, reset));
   const [day, month, user] = await Promise.all([
-    db.aiRequest.count({ where: { ...counted, createdAt: { gte: new Date(now.getTime() - 24 * 3600_000) } } }),
-    db.aiRequest.count({ where: { ...counted, createdAt: { gte: new Date(now.getTime() - 30 * 24 * 3600_000) } } }),
+    db.aiRequest.count({ where: { ...counted, createdAt: { gte: since(24 * 3600_000) } } }),
+    db.aiRequest.count({ where: { ...counted, createdAt: { gte: since(30 * 24 * 3600_000) } } }),
     db.user.findUnique({ where: { id: userId }, select: { email: true } }),
   ]);
   if (isAdminEmail(user?.email)) return { day, month, allowed: true };
@@ -285,3 +288,21 @@ export async function dueInsights(now: Date = new Date()): Promise<{ userId: str
   }
   return out;
 }
+
+/**
+ * Admin: volta a pedir o programa de uma pessoa com as respostas do último pedido dela (sem ela ter de repetir), fora
+ * do limite. Precisa do recurso `ai` e do consentimento dela. Ela vê o resultado em Treinos e recebe o aviso.
+ */
+export async function adminRetryProgram(userId: string): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+  const access = await getAiAccess(userId);
+  if (!access.feature) return { ok: false, error: 'Sem acesso à IA (plano Premium ou excepção «ai»).' };
+  if (!access.consent) return { ok: false, error: 'Ainda não deu o consentimento da IA: tem de o dar no app (Novo programa › Criar com IA).' };
+  if (!access.configured) return { ok: false, error: 'A chave do Gemini não está configurada.' };
+  const last = await db.aiRequest.findFirst({ where: { userId, kind: 'PROGRAM' }, orderBy: { createdAt: 'desc' }, select: { facts: true } });
+  if (!last?.facts) return { ok: false, error: 'Ainda não há nenhum pedido com respostas para repetir.' };
+  await db.aiRequest.updateMany({ where: { userId, kind: 'PROGRAM', status: { in: ['PENDING', 'FAILED'] } }, data: { status: 'DISCARDED' } });
+  const req = await db.aiRequest.create({ data: { userId, kind: 'PROGRAM', facts: last.facts as Prisma.InputJsonValue }, select: { id: true } });
+  await dispatchAi({ name: 'ai/program.requested', data: { requestId: req.id } }, () => runProgramRequest(req.id), req.id);
+  return { ok: true, id: req.id };
+}
+

@@ -1204,7 +1204,13 @@
       "save": "Salvar programa",
       "again": "Pedir outro",
       "discard": "Descartar",
-      "slow": "Está demorando um pouco mais que o normal. Pode sair: quando estiver pronto, você recebe uma notificação."
+      "slow": "Está demorando um pouco mais que o normal. Pode sair: quando estiver pronto, você recebe uma notificação.",
+      "ready": {
+        "title": "Seu programa com IA está pronto",
+        "text": "Revise e salve para começar a treinar.",
+        "pending": "A IA está montando seu programa",
+        "pendingText": "Avisamos quando estiver pronto."
+      }
     },
     "insights": {
       "title": "Retrospectiva da semana",

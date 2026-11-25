@@ -68,6 +68,7 @@ model User {
   planSince          DateTime?
   planExpiresAt      DateTime? // null = sem fim
   premiumRequestedAt DateTime? // pediu o Premium no app (o admin vê a lista e liberta); limpo ao passar a Premium
+  aiQuotaResetAt     DateTime? // o admin repôs as tentativas de programa com IA: só contam os pedidos depois disto
   isBot              Boolean     @default(false) // conta de demonstração (bot), sempre com a etiqueta «Bot»; sem login
 
   authTokens        AuthToken[]

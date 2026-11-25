@@ -1204,7 +1204,13 @@
       "save": "Save programme",
       "again": "Try another",
       "discard": "Discard",
-      "slow": "This is taking a bit longer than usual. You can leave; you'll get a notification when it's ready."
+      "slow": "This is taking a bit longer than usual. You can leave; you'll get a notification when it's ready.",
+      "ready": {
+        "title": "Your AI programme is ready",
+        "text": "Review it and save it to start training.",
+        "pending": "AI is building your programme",
+        "pendingText": "We'll let you know when it's ready."
+      }
     },
     "insights": {
       "title": "Weekly review",

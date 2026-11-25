@@ -211,3 +211,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Sessões:** ordenadas pelo dia do treino (o mais recente em cima) e, no mesmo dia, pela hora — um treino registado mais tarde com a data de outro dia fica no dia dele.
 - **Força no perfil:** de Diamante a Bronze; no mesmo nível, primeiro o mais perto da medalha seguinte.
 
+## Admin: repor tentativas e gerar de novo o programa com IA (2026-11-25)
+- Na ficha da pessoa (`/admin/users/[id]`), cartão «IA (programas)»: acesso, consentimento, chave, tentativas (hoje e 30 dias), os últimos pedidos com o motivo das falhas.
+- «Repor tentativas»: `User.aiQuotaResetAt` = agora; o limite só conta pedidos depois disso. «Gerar de novo»: repete o último pedido dela com as mesmas respostas, fora do limite (precisa do acesso à IA e do consentimento dela); ela recebe o aviso quando fica pronto.
+- Em Treinos, enquanto houver um programa com IA pronto para rever (ou a ser gerado), aparece uma linha em destaque que leva à revisão.
+
