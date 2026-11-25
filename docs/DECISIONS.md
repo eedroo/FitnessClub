@@ -200,9 +200,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - Os Termos e a Política continuam marcados como rascunho: rever com jurista antes de abrir além dos amigos.
 
 ## Bots (contas de demonstração) (2026-11-25)
-- Para o feed e as 3 primeiras ligas do ranking não estarem vazios no beta: 9 contas (`src/lib/bots/roster.ts`), 3 por liga (Bronze, Prata, Ouro). Aparecem como perfis normais, sem etiqueta (decisão da dona do projecto, a ocultar quando houver pessoas suficientes).
-- Por dentro são `User.isBot`: sem login (o `authorize` recusa-os), fora das métricas do admin e do pódio semanal (as vitórias e os avisos de vitória são só de pessoas); os pedidos de amizade feitos a bots são aceites no dia seguinte.
+- Para o feed e o ranking não estarem vazios no beta e para haver com quem competir (e perder): 9 contas (`src/lib/bots/roster.ts`), 5 no Bronze e 4 na Prata, nenhuma no Ouro. Aparecem como perfis normais, sem etiqueta (decisão da dona do projecto, a ocultar quando houver pessoas suficientes).
+- Por dentro são `User.isBot`: sem login (o `authorize` recusa-os) e fora das métricas do admin. **Competem a sério e podem ficar no pódio** (o acaso dos treinos decide); os pedidos de amizade feitos a bots são aceites no dia seguinte.
 - **Criar** (admin): cada bot recebe um programa de um modelo e o histórico das últimas semanas, ao seu ritmo (3 a 5 treinos por semana) e com progressão dupla, até ao nível dele; algumas publicações da última semana.
-- **Todos os dias** às 20h de Brasília (Inngest `bots-daily`): cada bot, ao acaso e ao seu ritmo, faz o treino seguinte (antes da hora actual) e às vezes publica (textos em `content/bots/posts.json`).
-- **Ocultar** (admin, `AppSetting` `bots` = `{ visible: false }`): os bots entram na lista de bloqueados de toda a gente (`blockedIds`), por isso somem do feed, perfis, pesquisa, comentários e ranking, e deixam de treinar. "Mostrar" volta atrás; "Apagar" remove-os de vez.
-
+- **Todos os dias** ao meio-dia de Lisboa (Inngest `bots-daily`): cada bot, ao acaso e ao seu ritmo, faz o treino seguinte (de manhã, antes da hora actual) e às vezes publica (textos em `content/bots/posts.json`). Os dias dos bots seguem Lisboa. **Cada bot fica sempre na sua liga:** se o nível passar da liga, saem os treinos mais antigos (nunca os da última semana, que contam no ranking).
+- **Ocultar** (admin, `AppSetting` `bots` = `{ visible: false }`): os bots entram na lista de bloqueados de toda a gente (`blockedIds`), por isso somem do feed, perfis, pesquisa, comentários e ranking (e do pódio), e deixam de treinar. "Mostrar" volta atrás; "Apagar" remove-os de vez.

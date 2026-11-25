@@ -4,11 +4,13 @@ import { leagueOf } from '@/lib/social/leagues';
 import { handleSchema } from '@/lib/social/rules';
 
 describe('bots', () => {
-  it('@ válidos e únicos, espalhados pelas 3 primeiras ligas', () => {
+  it('@ válidos e únicos, só no Bronze (5) e na Prata (4)', () => {
     expect(BOTS.every((b) => handleSchema.safeParse(b.handle).success)).toBe(true);
     expect(new Set(BOTS.map((b) => b.handle)).size).toBe(BOTS.length);
     const leagues = BOTS.map((b) => leagueOf(b.level));
-    for (const l of ['bronze', 'silver', 'gold']) expect(leagues.filter((x) => x === l).length).toBe(3);
+    expect(leagues.filter((x) => x === 'bronze').length).toBe(5);
+    expect(leagues.filter((x) => x === 'silver').length).toBe(4);
+    expect(leagues.filter((x) => x !== 'bronze' && x !== 'silver')).toEqual([]);
   });
   it('progressão dupla: soma reps até ao topo e depois sobe a carga', () => {
     let p: Progress = { kg: 40, reps: [8, 8, 7] };

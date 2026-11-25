@@ -15,12 +15,12 @@ export default async function AdminBotsPage() {
       <h1 className="mg-admin__title">Bots</h1>
       <GlassCard title="Estado">
         <p className="mg-admin__note">
-          {bots.length ? `${bots.length} bots · ${settings.visible ? 'visíveis' : 'ocultos'}` : `Ainda sem bots (${BOTS.length} prontos a criar, 3 por liga: Bronze, Prata e Ouro).`}
+          {bots.length ? `${bots.length} bots · ${settings.visible ? 'visíveis' : 'ocultos'}` : `Ainda sem bots (${BOTS.length} prontos a criar: 5 no Bronze e 4 na Prata).`}
         </p>
         <p className="mg-admin__note">
-          Aparecem como perfis normais no feed e no ranking. Não entram nas métricas nem no pódio semanal (as vitórias são só de pessoas),
-          não fazem login e aceitam os pedidos de amizade. Todos os dias às 20h de Brasília (Inngest «bots-daily») cada um treina ao seu
-          ritmo, com progressão dupla, e às vezes publica. Ocultos: somem de todo o lado e param.
+          Aparecem como perfis normais no feed e no ranking (Bronze e Prata) e competem a sério: podem ganhar o pódio da semana. Não
+          entram nas métricas, não fazem login e aceitam os pedidos de amizade. Todos os dias ao meio-dia de Lisboa (Inngest «bots-daily»)
+          cada um treina ao acaso, ao seu ritmo, com progressão dupla, e às vezes publica. Ocultos: somem de todo o lado e param.
         </p>
         <BotActions count={bots.length} visible={settings.visible} />
       </GlassCard>
@@ -49,7 +49,7 @@ export default async function AdminBotsPage() {
                     </td>
                     <td className="mg-admin-table__num">{b.sessions}</td>
                     <td className="mg-admin-table__num">{b.posts}</td>
-                    <td>{b.lastAt ? b.lastAt.toLocaleString('pt-PT', { timeZone: 'America/Sao_Paulo' }) : '—'}</td>
+                    <td>{b.lastAt ? b.lastAt.toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' }) : '—'}</td>
                   </tr>
                 );
               })}

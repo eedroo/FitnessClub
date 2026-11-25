@@ -6,6 +6,7 @@ import { levelsFor, weekStats } from '@/lib/gamification/server';
 import { blockedIds } from './server';
 import { leagueOf, podium, rankLeague, type League } from './leagues';
 import { pushToUser } from '@/lib/notifications/send';
+import { hiddenBotIds } from '@/lib/bots/server';
 import { leagueStartNotification, leagueWinNotification, rankingLaunchNotification } from '@/lib/notifications/content';
 
 /**
@@ -95,9 +96,9 @@ export async function getLeagueBoard(viewerId: string, league?: League): Promise
  * avisos. Corre ao domingo, depois de a semana ter acabado para toda a gente.
  */
 export async function closeLeagueWeek(weekStart: DateISO): Promise<{ userId: string; league: League; rank: number; xp: number }[]> {
-  // Os bots (contas de demonstração) contam na lista mas nunca ganham: o pódio é só de pessoas.
-  const bots = new Set((await db.user.findMany({ where: { isBot: true }, select: { id: true } })).map((u) => u.id));
-  const all = (await standings(weekStart)).filter((r) => !bots.has(r.userId));
+  // Os bots (contas de demonstração) competem a sério e podem ficar no pódio; ocultos, não entram.
+  const hidden = new Set(await hiddenBotIds());
+  const all = (await standings(weekStart)).filter((r) => !hidden.has(r.userId));
   const winners = [...new Set(all.map((r) => r.league))].flatMap((league) => podium(rankLeague(all.filter((r) => r.league === league))));
   const out = winners.map((w) => ({ userId: w.userId, league: w.league, rank: w.rank, xp: w.xp }));
   for (const w of out) {

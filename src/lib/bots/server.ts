@@ -8,6 +8,8 @@ import { translatorFor } from '@/i18n/translator';
 import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { recomputeExercisePrs } from '@/lib/fitness/queries';
 import { XP, xpForLevel } from '@/lib/gamification/xp';
+import { levelsFor } from '@/lib/gamification/server';
+import { leagueOf } from '@/lib/social/leagues';
 import { BOTS, nextSets, rng, startingKg, trainsToday, type BotDef, type Progress } from './roster';
 
 /**
@@ -15,8 +17,8 @@ import { BOTS, nextSets, rng, startingKg, trainsToday, type BotDef, type Progres
  * (Inngest), as publicações, ocultar e apagar. A definição `bots` (`AppSetting`) guarda `{ visible }`: ocultos, os
  * bots entram na lista de bloqueados de toda a gente (somem do feed, perfis, pesquisa e ranking) e não treinam.
  */
-const TZ = 'America/Sao_Paulo';
-const OFFSET = '-03:00';
+// Os dias dos bots seguem Lisboa (o job corre ao meio-dia de Lisboa).
+const TZ = 'Europe/Lisbon';
 const SETTING = 'bots';
 const EMAIL = (handle: string) => `${handle}@bots.fitnessclub.invalid`;
 
@@ -49,6 +51,13 @@ function postTexts(): string[] {
   } catch {
     return [''];
   }
+}
+
+/** Hora local de Lisboa (inverno UTC+0, verão UTC+1) → instante. */
+function lisbonTime(date: DateISO, hour: number, minute: number): Date {
+  const guess = new Date(`${date}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00Z`);
+  const local = Number(new Intl.DateTimeFormat('en-GB', { hour: '2-digit', hourCycle: 'h23', timeZone: TZ }).format(guess));
+  return new Date(guess.getTime() - (local - hour) * 3_600_000);
 }
 
 // ─── Uma sessão de um bot ────────────────────────────────────────────────────────────────────────
@@ -103,7 +112,7 @@ async function logSession(
 ): Promise<{ id: string; sets: number; startedAt: Date; endedAt: Date }> {
   const hour = 6 + Math.floor(r() * Math.max(1, latestHour - 6));
   const minute = Math.floor(r() * 60);
-  const startedAt = new Date(`${date}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00${OFFSET}`);
+  const startedAt = lisbonTime(date, hour, minute);
   let t = startedAt.getTime() + 4 * 60_000;
   const rows: { exerciseId: string; order: number; reps: number | null; weightGrams: number | null; durationSec: number | null; completedAt: Date }[] = [];
   for (const item of workout.items) {
@@ -166,6 +175,24 @@ async function postSession(botId: string, sessionId: string, workoutName: string
       },
     },
   });
+}
+
+/**
+ * Recalcula os recordes e mantém o bot na liga dele: se o nível passou da liga (o acaso dos treinos, ou semanas de
+ * treino diário), tira os treinos mais antigos até voltar. Nunca mexe na semana actual (o XP do ranking).
+ */
+async function keepInLeague(userId: string, def: BotDef, exerciseIds: string[]): Promise<void> {
+  const recompute = async () => {
+    for (const ex of exerciseIds) await recomputeExercisePrs(userId, ex);
+  };
+  await recompute();
+  const weekAgo = toDbDate(addDays(todayInTz(TZ), -7));
+  for (let guard = 0; guard < 40 && leagueOf((await levelsFor([userId])).get(userId) ?? 1) !== leagueOf(def.level); guard++) {
+    const oldest = await db.fitnessSession.findFirst({ where: { userId, date: { lt: weekAgo } }, orderBy: { startedAt: 'asc' }, select: { id: true } });
+    if (!oldest) break;
+    await db.fitnessSession.delete({ where: { id: oldest.id } });
+    await recompute();
+  }
 }
 
 // ─── Criar ───────────────────────────────────────────────────────────────────────────────────────
@@ -249,7 +276,7 @@ export async function createBots(): Promise<number> {
       trainedYesterday = true;
       if (d >= addDays(today, -6) && r() < 0.6) posts.push({ id: s.id, name: workout.name, at: s.endedAt });
     }
-    for (const ex of new Set(workouts.flatMap((wk) => wk.items.map((i) => i.exerciseId)))) await recomputeExercisePrs(user.id, ex);
+    await keepInLeague(user.id, def, [...new Set(workouts.flatMap((wk) => wk.items.map((i) => i.exerciseId)))]);
     for (const p of posts) await postSession(user.id, p.id, p.name, p.at, r);
     created++;
   }
@@ -289,7 +316,7 @@ export async function runBotsDay(): Promise<{ trained: number; posted: number }>
     const workout = workouts[(i + 1) % workouts.length]!;
     const progress = await lastProgress(b.id, workout.items.map((it) => it.exerciseId));
     const s = await logSession({ id: b.id, def }, workout, today, progress, r, nowHour - 2);
-    for (const it of workout.items) await recomputeExercisePrs(b.id, it.exerciseId);
+    await keepInLeague(b.id, def, workouts.flatMap((w) => w.items.map((it) => it.exerciseId)));
     trained++;
     if (r() < 0.55) {
       await postSession(b.id, s.id, workout.name, s.endedAt, r);
