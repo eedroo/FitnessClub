@@ -611,3 +611,15 @@ export async function completeTour(): Promise<FitnessResult> {
   await db.fitnessPrefs.upsert({ where: { userId: uid }, create: { userId: uid, tourDoneAt: now }, update: { tourDoneAt: now } });
   return ok();
 }
+
+/** Emblemas celebrados (o pop-up fechou): não voltam a aparecer. */
+export async function markBadgesSeen(ids: string[]): Promise<FitnessResult> {
+  const uid = await userId();
+  if (!uid) return fail('common.errors.unauthorized');
+  const p = z.array(z.string().max(40)).max(20).safeParse(ids);
+  if (!p.success) return fail();
+  const prefs = await db.fitnessPrefs.findUnique({ where: { userId: uid }, select: { badgesSeen: true } });
+  const seen = [...new Set([...(prefs?.badgesSeen ?? []), ...p.data])];
+  await db.fitnessPrefs.upsert({ where: { userId: uid }, create: { userId: uid, badgesSeen: seen, badgesSeenAt: new Date() }, update: { badgesSeen: seen, badgesSeenAt: new Date() } });
+  return ok();
+}

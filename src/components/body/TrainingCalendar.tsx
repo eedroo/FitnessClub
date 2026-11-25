@@ -25,7 +25,8 @@ export function TrainingCalendar({ open, onClose, today, trained }: { open: bool
 
   const set = new Set(trained);
   const cur = monthOf(today);
-  const oldest = trained.length ? monthOf(trained[trained.length - 1]!) : cur;
+  // O dia mais antigo, seja qual for a ordem da lista.
+  const oldest = trained.length ? monthOf(trained.reduce((a, b) => (b < a ? b : a))) : cur;
   const span = Math.max(MIN_MONTHS, (cur.year - oldest.year) * 12 + (cur.month - oldest.month) + 1);
   const months = Array.from({ length: Math.min(span, 24) }, (_, i) => addMonths(cur.year, cur.month, -i));
   const dows = weekDays('2026-01-04').map((d) => formatWeekdayShort(d, locale));

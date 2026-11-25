@@ -361,4 +361,5 @@ Nas definições, o cartão "Perfil de treino" mostra o resumo e leva a `/traini
 ### Administração no telemóvel e bots
 - Definições → **Administração** (só para os emails de `ADMIN_EMAILS`): botão "Abrir a administração", para chegar ao admin sem escrever `/admin`.
 - **BotActions** (client, admin) — em `/admin/bots`: "Criar os bots", "Rodar o dia agora", "Ocultar os bots" / "Mostrar os bots outra vez" e "Apagar"; a página mostra cada bot com a liga, o nível, os treinos, as publicações e o último treino.
+- **BadgeCelebration** (client) — pop-up de emblema novo, em qualquer página da app (nunca a meio de um treino): arte em grande, nome, como se ganhou, confetes (sem animação com movimento reduzido), "Compartilhar" e "Seguinte"/"Fechar"; fechar marca como celebrado (`markBadgesSeen`). `mg-celebrate`.
 

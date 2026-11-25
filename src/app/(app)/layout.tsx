@@ -18,6 +18,8 @@ import { OfflineBanner } from '@/components/providers/OfflineBanner';
 import { PendingSync } from '@/components/providers/PendingSync';
 import { WeighInPrompt } from '@/components/body/WeighInPrompt';
 import { AppTour } from '@/components/body/AppTour';
+import { BadgeCelebration } from '@/components/gamification/BadgeCelebration';
+import { newBadges } from '@/lib/gamification/celebrate';
 import { weighInPeriod } from '@/lib/body/weighIn';
 import { fromDbDate, todayInTz, type DateISO } from '@/lib/dates';
 import { formatGramsAsKg } from '@/lib/weight';
@@ -44,6 +46,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   // de saúde). Nunca os dois na mesma abertura nem por cima dos Termos; só com o recurso `pro`.
   let weighIn: { period: DateISO; today: DateISO; weekly: boolean; lastKg: string } | null = null;
   let showTour = false;
+  let celebrate: Awaited<ReturnType<typeof newBadges>> = [];
   if (user && entitlements.features.pro && !policyPending) {
     const [prefs, last] = await Promise.all([
       db.fitnessPrefs.findUnique({ where: { userId: session.user.id }, select: { weighInFrequency: true, tourDoneAt: true } }),
@@ -52,9 +55,11 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
         : null,
     ]);
     showTour = !prefs?.tourDoneAt;
+    // Emblema novo: o pop-up de celebração (e, nessa abertura, sem o pedido de pesagem).
+    celebrate = showTour ? [] : await newBadges(session.user.id);
     const freq = prefs?.weighInFrequency ?? 'OFF';
     const today = todayInTz(user.timezone);
-    const period = user.wellbeingConsentAt && !showTour ? weighInPeriod(freq, today, last ? fromDbDate(last.date) : null) : null;
+    const period = user.wellbeingConsentAt && !showTour && !celebrate.length ? weighInPeriod(freq, today, last ? fromDbDate(last.date) : null) : null;
     if (period) weighIn = { period, today, weekly: freq === 'WEEKLY', lastKg: last ? formatGramsAsKg(last.grams, 'pt-PT') : '' };
   }
   // Um registo por dia em que a pessoa abre o app (métricas do admin). Sem esperar.
@@ -76,6 +81,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
         <PendingSync />
         {weighIn && <WeighInPrompt {...weighIn} />}
         {showTour && <AppTour />}
+        {celebrate.length > 0 && <BadgeCelebration key={celebrate.map((b) => b.id).join()} badges={celebrate} />}
         <VerifyEmailBanner verified={!user || user.emailVerifiedAt !== null} />
         {children}
         {policyPending && <PolicyUpdateDialog askWellbeing={!user?.wellbeingConsentAt} />}

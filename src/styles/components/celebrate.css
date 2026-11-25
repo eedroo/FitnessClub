@@ -1,0 +1,109 @@
+/* BadgeCelebration: pop-up de emblema novo, com confetes */
+
+.mg-celebrate {
+  width: min(calc(100% - var(--space-6)), 400px);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--system-bg);
+  box-shadow: var(--shadow-menu);
+  color: var(--text-primary);
+  text-align: center;
+  overflow: hidden;
+}
+
+.mg-celebrate[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  animation: mg-celebrate-in 420ms var(--ease);
+}
+
+.mg-celebrate::backdrop {
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.mg-celebrate__kicker {
+  margin: 0;
+  color: var(--highlight);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mg-celebrate__art {
+  width: 180px;
+  height: 180px;
+  margin: var(--space-2) 0;
+  animation: mg-celebrate-pop 700ms var(--ease) both;
+}
+
+.mg-celebrate__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+}
+
+.mg-celebrate__text {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.mg-celebrate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.mg-celebrate__confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mg-celebrate__bit {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: mg-celebrate-fall 1.8s var(--ease) forwards;
+}
+
+.mg-celebrate__bit--0 { background: var(--highlight); }
+.mg-celebrate__bit--1 { background: var(--tier-gold); }
+.mg-celebrate__bit--2 { background: var(--tier-silver); }
+.mg-celebrate__bit--3 { background: var(--text-primary); }
+
+@keyframes mg-celebrate-in {
+  from { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes mg-celebrate-pop {
+  0% { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  60% { opacity: 1; transform: scale(1.08) rotate(3deg); }
+  100% { transform: none; }
+}
+
+@keyframes mg-celebrate-fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0); }
+  100% { opacity: 0; transform: translateY(520px) rotate(540deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-celebrate[open],
+  .mg-celebrate__art {
+    animation: none;
+  }
+
+  .mg-celebrate__confetti {
+    display: none;
+  }
+}

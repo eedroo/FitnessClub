@@ -52,7 +52,9 @@ export async function ProfileOverview({
     getTranslations('social.share'),
   ]);
   const earned = game.badges.filter((b) => b.earnedOn);
-  const tiers = strength?.levels.filter((l) => l.tier) ?? [];
+  // Força: de Diamante a Bronze; no mesmo nível, primeiro quem está mais perto do seguinte.
+  const TIER_ORDER = ['diamond', 'platinum', 'gold', 'silver', 'bronze'];
+  const tiers = (strength?.levels.filter((l) => l.tier) ?? []).sort((a, b) => TIER_ORDER.indexOf(a.tier!) - TIER_ORDER.indexOf(b.tier!) || b.progress - a.progress);
   const names = tiers.length
     ? new Map((await db.exercise.findMany({ where: { id: { in: tiers.map((l) => l.exerciseId) } }, select: { id: true, names: true } })).map((e) => [e.id, exerciseName(e.names as ExerciseNames, locale)]))
     : new Map<string, string>();

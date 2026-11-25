@@ -273,7 +273,7 @@ export interface SessionListItem {
 export async function listSessions(userId: string, take = 200): Promise<SessionListItem[]> {
   const rows = await db.fitnessSession.findMany({
     where: { userId, endedAt: { not: null } },
-    orderBy: { startedAt: 'desc' },
+    orderBy: [{ date: 'desc' }, { startedAt: 'desc' }],
     take,
     select: { id: true, date: true, startedAt: true, endedAt: true, workout: { select: { name: true } }, _count: { select: { sets: true } } },
   });

@@ -1339,6 +1339,13 @@
       "goal": "{tier} at {target} · {missing} to go",
       "top": "You've reached the top level.",
       "dumbbells": "Dumbbells: log both together (2 × 22.5 kg = 45 kg)."
+    },
+    "celebrate": {
+      "kicker": "New badge!",
+      "text": "One more step. Keep it up! 🎉",
+      "share": "Share",
+      "close": "Close",
+      "next": "Next ({n})"
     }
   },
   "activities": {

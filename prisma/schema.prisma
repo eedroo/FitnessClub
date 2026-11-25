@@ -246,6 +246,8 @@ model FitnessPrefs {
   weighInTime      String           @default("08:00")
   aiWeeklyInsights Boolean          @default(true) // retrospectiva semanal da IA (com o recurso `ai` e o consentimento)
   tourDoneAt       DateTime? // tour de boas-vindas do app visto (ou saltado)
+  badgesSeen       String[]         @default([]) // emblemas já celebrados (o pop-up mostra só os novos)
+  badgesSeenAt     DateTime? // última verificação; null = ainda não (os emblemas que já tinha não dão pop-up)
   onboardedAt      DateTime?
   user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

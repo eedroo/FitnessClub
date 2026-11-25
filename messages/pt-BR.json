@@ -1339,6 +1339,13 @@
       "goal": "{tier} com {target} · faltam {missing}",
       "top": "Você chegou ao nível máximo.",
       "dumbbells": "Halteres: registre a soma dos dois (2 × 22,5 kg = 45 kg)."
+    },
+    "celebrate": {
+      "kicker": "Emblema novo!",
+      "text": "Mais um passo. Continue assim! 🎉",
+      "share": "Compartilhar",
+      "close": "Fechar",
+      "next": "Próximo ({n})"
     }
   },
   "activities": {

@@ -205,3 +205,9 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - **Criar** (admin): cada bot recebe um programa de um modelo e o histórico das últimas semanas, ao seu ritmo (3 a 5 treinos por semana) e com progressão dupla, até ao nível dele; algumas publicações da última semana.
 - **Todos os dias** ao meio-dia de Lisboa (Inngest `bots-daily`): cada bot, ao acaso e ao seu ritmo, faz o treino seguinte (de manhã, antes da hora actual) e às vezes publica (textos em `content/bots/posts.json`). Os dias dos bots seguem Lisboa. **Cada bot fica no seu nível:** se passar dele, saem os treinos mais antigos (nunca os da última semana, que contam no ranking).
 - **Ocultar** (admin, `AppSetting` `bots` = `{ visible: false }`): os bots entram na lista de bloqueados de toda a gente (`blockedIds`), por isso somem do feed, perfis, pesquisa, comentários e ranking (e do pódio), e deixam de treinar. "Mostrar" volta atrás; "Apagar" remove-os de vez.
+
+## Emblemas celebrados, ordem das sessões e da força (2026-11-25)
+- **Pop-up de emblema novo:** `FitnessPrefs.badgesSeen` (já celebrados) e `badgesSeenAt`. A app só recalcula os emblemas quando houve um treino terminado ou uma atividade desde a última verificação; na primeira verificação os emblemas que a pessoa já tinha contam como vistos (sem pop-up). Na abertura com pop-up não aparece o pedido de pesagem; com o tour, não aparece o pop-up.
+- **Sessões:** ordenadas pelo dia do treino (o mais recente em cima) e, no mesmo dia, pela hora — um treino registado mais tarde com a data de outro dia fica no dia dele.
+- **Força no perfil:** de Diamante a Bronze; no mesmo nível, primeiro o mais perto da medalha seguinte.
+

@@ -104,7 +104,9 @@ export async function SessionList({ sessions, activities = [] }: { sessions: Ses
   const entries: Entry[] = [
     ...sessions.map((s) => ({ key: `s-${s.id}`, date: s.date, startedAt: s.startedAt, node: <SessionRow session={s} /> })),
     ...activities.map((a) => ({ key: `a-${a.id}`, date: a.date, startedAt: a.startedAt, node: <ActivityRow activity={a} locale={locale} /> })),
-  ].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+    // Pelo dia do treino (o mais recente em cima) e, no mesmo dia, pela hora; um treino registado mais tarde com a
+    // data de outro dia fica no dia dele.
+  ].sort((a, b) => b.date.localeCompare(a.date) || b.startedAt.localeCompare(a.startedAt));
   const months = new Map<string, Entry[]>();
   for (const e of entries) {
     const k = e.date.slice(0, 7);
