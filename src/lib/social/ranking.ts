@@ -7,7 +7,7 @@ import { blockedIds } from './server';
 import { leagueOf, podium, rankLeague, type League } from './leagues';
 import { pushToUser } from '@/lib/notifications/send';
 import { hiddenBotIds } from '@/lib/bots/server';
-import { leagueStartNotification, leagueWinNotification, rankingLaunchNotification } from '@/lib/notifications/content';
+import { leaguePodiumNotification, leagueStartNotification, leagueWinNotification, rankingLaunchNotification } from '@/lib/notifications/content';
 
 /**
  * Ranking semanal por ligas. A semana é domingo a sábado nas datas de cada pessoa (as sessões e atividades já são
@@ -112,20 +112,32 @@ export async function closeLeagueWeek(weekStart: DateISO): Promise<{ userId: str
 }
 
 /**
- * Avisos de domingo: quem ficou no pódio recebe a vitória; quem está no ranking e tem notificações recebe "começou
- * uma nova semana". Quem saiu do ranking não recebe nada.
+ * Avisos de domingo: quem ficou no pódio recebe a vitória; os outros que estão no ranking recebem o pódio da sua liga
+ * (quem ganhou) e que começou uma nova semana. Quem saiu do ranking não recebe nada.
  */
 export async function notifyLeagueWeek(winners: { userId: string; league: string; rank: number }[]): Promise<{ sent: number }> {
   const subs = await db.pushSubscription.findMany({ select: { userId: true }, distinct: ['userId'] });
   const ids = subs.map((s) => s.userId);
   if (!ids.length) return { sent: 0 };
-  const people = await db.user.findMany({ where: { id: { in: ids }, socialProfile: { inRanking: true } }, select: { id: true, locale: true } });
+  const people = await db.user.findMany({ where: { id: { in: ids }, isBot: false, socialProfile: { inRanking: true } }, select: { id: true, locale: true } });
+  // O pódio de cada liga, pela ordem, com os nomes (para quem não ganhou saber quem ganhou na sua liga).
+  const names = new Map(
+    (await db.socialProfile.findMany({ where: { userId: { in: winners.map((w) => w.userId) } }, select: { userId: true, displayName: true } })).map((p) => [p.userId, p.displayName]),
+  );
+  const podiums = new Map<string, string[]>();
+  for (const w of [...winners].sort((a, b) => a.rank - b.rank)) podiums.set(w.league, [...(podiums.get(w.league) ?? []), names.get(w.userId) ?? '—']);
+  const levels = await levelsFor(people.map((p) => p.id));
   const won = new Map(winners.map((w) => [w.userId, w]));
   let sent = 0;
   for (const p of people) {
     const w = won.get(p.id);
-    const content = w ? leagueWinNotification(p.locale, w.league, w.rank) : leagueStartNotification(p.locale);
-    sent += await pushToUser(p.id, { ...content, tag: w ? 'league-win' : 'league-start' }).catch(() => 0);
+    const podium = podiums.get(leagueOf(levels.get(p.id) ?? 1));
+    const content = w
+      ? leagueWinNotification(p.locale, w.league, w.rank)
+      : podium?.length
+        ? leaguePodiumNotification(p.locale, leagueOf(levels.get(p.id) ?? 1), podium)
+        : leagueStartNotification(p.locale);
+    sent += await pushToUser(p.id, { ...content, tag: w ? 'league-win' : 'league-week' }).catch(() => 0);
   }
   return { sent };
 }

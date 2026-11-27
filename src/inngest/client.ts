@@ -7,6 +7,8 @@ type Events = {
   // IA (Fase B): programa pedido pela pessoa; retrospectiva de uma semana (domingo `weekStart`).
   'ai/program.requested': { data: { requestId: string } };
   'ai/insight.requested': { data: { userId: string; weekStart: string } };
+  // Rede social: alguém terminou um treino (avisa os amigos).
+  'social/friend.trained': { data: { userId: string; sessionId: string } };
 };
 
 export const inngest = new Inngest({ id: 'fitnessclub', schemas: new EventSchemas().fromRecord<Events>() });

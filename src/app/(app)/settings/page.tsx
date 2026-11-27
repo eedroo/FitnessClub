@@ -28,6 +28,7 @@ import { getFitnessPrefs, getTrainingProfile } from '@/lib/fitness/queries';
 import { toProfileData } from '@/lib/fitness/profile';
 import { intlLocale, isAppLocale } from '@/i18n/locales';
 import { isAdminEmail } from '@/lib/admin';
+import { FriendWorkoutsToggle } from '@/components/settings/FriendWorkoutsToggle';
 
 const SECTIONS = ['profile', 'account', 'preferences', 'trainingProfile', 'training', 'notifications', 'privacy', 'sessions', 'danger'] as const;
 
@@ -159,6 +160,7 @@ export default async function SettingsPage() {
           <GlassCard id="notifications" className="mg-settings__section" title={t('sections.notifications')}>
             <div className="mg-form">
               <p className="mg-form__status">{t('notificationsHint')}</p>
+              {prefs && <FriendWorkoutsToggle initial={prefs.notifyFriendWorkouts} />}
               <NotificationsPromptCard />
               <InstallButton />
             </div>

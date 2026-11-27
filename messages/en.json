@@ -106,12 +106,13 @@
       },
       "weighInConsent": "To see the prompt, give your health data consent further down."
     },
-    "notificationsHint": "The only alert is the end-of-rest one, and it only arrives when you've left the app during a session.",
+    "notificationsHint": "Notifications you may get: rest over (with the app in the background), friends who trained, the weekly ranking and your weekly review.",
     "admin": {
       "title": "Admin",
       "text": "Metrics, users, Premium requests, bots, notifications and AI.",
       "open": "Open admin"
-    }
+    },
+    "friendWorkouts": "Notify me when a friend trains"
   },
   "validation": {
     "required": "This field is required.",
@@ -180,6 +181,15 @@
       "rankingLaunch": {
         "title": "New: weekly ranking",
         "body": "Compete in the league for your level, against people at a similar stage. See where you stand."
+      },
+      "friendWorkout": {
+        "title": "{name} just trained 💪",
+        "body": "{workout} · {sets, plural, one {# set} other {# sets}}. Your turn?",
+        "bodyFree": "Free workout · {sets, plural, one {# set} other {# sets}}. Your turn?"
+      },
+      "leaguePodium": {
+        "title": "This week's podium · {league} league",
+        "body": "{podium}. A new week has started: let's go!"
       }
     },
     "prompt": {
@@ -1520,9 +1530,10 @@
     },
     "edit": {
       "title": "Public profile",
-      "shareLevels": "Show my strength levels",
+      "shareLevels": "Show the Strength tab on my profile",
       "blocked": "Blocked people",
-      "noBlocked": "You haven't blocked anyone."
+      "noBlocked": "You haven't blocked anyone.",
+      "shareLevelsHint": "People who visit your profile see your strength medals per exercise (never your weight)."
     },
     "workout": {
       "free": "Free workout",

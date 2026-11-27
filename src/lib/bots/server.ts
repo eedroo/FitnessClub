@@ -9,6 +9,7 @@ import { FITNESS_TEMPLATES } from '@/lib/fitness/templates';
 import { recomputeExercisePrs } from '@/lib/fitness/queries';
 import { XP, xpForLevel } from '@/lib/gamification/xp';
 import { levelsFor } from '@/lib/gamification/server';
+import { notifyFriendsTrained } from '@/lib/social/friendWorkout';
 import { BOTS, nextSets, rng, startingKg, trainsToday, type BotDef, type Progress } from './roster';
 
 /**
@@ -326,6 +327,7 @@ export async function runBotsDay(): Promise<{ trained: number; posted: number }>
     const s = await logSession({ id: b.id, def }, workout, today, progress, r, nowHour - 2);
     await keepLevel(b.id, def, workouts.flatMap((w) => w.items.map((it) => it.exerciseId)));
     trained++;
+    await notifyFriendsTrained(b.id, s.id).catch(() => undefined);
     if (r() < 0.55) {
       await postSession(b.id, s.id, workout.name, s.endedAt, r);
       posted++;

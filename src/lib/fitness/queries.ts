@@ -10,7 +10,7 @@ import type { ActiveSessionView, ExerciseHistoryGroup, ExerciseView, LastPerform
 
 /** Leituras dos treinos. Só lêem (excepto fechar uma sessão esquecida há mais de 6 h). */
 
-export const DEFAULT_PREFS = { defaultRestSec: 90, restAlert: true, keepAwake: true, weighInFrequency: 'OFF' as WeighInFrequency, onboardedAt: null as Date | null };
+export const DEFAULT_PREFS = { defaultRestSec: 90, restAlert: true, keepAwake: true, weighInFrequency: 'OFF' as WeighInFrequency, notifyFriendWorkouts: true, onboardedAt: null as Date | null };
 
 export async function getFitnessPrefs(userId: string) {
   return (await db.fitnessPrefs.findUnique({ where: { userId } })) ?? { userId, ...DEFAULT_PREFS };

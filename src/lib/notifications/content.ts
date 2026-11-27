@@ -73,3 +73,24 @@ export function rankingLaunchNotification(locale: Locale): NotificationContent {
   const t = translatorFor(locale);
   return { title: t('notifications.push.rankingLaunch.title'), body: t('notifications.push.rankingLaunch.body'), url: '/ranking' };
 }
+
+/** Um amigo terminou um treino. */
+export function friendWorkoutNotification(locale: Locale, name: string, workout: string | null, sets: number, url: string): NotificationContent {
+  const t = translatorFor(locale);
+  return {
+    title: t('notifications.push.friendWorkout.title', { name }),
+    body: workout ? t('notifications.push.friendWorkout.body', { workout, sets }) : t('notifications.push.friendWorkout.bodyFree', { sets }),
+    url,
+  };
+}
+
+/** Fecho da semana do ranking: o pódio da liga de quem recebe (e a nova semana). */
+export function leaguePodiumNotification(locale: Locale, league: string, podium: string[]): NotificationContent {
+  const t = translatorFor(locale);
+  const medals = ['🥇', '🥈', '🥉'];
+  return {
+    title: t('notifications.push.leaguePodium.title', { league: t(`ranking.leagues.${league}`) }),
+    body: t('notifications.push.leaguePodium.body', { podium: podium.map((n, i) => `${medals[i]} ${n}`).join(' · ') }),
+    url: '/ranking',
+  };
+}

@@ -17,6 +17,7 @@ import { ProfileActions } from './ProfileActions';
 import { StrengthTier } from '@/components/gamification/StrengthTier';
 import { BadgeGrid } from '@/components/gamification/BadgeGrid';
 import { ProfileTabs } from './ProfileTabs';
+import { ShareLevelsToggle } from './ShareLevelsToggle';
 
 /**
  * Um perfil (o meu no "Eu" ou o de outra pessoa): cabeçalho (avatar, @, bio, nível, amigos, barra de XP, editar ou
@@ -41,7 +42,7 @@ export async function ProfileOverview({
   /** Conteúdo entre o perfil e as publicações (no "Eu": o corpo). */
   children?: React.ReactNode;
 }) {
-  const [t, tg] = await Promise.all([getTranslations('social'), getTranslations('game')]);
+  const [t, tg, te] = await Promise.all([getTranslations('social'), getTranslations('game'), getTranslations('social.edit')]);
   const self = rel === 'self';
   const [game, posts, strength, wins, tr, ts] = await Promise.all([
     getGamification(profile.userId),
@@ -146,7 +147,16 @@ export async function ProfileOverview({
             // Força: os meus níveis sempre; os dos outros só se os mostrarem.
             ...(self || tiers.length > 0
               ? {
-                  strength: tiers.length ? (
+                  strength: (
+                    <>
+                      {/* No meu perfil: escolher se a aba Força é pública. */}
+                      {self && (
+                        <>
+                          <ShareLevelsToggle initial={profile.shareLevels} />
+                          <p className="mg-notes__empty">{te('shareLevelsHint')}</p>
+                        </>
+                      )}
+                      {tiers.length ? (
                     <ul className="mg-program-list">
                       {tiers.map((l) => (
                         <li key={l.exerciseId}>
@@ -159,6 +169,8 @@ export async function ProfileOverview({
                     </ul>
                   ) : (
                     <p className="mg-notes__empty">{tg('strength.empty')}</p>
+                  )}
+                    </>
                   ),
                 }
               : {}),

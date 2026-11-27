@@ -106,12 +106,13 @@
       },
       "weighInConsent": "Para o pedido aparecer, dá o consentimento de dados de saúde mais abaixo."
     },
-    "notificationsHint": "O único aviso é o de fim de descanso, e só chega quando saíste da app durante a sessão.",
+    "notificationsHint": "Avisos que podem chegar: fim do descanso (com a app em segundo plano), amigos que treinaram, o ranking da semana e a tua retrospectiva.",
     "admin": {
       "title": "Administração",
       "text": "Métricas, utilizadores, pedidos de Premium, bots, notificações e IA.",
       "open": "Abrir a administração"
-    }
+    },
+    "friendWorkouts": "Avisar quando um amigo treinar"
   },
   "validation": {
     "required": "Campo obrigatório.",
@@ -180,6 +181,15 @@
       "rankingLaunch": {
         "title": "Novidade: ranking semanal",
         "body": "Compete na liga do teu nível, com quem está num ponto parecido. Vê em que lugar estás."
+      },
+      "friendWorkout": {
+        "title": "{name} treinou 💪",
+        "body": "{workout} · {sets, plural, one {# série} other {# séries}}. Bora também?",
+        "bodyFree": "Treino livre · {sets, plural, one {# série} other {# séries}}. Bora também?"
+      },
+      "leaguePodium": {
+        "title": "Pódio da semana · Liga {league}",
+        "body": "{podium}. Começou uma nova semana: bora!"
       }
     },
     "prompt": {
@@ -1520,9 +1530,10 @@
     },
     "edit": {
       "title": "Perfil público",
-      "shareLevels": "Mostrar os meus níveis de força",
+      "shareLevels": "Mostrar a aba Força no meu perfil",
       "blocked": "Pessoas bloqueadas",
-      "noBlocked": "Não bloqueaste ninguém."
+      "noBlocked": "Não bloqueaste ninguém.",
+      "shareLevelsHint": "Quem visita o teu perfil vê as tuas medalhas de força por exercício (nunca o teu peso)."
     },
     "workout": {
       "free": "Treino livre",

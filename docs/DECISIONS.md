@@ -216,3 +216,8 @@ App de treino independente, nascido do "Foco no corpo" do MYGLOW (commit `73f702
 - «Repor tentativas»: `User.aiQuotaResetAt` = agora; o limite só conta pedidos depois disso. «Gerar de novo»: repete o último pedido dela com as mesmas respostas, fora do limite (precisa do acesso à IA e do consentimento dela); ela recebe o aviso quando fica pronto.
 - Em Treinos, enquanto houver um programa com IA pronto para rever (ou a ser gerado), aparece uma linha em destaque que leva à revisão.
 
+## Avisos da comunidade e aba Força pública (2026-11-27)
+- **Fecho da semana do ranking:** quem ficou no pódio recebe a vitória; todos os outros que estão no ranking (e têm notificações) recebem o pódio da **sua** liga (🥇 · 🥈 · 🥉, com os nomes) e que começou uma nova semana. Sem pódio na liga, só "começou uma nova semana".
+- **«Fulana treinou» 💪:** ao terminar um treino com séries (também o terminado sem rede e os dos bots), os amigos recebem um aviso, pelo Inngest (`social/friend.trained`; sem Inngest, no momento). No máximo um por amigo e por dia (`NotificationLog` FRIEND_WORKOUT, `autor:data`); nunca a quem bloqueou; desligável em Definições › Notificações (`FitnessPrefs.notifyFriendWorkouts`).
+- **Aba Força pública:** a opção do perfil passa a chamar-se "Mostrar a aba Força no meu perfil" e aparece também dentro da própria aba; os outros veem as medalhas por exercício, nunca o peso.
+

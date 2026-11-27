@@ -53,6 +53,7 @@ const prefsSchema = z.object({
   restAlert: z.boolean().optional(),
   keepAwake: z.boolean().optional(),
   weighInFrequency: z.enum(['OFF', 'DAILY', 'WEEKLY']).optional(),
+  notifyFriendWorkouts: z.boolean().optional(),
 });
 
 export async function updateFitnessPrefs(patch: z.input<typeof prefsSchema>): Promise<FitnessResult> {

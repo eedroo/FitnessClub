@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { sendSafely, type FitnessRestEvent } from '@/inngest/client';
 import { getFitnessPrefs, recomputeExercisePrs, usableExercise } from './queries';
 import { AUTO_END_HOURS, restEndsAt, restFor, validateSet } from './session';
+import { dispatchFriendTrained } from '@/lib/social/friendWorkout';
 
 /**
  * Escritas da sessão partilhadas pela Server Action e pela rota `/api/fitness/sessions/[id]`.
@@ -49,6 +50,8 @@ export async function endSessionFor(uid: string, sessionId: string, clientEndedA
   const wanted = client && !Number.isNaN(client.getTime()) ? client : now;
   const endedAt = new Date(Math.min(now.getTime(), Math.max(floor.getTime(), wanted.getTime())));
   await db.fitnessSession.update({ where: { id: s.id }, data: { endedAt, restEndsAt: null, restExerciseId: null, clientHidden: false } });
+  // Os amigos ficam a saber (um aviso por dia; repetir o fim não volta a avisar).
+  await dispatchFriendTrained(uid, s.id);
   return { ok: true, data: { id: s.id, next: `/sessions/${encodeURIComponent(s.id)}?done=1` } };
 }
 
